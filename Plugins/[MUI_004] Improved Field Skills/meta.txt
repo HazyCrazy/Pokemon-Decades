@@ -1,0 +1,6 @@
+Name         = [MUI] Improved Field Skills
+Version      = 1.0.1
+Essentials   = 21.1
+Requires     = Modular UI Scenes,2.0.8
+Website      = https://eeveeexpo.com/resources/1401/
+Credits      = Lucidious89

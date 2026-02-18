@@ -1,0 +1,347 @@
+Essentials Engine Trainer Battle Setup
+https://essentialsengine.miraheze.org/wiki/Essentials_Engine_wiki
+https://essentialsengine.miraheze.org/wiki/Defining_a_trainer
+https://essentialsengine.miraheze.org/wiki/Trainers
+
+Deluxe Battle Kit Add-ons Setup 
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/enhanced-battle-ui
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/sos-battles
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/z-power
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/dynamax
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/terastallization
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/animated-pokemon-system
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/improved-item-ai
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/wonder-launcher
+https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/animated-trainer-intros
+
+Trainer Setup Notes
+
+Nearly every Pokemon in Super Yellow always have 1 Regular Ability.
+The rest of a Pokemon's 5 Abilities are all Hidden Abilities.
+The Ability Vial Key Item allows for full unconditional Ability changing.
+
+Nearly all Pokemon have just 1 Regular Ability, for the purposes of removing the tedium of generating a Pokemon with it's general best ability.
+
+Ability Index Numbers
+
+TYRANITAR
+
+Index 0: SANDSTREAM 	(Regular Ability that all genrated Species have, unless edited in Events. Index 0 and Index 1 are a Pokemon's Regular Ability slot.)
+Index 1: SANDSTREAM 	(Regular Ability that all genrated Species have, unless edited in Events. Index 0 and Index 1 are a Pokemon's Regular Ability slot.)
+Index 2: SHEERFORCE 	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 3: INTIMIDATE 	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 4: BULLETPROOF	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 5: MOXIE 			(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 6: PUREPOWER		(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0) 
+
+In Super Yellow, all moves affected by Friendship have been tweaked or overhauled, to remove min/maxing of the Friendship value.
+Return is a simple 110 Base Power, 85% Accuracy Fairy Type move, Frustration is a simple 110 Base Power, 85% Accuracy Dark Type move. 
+Egg Bomb is the new and Auto Category Changing Return.
+
+BaseMoney sets the default value of SkillLevel for every trainer.
+It is best if possible, to manually set the SkillLevel in a Trainer Battle event.
+BaseMoney is needed to manage the pace of the player obtaining resources.
+
+All Trainer Battles in Super Yellow are divided into Triple, Double and Single battles, for every instance of a Trainer Battle Event.
+This has to be done, because the player can freely change their Battle Format Preference, and is not locked into a Battle Format. 
+All Trainer Battles need at least 3 Pokemon, in order for the player to not get confused when setting their Battle Format preference. 
+
+Auto Level Scaling is required, in order to cut the amount of battles for each trainers needed from a minimum of 12, to just 3.
+A consequence of this, is that Little Cup teams cannot be fully optimized. 
+Lower Level's fundementally change nuances. Leftovers sucks in Little Cup, and the Berry Juice becomes the de facto Healing Held Item. 
+Berry Juice is worthless junk outside Little Cup, and Leftovers becomes the de facto Healing Held Item.
+You will have to use the Honey Item (33% max HP recovery), to act as a compromise.
+You also don't be able to give foes the Eviolite item, because auto scaling means a Pokemon's Evolution stage can change at the drop of a hat.
+The Eviolite only works on Pokemon that are not fully evolved.
+
+Unless there is a good reason, do not waste your time setting these values for every Pokemon a trainer has:
+
+Name 
+Shiny
+Super Shiny 
+Shadow (For Battle Mode, do not set this. This is strictly for Story Mode)
+Happiness (Happiness is now no longer a factor in battle in Super Yellow)
+Ball (While a nice attention to detail, there are way too many Pokemon to go through and test if the ball choice works) 
+
+For every Serious Trainer Battle, such as the ones in Battle Mode, these are the values you must set, in order for each battle to be worth making:
+
+Form (Sets Regional form, and every other non complex forms/formes a Pokemon needs. Complex Forms are Fusion Pokemon, (Calyrex, Kyruem) etc.
+Gender (Technically pointless, but this isn't unreasonable to set, and is able to work as a subtle form of story telling. Only use if it suits a Trainer's Pokemon team)
+Moves (Every good Pokemon team NEEDS optimal Move Sets. Super Yellow has modded Automatic Level Scaling for it's design goals, and all generated Pokemon have a stock metagame Learn Set. All Pokemon must be at Lvl.1, in order for Level Scaling to work correctly)
+Ability/AbilityIndex (Every good Pokemon team NEEDS optimal Abilities. Ability is best on Pokemon who are going to change form in Battle (Megas/Dynamax), AbilityIndex is best on Pokemon who are not going to change form in Battle. (Z-Moves/Teras) Look at the above guide links to account for special cases)
+Item (Every good Pokemon team NEEDS to hold an item, unless using Acrobatics or other strategies)
+Nature (Opponent trainers can not have Nature Modifiers applied to them like the player can on their Pokemon. Opponent Pokemon NEED optimal Natures)
+EV (Every good Pokemon team NEEDS to have a 100% optimised Effort Value Spread. EV's in a Stat go up to 256, and have a 512 Limit budget. Refer to Poke Paste/Smogon Competitive Play Forums to have a reference point for Optimised EV Spreads)
+
+Smogon Forum Links:
+https://www.smogon.com/forums/threads/vgc-25-regulation-g-sample-teams-thread.3747193/
+https://www.smogon.com/forums/threads/sv-ou-sample-teams-new-samples-added-post-spl-and-roaring-moon-ban.3712513/
+
+# Poke Paste Links:
+https://www.pokeaimmd.com/teams
+https://pokepast.es/059d346a4c68e7e1 
+
+The 5 values with NEED/NEEDS in their description cannot be neglected for serious Trainer battles. You must set these. (Also don't forget IV. Trainers with Pokemon default to 0 IVs)
+
+IV (All Pokemon in Super Yellow have 100% Generated 31 IVs in all stats. You only have to configure Attack, Sp.Atk and Speed IVs, or only for a Pokemon whose Battle Set needs precise IVs. But, Trainer Pokemon default to 0 IV's as of writing this, 14th July 2025, 9:05 PM. So they have to be configured)
+
+EV IV Spread setup in trainers.txt 
+
+EV = HP,ATTACK,DEFENSE,SPEED,SPECIAL_ATTACK,SPECIAL_DEFENSE (256 max in a value, 512 Allocation budget)
+IV = HP,ATTACK,DEFENSE,SPEED,SPECIAL_ATTACK,SPECIAL_DEFENSE (31 max, 0 min. All generated Pokemon have 31 IVs 100% of the time. The Party Screen can change IVs, to account for Foul Play/Sparkly Swirl, Beast Boost, Trick Room, and every other hyper specfic mechanics that interact with IV values)
+
+SY is using the EV Allocator Overhaul Plugin. Attack and Sp.Attack EV's are linked together. Only Attack EV's need to be edited 
+To correctly assign Attack/Sp.Atk EV's, use just ATTACK 
+
+For every Casual Trainer Battle, refer to trainers.txt, Liam 
+In Story Mode, the player can manually choose Level Scaling, or Static Levels.
+Up to you how to handle Static Level Curves, and Level Scaling.
+As said before, all Casual Trainer Battles need at least 3 Pokemon.
+#-------------------------------
+[CAMPER,Liam]
+Items = MEGARING,DYNAMAXBAND,ZRING,TERAORB
+LoseText = A very good battle, indeed!
+Pokemon = DIGLETT,10
+Pokemon = BONSLY,11
+Pokemon = GEODUDE,10
+#-------------------------------
+
+Battle Gimmick Notes 
+
+When the Map is setup correctly, All 4 Battle Gimmicks, Gen 6 to Gen 9, can be present all at once. 
+The order of gimmicks is Mega Evolution, Z-Moves, Dynamax, and Tera. 
+A single Pokémon cannot use all of them at once, but any Pokémon that meets what is required to 
+Dynamax or Tera can use them one after another. This means once Dynamax wears off, a Pokémon can Tera straight after.
+When Megas and Z-Moves are used, you cannot also Dynamax or Tera straight after.
+Super Yellow has the Dynamax Inhibitor Item, in order for the player to use Dynamax alongside Megas, Z-Moves and Tera.
+
+All Trainer Battles in Battle Mode, must be crafted with a Mega Captain, Z-Move Captain, Tera Captain and Dynamax Captain,
+if a Trainer's Pokemon team is able to squeeze all 4 gimmicks into a team composition.
+This must be done, because the player and Battle Mode opponent have equal unlimited access to all the game's items.
+If the player is on paper, able to craft a team that uses all 4 Battle Gimmicks. 
+The opponent also has to have a team with all 4 Battle Gimmicks. 
+
+Otherwise, the player can easily beat any team 
+with Dynamax and Z-Move abuse. Mainly Dynamax abuse in Singles. Up to you if Dynamax is banned in a Single battle.
+It's a mechanic that can only work in Double/Triple battles. It otherwise breaks the game's balance. 
+But from my time testing/playing in all Battle Formats. 
+I've grown to like Dynamax, mainly because of the instant Defense response it brings, in all formats.
+But Defense play doesn't matter in Singles, when Dynamax Moxie Gyarados exists. 
+The best gimmick metagame is Teras only. But I like the sandbox of all 4 battle gimmicks present in a battle.
+
+With the Tera mechanic, Shedinja's Tera Type is set to Stellar.
+This is required, to stop Air Balloon Electric Type Shedinja from breaking the game, unless Electric types are weak to Rock types.
+
+In order for the Metagame Wiki dex in game, to do it's job of making all Ability and Move changes be documented,
+without the headache of maintaining a online wiki. The Pokedex Data Page is used, and  
+Arceus can learn every Ability and Move in the game.
+20 Pokemon of a specfic Type, can learn every Move that matches one of their Types, in order for all Move changes to be easily searchable in game.
+9 to 10 Pokemon can learn every Move in the game. For the purposes of removing all issues with Legal Move Sets via Breeding Chains.
+Ditto and Smeargle can breed with any Pokemon that does not have the Legendary/Mytical Flag. (Refer to pokemon.txt)
+They are both 2 of the 9 to 10 Pokemon that learn every Move in the game.
+Ultimate Move Tutor is configured to allow the Breeding and TM mechanics to be removed from Super Yellow. 
+And The All Moves Disk in the Cheats Pocket, toggles allowing any Pokemon to learn any Move in the game.
+This is to remove all error in linking the whole history of every Pokemon's Evolution Family line's Learn Sets.
+The player can choose for themselves, if they want to abuse the All Moves Disk.
+Ultimate Move Tutor also Applies Universal Moves and Universal Type Moves, for all Pokemon.
+Starters, labled as VGC Starters, can learn nearly every move that makes a Pokemon viable to great in Double/Triple battles.
+This is to make sure whatever team the player makes, they can use the whole way through, 
+the starter they will get attached to in any variation of investment.
+
+Trainers.txt Attributes Values for DBK Add-ons:
+
+Items = MEGARING,DYNAMAXBAND,ZRING,TERAORB (Have these on all trainers, so you do not have to think twice on if they can use a Battle Gimmick or not)
+NoDynamax = true (Have only 1 Pokemon that can Dynamax. Dynamax Levels are at Lvl.10, 100% of the time for all generated Pokemon. Level must be set to 10 for opponent trainers)
+DynamaxLv = 1-10 (Set to Lvl.10 for opponent trainers. Dumb as fuck that you have to grind Dynamax Levels in the offical games, when it's a flat times 2 HP Multiplier at Level 10)
+Gigantamax = true (Set this for a Pokemon that has a Gigantamax form, if you think it's better for them to have this form)
+
+Eternamax Eternatus is a dedicated Form seperate from Dynamax. 
+It's best that you directly make Eternatus be in it's form, than bother setting up an Eterna Spot.
+Only if you want to use Eternamax Eternatus. They have been nerfed to a 810 Base Stat Total. Same as Arceus's 810 base Stat Total.
+
+Do not set the Tera Orb to have Infinite Charge. This causes problems for accessing Dynamax, Megas and Z-Moves.
+NoTera = true (Use if you want an exact Pokemon to be able to Tera)
+TeraType = TYPE (types.txt)
+Independant Hidden Power Type is able to set Hidden/Secret Power to be Stellar Type.
+For opponent Pokemon, use the dedicated Hidden Power types in moves_hidden_power_types. It's otherwise too much of a hassle to give an opponent Pokemon a Hidden Power type
+Megas and Z-Moves. Just give a Pokemon the respective items.
+
+Opponent Pokemon EV Allowcation Notes 
+
+Due to the complex formula EV Allocator uses to auto adapt opponent Pokemon EV's,
+it is not possible for foes to have complex EV Spreads in pratice. 
+
+All opponent Pokemon need 256/256 EV Spreads, in order for the assigned EV's to be applied correctly.
+Opponent Pokemon due to the EV Allowcator Formula and Level Scaling, cannot reach the max EV Limit in pratice.
+Opponent Pokemon from Lvl. 5 to Lvl. 100 can have 240 EV's max in each stat. Being able to max out up to 2 stats only. 
+Sunshine Yellow has modded the EV Allocator to allow Lvl.5 Pokemon to get 256 EV's max in a stat.
+
+This indirectly gives the player an easier time against all foes. 
+
+Bugs/Crashing issues List
+
+Opponent Pokemon using Egg Bomb will crash the game. Do not give any opponent or wild Pokemon Egg Bomb.
+
+Script error in event 104 (coords 14,12), map 42 (Battle Paradise 230)
+Exception: SystemStackError
+Message: stack level too deep
+
+***Full script:
+TrainerBattle.start(:KANTOIAN_FRLG_LADY,"Keiko (2v2)")
+Backtrace:
+Validation:18:in `block (2 levels) in validate'
+Validation:18:in `any?'
+Validation:18:in `block in validate'
+Validation:16:in `each'
+Validation:16:in `map'
+Validation:16:in `validate'
+GameData:111:in `try_get'
+Battle_Battler:73:in `ability'
+[Generation 9 Pack] [002] Battle_Battler.rb:278:in `abilityActive?'
+[Deluxe Battle Kit] [003] Deluxe Battle Rules.rb:362:in `abilityActive?'
+
+Opponent Pokemon using Z-Moves will crash the game. Do not give any opponent Z-Crystals. :(
+
+Script error in event 104 (coords 14,12), map 42 (Battle Paradise 230)
+Exception: SystemStackError
+Message: stack level too deep
+
+***Full script:
+TrainerBattle.start(:KANTOIAN_FRLG_LADY,"Keiko (2v2)")
+Backtrace:
+Validation:18:in `block (2 levels) in validate'
+Validation:18:in `any?'
+Validation:18:in `block in validate'
+Validation:16:in `each'
+Validation:16:in `map'
+Validation:16:in `validate'
+GameData:111:in `try_get'
+Battle_Battler:73:in `ability'
+[Generation 9 Pack] [002] Battle_Battler.rb:278:in `abilityActive?'
+[Deluxe Battle Kit] [003] Deluxe Battle Rules.rb:362:in `abilityActive?'
+
+This error as of the 14th September 2025 keeps happening inconsistently in pratice:
+
+[Pokémon Essentials version 21.1]
+[v21.1 Hotfixes 1.0.9]
+
+Script error in event 104 (coords 14,12), map 42 (Battle Paradise 230)
+Exception: SystemStackError
+Message: stack level too deep
+
+***Full script:
+TrainerBattle.start(:KANTOIAN_FRLG_LADY,"Keiko (3v3)")
+Backtrace:
+Validation:18:in `block (2 levels) in validate'
+Validation:18:in `any?'
+Validation:18:in `block in validate'
+Validation:16:in `each'
+Validation:16:in `map'
+Validation:16:in `validate'
+GameData:111:in `try_get'
+Battle_Battler:73:in `ability'
+[Generation 9 Pack] [002] Battle_Battler.rb:278:in `abilityActive?'
+[Deluxe Battle Kit] [003] Deluxe Battle Rules.rb:362:in `abilityActive?'
+
+Opponent Pokemon using Trapping moves such as Whirlpool crash the game. Do not give any opponent Trapping attacks. :(
+
+[Pokémon Essentials version 21.1]
+[v21.1 Hotfixes 1.0.9]
+
+Script error in event 107 (coords 45,12), map 42 (Battle Paradise 230)
+Exception: SystemStackError
+Message: stack level too deep
+
+***Full script:
+TrainerBattle.start(:KANTOIAN_HGSS_BROCK_CASUAL,"Brock (1v1)")
+Backtrace:
+Validation:18:in `block (2 levels) in validate'
+Validation:18:in `any?'
+Validation:18:in `block in validate'
+Validation:16:in `each'
+Validation:16:in `map'
+Validation:16:in `validate'
+GameData:111:in `try_get'
+Battle_Battler:73:in `ability'
+[Generation 9 Pack] [002] Battle_Battler.rb:278:in `abilityActive?'
+[Deluxe Battle Kit] [003] Deluxe Battle Rules.rb:362:in `abilityActive?'
+
+Hisui Avalugg in general crashes the game?
+
+[Pokémon Essentials version 21.1]
+[v21.1 Hotfixes 1.0.9]
+
+Script error in event 107 (coords 45,12), map 42 (Battle Paradise 230)
+Exception: SystemStackError
+Message: stack level too deep
+
+***Full script:
+TrainerBattle.start(:KANTOIAN_HGSS_BROCK_CASUAL,"Brock (2v2)")
+Backtrace:
+Validation:18:in `block (2 levels) in validate'
+Validation:18:in `any?'
+Validation:18:in `block in validate'
+Validation:16:in `each'
+Validation:16:in `map'
+Validation:16:in `validate'
+GameData:111:in `try_get'
+Battle_Battler:73:in `ability'
+[Generation 9 Pack] [002] Battle_Battler.rb:278:in `abilityActive?'
+[Deluxe Battle Kit] [003] Deluxe Battle Rules.rb:362:in `abilityActive?'
+
+Story Mode Trainers 
+
+The Key parts of making a Story Mode trainer:
+
+They are not required to be fully optimized. Because they exist as level pacing tools,
+it's bad to make them fully optimised, if they are just a common trainer.
+
+Pokemon SY is going to use 1:1 Level Scaling in the same manner that Elite Redux does it.
+Simply because it's too much of a technical hassle to set up Difficulty Options, that does not involve Events.
+I want anything that is an option to use Key Items as part of a trainer's suite, if it's possible.  
+I hate going to a specfic location in any Pokemon game to change options. I want options to always be Key Items or Menu Options selections. 
+
+Story Mode Trainers only need 1 entry, compared to Battle Mode Trainers.
+Story Mode trainers will always need at least 3 Pokemon, due to the player being able to easily change Battle Formats in the Options Menu.
+It is up to the player to decide what Battle Format they prefer, and stick to it. 
+
+Story Mode Trainer Pokemon will require Movesets to be manually applied. 
+Story Mode Trainer Pokemon automatially have 0 IV's, and EV's scale based on Level, up to 85 in all stats. 
+Common Story Mode Trainers are not forced battles. The player can always say no to a battle, if the context of the battle does not require the fight to be mandatory.
+The player can choose if the battle will be a regular battle with Exp Gain, or a Metagame fight, that allows the player to forfeit the battle, at the cost of not gaining Exp. 
+I had no luck finding a resource that works, that tweaks normal battles where you can always quit the fight, and are not locked into a fight.  
+
+Story Mode Type Masters/Gym Leaders
+
+The Key parts of making a Story Mode Type Master/Gym Leader:
+
+Type Masters will have 2 versions of their teams.
+
+The first version is their Full Power Team. This is their intented team, straight out of Battle Mode. 
+
+The second version is their Gym Challenge Teams. This is 10 variations of their teams, based on how the offical games pace the challenge of the Gym Leaders/Elite Four/Champion. 
+With a sprinking of how Renegade Platinum handled the Gym Leaders, to make for fun and engaging, but not sweat drenching fights.
+The offical games generally have Gyms 1 to 3 have 3 Pokemon. Gyms 4 to 6 have 4 Pokemon. Gyms 7 to 8 have 5 Pokemon. Elite 4 have 5 Pokemon on their teams, and the Champion has a full 6 Pokemon team. 
+This option takes it's cue from Tectonic, and to stop the problem that happens with games such as Elite Redux and Radical Red, where the hardcore intented experince, can become a stone wall 
+that stops the player from playing the game. 
+
+While a major pain in the ass, this is the consequence of making a non linear Pokemon game. I do not need to make 18 variations of each Type Master. After Gym 10, just use the Battle Mode teams.
+
+Both Trainers and Wild Pokemon are Level Scaled. This is done to make the workload as easy as possible. And the very existance of the Doom and Level Candies means I need Level Scaling anyway. 
+Because I'll be honest, I like Pokemon the most with 1:1 Level Scaling. That is how the Metagame of Pokemon is played after all.
+
+Wild Pokemon also follow the same Level Scaling system as the trainers of Story Mode.
+
+5th November 2025
+
+The Type Master's are now only going to have a Basic Team, and a Full Power Team. 
+It's also because the Level Scaling System setting for Story Mode is working as intended. 
+And I do not want to waste a lot of time stuck on stuff that gets in the way of Pokemon battles. 
+
+Simply put, I want to focus more on making a fun map to navigate, than wasting time with wild Pokemon distrubutions,
+and market items. I just flat out don't have the patience to remember how to space out the items that actually matter in the metagame. 
+
+I've wasted 2 to 3 months on Battle Mode. And the whole process of updating it to 3.0.0 took 6 months, since the 31st May 2025, when 3.0.0's development began again. 
+
+It could have been worse. But as expected. My patience and ability to put up with planning out item marts is gone. 

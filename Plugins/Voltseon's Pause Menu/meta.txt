@@ -1,0 +1,5 @@
+Name         = Voltseon's Pause Menu
+Essentials   = 21.1
+Version      = 2.2
+Website      = https://eeveeexpo.com/resources/692/
+Credits      = Voltseon, Golisopod User, ENLS

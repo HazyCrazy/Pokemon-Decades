@@ -1,0 +1,1594 @@
+#===============================================================================
+# Modular Pokemon Selection
+#===============================================================================
+# Pokemon Lists page:
+# list_name = [
+#   species,
+#   species,
+#   species,
+#   ...
+# ]
+#===============================================================================
+module PokemonSelections
+  Starting_Pokemon = [
+    :BULBASAUR,		:CHARMANDER,	:SQUIRTLE,
+	:CHIKORITA,		:CYNDAQUIL,		:TOTODILE,
+    :TREECKO,		:TORCHIC,		:MUDKIP,
+    :TURTWIG,		:CHIMCHAR,		:PIPLUP,
+	:SNIVY,			:TEPIG,			:OSHAWOTT,
+	:CHESPIN,		:FENNEKIN,		:FROAKIE,
+	:ROWLET,		:LITTEN,		:POPPLIO,
+	:GROOKEY,		:SCORBUNNY,		:SOBBLE,
+	:SPRIGATITO,	:FUECOCO,		:QUAXLY,
+  ]
+
+  Mythical = [
+    :MEW,		:CELEBI,	:JIRACHI,
+    :DEOXYS,	:MANAPHY,	:PHIONE,
+    :DARKRAI,	:SHAYMIN,	:ARCEUS
+  ]
+
+  Legendaries = [
+    :ARTICUNO, :ZAPDOS, :MOLTRES,
+    :MEWTWO,
+    :ENTEI, 	:RAIKOU, :SUICUNE,
+    :LUGIA, 	:HOOH,
+    :REGIROCK, 	:REGICE, :REGISTEEL,
+    :LATIAS, 	:LATIOS,
+    :GROUDON, 	:KYOGRE, 	:RAYQUAZA,
+    :UXIE, 		:MESPRIT, 	:AZELF,
+    :DIALGA, 	:PALKIA, 	:GIRATINA,
+    :CRESSELIA,	:HEATRAN,	:REGIGIGAS
+  ]
+  
+  Final_Quest_Reward_Legendaries = [
+	:ARTICUNO,  :ZAPDOS,  		:MOLTRES,
+    :MEWTWO,    :MEW,	 		:RAIKOU,
+	:ENTEI,	    :SUICUNE, 		:LUGIA,
+	:HOOH,	    :CELEBI,		:REGIROCK,
+	:REGICE,    :REGISTEEL,		:LATIAS,
+	:LATIOS,    :KYOGRE,		:GROUDON,
+	:RAYQUAZA,  :JIRACHI,		:DEOXYS,
+	:UXIE,	    :MESPRIT,		:AZELF,
+	:DIALGA,    :PALKIA,		:HEATRAN,
+	:REGIGIGAS, :GIRATINA,		:CRESSELIA,
+	:PHIONE,    :MANAPHY,		:DARKRAI,
+	:SHAYMIN,   :ARCEUS,		:COBALION,
+	:TERRAKION,	:VIRIZION,		:TORNADUS,
+	:THUNDURUS,	:RESHIRAM,		:ZEKROM,
+	:LANDORUS,	:KYUREM,		:VICTINI,
+	:KELDEO,	:MELOETTA,		:GENESECT,
+	:XERNEAS_1, :YVELTAL,		:ZYGARDE,
+	:DIANCIE,	:HOOPA,			:VOLCANION,
+	:TYPENULL,	:TAPUKOKO,		:TAPULELE,
+	:TAPUBULU,	:TAPUFINI,		:COSMOG,
+	:MAGEARNA,	:MARSHADOW,		:ZERAORA,
+	:MELTAN,	:ZACIAN,		:ZAMAZENTA,
+	:ETERNATUS,	:KUBFU,			:REGIELEKI,
+	:REGIDRAGO,	:GLASTRIER,		:SPECTRIER,
+	:CALYREX,	:ENAMORUS,		:ZARUDE,
+	:WOCHIEN,	:CHIENPAO,		:TINGLU,
+	:CHIYU,		:CYCLIZAR,  	:OKIDOGI,
+	:MUNKIDORI,	:FEZANDIPITI,	:OGERPON,
+	:TERAPAGOS
+  ]
+  
+  Final_Quest_Reward_Misc_Pokemon1 = [
+	:MINIOR_7,		:MINIOR_8,	:MINIOR_9,
+	:MINIOR_10,		:MINIOR_11,	:MINIOR_12,
+	:MINIOR_13
+  ]
+  
+  Final_Quest_Reward_Misc_Pokemon2 = [
+	:PIKACHU_3,			:PIKACHU_4,		:PIKACHU_5,
+	:PIKACHU_6,			:PIKACHU_7,		:PIKACHU_8,
+	:PIKACHU_9,			:PIKACHU_10,	:PIKACHU_11,
+	:PIKACHU_12,		:PIKACHU_13,	:PIKACHU_14,
+	:PIKACHU_15
+  ]
+  
+  Final_Quest_Reward_Grass_Legendaries = [
+	:CELEBI,		:SHAYMIN,	:VIRIZION,
+	:IRONLEAVES,	:KARTANA,	:ZARUDE,
+	:CALYREX,		:OGERPON
+  ]
+  
+  Final_Quest_Reward_Fire_Legendaries = [
+	:MOLTRES,		:ENTEI,		:GOUGINGFIRE,
+	:HOOH,			:HEATRAN,	:RESHIRAM,
+	:VICTINI,		:VOLCANION,	:BLACEPHALON,
+	:CHIYU
+  ]
+  
+  Final_Quest_Reward_Water_Legendaries = [
+	:SUICUNE,		:WALKINGWAKE,	:LUGIA,
+	:KYOGRE,		:PALKIA,		:MANAPHY,
+	:PHIONE,		:KELDEO,		:VOLCANION,
+	:TAPUFINI
+  ]
+  
+    Final_Quest_Reward_Fighting_Legendaries = [
+	:ZAPDOS_1,		:AZELF,			:COBALION,		
+	:TERRAKION,		:VIRIZION,		:KELDEO,
+	:MELOETTA_1,	:BUZZWOLE,		:MARSHADOW,		
+	:ZAMAZENTA,		:KUBFU,			:CYCLIZAR,		
+	:OKIDOGI
+  ]
+  
+  Final_Quest_Reward_Dark_Legendaries = [
+	:MOLTRES_1,		:RAIKOU,		:DARKRAI,		
+	:YVELTAL,		:NECROZMA,		:GUZZLORD,		
+	:KUBFU,			:ZARUDE,		:WOCHIEN,		
+	:CHIENPAO,		:TINGLU,		:CHIYU
+  ]
+  
+  Final_Quest_Reward_Psychic_Legendaries = [
+	:ARTICUNO_1,	:MEWTWO,		:LATIOS,		
+	:DEOXYS,		:MESPRIT,		:AZELF,			
+	:UXIE,			:CRESSELIA,		:MANAPHY,		
+	:IRONCROWN,		:IRONBOULDER,	:IRONLEAVES,	
+	:MELOETTA,		:VICTINI,		:HOOPA,			
+	:TAPULELE,		:COSMOG,		:NECROZMA,		
+	:CALYREX,		:MUNKIDORI
+  ]
+  
+    Final_Quest_Reward_Ground_Legendaries = [
+	:ENTEI,			:REGIGIGAS,		:GROUDON,
+	:LANDORUS,		:ZYGARDE,		:TINGLU
+  ]
+  
+  Final_Quest_Reward_Rock_Legendaries = [
+	:REGIROCK,		:TERRAKION,		:NIHILEGO,		
+	:STAKATAKA,		:IRONBOULDER
+  ]
+  
+  Final_Quest_Reward_Bug_Legendaries = [
+	:GENESECT,		:BUZZWOLE,		:PHEROMOSA
+  ]
+  
+    Final_Quest_Reward_Normal_Legendaries = [
+	:MEW,		:MEWTWO,	:REGIGIGAS,	:DEOXYS,
+	:ARCEUS,	:MELOETTA,	:TYPENULL,	:TERAPAGOS
+  ]
+  
+  Final_Quest_Reward_Electric_Legendaries = [
+	:ZAPDOS,		:RAIKOU,		:RAGINGBOLT,
+	:REGIELEKI,		:THUNDURUS,		:ZEKROM,
+	:TAPUKOKO,		:XURKITREE,		:ZERAORA,
+	:CYCLIZAR
+  ]
+  
+  Final_Quest_Reward_Poison_Legendaries = [
+	:POIPOLE,		:NIHILEGO,		:ETERNATUS,
+	:WOCHIEN,		:PECHARUNT,		:OKIDOGI,
+	:MUNKIDORI,		:FEZANDIPITI
+  ]
+  
+    Final_Quest_Reward_Fairy_Legendaries = [
+	:MEW,			:CELEBI,		:LATIAS,
+	:JIRACHI,		:MESPRIT,		:CRESSELIA,
+	:PHIONE,		:SHAYMIN,		:ENAMORUS,
+	:FLOETTE_5,		:DIANCIE,		:XERNEAS_1,		
+	:TAPUKOKO,		:TAPULELE,		:TAPUBULU,		
+	:TAPUFINI,		:PHEROMOSA,		:MAGEARNA,		
+	:ZACIAN,		:FEZANDIPITI,	:OGERPON
+  ]
+  
+  Final_Quest_Reward_Ghost_Legendaries = [
+	:GIRATINA,		:DARKRAI,		:FLOETTE_5,
+	:HOOPA,			:COSMOG,		:BLACEPHALON,	
+	:MARSHADOW,		:SPECTRIER,		:PECHARUNT
+  ]
+  
+  Final_Quest_Reward_Dragon_Legendaries = [
+	:RAGINGBOLT,	:GOUGINGFIRE,	:WALKINGWAKE,
+	:REGIDRAGO,		:LATIAS,		:LATIOS,
+	:RAYQUAZA,		:DIALGA,		:PALKIA,
+	:GIRATINA,		:RESHIRAM,		:ZEKROM,	
+	:KYUREM,		:ZYGARDE,		:POIPOLE,
+	:GUZZLORD,		:ETERNATUS,		:CYCLIZAR
+  ]
+  
+    Final_Quest_Reward_Steel_Legendaries = [
+	:REGISTEEL,		:JIRACHI,		:DIALGA,
+	:HEATRAN,		:COBALION,		:IRONCROWN,
+	:GENESECT,		:COSMOG,		:CELESTEELA,
+	:KARTANA,		:STAKATAKA,		:MAGEARNA,	
+	:MELTAN
+  ]
+  
+  Final_Quest_Reward_Ice_Legendaries = [
+	:ARTICUNO,		:SUICUNE,		:REGICE,
+	:KYUREM,		:GLASTRIER,		:CHIENPAO
+  ]
+  
+  Final_Quest_Reward_Flying_Legendaries = [
+	:ARTICUNO,		:ZAPDOS,		:MOLTRES,
+	:LUGIA,			:HOOH,			:RAYQUAZA,
+	:TORNADUS,		:THUNDURUS,		:LANDORUS,
+	:ENAMORUS,		:YVELTAL,		:CELESTEELA
+  ]
+  
+  # Revised Monotype Starters 
+  # This final revision is the reason why I am not making a comprehensive Vanilla Gen 9 Mod.
+  # The best I can do is a patch that changes the Base Stats and Typings to Vanilla Gen 9.
+  # ARCEUS_9/SILVALLY_9 is the ??? Type. ??? Types are not part of the Monotype List
+  # This exists for the Challenge Modes Plugin, that allows for Monotype Runs
+  # With this, any Pokemon in an evolution line that matches or is connected to a Monotype is on the list, such as Vaporeon and Lapras. Also includes Forms/Formes
+  Final_Mono_Bug = [
+	# Gen 1 Mono 
+	:CATERPIE,		:WEEDLE,		:PARAS,
+	:VENONAT,		:SCYTHER,		:PINSIR,
+	
+	# Gen 2 Mono 
+	:LEDYBA,		:SPINARAK,		:YANMA,
+	:PINECO,		:SHUCKLE,		:HERACROSS,
+	:SLUGMA,
+	
+	# Gen 3 Mono 
+	:WURMPLE,		:SURSKIT,		:NINCADA,
+	:VOLBEAT,		:ILLUMISE,		:TRAPINCH,
+	:ANORITH,			
+	
+	# Gen 4 Mono 
+	:KRICKETOT,		:WORMADAM,		:BURMY_1,		
+	:BURMY_2,		:COMBEE,		:VESPIQUEN,		
+	:SKORUPI,		:FINNEON,		:ARCEUS_6,	
+	
+	# Gen 5 Mono 
+	:SEWADDLE,		:VENIPEDE,		:DWEBBLE,
+	:KARRABLAST,	:JOLTIK,		:SHELMET,
+	:DURANT,		:LARVESTA,
+	:GENESECT,
+	
+	# Gen 6 Mono
+	:SCATTERBUG,	:VIVILLON,		:VIVILLON_1,		
+	:VIVILLON_2,	:VIVILLON_3,	:VIVILLON_4,	
+	:VIVILLON_5,	:VIVILLON_6,	:VIVILLON_7,	
+	:VIVILLON_8,	:VIVILLON_9,	:VIVILLON_10,	
+	:VIVILLON_11,	:VIVILLON_12,	:VIVILLON_13,	
+	:VIVILLON_14,	:VIVILLON_15,	:VIVILLON_16,	
+	:VIVILLON_17,	:VIVILLON_18,	:VIVILLON_19,
+	
+	# Gen 7 Mono 
+	:GRUBBIN,		:CUTIEFLY,		:DEWPIDER,
+	:WIMPOD,		:SILVALLY_6,	:BUZZWOLE,
+	:PHEROMOSA,
+	
+	# Gen 8 Mono 
+	:BLIPBUG,		:APPLIN,		:SIZZLIPEDE,
+	:SNOM,
+	
+	# Gen 9 Mono
+	:TAROUNTULA,	:NYMBLE,		:RELLOR,
+	:KLAWF,			:GIMMIGHOUL_1
+  ]
+  
+  Final_Mono_Dark = [
+	# Gen 1 Mono 
+	:RATTATA_1,		:IGGLYBUFF,
+	:MEOWTH_1,		:GRIMER_1,		:DROWZEE,
+	:TAUROS_1,		:MAGIKARP,		:EEVEE,
+	:UMBREON,		:MOLTRES_1,
+	
+	# Gen 2 Mono 
+	:TOTODILE,		:MURKROW,		:MISDREAVUS,
+	:GLIGAR,		:QWILFISH_1,	:SNEASEL,
+	:TEDDIURSA,		:URSALUNA_1,	:HOUNDOUR,
+	:LARVITAR,		:RAIKOU,		:LUGIA_1,
+	
+	# Gen 3 Mono 
+	:POOCHYENA,		:ZIGZAGOON_1,	:SEEDOT,
+	:SABLEYE,		:MAWILE,		:CARVANHA,
+	:CACNEA,		:SEVIPER,		:CORPHISH,
+	:ABSOL,			:CLAMPERL,		:BAGON,
+	
+	# Gen 4 Mono 
+	:CRANIDOS,		:STUNKY,		:SKORUPI,
+	:DARKRAI,		:ARCEUS_17,
+	
+	# Gen 5 Mono 
+	:OSHAWOTT,		:SAMUROTT_1,	:PURRLOIN,
+	:PANSEAR,		:BASCULIN_1,	:SANDILE,
+	:SCRAGGY,		:ZORUA,			:GOTHITA,
+	:FOONGUS,		:SHELMET,		:PAWNIARD,		
+	:VULLABY,		:DEINO,
+	
+	# Gen 6 Mono
+	:FROAKIE,		:VIVILLON_12,	:PANCHAM,
+	:FURFROU_6,		:INKAY,			:YVELTAL,
+	:HOOPA_1,
+	
+	# Gen 7 Mono 
+	:LITTEN,		:ROCKRUFF,		:LYCANROC_1,
+	:COSMOG,		:NECROZMA,		:SILVALLY_17,
+	:GUZZLORD,
+	
+	# Gen 8 Mono 
+	:NICKIT,		:IMPIDIMP,		:MORPEKO,
+	:KUBFU,			:ZARUDE,		
+	
+	# Gen 9 Mono
+	:SPRIGATITO,	:NYMBLE,		:MASCHIFF,
+	:REVAVROOM_5,	:BOMBIRDIER,	:WOCHIEN,		
+	:CHIENPAO,		:TINGLU,		:CHIYU
+  ]
+  
+  Final_Mono_Dragon = [
+	# Gen 1 Mono 
+	:CHARMANDER,	:PIDGEY,		:EKANS,
+	:PIKACHU_11,	:ONIX,			:EXEGGCUTE,
+	:EXEGGUTOR_1,	:HORSEA,		:MAGIKARP,		
+	:LAPRAS,		:DRATINI,
+	
+	# Gen 2 Mono 
+	:CHIKORITA,		:TOTODILE,		:MAREEP,
+	:YANMA,			:RAIKOU,		:ENTEI,			
+	:SUICUNE,	
+	
+	# Gen 3 Mono 
+	:TREECKO,		:ARON,			:TRAPINCH,
+	:SWABLU,		:TROPIUS,		:BAGON,
+	:REGIDRAGO,		:LATIAS,		:LATIOS,		
+	:RAYQUAZA,
+	
+	# Gen 4 Mono 
+	:CRANIDOS,		:SHIELDON,		:GIBLE,
+	:DIALGA,		:PALKIA,		:GIRATINA,
+	:ARCEUS_16,
+	
+	# Gen 5 Mono 
+	:SNIVY,			:AXEW,			:DRUDDIGON,
+	:LARVESTA,		:DEINO,			:RESHIRAM,		
+	:ZEKROM,		:KYUREM,
+	
+	# Gen 6 Mono
+	:VIVILLON_6,	:SKRELP,		:TYRUNT,
+	:NOIBAT,		:GOOMY,			:SLIGGOO_1,
+	:ZYGARDE,
+	
+	# Gen 7 Mono 
+	:MINIOR_13,		:TURTONATOR,	:DRAMPA,
+	:JANGMOO,		:COSMOG,		:NECROZMA,
+	:POIPOLE,		:GUZZLORD,
+	
+	# Gen 8 Mono 
+	:CHEWTLE,		:APPLIN,		:SILICOBRA,
+	:DRACOZOLT,		:DRACOVISH,		:DURALUDON,
+	:DREEPY,		:ETERNATUS,
+	
+	# Gen 9 Mono
+	:CYCLIZAR,		:KORAIDON,		:MIRAIDON,
+	:TATSUGIRI,		:FRIGIBAX
+  ]
+  
+  Final_Mono_Electric = [
+	# Gen 1 Mono 
+	:PICHU,			:PICHU_2,		:PIKACHU,		
+	:PIKACHU_3,		:PIKACHU_4,		:PIKACHU_5,		
+	:PIKACHU_6,		:PIKACHU_7,		:PIKACHU_8,		
+	:PIKACHU_9,		:PIKACHU_10,	:PIKACHU_11,	
+	:PIKACHU_12,	:PIKACHU_13,	:PIKACHU_14,	
+	:PIKACHU_15,	:RAICHU,		:RAICHU_1,		
+	:GEODUDE_1,		:MAGNEMITE,		:SANDYSHOCKS,	
+	:VOLTORB,		:VOLTORB_1,		:ELEKID,		
+	:EEVEE,			:JOLTEON,		:PORYGON,		
+	:ZAPDOS,
+	
+	# Gen 2 Mono 
+	:CHINCHOU,		:MAREEP,		:LARVITAR,
+	:RAIKOU,
+	
+	# Gen 3 Mono 
+	:TREECKO,		:MAKUHITA,
+	:NOSEPASS,		:ELECTRIKE,		:PLUSLE,
+	:MINUN,			:VOLBEAT,		:REGIELEKI,
+	:KYOGRE,		:DEOXYS_3,
+	
+	# Gen 4 Mono 
+	:SHINX,			:PACHIRISU,		:ROTOM,
+	:ROTOM_1,		:ROTOM_2,		:ROTOM_3,
+	:ROTOM_4,		:ROTOM_5,		:ARCEUS_13,		
+	
+	# Gen 5 Mono 
+	:BLITZLE,		:EMOLGA,		:JOLTIK,
+	:TYNAMO,		:STUNFISK,		:THUNDURUS,
+	:ZEKROM,		:KYUREM,		:GENESECT_1,
+	
+	# Gen 6 Mono
+	:FLABEBE_1,		:FURFROU_2,		:HELIOLISK,
+	:DEDENNE,
+	
+	# Gen 7 Mono 
+	:GRUBBIN,		:ORICORIO_1,	:MINIOR_9,
+	:TOGEDEMARU,	:TAPUKOKO,		:SILVALLY_13,
+	:XURKITREE,		:ZERAORA,
+	
+	# Gen 8 Mono 
+	:YAMPER,		:TOXEL,			:PINCURCHIN,
+	:MORPEKO,		:DRACOZOLT,		:ARCTOZOLT,
+	
+	# Gen 9 Mono
+	:PAWMI,			:TADBULB,		:WATTREL,
+	:CYCLIZAR,		:MIRAIDON
+  ]
+  
+  Final_Mono_Fairy = [
+	# Gen 1 Mono 
+	:SQUIRTLE,		:PIKACHU_5,		:CLEFFA,
+	:VULPIX,		:VULPIX_1,		:IGGLYBUFF,
+	:ODDISH,		:PONYTA_1,
+	:KOFFING,		:WEEZING_1,		:GOLDEEN,
+	:MIMEJR,		:EEVEE,			:SYLVEON,
+	:MEW,			:MEWTWO,			
+	
+	# Gen 2 Mono 
+	:CHIKORITA,		:TOGEPI,		:MAREEP,
+	:AZURILL,		:MISDREAVUS,
+	:SNUBBULL,		:CELEBI,
+	
+	# Gen 3 Mono 
+	:WURMPLE,		:RALTS,	
+	:MAWILE,		:ILLUMISE,		:SWABLU,
+	:FEEBAS,		:ABSOL,			:LUVDISC,
+	:LATIAS,		:JIRACHI,
+	
+	# Gen 4 Mono 
+	:CHERUBI,		:FINNEON,		:MESPRIT,
+	:CRESSELIA,		:PHIONE,		:SHAYMIN,
+	:ARCEUS_18,
+	
+	# Gen 5 Mono 
+	:TEPIG,			:AUDINO,		:COTTONEE,
+	:PETILIL,		:MINCCINO,		:GOTHITA,
+	:VANILLITE,		:KELDEO,		:ENAMORUS,
+	
+	# Gen 6 Mono
+	:FENNEKIN,		:VIVILLON_18,	:FLABEBE,
+	:FLABEBE_1,		:FLABEBE_2,		:FLABEBE_3,		
+	:FLABEBE_4,		:FLOETTE_5,		:FURFROU_4,
+	:SPRITZEE,		:SWIRLIX,		:DEDENNE,
+	:CARBINK,		:KLEFKI,		:XERNEAS_1,
+	
+	# Gen 7 Mono 
+	:POPPLIO,		:CUTIEFLY,		:MORELULL,
+	:BOUNSWEET,		:COMFEY,		:MINIOR_7,
+	:MIMIKYU,		:TAPUKOKO,		:TAPULELE,
+	:TAPUBULU,		:TAPUFINI,		:COSMOG,
+	:NECROZMA,		:PHEROMOSA,		:MAGEARNA,
+	
+	# Gen 8 Mono 
+	:SINISTEA,		:HATENNA,		:IMPIDIMP,
+	:MILCERY,		:INDEEDEE_1,	:ZACIAN,	
+	
+	# Gen 9 Mono
+	:LECHONK,		:FIDOUGH,		:TINKATINK,
+	:REVAVROOM_2,	:FEZANDIPITI,	:OGERPON
+  ]
+  
+  Final_Mono_Fighting = [
+	# Gen 1 Mono 
+	:PIKACHU_7,		:MEOWTH_2,		:MANKEY,
+	:POLIWAG,		:MACHOP,		:FARFETCHD_1,
+	:TYROGUE,		:ELEKID,		:MAGMAR,
+	:TAUROS,		:TAUROS_1,		:TAUROS_2,
+	:TAUROS_2,		:TAUROS_3,		:ZAPDOS_1,
+	:MEWTWO,
+	
+	# Gen 2 Mono 
+	:LEDYBA,		:BONSLY,		:SNUBBULL,
+	:HERACROSS,		:PHANPY,		:GREATTUSK,
+	
+	# Gen 3 Mono 
+	:TORCHIC,		:RALTS,
+	:SHROOMISH,		:SLAKOTH,		:MAKUHITA,
+	:IRONHANDS,		:MEDITITE,		:ZANGOOSE,
+	:DUSKULL,		:DEOXYS_1,
+	
+	# Gen 4 Mono 
+	:CHIMCHAR,		:STARLY,		:BUNEARY,
+	:CROAGUNK,		:RIOLU,			:AZELF,
+	:ARCEUS_1,
+	
+	# Gen 5 Mono 
+	:TEPIG,			:OSHAWOTT,		:PANSAGE,
+	:TIMBURR,		:THROH,			:SAWK,
+	:PETILIL,		:LILLIGANT_1,	:BASCULIN,
+	:SCRAGGY,		:SOLOSIS,		:AXEW,
+	:CUBCHOO,		:MIENFOO,		:RUFFLET,
+	:COBALION,		:TERRAKION,		:VIRIZION,		
+	:KELDEO,		:MELOETTA_1,
+	
+	# Gen 6 Mono
+	:CHESPIN,		:FLABEBE_2,		:PANCHAM,
+	:FURFROU_8,		:SWIRLIX,		:HAWLUCHA,
+	
+	# Gen 7 Mono 
+	:ROWLET,		:DECIDUEYE_1,	:CRABRAWLER,
+	:ROCKRUFF,		:LYCANROC,		:STUFFUL,
+	:BOUNSWEET,		:PASSIMIAN,		:JANGMOO,
+	:SILVALLY_1,	:BUZZWOLE,		:MARSHADOW,
+	
+	# Gen 8 Mono 
+	:CLOBBOPUS,		:FALINKS,		:KUBFU,
+	:ZAMAZENTA,	
+	
+	# Gen 9 Mono
+	:QUAXLY,		:TAROUNTULA,	:PAWMI,
+	:FLAMIGO,		:REVAVROOM_3,	:CYCLIZAR,
+	:KORAIDON,		:OKIDOGI
+  ]
+  
+  Final_Mono_Fire = [
+	# Gen 1 Mono 
+	:CHARMANDER,	:PIKACHU_13,	:VULPIX,
+	:GROWLITHE,		:PONYTA,		:CUBONE,
+	:MAROWAK_1,		:KOFFING,		:MAGBY,
+	:TAUROS_2,		:EEVEE,			:FLAREON,
+	:MOLTRES,
+	
+	# Gen 2 Mono 
+	:CYNDAQUIL,		:TYPHLOSION_1,	:SUNKERN,
+	:SLUGMA,		:REMORAID,		:HOUNDOUR,
+	:ENTEI,			:HOOH,
+	
+	# Gen 3 Mono 
+	:TORCHIC,		:ELECTRIKE,		:PLUSLE,
+	:NUMEL,			:TORKOAL,		:SOLROCK,
+	:CASTFORM_1,	:GROUDON,
+	
+	# Gen 4 Mono 
+	:CHIMCHAR,		:CHERUBI,		:ROTOM_1,
+	:HEATRAN,		:ARCEUS_10,
+	
+	# Gen 5 Mono 
+	:TEPIG,			:PANSEAR,	:DARUMAKA,	
+	:DEERLING_1,	:LITWICK,	:HEATMOR,	
+	:LARVESTA,		:IRONMOTH,	:RESHIRAM,	
+	:KYUREM,		:GENESECT_2,:VICTINI,
+	
+	# Gen 6 Mono
+	:FENNEKIN,	:FLETCHLING,	:VIVILLON_16,
+	:LITLEO,	:VOLCANION,
+	
+	# Gen 7 Mono 
+	:LITTEN,		:ORICORIO,		:SALANDIT,
+	:SALAZZLE,		:MINIOR_8,		:TURTONATOR,
+	:SILVALLY_10,	:BLACEPHALON,
+	
+	# Gen 8 Mono 
+	:SCORBUNNY,		:ROLYCOLY,		:SIZZLIPEDE,
+	
+	# Gen 9 Mono
+	:FUECOCO,		:FIDOUGH,		:CHARCADET,
+	:CAPSAKID,		:REVAVROOM_1,	:CHIYU,	
+	:OGERPON
+  ]
+  
+  Final_Mono_Flying = [
+	# Gen 1 Mono 
+	:CHARMANDER,	:PIDGEY,		:SPEAROW,
+	:PIKACHU_15,	:ZUBAT,			:FARFETCHD,
+	:FARFETCHD_1,	:DODUO,			:GOLDEEN,		
+	:SCYTHER,		:PINSIR,		:MAGIKARP,		
+	:AERODACTYL,	:ARTICUNO,		:ARTICUNO_1,	
+	:ZAPDOS,		:ZAPDOS_1,		:MOLTRES,		
+	:MOLTRES_1,		:DRATINI,
+	
+	# Gen 2 Mono 
+	:HOOTHOOT,		:LEDYBA,		:TOGEPI,
+	:NATU,			:HOPPIP,		:YANMA,
+	:MURKROW,		:DELIBIRD,		:MANTYKE,
+	:SKARMORY,		:LUGIA,			
+	:HOOH,
+	
+	# Gen 3 Mono 
+	:TORCHIC,		:TAILLOW,		:WINGULL,
+	:NINCADA,		:SWABLU,		:CHINGLING,
+	:BAGON,			:RAYQUAZA,
+	
+	# Gen 4 Mono 
+	:STARLY,		:BURMY,			:COMBEE,
+	:DRIFLOON,		:ROTOM_4,		:CHATOT,		
+	:SHAYMIN,		:ARCEUS_2,
+	
+	# Gen 5 Mono 
+	:PIDOVE,		:WOOBAT,		:ARCHEN,
+	:DUCKLETT,		:EMOLGA,		:ELGYEM,
+	:CRYOGONAL,		:RUFFLET,		:BRAVIARY_1,
+	:VULLABY,		:TORNADUS,		:THUNDURUS,
+	:LANDORUS,		:ENAMORUS,
+	
+	# Gen 6 Mono
+	:FROAKIE,		:FLETCHLING,	:SCATTERBUG,
+	:VIVILLON_10,	:HAWLUCHA,		:NOIBAT,
+	:YVELTAL,
+	
+	# Gen 7 Mono 
+	:ROWLET,		:PIKIPEK,		:ORICORIO,		
+	:ORICORIO_1,	:ORICORIO_2,	:ORICORIO_3,
+	:MINIOR,		:SILVALLY_2,	:CELESTEELA,
+	
+	# Gen 8 Mono 
+	:ROOKIDEE,		:SILICOBRA,		:CRAMORANT,
+	
+	# Gen 9 Mono
+	:SQUAWKABILLY,	:WATTREL,		:FLAMIGO,
+	:BOMBIRDIER
+  ]
+  
+  Final_Mono_Ghost = [
+	# Gen 1 Mono 
+	:PICHU_2,		:PARAS,			:MANKEY,
+	:GASTLY,		:CUBONE,		:MAROWAK_1,
+	
+	# Gen 2 Mono 
+	:CYNDAQUIL,		:TYPHLOSION_1,	:HOOTHOOT,
+	:MISDREAVUS,	:WYNAUT,		:CORSOLA_1,
+	
+	# Gen 3 Mono 
+	:POOCHYENA,		:NINCADA,		:SABLEYE,
+	:KECLEON,		:SHUPPET,		:DUSKULL,
+	:SNORUNT,
+	
+	# Gen 4 Mono 
+	:DRIFLOON,		:ROTOM,			:SPIRITOMB,
+	:GIRATINA,		:DARKRAI,		:ARCEUS_7,
+	
+	# Gen 5 Mono 
+	:BASCULIN_2,	:SIGILYPH,		:YAMASK,
+	:YAMASK_1,		:ZORUA,			:ZORUA_1,
+	:FRILLISH,		:LITWICK,		:GOLETT,
+	
+	# Gen 6 Mono
+	:VIVILLON_2,	:FLOETTE_5,		:FURFROU_9,
+	:HONEDGE,		:PHANTUMP,		:PUMPKABOO,
+	:HOOPA,
+	
+	# Gen 7 Mono 
+	:ROWLET,		:ORICORIO_3,	:SANDYGAST,
+	:MIMIKYU,		:DHELMISE,		:COSMOG,
+	:NECROZMA,		:BLACEPHALON,	:MARSHADOW,
+	
+	# Gen 8 Mono 
+	:SINISTEA,		:POLTCHAGEIST,	:DREEPY,
+	:SPECTRIER,		:CALYREX,
+	
+	# Gen 9 Mono
+	:FUECOCO,		:CHARCADET,		:BRAMBLIN,
+	:GREAVARD,		:GIMMIGHOUL,	:GIMMIGHOUL_1,
+	:PECHARUNT
+  ]
+  
+  Final_Mono_Grass = [
+	# Gen 1 Mono 
+	:BULBASAUR,		:PIKACHU_14,	:ODDISH,
+	:PARAS,			:BELLSPROUT,	:TOEDSCOOL,
+	:FARFETCHD,		:VOLTORB_1,		:EXEGGCUTE,
+	:TANGELA,		:EEVEE,			:LEAFEON,
+	:MUNCHLAX,
+	
+	# Gen 2 Mono 
+	:CHIKORITA,		:HOPPIP,		:SUNKERN,
+	:CELEBI,
+	
+	# Gen 3 Mono 
+	:TREECKO,		:LOTAD,			:SEEDOT,
+	:SHROOMISH,		:BUDEW,			:CACNEA,
+	:LILEEP,		:TROPIUS,
+	
+	# Gen 4 Mono 
+	:TURTWIG,		:BURMY,			:CHERUBI,
+	:ROTOM_5,		:CARNIVINE,		:SNOVER,
+	:SHAYMIN,		:ARCEUS_12,
+	
+	# Gen 5 Mono 
+	:SNIVY,			:PANSAGE,		:TIMBURR,
+	:SEWADDLE,		:COTTONEE,		:PETILIL,
+	:MARACTUS,		:DEERLING,		:DEERLING_1,	
+	:DEERLING_2,	:DEERLING_3,	:FOONGUS,		
+	:FERROSEED,		:VIRIZION,
+	
+	# Gen 6 Mono
+	:CHESPIN,		:VIVILLON_3,	:SKIDDO,
+	:PHANTUMP,		:PUMPKABOO,
+	
+	# Gen 7 Mono 
+	:ROWLET,		:DECIDUEYE_1,	:FOMANTIS,
+	:MORELULL,		:BOUNSWEET,		:MINIOR_10,
+	:KOMALA,		:DHELMISE,		:TAPUBULU,
+	:KARTANA,
+	
+	# Gen 8 Mono 
+	:GROOKEY,		:GOSSIFLEUR,	:APPLIN,
+	:POLTCHAGEIST,	:ZARUDE,		:CALYREX,
+	
+	# Gen 9 Mono
+	:SPRIGATITO,	:SMOLIV,		:BRAMBLIN,
+	:CAPSAKID,		:OGERPON
+  ]
+  
+  Final_Mono_Ground = [
+	# Gen 1 Mono 
+	:PIKACHU_12,	:SANDSHREW,		:NIDORANfE,
+	:NIDORANmA,		:DIGLETT,		:DIGLETT_1,
+	:TOEDSCOOL,		:GEODUDE,		:MAGNEMITE,
+	:DODUO,			:ONIX,			:CUBONE,		
+	:TYROGUE,		:HITMONCHAN,	:RHYHORN,		
+	:PINSIR,		
+	
+	# Gen 2 Mono 
+	:CYNDAQUIL,		:WOOPER,		:WOOPER_1,		
+	:DUNSPARCE,		:GLIGAR,		:TEDDIURSA,		
+	:SWINUB,		:PHANPY,		:LARVITAR,		
+	:ENTEI,
+	
+	# Gen 3 Mono 
+	:MUDKIP,		:NINCADA,		:NUMEL,
+	:TRAPINCH,		:BARBOACH,		:BALTOY,
+	:REGIGIGAS,		:GROUDON,
+	
+	# Gen 4 Mono 
+	:TURTWIG,		:BURMY_1,		:SHELLOS,
+	:HIPPOPOTAS,	:GIBLE,			:ARCEUS_4,
+	
+	# Gen 5 Mono 
+	:SANDILE,		:YAMASK_1,		:DEERLING_2,
+	:STUNFISK,		:STUNFISK_1,	:GOLETT,
+	:LANDORUS,		
+	
+	# Gen 6 Mono
+	:BUNNELBY,		:VIVILLON_1,	:SKIDDO,
+	:ZYGARDE,		
+	
+	# Gen 7 Mono 
+	:GRUBBIN,		:MUDBRAY,		:SANDYGAST,
+	:SILVALLY_4,	
+	
+	# Gen 8 Mono 
+	:SILICOBRA,
+	
+	# Gen 9 Mono
+	:LECHONK,		:SMOLIV,		:RELLOR,
+	:FLITTLE,		:TINGLU
+  ]
+  
+  Final_Mono_Ice = [
+	# Gen 1 Mono 
+	:PIKACHU_4,		:SANDSHREW_1,	:VULPIX_1,
+	:SEEL,			:SHELLDER,		:MRMIME_1,
+	:SMOOCHUM,		:ELEKID,		:LAPRAS,
+	:EEVEE,			:GLACEON,		:ARTICUNO,
+	
+	# Gen 2 Mono 
+	:SNEASEL_1,		:SWINUB,		:DELIBIRD,
+	:STANTLER,		:SUICUNE,
+	
+	# Gen 3 Mono 
+	:SLAKOTH,		:CASTFORM_3,	:SNORUNT,
+	:SPHEAL,		:REGICE,
+	
+	# Gen 4 Mono 
+	:PRINPLUP,		:ROTOM_3,		:SNOVER,
+	:ARCEUS_15,		
+	
+	# Gen 5 Mono 
+	:DARUMAKA_2,	:VANILLITE,		:DEERLING_3,
+	:CUBCHOO,		:CRYOGONAL,		:KYUREM,
+	:GENESECT_3,
+	
+	# Gen 6 Mono
+	:VIVILLON_17,	:FLABEBE_4,		:FLORGES_4,		
+	:AMAURA,		:BERGMITE,		:AVALUGG_1,
+	
+	# Gen 7 Mono 
+	:CRABRAWLER,	:MINIOR_11,		:SILVALLY_15,
+	
+	# Gen 8 Mono 
+	:SNOM,			:EISCUE,		:ARCTOZOLT,
+	:ARCTOVISH,		:GLASTRIER,		:CALYREX,	
+	
+	# Gen 9 Mono
+	:CETODDLE,		:FRIGIBAX,		:CHIENPAO
+  ]
+  
+  Final_Mono_Normal = [
+	# Gen 1 Mono 
+	:PIDGEY,		:RATTATA,		:SPEAROW,
+	:PIKACHU_8,		:IGGLYBUFF,		:MEOWTH,
+	:MANKEY,		:POLIWAG,		:DODUO,
+	:LICKITUNG,		:HAPPINY,		:KANGASKHAN,
+	:TAUROS,		:DITTO,			:EEVEE,
+	:PORYGON,		:MUNCHLAX,		:MEW,
+	:MEWTWO,
+	
+	# Gen 2 Mono 
+	:SENTRET,		:AZURILL,		:AIPOM,
+	:SUNKERN,		:GIRAFARIG,		:DUNSPARCE,
+	:TEDDIURSA,		:PHANPY,		:STANTLER,
+	:SMEARGLE,		:MILTANK,
+	
+	# Gen 3 Mono 
+	:ZIGZAGOON,		:TAILLOW,		:RALTS,
+	:SLAKOTH,		:WHISMUR,		:SKITTY,
+	:GRUMPIG,		:SPINDA,		:ZANGOOSE,
+	:FEEBAS,		:CASTFORM,		:KECLEON,
+	:SHUPPET,		:REGIGIGAS,		:DEOXYS,
+	
+	# Gen 4 Mono 
+	:STARLY,		:BIDOOF,		:KRICKETOT,
+	:PACHIRISU,		:BUIZEL,		:BUNEARY,
+	:GLAMEOW,		:CHATOT,		:UXIE,
+	:ARCEUS,
+	
+	# Gen 5 Mono 
+	:PATRAT,		:LILLIPUP,		:PANSAGE,
+	:PANSEAR,		:PANPOUR,		:PIDOVE,
+	:BLITZLE,		:AUDINO,		:ZORUA_1,
+	:MINCCINO,		:DEERLING,		:MIENFOO,
+	:BOUFFALANT,	:RUFFLET,		:MELOETTA,
+	
+	# Gen 6 Mono
+	:BUNNELBY,		:FLETCHLING,	:LITLEO,
+	:FURFROU,		:FURFROU_1,		:FURFROU_2,
+	:FURFROU_3,		:FURFROU_4,		:FURFROU_5,
+	:FURFROU_6,		:FURFROU_7,		:FURFROU_8,
+	:FURFROU_9,		:ESPURR,		:HELIOPTILE,
+	
+	# Gen 7 Mono 
+	:PIKIPEK,		:YUNGOOS,		:ROCKRUFF,
+	:STUFFUL,		:ORANGURU,		:PASSIMIAN,
+	:KOMALA,		:DRAMPA,		:SILVALLY,
+	
+	# Gen 8 Mono 
+	:SKWOVET,		:WOOLOO,		:INDEEDEE,
+	
+	# Gen 9 Mono
+	:LECHONK,		:TAROUNTULA,	:TANDEMAUS,
+	:SMOLIV,		:SQUAWKABILLY,	:MASCHIFF,
+	:SHROODLE,		:CYCLIZAR,		:TERAPAGOS
+  ]
+  
+  Final_Mono_Poison = [
+	# Gen 1 Mono 
+	:BULBASAUR,		:WEEDLE,		:EKANS,
+	:NIDORANfE,		:NIDORANmA,		:ZUBAT,
+	:ODDISH,		:VENONAT,		:BELLSPROUT,
+	:TENTACOOL,		:SLOWPOKE_1,	:GRIMER,
+	:GRIMER_1,		:GASTLY,		:KOFFING,
+	:WEEZING_1,		:HORSEA,	
+	
+	# Gen 2 Mono 
+	:SPINARAK,		:WOOPER_1,		:GLIGAR,
+	:QWILFISH,		:QWILFISH_1,	:SNEASEL_1,
+	
+	
+	# Gen 3 Mono 
+	:WURMPLE,		:BUDEW,			:GULPIN,
+	:SEVIPER,
+	
+	# Gen 4 Mono 
+	:VESPIQUEN,		:STUNKY,		:SKORUPI,
+	:CROAGUNK,		:ARCEUS_3,
+	
+	# Gen 5 Mono 
+	:VENIPEDE,		:TRUBBISH,		:SOLOSIS,
+	:FOONGUS,		:TYNAMO,		:VULLABY,
+	:LARVESTA,
+	
+	# Gen 6 Mono
+	:FURFROU_5,		:SPRITZEE,		:SKRELP,
+	:GOOMY,
+	
+	# Gen 7 Mono 
+	:MAREANIE,		:SALANDIT,		:SALAZZLE,
+	:SILVALLY_3,	:POIPOLE,		:NIHILEGO,
+	
+	# Gen 8 Mono 
+	:TOXEL,			:PINCURCHIN,	:ETERNATUS,
+	
+	# Gen 9 Mono
+	:SHROODLE,		:VAROOM,		:GLIMMET,
+	:WOCHIEN,		:PECHARUNT,		:OKIDOGI,
+	:MUNKIDORI,		:FEZANDIPITI
+  ]
+  
+  Final_Mono_Psychic = [
+	# Gen 1 Mono 
+	:CATERPIE,		:PIKACHU_6,		:RAICHU_1,
+	:PSYDUCK,		:ABRA,			:PONYTA_1,
+	:SLOWPOKE,		:SLOWPOKE_1,	:DROWZEE,
+	:EXEGGCUTE,		:STARYU,		:MIMEJR,
+	:SMOOCHUM,		:EEVEE,			:ESPEON,
+	:PORYGON,		:ARTICUNO_1,	:MEWTWO,
+	
+	# Gen 2 Mono 
+	:HOOTHOOT,		:NATU,			:UNOWN,
+	:WYNAUT,		:GIRAFARIG,		:STANTLER,
+	:LUGIA_1,
+	
+	
+	# Gen 3 Mono 
+	:RALTS,			:MEDITITE,		:SPOINK,
+	:LUNATONE,		:SOLROCK,		:BALTOY,
+	:CHINGLING,		:CLAMPERL,		:BELDUM,
+	:LATIOS,		:DEOXYS,		
+	
+	# Gen 4 Mono 
+	:CHIMCHAR,		:BRONZOR,		:RIOLU,
+	:MESPRIT,		:AZELF,			:UXIE,
+	:CRESSELIA,		:MANAPHY,		:ARCEUS_14,
+	
+	# Gen 5 Mono 
+	:PANPOUR,		:MUNNA,			:WOOBAT,
+	:DARUMAKA,		:SIGILYPH,		:GOTHITA,
+	:SOLOSIS,		:ELGYEM,		:BRAVIARY_1,
+	:COBALION,		:TERRAKION,		:VIRIZION,	
+	:MELOETTA,		:VICTINI,
+	
+	# Gen 6 Mono
+	:FENNEKIN,		:FURFROU_1,		:ESPURR,
+	:INKAY,			:HOOPA,
+	
+	# Gen 7 Mono 
+	:ORICORIO_2,	:ORANGURU,		:BRUXISH,
+	:TAPULELE,		:COSMOG,		:NECROZMA,
+	:SILVALLY_14,
+	
+	# Gen 8 Mono 
+	:BLIPBUG,		:HATENNA,		:STONJOURNER,
+	:INDEEDEE,		:INDEEDEE_1,	:CALYREX,
+	
+	# Gen 9 Mono
+	:CHARCADET,		:RABSCA,		:FLITTLE,
+	:VELUZA,		:MUNKIDORI
+  ]
+  
+  Final_Mono_Rock = [
+	# Gen 1 Mono 
+	:PIKACHU_10,	:WIGLETT,		:GROWLITHE_1,		
+	:GEODUDE,		:GEODUDE_1,		:ONIX,			
+	:TYROGUE,		:RHYHORN,		:SCYTHER,		
+	:OMANYTE,		:KABUTO,		:AERODACTYL,	
+	
+	# Gen 2 Mono
+	:BONSLY,		:SHUCKLE,		:SLUGMA,
+	:CORSOLA,		:LARVITAR,		
+	
+	# Gen 3 Mono
+	:NOSEPASS,		:ARON,			:LILEEP,
+	:ANORITH,		:SNORUNT,		:RELICANTH,
+	:BAGON,			:REGIROCK,
+	
+	# Gen 4 Mono
+	:TURTWIG,		:CRANIDOS,		:SHIELDON,
+	:SPIRITOMB,		:ARCEUS_5,
+	
+	# Gen 5 Mono
+	:ROGGENROLA,	:TIMBURR,		:DWEBBLE,
+	:YAMASK,		:TIRTOUGA,		:ARCHEN,
+	:DRUDDIGON,		:TERRAKION,		:IRONBOULDER,		
+	
+	# Gen 6 Mono
+	:VIVILLON_14,	:SKIDDO,		:FURFROU_3,
+	:BINACLE,		:TYRUNT,		:AMAURA,		
+	:CARBINK,		:AVALUGG_1,		
+	
+	# Gen 7 Mono
+	:ROCKRUFF,		:LYCANROC,		:LYCANROC_1,	
+	:LYCANROC_2,	:MINIOR,		:SILVALLY_5,
+	:NIHILEGO,		:STAKATAKA,
+	
+	# Gen 8 Mono
+	:CHEWTLE,		:ROLYCOLY,		:STONJOURNER,
+	
+	# Gen 9 Mono
+	:NACLI,			:GLIMMET,		:GREAVARD,
+	:KLAWF,			:OGERPON
+  ]
+  
+  Final_Mono_Steel = [
+	# Gen 1 Mono 
+	:SQUIRTLE,		:CATERPIE,		:WEEDLE,
+	:PIKACHU_3,		:SANDSHREW_1,	:DIGLETT_1,
+	:MEOWTH_2,		:MAGNEMITE,		:SHELLDER,
+	:ONIX,			:KRABBY,		:VOLTORB,
+	:TYROGUE,		:SCYTHER,		:MAGBY,
+	:DITTO,
+	
+	# Gen 2 Mono 
+	:PINECO,		:REMORAID,		:SKARMORY,
+	:PHANPY,	
+	
+	#Gen 3 Mono 
+	:WURMPLE,		:NOSEPASS,		:MAWILE,		
+	:ARON,			:CHINGLING,		:BELDUM,		
+	:REGISTEEL,		:JIRACHI,		:DEOXYS_2,
+	
+	# Gen 4 Mono 
+	:PIPLUP,		:SHIELDON,		:BURMY_2,
+	:BRONZOR,		:CARNIVINE,		:RIOLU,			
+	:DIALGA,		:HEATRAN,		:ARCEUS_8,
+	
+	#Gen 5 Mono 
+	:OSHAWOTT,		:DRILBUR,		:TIMBURR,
+	:TRUBBISH,		:KARRABLAST,	:FERROSEED,
+	:KLINK,			:AXEW,			:SHELMET,
+	:STUNFISK_1,	:PAWNIARD,		:HEATMOR,
+	:DURANT,		:DEINO,			:IRONJUGULIS,
+	:COBALION,		:GENESECT,
+	:GENESECT_1,	:GENESECT_2,	:GENESECT_3,
+	:GENESECT_4,
+	
+	# Gen 6 Mono
+	:CHESPIN,		:VIVILLON_19,	:HONEDGE,		
+	:KLEFKI,		:SLIGGOO_1,
+	
+	# Gen 7 Mono
+	:PIKIPEK,		:GRUBBIN,		:TOGEDEMARU,
+	:JANGMOO,		:COSMOG,		:NECROZMA,
+	:SILVALLY_8,	:CELESTEELA,	:KARTANA,		
+	:STAKATAKA,		:MAGEARNA,		:MELTAN,		
+	
+	# Gen 8 Mono
+	:ROOKIDEE,		:FALINKS,		:CUFANT,
+	:DURALUDON,		:ZACIAN,		:ZAMAZENTA,
+
+	# Gen 9 Mono
+	:TINKATINK,		:VAROOM,		:REVAVROOM_1,
+	:REVAVROOM_2,	:REVAVROOM_3,	:REVAVROOM_4,
+	:REVAVROOM_5,	:ORTHWORM,		:GIMMIGHOUL
+  ]
+  
+  Final_Mono_Water = [
+	# Gen 1 Mono
+	:SQUIRTLE,	    :WIGLETT,		:PSYDUCK,
+	:POLIWAG,		:TENTACOOL,		:SLOWPOKE,
+	:SEEL,			:SHELLDER,		:KRABBY,
+	:HORSEA,		:GOLDEEN,		:STARYU,
+	:TAUROS_3,		:MAGIKARP,		:LAPRAS,		
+	:EEVEE,			:VAPOREON,		:OMANYTE,		
+	:KABUTO,
+
+	# Gen 2 Mono 
+	:TOTODILE,		:CHINCHOU,		:AZURILL,
+	:MARILL,		:WOOPER,		:QWILFISH,		
+	:CORSOLA,		:REMORAID,		:DELIBIRD,	
+	:MANTYKE,		:SUICUNE,		:WALKINGWAKE,	
+	:LUGIA,			
+	
+	# Gen 3 Mono
+	:MUDKIP,		:LOTAD,			:WINGULL,		
+	:SURSKIT,		:MINUN,			:CARVANHA,		
+	:WAILMER,		:LUNATONE,		:BARBOACH,		
+	:CORPHISH,		:FEEBAS,		:CASTFORM,
+	:CASTFORM_2,	:SPHEAL,		:CLAMPERL,		
+	:RELICANTH,		:LUVDISC,		:KYOGRE,		
+	
+	# Gen 4 Mono
+	:PIPLUP,		:BIDOOF,		
+	:BUIZEL,		:SHELLOS,		:ROTOM_2,		
+	:FINNEON,		:PALKIA,		:MANAPHY,		
+	:PHIONE,		:ARCEUS_11,		
+	
+	# Gen 5 Mono 
+	:OSHAWOTT,		:SAMUROTT_1,	:PANPOUR,		
+	:TYMPOLE,		:BASCULIN,		:BASCULIN_1,		
+	:BASCULIN_2,	:TIRTOUGA,		:DUCKLETT,		
+	:VANILLITE,		:DEERLING,		:SAWSBUCK,		
+	:FRILLISH,		:ALOMOMOLA,		:TYNAMO,		
+	:EELEKTROSS,	:CUBCHOO,		:KELDEO,		
+	:GENESECT_4,
+	
+	# Gen 6 Mono 
+	:FROAKIE,		:VIVILLON_7,	:FLABEBE_3,		
+	:FLORGES_3,		:FURFROU_7,		:BINACLE,		
+	:SKRELP,		:CLAUNCHER,		:GOOMY,			
+	:SLIGGOO,		:VOLCANION,		
+	
+	# Gen 7 Mono 
+	:POPPLIO,		:CRABRAWLER,	:WISHIWASHI,	
+	:MAREANIE,		:DEWPIDER,		:WIMPOD,		
+	:PYUKUMUKU,		:MINIOR_12,		:BRUXISH,
+	:SILVALLY_11,	:TAPUFINI,		
+	
+	#Gen 8 Mono 
+	:SOBBLE,		:CHEWTLE,		:CRAMORANT,		
+	:ARROKUDA,		:CUFANT,		:DRACOVISH,		
+	:ARCTOVISH,		:KUBFU,	
+	
+	# Gen 9 Mono
+	:QUAXLY,		:FINIZEN,		:VELUZA,		
+	:DONDOZO,		:TATSUGIRI,		:OGERPON
+  ]
+  
+  # Traditional Starters, Gen 1 to Gen 9
+  Traditional_Starters = [
+	# Gen 1 Starters 
+	:BULBASAUR,		:CHARMANDER,	:SQUIRTLE,
+	:PICHU,			:MEOWTH_1,		:EEVEE,
+
+	# Gen 2 Starters 
+	:CHIKORITA,		:CYNDAQUIL,		:TOTODILE,
+	:MURKROW,		:MISDREAVUS,	:TEDDIURSA,
+	
+	# Gen 3 Starters 
+	:TREECKO,		:TORCHIC,		:MUDKIP,
+	:SKITTY,		:PLUSLE,		:MINUN,
+	
+	# Gen 4 Starters 
+	:TURTWIG,		:CHIMCHAR,		:PIPLUP,
+	:RIOLU,			:GIBLE,			:SNOVER,
+	
+	# Gen 5 Starters 
+	:SNIVY,			:TEPIG,			:OSHAWOTT,
+	:ZORUA,			:JOLTIK,		:AXEW,
+
+	# Gen 6 Starters 
+	:CHESPIN,		:FENNEKIN,		:FROAKIE,
+	:HONEDGE,		:HELIOPTILE,	:GOOMY,
+	
+	# Gen 7 Starters 
+	:ROWLET,		:LITTEN,		:POPPLIO,
+	:ROCKRUFF,		:MUDBRAY,		:TOGEDEMARU,
+	
+	# Gen 8 Starters 
+	:GROOKEY,		:SCORBUNNY,		:SOBBLE,
+	:WOOLOO,		:CLOBBOPUS,		:SNOM,
+	
+	# Gen 9 Starters
+	:SPRIGATITO,	:FUECOCO,		:QUAXLY,
+	:PAWMI,			:CYCLIZAR,		:TINKATINK,		
+	
+	# Pokemon Decades Starters (If it did a traditional Regional Dex)
+	:RHYHORN,		:TRAPINCH,		:SANDILE,
+	:BRONZOR,		:MORELULL,		:PANCHAM
+  ]
+  
+  # Starters are organized by National Dex Number. The whole of a Pokemon's evolution line across it's dedicated family lines is factored in when deciding what generation this Starter Pokemon is from (Kanto farfetchd is a Kanto Starter, Galar farfetchd becomes Sirfetched, and makes them a Galar Starter)
+  # A total of 360 Pokemon Starter Options was done, to make sure as many Pokemon designs can appeal to nearly anyone, casual and competitive players
+  # and to ensure no one has ground to stand on, when they say they won't play the game, because an exact starter they want for their squad isn't there, the second they click New Game
+  # The cornucopia of starters, on top of all of these Pokemon lines getting the VGC Moveset injection via Ultimate Move Tutor, will ensure no matter what team the player makes,
+  # they will have a Pokemon that can work, in Single, Double and Triple battles.
+  # Custom starters will not be given the VGC Moveset injection, but nothing's stopping a player from modding and recompiling the source project for their needs
+  Final_Starters = [
+	# Gen 1 Starters
+	:BULBASAUR, 	:CHARMANDER, 	:SQUIRTLE,
+	:SPEAROW,		:EKANS,		 	:PICHU, 	:PICHU_2,
+	:SANDSHREW,		:NIDORANfE,		:NIDORANmA,
+	:CLEFFA,	 	:VULPIX,		:IGGLYBUFF,
+	:ZUBAT,			:ODDISH,		:PARAS,
+	:VENONAT,		:DIGLETT,		:MEOWTH,
+	:PSYDUCK,		:MANKEY,		:GROWLITHE,	
+	:POLIWAG,		:ABRA,			:MACHOP,
+	:BELLSPROUT,	:GEODUDE,		:PONYTA,
+	:SLOWPOKE,		:FARFETCHD,		:SEEL,
+	:ONIX,			:TYROGUE,		:LICKITUNG,
+	:KOFFING,		:RHYHORN,   	:HAPPINY,
+	:TANGELA,		:GOLDEEN,		:MIMEJR,
+	:SCYTHER,		:SMOOCHUM,   	:ELEKID,		 
+	:MAGBY,			:PINSIR,		:MAGIKARP,
+	:LAPRAS,		:DITTO,			:EEVEE,		 
+	:PORYGON,   	:MUNCHLAX,		:DRATINI,
+
+	# Gen 2 Starters 
+	:CHIKORITA,		:CYNDAQUIL,	 	:TOTODILE,
+	:SENTRET,		:LEDYBA,	 	:SPINARAK,
+	:CHINCHOU,		:TOGEPI,		:NATU,	 	 	
+	:MAREEP,		:AZURILL,		:BONSLY,	 	
+	:HOPPIP,		:SUNKERN,		:YANMA,		 	
+	:WOOPER,		:MURKROW,		:MISDREAVUS, 	
+	:UNOWN,			:WYNAUT,		:PINECO,		
+	:DUNSPARCE,	 	:GLIGAR,		:SNUBBULL,		
+	:QWILFISH,		:SHUCKLE,		:HERACROSS,		
+	:SNEASEL,		:TEDDIURSA,		:SLUGMA,		
+	:SWINUB,		:CORSOLA,		:REMORAID,		
+	:DELIBIRD,		:MANTYKE,		:HOUNDOUR,		
+	:PHANPY,		:SMEARGLE,		:LARVITAR,
+
+	# Gen 3 Starters
+	:TREECKO,		:TORCHIC,    	:MUDKIP,
+	:WURMPLE,		:LOTAD,			:SEEDOT,
+	:WINGULL,		:RALTS,			:SURSKIT,
+	:SHROOMISH,		:SLAKOTH,		:NINCADA,
+	:MAKUHITA,		:NOSEPASS,		:SKITTY,	
+	:SABLEYE,		:MAWILE,		:ARON,			
+	:MEDITITE,		:PLUSLE,		:MINUN,	
+	:VOLBEAT,		:ILLUMISE,		:BUDEW,		
+	:GULPIN,		:CARVANHA,		:NUMEL,
+	:SPOINK,		:SPINDA,		:TRAPINCH,
+	:CACNEA,		:SWABLU,		:BALTOY,
+	:FEEBAS,		:CASTFORM,		:TROPIUS,		
+	:CHINGLING,		:ABSOL,			:SNORUNT,
+	:SPHEAL,		:CLAMPERL,		:RELICANTH,
+	:LUVDISC,		:BAGON,			:BELDUM,
+
+	# Gen 4 Starters 
+	:TURTWIG,		:CHIMCHAR,		:PIPLUP,
+	:STARLY,		:BIDOOF,		:KRICKETOT,
+	:SHINX,			:CRANIDOS,		:SHIELDON,
+	:BURMY,			:COMBEE,		:PACHIRISU,		
+	:CHERUBI,		:SHELLOS,		:AIPOM,
+	:DRIFLOON,		:BUNEARY,		:GLAMEOW,
+	:STUNKY,		:BRONZOR,		:CHATOT,
+	:SPIRITOMB,		:GIBLE,			:RIOLU,	
+	:HIPPOPOTAS,	:SKORUPI,		:CROAGUNK,
+	:CARNIVINE,		:FINNEON,		:SNOVER,
+	:DUSKULL,		:ROTOM,			:PHIONE,
+
+	# Gen 5 Starters 
+	:SNIVY,			:TEPIG,			:OSHAWOTT,
+	:PANSAGE,		:PANSEAR,		:PANPOUR,
+	:MUNNA,			:BLITZLE,		:ROGGENROLA,
+	:WOOBAT,		:DRILBUR,		:AUDINO,
+	:TIMBURR,		:SEWADDLE,		:VENIPEDE,
+	:BASCULIN,		:MARACTUS,		:DWEBBLE,
+	:SIGILYPH,		:YAMASK,		:TRUBBISH,
+	:ZORUA,			:MINCCINO,		:GOTHITA,		
+	:SOLOSIS,		:DUCKLETT,		:VANILLITE,		
+	:DEERLING,		:EMOLGA,		:FRILLISH,
+	:ALOMOMOLA,		:JOLTIK,		:KLINK,
+	:TYNAMO,		:ELGYEM,		:AXEW,
+	:CRYOGONAL,		:STUNFISK,		:GOLETT,
+	:RUFFLET,		:VULLABY,		:HEATMOR,		
+	:DURANT,		:DEINO,			:LARVESTA,
+
+	# Gen 6 Starters 
+	:CHESPIN,		:FENNEKIN,		:FROAKIE,
+	:BUNNELBY,		:FLETCHLING,	:SCATTERBUG,
+	:LITLEO,		:FLABEBE,		:FLOETTE_5,
+	:SKIDDO,		:PANCHAM,		:FURFROU,
+	:ESPURR,		:HONEDGE,		:SPRITZEE,
+	:SWIRLIX,		:INKAY,			:BINACLE,
+	:SKRELP,		:CLAUNCHER,		:HELIOPTILE,
+	:TYRUNT,		:AMAURA,		:HAWLUCHA,	
+	:DEDENNE,		:CARBINK,		:GOOMY,	
+	:KLEFKI,		:PHANTUMP,		:PUMPKABOO,	
+	:BERGMITE,		:NOIBAT,		:ZYGARDE_1,
+
+	# Gen 7 Starters 
+	:ROWLET,		:LITTEN,		:POPPLIO,
+	:PIKIPEK,		:GRUBBIN,		:CRABRAWLER,	
+	:ORICORIO,		:CUTIEFLY,		:ROCKRUFF,		
+	:WISHIWASHI,	:MAREANIE,		:MUDBRAY,		
+	:DEWPIDER,		:FOMANTIS,		:MORELULL,		
+	:SALANDIT,		:STUFFUL,		:BOUNSWEET,		
+	:COMFEY,		:ORANGURU,		:PASSIMIAN,	
+	:WIMPOD,		:SANDYGAST,		:PYUKUMUKU,
+	:TYPENULL,		:MINIOR,		:KOMALA,		
+	:TURTONATOR,	:TOGEDEMARU,	:MIMIKYU,		
+	:BRUXISH,		:DRAMPA,		:DHELMISE,		
+	:JANGMOO,		:COSMOG,		:POIPOLE,		
+	:MELTAN,
+
+	# Gen 8 Starters 
+	:GROOKEY,		:SCORBUNNY,		:SOBBLE,
+	:SKWOVET,		:ROOKIDEE,		:BLIPBUG,
+	:NICKIT,		:GOSSIFLEUR,	:WOOLOO,
+	:CHEWTLE,		:YAMPER,		:ROLYCOLY,
+	:APPLIN,		:SILICOBRA,		:CRAMORANT,
+	:ARROKUDA,		:TOXEL,			:SIZZLIPEDE,
+	:CLOBBOPUS,		:SINISTEA,		:HATENNA,
+	:IMPIDIMP,		:ZIGZAGOON_1,	:CORSOLA_1,	
+	:FARFETCHD_1,	:MRMIME_1,		:MILCERY,		
+	:FALINKS,		:PINCURCHIN,	:SNOM,			
+	:STONJOURNER,	:EISCUE,		:INDEEDEE,		
+	:MORPEKO,		:CUFANT,		:DREEPY,	
+
+	# Gen 9 Starters 
+	:SPRIGATITO,	:FUECOCO,		:QUAXLY,
+	:LECHONK,		:TAROUNTULA,	:NYMBLE,
+	:PAWMI,			:TANDEMAUS,		:FIDOUGH,		
+	:SMOLIV,		:SQUAWKABILLY,	:NACLI,			
+	:CHARCADET,		:TADBULB,		:WATTREL,
+	:MASCHIFF,		:SHROODLE,		:BRAMBLIN,
+	:TOEDSCOOL,		:KLAWF,			:CAPSAKID,
+	:RELLOR,		:FLITTLE,		:TINKATINK,
+	:WIGLETT,		:BOMBIRDIER,	:FINIZEN,
+	:VAROOM,		:CYCLIZAR,		:ORTHWORM,
+	:GLIMMET,		:GREAVARD,		:FLAMIGO,
+	:CETODDLE,		:DONDOZO,		:TATSUGIRI,
+	:WOOPER_1,		:GIRAFARIG,		:FRIGIBAX,
+	:GIMMIGHOUL,	:POLTCHAGEIST,	:DURALUDON
+  ]
+  
+  # Custom Starters (This is the 185 every Pokemon that didn't make the cut to be a Starter Pokemon. Custom starters do not get the VGC Movepool injection. Players are free to modify this if they want to)
+  # These Custom Starters options are 185 in total. 362 Super Yellow's Starters, plus 185 Custom Starters, means there is 547 Pokemon to choose from as starter options. 
+  # Now, there's no way someone can complain about how they won't play the game, because they cannot start New Game with the exact team they want, frame 1.
+  # And honest to god, I vastly prefer this method of choosing a starter, over the traditional way. It's more efficent, and isn't going to be victium to 
+  # revisions in the fan game project, that can make additions to starter selection more of a pain in the ass to do. It's to the point and doesn't waste a frame of time too. 
+  Custom_Starters = [
+	# Gen 1 Customs
+	:CATERPIE,		:WEEDLE,		:PIDGEY,
+	:RATTATA,		:TENTACOOL,		:MAGNEMITE,
+	:DODUO,			:GRIMER,		:SHELLDER,		
+	:GASTLY,		:DROWZEE,		:KRABBY,		
+	:VOLTORB,		:EXEGGCUTE,		:CUBONE,		
+	:KANGASKHAN,	:HORSEA,		:STARYU,		
+	:PINSIR,		:TAUROS,		:OMANYTE,		
+	:KABUTO,		:AERODACTYL,	:ARTICUNO,
+	:ZAPDOS,		:MOLTRES,		:MEWTWO,
+	:MEW,
+	
+	# Gen 2 Customs 
+	:HOOTHOOT,		:SKARMORY,		:STANTLER,		
+	:MILTANK,		:RAIKOU,		:RAGINGBOLT,
+	:ENTEI,			:GOUGINGFIRE,	:SUICUNE,
+	:WALKINGWAKE,	:LUGIA,			:HOOH,		
+	:CELEBI,
+	
+	# Gen 3 Customs
+	:POOCHYENA,		:TAILLOW,		:WHISMUR,
+	:ELECTRIKE,		:WAILMER,		:TORKOAL,
+	:ZANGOOSE,		:SEVIPER,		:LUNATONE,
+	:SOLROCK,		:BARBOACH,		:CORPHISH,
+	:LILEEP,		:ANORITH,		:KECLEON,
+	:SHUPPET,		:REGIROCK,		:REGICE,
+	:REGISTEEL,		:REGIGIGAS,		:REGIELEKI,
+	:REGIDRAGO,		:LATIAS,		:LATIOS,
+	:KYOGRE,		:GROUDON,		:RAYQUAZA,
+	:JIRACHI,		:DEOXYS,
+	
+	# Gen 4 Customs
+	:BUIZEL,		:UXIE,			:MESPRIT,
+	:AZELF,			:DIALGA,		:PALKIA,
+	:HEATRAN,		:GIRATINA,		:CRESSELIA,
+	:MANAPHY,		:DARKRAI,		:SHAYMIN,
+	:ARCEUS,
+	
+	# Gen 5 Customs 
+	:VICTINI,		:PATRAT,		:LILLIPUP,		
+	:PURRLOIN,		:PIDOVE,		:TYMPOLE,
+	:THROH,			:SAWK,			:COTTONEE,		
+	:PETILIL,		:SANDILE,		:DARUMAKA,
+	:TIRTOUGA,		:ARCHEN,		:KARRABLAST, 	
+	:FOONGUS,		:FERROSEED,		:LITWICK,		
+	:CUBCHOO,		:SHELMET,		:MIENFOO,		
+	:DRUDDIGON,		:PAWNIARD,		:BOUFFALANT,
+	:COBALION,		:IRONCROWN,		:TERRAKION,
+	:IRONBOULDER,	:VIRIZION,		:IRONLEAVES,
+	:KELDEO,		:TORNADUS,		:THUNDURUS,		
+	:LANDORUS,		:ENAMORUS,		:RESHIRAM,		
+	:ZEKROM,		:KYUREM,		:MELOETTA,
+	:GENESECT,
+	
+	# Gen 6 Customs 
+	:XERNEAS_1,		:YVELTAL,		:DIANCIE,
+	:HOOPA,			:VOLCANION,
+	
+	# Gen 7 Customs
+	:YUNGOOS,		:TAPUKOKO,		:TAPULELE,
+	:TAPUBULU,		:TAPUFINI,		:NIHILEGO,
+	:BUZZWOLE,		:PHEROMOSA,		:XURKITREE,
+	:CELESTEELA,	:KARTANA,		:GUZZLORD,
+	:NECROZMA,		:MAGEARNA,		:MARSHADOW,
+	:STAKATAKA,		:BLACEPHALON,	:ZERAORA,
+	
+	# Gen 8 Customs 
+	:DRACOZOLT,		:ARCTOZOLT,		:DRACOVISH,
+	:ARCTOVISH,		:ZACIAN_1,		:ZAMAZENTA_1,
+	:ETERNATUS,		:KUBFU,			:URSHIFU,		
+	:ZARUDE_1,		:GLASTRIER,		:SPECTRIER,		
+	:CALYREX,
+	
+	#Gen 9 Customs 
+	:VELUZA,		:GREATTUSK,		:SCREAMTAIL,
+	:FLUTTERMANE,	:SLITHERWING,	:SANDYSHOCKS,
+	:IRONTREADS,	:IRONBUNDLE,	:IRONHANDS,
+	:IRONJUGULIS,	:IRONMOTH,		:IRONTHORNS,
+	:WOCHIEN,		:CHIENPAO,		:TINGLU,
+	:CHIYU,			:ROARINGMOON,	:IRONVALIANT,
+	:KORAIDON,		:MIRAIDON,		:OKIDOGI,
+	:MUNKIDORI,		:FEZANDIPITI,	:OGERPON,
+	:TERAPAGOS,		:PECHARUNT
+  ]
+  
+  # All Pokemon Starters (This exists to allow Super Yellow's Starters, and the Custom Starters to be mixed and matched for the player's preferences.
+  # A consequence of this, is that the player cannot tell what is and isn't Super Yellow's intended Starters. But in order for the mixing and matching 
+  # of Custom and Super Yellow Starters to work, without it becoming a branching choice nightmare to setup and maintain on the developer end, 
+  # this array is needed, in order for the mixing and matching to be feasible. 
+  All_Starters = [
+	# Gen 1 Starters 
+	:BULBASAUR, 	:CHARMANDER, 	:SQUIRTLE,
+	:CATERPIE,		:WEEDLE,		:PIDGEY,
+	:RATTATA,		:SPEAROW,		:EKANS,		 	
+	:PICHU, 		:PICHU_2,		:SANDSHREW,		
+	:NIDORANfE,		:NIDORANmA,		:CLEFFA,
+	:VULPIX,		:IGGLYBUFF,		:SCREAMTAIL,
+	:ZUBAT,			:ODDISH,		:PARAS,
+	:VENONAT,		:DIGLETT,		:WIGLETT,		
+	:MEOWTH,		:PSYDUCK,		:MANKEY,		
+	:GROWLITHE,		:POLIWAG,		:ABRA,			
+	:MACHOP,		:BELLSPROUT,	:TENTACOOL,		
+	:TOEDSCOOL,		:GEODUDE,		:PONYTA,		
+	:SLOWPOKE,		:MAGNEMITE,		:SANDYSHOCKS,	
+	:FARFETCHD,		:DODUO,			:SEEL,			
+	:GRIMER,		:SHELLDER,		:GASTLY,		
+	:ONIX,			:DROWZEE,		:KRABBY,		
+	:VOLTORB,		:EXEGGCUTE,		:CUBONE,		
+	:TYROGUE,		:LICKITUNG,		:KOFFING,		
+	:RHYHORN,   	:HAPPINY,		:TANGELA,		
+	:HORSEA,		:GOLDEEN,		:STARYU,		
+	:MIMEJR,		:SCYTHER,		:SMOOCHUM,   	
+	:ELEKID,		:MAGBY,			:PINSIR,		
+	:TAUROS,		:MAGIKARP,		:LAPRAS,		
+	:DITTO,			:EEVEE,		 	:PORYGON,		
+	:OMANYTE,		:KABUTO,		:AERODACTYL,	
+	:MUNCHLAX,		:DRATINI,		:ARTICUNO,		
+	:ZAPDOS,		:MOLTRES,		:MEW,			
+	:MEWTWO,
+	
+	# Gen 2 Starters 
+	:CHIKORITA,		:CYNDAQUIL,	 	:TOTODILE,
+	:SENTRET,		:HOOTHOOT,		:LEDYBA,
+	:SPINARAK,		:CHINCHOU,		:TOGEPI,		
+	:NATU,	 	 	:MAREEP,		:AZURILL,		
+	:BONSLY,	 	:HOPPIP,		:SUNKERN,		
+	:YANMA,		 	:WOOPER,		:MURKROW,		
+	:MISDREAVUS,	:FLUTTERMANE, 	:UNOWN,			
+	:WYNAUT,		:PINECO,		:DUNSPARCE,	 	
+	:GLIGAR,		:SNUBBULL,		:QWILFISH,		
+	:SHUCKLE,		:HERACROSS,		:SNEASEL,		
+	:TEDDIURSA,		:SLUGMA,		:SWINUB,		
+	:CORSOLA,		:REMORAID,		:DELIBIRD,		
+	:IRONBUNDLE,	:MANTYKE,		:SKARMORY,		
+	:HOUNDOUR,		:PHANPY,		:GREATTUSK,		
+	:IRONTREADS,	:STANTLER,		:SMEARGLE,		
+	:MILTANK,		:LARVITAR,		:IRONTHORNS,		
+	:RAIKOU,		:RAGINGBOLT,	:ENTEI,			
+	:GOUGINGFIRE,	:SUICUNE,		:WALKINGWAKE,	
+	:LUGIA,			:HOOH,			:CELEBI,		
+	
+	# Gen 3 Starters 
+	:TREECKO,		:TORCHIC,    	:MUDKIP,
+	:POOCHYENA,		:WURMPLE,		:LOTAD,			
+	:SEEDOT,		:TAILLOW,		:WINGULL,		
+	:RALTS,			:IRONVALIANT,	:SURSKIT,		
+	:SHROOMISH,		:SLAKOTH,		:NINCADA,		
+	:WHISMUR,		:MAKUHITA,		:IRONHANDS,		
+	:NOSEPASS,		:SKITTY,		:SABLEYE,		
+	:MAWILE,		:ARON,			:MEDITITE,		
+	:ELECTRIKE,		:PLUSLE,		:MINUN,			
+	:VOLBEAT,		:ILLUMISE,		:BUDEW,			
+	:GULPIN,		:CARVANHA,		:WAILMER,		
+	:NUMEL,			:TORKOAL,		:SPOINK,		
+	:SPINDA,		:TRAPINCH,		:CACNEA,		
+	:SWABLU,		:ZANGOOSE,		:SEVIPER,		
+	:LUNATONE,		:SOLROCK,		:BARBOACH,		
+	:CORPHISH,		:BALTOY,		:LILEEP,		
+	:ANORITH,		:FEEBAS,		:CASTFORM,		
+	:SHUPPET,		:TROPIUS,		:CHINGLING,		
+	:ABSOL,			:SNORUNT,		:CLAMPERL,		
+	:RELICANTH,		:LUVDISC,		:BAGON,			
+	:ROARINGMOON,	:BELDUM,		:REGIROCK,		
+	:REGICE,		:REGISTEEL,		:REGIELEKI,		
+	:REGIDRAGO,		:REGIGIGAS,		:LATIAS,		
+	:LATIOS,		:KYOGRE,		:GROUDON,		
+	:RAYQUAZA,		:JIRACHI,		:DEOXYS,
+	
+	# Gen 4 Starters 
+	:TURTWIG,		:CHIMCHAR,		:PIPLUP,
+	:STARLY,		:BIDOOF,		:KRICKETOT,
+	:SHINX,			:CRANIDOS,		:SHIELDON,
+	:BURMY,			:COMBEE,		:PACHIRISU,		
+	:BUIZEL,		:CHERUBI,		:SHELLOS,		
+	:AIPOM,			:DRIFLOON,		:BUNEARY,		
+	:GLAMEOW,		:STUNKY,		:BRONZOR,		
+	:CHATOT,		:SPIRITOMB,		:RIOLU,			
+	:HIPPOPOTAS,	:SKORUPI,		:CROAGUNK,		
+	:CARNIVINE,		:FINNEON,		:SNOVER,		
+	:DUSKULL,		:ROTOM,			:GIBLE,
+	:MESPRIT,		:AZELF,			:UXIE,					
+	:DIALGA,		:PALKIA,		:GIRATINA,
+	:CRESSELIA,		:DARKRAI,		:MANAPHY,
+	:PHIONE,		:HEATRAN,		:SHAYMIN,
+	:ARCEUS,
+	
+	# Gen 5 Starters 
+	:SNIVY,			:TEPIG,			:OSHAWOTT,
+	:PATRAT,		:LILLIPUP,		:PURRLOIN,
+	:PANSAGE,		:PANSEAR,		:PANPOUR,
+	:MUNNA,			:PIDOVE,		:BLITZLE,		
+	:ROGGENROLA,	:WOOBAT,		:DRILBUR,		
+	:AUDINO,		:TIMBURR,		:TYMPOLE,
+	:THROH,			:SAWK,			:SEWADDLE,		
+	:VENIPEDE,		:COTTONEE,		:PETILIL,
+	:BASCULIN,		:SANDILE,		:DARUMAKA,
+	:MARACTUS,		:DWEBBLE,		:SCRAGGY,
+	:SIGILYPH,		:YAMASK,		:TIRTOUGA,		
+	:ARCHEN,		:TRUBBISH,		:ZORUA,			
+	:MINCCINO,		:GOTHITA,		:SOLOSIS,		
+	:DUCKLETT,		:VANILLITE,		:DEERLING,
+	:EMOLGA,		:FOONGUS,		:BRUTEBONNET,		
+	:FRILLISH,		:ALOMOMOLA,		:JOLTIK,		
+	:FERROSEED,		:KLINK,			:TYNAMO,		
+	:ELGYEM,		:LITWICK,		:AXEW,			
+	:CUBCHOO,		:CRYOGONAL,		:SHELMET,		
+	:STUNFISK,		:MIENFOO,		:DRUDDIGON,		
+	:GOLETT,		:PAWNIARD,		:BOUFFALANT,	
+	:RUFFLET,		:VULLABY,		:HEATMOR,		
+	:DURANT,		:DEINO,			:IRONJUGULIS,			
+	:LARVESTA,		:SLITHERWING,	:IRONMOTH,		
+	:COBALION,		:IRONCROWN,		:TERRAKION,		
+	:IRONBOULDER,	:VIRIZION,		:IRONLEAVES,	
+	:KELDEO,		:TORNADUS,		:THUNDURUS,		
+	:LANDORUS,		:ENAMORUS,		:RESHIRAM,		
+	:ZEKROM,		:KYUREM,		:MELOETTA,		
+	:GENESECT,		:VICTINI,
+	
+	# Gen 6 Starters 
+	:CHESPIN,		:FENNEKIN,		:FROAKIE,
+	:BUNNELBY,		:FLETCHLING,	:SCATTERBUG,
+	:LITLEO,		:FLABEBE,		:FLOETTE_5,
+	:SKIDDO,		:PANCHAM,		:FURFROU,
+	:ESPURR,		:HONEDGE,		:SPRITZEE,
+	:SWIRLIX,		:INKAY,			:BINACLE,
+	:SKRELP,		:CLAUNCHER,		:HELIOPTILE,
+	:TYRUNT,		:AMAURA,		:HAWLUCHA,	
+	:DEDENNE,		:CARBINK,		:GOOMY,			
+	:KLEFKI,		:PHANTUMP,		:PUMPKABOO,		
+	:BERGMITE,		:NOIBAT,		:XERNEAS_1,		
+	:YVELTAL,		:ZYGARDE_1,		:DIANCIE,		
+	:HOOPA,			:VOLCANION,
+	
+	# Gen 7 Starters 
+	:ROWLET,		:LITTEN,		:POPPLIO,
+	:PIKIPEK,		:YUNGOOS,		:GRUBBIN,		
+	:CRABRAWLER,	:ORICORIO,		:CUTIEFLY,		
+	:ROCKRUFF,		:WISHIWASHI,	:MAREANIE,		
+	:MUDBRAY,		:DEWPIDER,		:FOMANTIS,		
+	:MORELULL,		:SALANDIT,		:STUFFUL,		
+	:BOUNSWEET,		:COMFEY,		:ORANGURU,		
+	:PASSIMIAN,		:WIMPOD,		:SANDYGAST,		
+	:PYUKUMUKU,		:MINIOR,		:KOMALA,		
+	:TURTONATOR,	:TOGEDEMARU,	:MIMIKYU,		
+	:BRUXISH,		:DRAMPA,		:DHELMISE,		
+	:JANGMOO,		:TAPUKOKO,		:TAPULELE,
+	:TAPUBULU,		:TAPUFINI,		:TYPENULL,		
+	:COSMOG,		:POIPOLE,		:MELTAN,				
+	:NECROZMA,		:NIHILEGO,		:BUZZWOLE,		
+	:PHEROMOSA,		:XURKITREE,		:CELESTEELA,	
+	:KARTANA,		:GUZZLORD,		:STAKATAKA,		
+	:BLACEPHALON,	:MAGEARNA,		:MARSHADOW,
+	:ZERAORA,
+	
+	# Gen 8 Starters 
+	:GROOKEY,		:SCORBUNNY,		:SOBBLE,
+	:SKWOVET,		:ROOKIDEE,		:BLIPBUG,
+	:NICKIT,		:GOSSIFLEUR,	:WOOLOO,
+	:CHEWTLE,		:YAMPER,		:ROLYCOLY,
+	:APPLIN,		:SILICOBRA,		:CRAMORANT,
+	:ARROKUDA,		:TOXEL,			:SIZZLIPEDE,
+	:CLOBBOPUS,		:SINISTEA,		:POLTCHAGEIST,		
+	:HATENNA,		:IMPIDIMP,		:ZIGZAGOON_1,	
+	:CORSOLA_1,		:FARFETCHD_1,	:MRMIME_1,		
+	:MILCERY,		:FALINKS,		:PINCURCHIN,	
+	:SNOM,			:STONJOURNER,	:EISCUE,		
+	:INDEEDEE,		:MORPEKO,		:CUFANT,		
+	:DRACOZOLT,		:ARCTOZOLT,		:DRACOVISH,		
+	:ARCTOVISH,		:DREEPY,		:ZACIAN_1,		
+	:ZAMAZENTA_1,	:ETERNATUS,		:KUBFU,			
+	:URSHIFU,		:ZARUDE_1,		:GLASTRIER,		
+	:SPECTRIER,		:CALYREX,		
+	
+	# Gen 9 Starters  
+	:SPRIGATITO,	:FUECOCO,		:QUAXLY,
+	:LECHONK,		:TAROUNTULA,	:NYMBLE,
+	:PAWMI,			:TANDEMAUS,		:FIDOUGH,		
+	:SMOLIV,		:SQUAWKABILLY,	:NACLI,			
+	:CHARCADET,		:TADBULB,		:WATTREL,
+	:MASCHIFF,		:SHROODLE,		:BRAMBLIN,
+	:KLAWF,			:CAPSAKID,		:RELLOR,		
+	:FLITTLE,		:TINKATINK,		:BOMBIRDIER,	
+	:FINIZEN,		:VAROOM,		:CYCLIZAR,
+	:KORAIDON,		:MIRAIDON,		:ORTHWORM,		
+	:GLIMMET,		:GREAVARD,		:FLAMIGO,		
+	:CETODDLE,		:VELUZA,		:DONDOZO,		
+	:TATSUGIRI,		:WOOPER_1,		:GIRAFARIG,		
+	:GIMMIGHOUL,	:DURALUDON,		:FRIGIBAX,		
+	:WOCHIEN,		:CHIENPAO,		:TINGLU,		
+	:CHIYU,			:OKIDOGI,		:MUNKIDORI,		
+	:FEZANDIPITI,	:OGERPON,		:PECHARUNT,		
+	:TERAPAGOS
+  ]
+end

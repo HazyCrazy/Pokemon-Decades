@@ -1,0 +1,2 @@
+Unless you are a speedrunner, 
+60hrz ensures Decades is playing at the correct framerate timing.

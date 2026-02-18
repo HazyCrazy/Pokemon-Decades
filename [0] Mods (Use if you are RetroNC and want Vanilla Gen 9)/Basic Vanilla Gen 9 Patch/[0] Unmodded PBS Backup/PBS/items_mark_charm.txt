@@ -1,0 +1,9 @@
+#-------------------------------
+[MARKCHARM]
+Name = Mark Charm
+NamePlural = Mark Charms
+Pocket = 1#8
+Price = 0
+Flags = KeyItem
+#Description = Drastically increases the odds of Wild Pokémon having marks, by 2 Billion, with 1/1 chance (100%).
+Description = Having one of these mysterious charms makes it more likely you’ll encounter a Pokémon with a mark.

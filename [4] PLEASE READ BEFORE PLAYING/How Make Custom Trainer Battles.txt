@@ -1,0 +1,137 @@
+Debug mode can be enabled without the use of RPG Maker Xp 
+by passing the command line argument "debug" 
+
+How to pass the "debug" command line to the game 
+
+1. Right click on Game.exe (On Windows 10, select Show More Options)
+2. Create a Shortcut
+3. Rename the Shortcut to Game.exe - Debug Mode
+4. Right click on Game.exe - Debug Mode and select Properties (On Windows 10, select Show More Options)
+5. In Target, add debug at the end of the path like this:
+6. "C:\My Path\Decades 3.0.0\Game.exe" debug
+
+When using the Debug Mode Shortcut, you must hold down the CTRL button to force the game to compile.
+Hold down the left or right CTRL key when Pokemon Essentials V21.1 window is visible. The window must be in focus.
+
+How to make a custom Pokemon Trainer Battle 
+
+Pokemon Essentials Wiki: https://essentialsengine.miraheze.org/wiki/Essentials_Engine_wiki
+
+Prerequisites
+
+In the game folder when Pokemon Decades 3.0.0 is put, go to these folder directories:
+
+Graphics\Trainers
+Graphics\Characters
+
+Pokemon Trainer Sprites, Gen 4 Art Style, 
+Trainer sprites are 99.9% of the time, 80 x 80 .png files, upscaled to 160 x 160. 
+Your custom .png file must be 80 x 80, x1 sprite scale, that is exported to 160 x 160, 
+with the export having a x2 scale on every pixel.
+If your sprite design has a character who needs to be taller, such as AZ, who's x1 scale is 56 x 94,
+it is up to you to figure out how to craft the dimensions your sprite conforms to.
+
+Trainer Sprites Resources:
+
+Pokemon Showdown Trainer Battle Sprites x1 scale: https://play.pokemonshowdown.com/sprites/trainers/
+Pokengine Trainer Battle + Overworld Sptites (You must use Sprites marked as "Free to use with credit/#public use with credits"): https://pokengine.org/trainers : https://pokengine.org/search?query=trainers+%23public%2Buse%2Bwith%2Bcredits
+Convert WebP to PNG: https://ezgif.com/webp-to-png
+
+Look at the naming structure of trainer sprites in Graphics\Trainers and Graphics\Characters to understand how to name your custom trainer sprites.
+Follow this naming structure in order to prevent Pokemon Trainer character designs from conflicting with each other and overwritting each other.
+
+Decades 3.0.0 Pokemon Trainer Naming Convention is:
+
+REGIONNATIONALITY/GAME/CHARACTERNAME 
+
+Example 1: KALOIAN_XY_AUGUSTINE_SYCAMORE
+Example 2: SINNOHIAN_UNOFFICAL_DPP_CLOWN
+Example 3: SINNOHIAN_USUM_CYNTHIA_VACATION
+
+Decades Overworld Character Naming Convention is:
+
+NPC_GAME_Character_Name
+
+Example 1: NPC_XY_Augustine_Sycamore
+Example 2: NPC_UNOFFICAL_DPP_Clown 
+Example 3: NPC_DPP_Cynthia
+
+Essentials Pokemon Battle System Files
+
+PBS\trainer_types.txt 
+PBS\trainers.txt 
+
+trainer_types.txt is where the data of every single trainer character is stored. 
+Every unique trainer chracter is required to be defined in this file.
+
+Trainer types detail: https://essentialsengine.miraheze.org/wiki/Defining_a_trainer
+
+trainers.txt is where every Pokemon Trainer Battle you have in your game is set up,
+and then can be played via Events made in RPG Maker XP, or accessed via Debug Mode.
+
+Pokemon Trainer and Pokemon Team setup Detail: https://essentialsengine.miraheze.org/wiki/Trainers 
+
+Key Details for Decades 3.0.0:
+
+Effort Values go up to 256 for a single stat
+512 is the Effort Value budget each legal Pokemon has to work with.
+IV's are 31 100% of the time, for all generated Pokemon. This means every Pokemon in the wild, the player's Pokemon and foe's Pokemon. 
+Natures for opponent Trainer Battles still affect what stat is raised/lowered by 10%
+To make applying a Hidden Power/Hidden Force Type easier, use the Move ID's in moves_hidden_power_types.txt. Because IV calulators are a waste of time, and the precise values in Essentials are different from the offical games.
+To assign an Ability to a Pokemon, you have to use AbillityIndex.
+
+How AbilityIndex works in Decades 3.0.0
+
+Nearly every Pokemon in Decades always have 1 Regular Ability.
+The rest of a Pokemon's 5 Abilities are all Hidden Abilities.
+The Ability Vial Key Item allows for full unconditional Ability changing.
+
+Nearly all Pokemon have just 1 Regular Ability, for the purposes of removing the tedium of generating a Pokemon with it's general best ability.
+
+Ability Index Numbers
+
+TYRANITAR
+
+Index 0: SANDSTREAM 	(Regular Ability that all genrated Species have, unless edited in Events. Index 0 and Index 1 are a Pokemon's Regular Ability slot.)
+Index 1: SANDSTREAM 	(Regular Ability that all genrated Species have, unless edited in Events. Index 0 and Index 1 are a Pokemon's Regular Ability slot.)
+Index 2: SHEERFORCE 	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 3: INTIMIDATE 	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 4: BULLETPROOF	(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 5: MOXIE 			(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0)
+Index 6: PUREPOWER		(Hidden Ability that can be given via the Ability Vial Key Item, also applied via Events. Do not assign an index higher than 6. If you do, the index rolls back to 0) 
+
+For Mega Pokemon, do not touch the Ability or AbilityIndex values.
+Only give a Mega Pokemon it's Mega Stone. In Decades, every Mega Evolution can hold a universal Mega Stone.
+
+Nicknames are 10 characters long
+Shadow Pokemon are supported out of the box with Stock Essentials, and enhanced by the Deluxe Battle Kit.
+Decades does not have the Snag Machine or a Poke Ball designed to catch Shadow Pokemon. 
+Shadow Pokemon in the context of Decades, don't work in pratice, because the design goals of Shadow Pokemon serve a narrative purpose, and raising the stakes for catching a Pokemon.
+Shadow Pokemon's mechanics cause havoc on balancing. And I personally hate how Shadow Pokemon in pratice, bring out the worst in the Catching mechanics.
+Shadow Lugia serves to represent Shadow Pokemon, because I was too deep into development by the time I realised it was possible to add in Shadow Lugia, to fully inplement what was necessary to make Shadow Pokemon work in Decades.
+
+How to use Debug Mode to make a custom Pokemon Trainer Battle:
+
+1. Press Z to open the pause menu 
+2. Choose Debug
+3. Choose PSB file editor...
+4. Choose Edit trainers.txt 
+5. Choose [NEW TRAINER BATTLE]
+
+Pokemon Essentials Trainer Detail: Pokemon Trainer and Pokemon Team setup Detail: https://essentialsengine.miraheze.org/wiki/Trainers 
+Deluxe Battle Kit Detail (Add-On Tutorials to know what to do with Battle Gimmicks): https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial
+
+While you can use Essentials's Player tools, I recommend using Notepad++ or another good Text Editor, to reduce the tedium of setting things up.
+And to have at a moment's notice be able to glance at information to know what to do.
+Look at trainers.txt outside of in game to get an idea of how your custom trainer battles should be crafted.
+If you want to use Deluxe Battle Kit's Mid Battle Scripting tools, you will have to have RPG Maker XP installed on your computer.
+
+Once you are happy with the custom Pokemon battle you have made, follow these steps:
+
+1. Press Z to open the pause menu 
+2. Choose Debug
+3. Choose Battle options...
+4. Choose Test trainer battle/Test Trainer battle advanced
+5. In Test trainer battle, simply choose what Pokemon Trainer exists. All Pokemon Trainers are sorted Alphabetially by ID. You can only do a Single Battle with this option.
+6. In Decades, every Pokemon Trainer has a dedicated Single, Double and Triple Battle team.
+7. Use advanced to setup Double or Triple Battles. Debug Mode allows items to be used in battle.

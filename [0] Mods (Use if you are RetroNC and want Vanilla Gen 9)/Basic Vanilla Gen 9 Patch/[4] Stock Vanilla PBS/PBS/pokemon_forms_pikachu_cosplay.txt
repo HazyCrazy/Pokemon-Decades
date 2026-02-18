@@ -1,0 +1,26 @@
+#-------------------------------
+[PIKACHU,3]
+FormName = Belle Form
+UngmaxForm = 3
+Evolutions = RAICHU,None,
+#-------------------------------
+[PIKACHU,4]
+FormName = Libre Form
+UngmaxForm = 4
+Evolutions = RAICHU,None,
+#-------------------------------
+[PIKACHU,5]
+FormName = Ph.D Form 
+UngmaxForm = 5
+Evolutions = RAICHU,None,
+#-------------------------------
+[PIKACHU,6]
+FormName = Pop Star Form 
+UngmaxForm = 6
+Evolutions = RAICHU,None,
+#-------------------------------
+[PIKACHU,7]
+FormName = Rock Star Form 
+UngmaxForm = 7
+Evolutions = RAICHU,None,
+#-------------------------------

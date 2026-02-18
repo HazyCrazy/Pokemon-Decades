@@ -1,0 +1,10 @@
+#-------------------------------
+#[METABREAKERAMULET]
+#Name = Meta Breaker Amulet
+#NamePlural = Meta Breaker Amulets
+#Pocket = 7#1
+#Price = 30000
+#Flags = MegaStone,Fling_30
+#Description = An item to be held by a Pokémon. It protects the holder from having its stats lowered.
+#Description = Gives only Funbro Good as Gold + Levitate. Funbro is Tera Electric + Wonder Guard.
+#-------------------------------

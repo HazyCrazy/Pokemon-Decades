@@ -1,0 +1,12 @@
+If your laptop/low spec PC is suffering from input delay while playing Pokemon Decades,
+you need to set the GPU that the game uses to run.
+
+Nivdia Control Panel Setup (Same method will apply to the AMD version of Nivdia Control Panel)
+
+1. Choose Manage 3D Settings, Program Settings 
+2. After running Pokemon Decades once, click Add from Select a program to customize:
+3. In Select a program: Sorted by: Recently used (You can also use Browse to manually select Pokemon Decades' Game.exe), select Game.exe, click Add Selected Program
+4. In 2. Specify the settings for this program:, OpenGL rendering GPU, manually set it to your GPU Driver. Once this is done, restart your Laptop/low spec PC to properly apply the changes
+5. If you are still suffering from input delay, in 2. Specify the settings for this program: Vertical sync, turn off Vertical Sync
+
+Also make sure your Laptop is plugged into the wall, before turning on the laptop.

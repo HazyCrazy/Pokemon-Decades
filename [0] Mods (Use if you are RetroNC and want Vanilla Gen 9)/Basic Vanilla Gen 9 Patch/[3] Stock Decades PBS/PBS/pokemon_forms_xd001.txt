@@ -1,0 +1,12 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[LUGIA,1]
+FormName = XD 001
+Types = PSYCHIC,DARK
+Abilities = SHADOWSHIELD
+HiddenAbilities = NEUROFORCE,INTIMIDATE,PSYCHICSURGE,DARKAURA,LEVITATE
+Color = Purple
+Category = XD001
+Pokedex = Created from an artifical process, this Pokémon is lethal. It's black aura decays all organic matter that is not protected by a Snag Machine.    
+Generation = 3
+#-------------------------------

@@ -1,0 +1,21 @@
+Decades uses plugins such as End of Round Skipper, EV Allocator,
+and general under the hood changes in code, to remove 
+as much downtime in the tedium of battles and menus as possible.
+
+Your Trainer Suite the second you click New Game comes with 
+the Fast Travel Phone Key Item (PAS, Phone Assisted Speedrun)
+
+It can instantly and optimally fast travel you to anywhere in the game,
+and can toggle Damage Rolls to be 100%.
+
+It is possible with a PAS Speedrun, to beat the game in under 5 minutes or less.
+
+By using F12 (Soft Reset) after saving the game, navigation through specfic
+menus or animations will become faster. 
+
+Please set the Refresh Rate of your monitor to 60hrz for Decades,
+for the correct framerate timings. Or set to higher, for faster times.
+
+In the Pokemon Party Menu, you can click the [Z] Key to quick Swap a Pokemon's order.
+In the overworld, when using the Singles Battle Format, you can press [S]
+to quick swap the first Pokemon sent out. 

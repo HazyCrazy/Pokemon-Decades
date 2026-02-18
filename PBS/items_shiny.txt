@@ -1,0 +1,27 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[VIALOFGLITTER]
+#Name = Vial of Glitter
+Name = Shiny Glitter
+#NamePlural = Vials of Glitter
+NamePlural = Shiny Glitters
+Pocket = 1
+Price = 15000
+FieldUse = OnPokemon
+Flags = KeyItem,Fling_30
+#Description = When used, the Pokémon is turned shiny.
+#Description = Toggles a Pokémon's Shiny. Decades' Rate is 800/1600 (50%), Legends ZA is 1/4096 (0.02%).
+Description = Toggles a Pokémon's Shiny. Decades' Rate is 800/1600 (33%), Legends ZA is 1/4096 (0.02%).
+#-------------------------------
+[SUPERVIAL]
+#Name = Vial of Super Glitter
+Name = Super Glitter 
+#NamePlural = Vials of Super Glitter
+NamePlural = Super Glitters
+Pocket = 1
+Price = 15000
+FieldUse = OnPokemon
+Flags = KeyItem,Fling_30
+#Description = When used, the Pokémon is turned into an alternate shiny with random color hues.
+Description = Toggles an alternative Shiny Hue. Exact Hue Colors must be assigned via Debug. (pokemon_metrics.txt)
+#-------------------------------

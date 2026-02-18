@@ -1,0 +1,26 @@
+Name         = Form Trader
+Version      = 2.0
+Essentials   = 20, 20.1, 21, 21.1
+Website      = https://reliccastle.com/resources/1425/
+Credits      = Dr.Doom76
+#===============================================================================
+# Installation
+#===============================================================================
+# To install this plugin, extract the folders file into your game root folder.
+# 
+#===============================================================================
+# How to use
+#===============================================================================
+# Use the call "pbFormTrader" in an event, and it will run itself from there.
+# Use the call "pbFormTrader(nickName, trainerName, trainerGender)" if you want to use arguments.
+# Nickname is going to be the nickname of the Pokemon coming back to you.
+#	If left blank, it will default to the Pokemon's name.
+# Trainer name is the name of the Trainer who is trading you, or "OT".
+#	If left blank, it will default to the NPC Event's name within your game.
+# Trainer gender is the gender of the trainer who is trading you. 0 by default.
+#	0 = male, 1 = female.
+# This plugin will allow you to trade Pokemon for a different form of that Pokemon.
+# The Pokemon traded back will be the same Pokemon (stats, etc) as the one traded.
+# The arguments are optional, but can be used if desired.
+# If using my Charm Case, it will also add to the IV's and add a chance to come back Shiny.
+# This will not work on Mega forms, Legendary forms, or Pokemon that change forms due to outside circumstances(deerling, etc.)

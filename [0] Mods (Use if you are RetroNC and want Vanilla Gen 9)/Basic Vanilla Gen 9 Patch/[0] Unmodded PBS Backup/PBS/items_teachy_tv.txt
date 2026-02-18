@@ -1,0 +1,42 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[TEACHYTV]
+Name = Level Adjuster
+NamePlural = Level Adjuster's
+#Name = Walkthrough TV
+#NamePlural = Walkthrough TV's
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that applies Level Scaling Presets. Default is Story Mode Showdown Mode.
+#Description = A device that adjusts the Levels of Trainer and Wild Pokémon. 
+#Description = A television set tuned to a program that helps Trainers who are lost or need help.
+#-------------------------------
+[RULEBOOK]
+#Name = Rule Book
+#NamePlural = Rule Book's
+#Name = Level Format Book 
+#NamePlural = Level Format Book's
+Name = Inversion Book 
+NamePlural = Inversion Book's
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+#Description = It lists the rules for holding battles. For linked battles, you may choose which set of rules you wish to use.
+#Description = Configures Battle Mode Showdown Mode's Level Formats and toggles Inverse Battles for Trainers only.
+Description = Toggles Inverse Battles for Trainers only. Type Matchups become the opposite of what they normally are.
+#-------------------------------
+[MAXLURE]
+#Name = Max Lures
+#NamePlural = Max Lures
+Name = Wild Format Bottle 
+NamePlural = Wild Format Bottles
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+#Description = A bottle of perfume that makes rare Pokémon more likely to appear.
+Description = Toggles Double Wild Battles. Wild Quest Pokémon and Interactable Encounters are not affected. 
+#-------------------------------

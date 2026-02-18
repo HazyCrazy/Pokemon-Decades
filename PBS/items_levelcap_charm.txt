@@ -1,0 +1,9 @@
+#[LEVELCAPCHARM]
+#Name = Level Cap Charm
+#NamePlural = Level Cap Charms
+#Pocket = 4#8
+#Price = 0
+#FieldUse = Direct
+#Flags = KeyItem
+#Description = A configuable charm that can enforce manual Level Caps. An alternative to free form Level Caps.
+#-------------------------------

@@ -1,0 +1,180 @@
+﻿#-------------------------------
+[FLOATYFALL]
+Name = Floaty Fall
+Type = FLYING
+Category = Physical
+Power = 75
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = LowerTargetSpAtk1
+Flags = Contact,CanProtect,CanMirrorMove
+EffectChance = 100
+#Description = The user floats in the air, and dives to attack the target. This may also make the target flinch.
+Description = Will lower the target’s Sp.Atk stat.
+#-------------------------------
+[SPLISHYSPLASH]
+Name = Splishy Splash
+Type = WATER
+Category = Special
+Power = 90
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = ParalyzeTarget
+Flags = CanProtect,CanMirrorMove,ElectrocuteUser
+EffectChance = 10
+Description = 10% chance to Paralyze target. 
+#-------------------------------
+[ZIPPYZAP]
+Name = Zippy Zap
+Type = ELECTRIC
+Category = Physical
+Power = 80
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 2
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+#Description = The user attacks with electricity. This move always goes first has a high critical-hit ratio.
+Description = +2 Priority. Blocked by Dazzling, Elegance, Armor Tail. +1 Critical Hit Rate, (12.5%).
+#-------------------------------
+[BADDYBAD]
+Name = Baddy Bad
+Type = DARK
+Category = Special
+Power = 80
+Accuracy = 95
+TotalPP = 15
+Target = NearOther
+FunctionCode = StartWeakenPhysicalDamageAgainstUserSide
+#Description = The user attacks the target. A wall of light weakens the power of the foe's physical moves.
+Description = Sets Reflect for 5 Turns, 8 if holding Light Clay. Reflect reduces Physical damage by 33%.
+#-------------------------------
+[BOUNCYBUBBLE]
+Name = Bouncy Bubble
+Type = WATER
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = HealUserByHalfOfDamageDone
+Flags = CanProtect,CanMirrorMove
+#Description = The user shoots water bubbles at the target. Restores its HP by half the damage dealt.
+Description = The user's HP is restored by 50% of damage dealt.
+#-------------------------------
+[BUZZYBUZZ]
+Name = Buzzy Buzz
+Type = ELECTRIC
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 20
+Target = NearOther
+FunctionCode = ParalyzeTarget
+Flags = CanProtect,CanMirrorMove
+EffectChance = 15
+#Description = The user shoots a jolt of electricity to attack the target. This may also paralyze the target.
+Description = 15% chance to Paralyze target. 
+#-------------------------------
+[FREEZYFROST]
+Name = Freezy Frost
+Type = ICE
+Category = Special
+Power = 100
+Accuracy = 90
+TotalPP = 10
+Target = NearOther
+FunctionCode = ResetTargetStatStages
+Flags = CanProtect,CanMirrorMove
+#Description = The user attacks with frozen crystals. It eliminates every stat change among all Pokémon in battle.
+Description = The target's Stat Changes are set back to 0.
+#-------------------------------
+[GLITZYGLOW]
+Name = Glitzy Glow
+Type = PSYCHIC
+Category = Special
+Power = 80
+Accuracy = 95
+TotalPP = 15
+Target = NearOther
+FunctionCode = StartWeakenSpecialDamageAgainstUserSide
+#Description = The user bombards the target. A wall of light weakens the power of the foe's special moves.
+Description = Sets Light Screen 5 Turns, 8 with Light Clay. Light Screen reduces Special damage by 33%.
+#-------------------------------
+[SAPPYSEED]
+Name = Sappy Seed
+Type = GRASS
+Category = Physical
+Power = 110
+Accuracy = 85
+TotalPP = 5
+Target = NearOther
+FunctionCode = StartLeechSeedTarget
+Flags = CanProtect,CanMirrorMove
+EffectChance = 10
+Description = 10% chance to steal 12.5% of max HP every turn. No Effect on Grass Types.
+#Power = 110
+#Accuracy = 70#85
+#TotalPP = 5
+#Target = NearOther
+#FunctionCode = StartLeechSeedTarget
+#Flags = CanProtect,CanMirrorMove
+#Description = The user grows a gigantic stalk. These seeds drain the target’s HP every turn.
+#Description = Target is Seeded. Steals 12.5% of max HP every turn. No Effect on Grass Types.
+#-------------------------------
+[SIZZLYSLIDE]
+Name = Sizzly Slide
+Type = FIRE
+Category = Physical
+Power = 80
+Accuracy = 100
+TotalPP = 15
+Target = AllNearOthers
+FunctionCode = BurnTarget
+EffectChance = 15
+Flags = Contact,CanProtect,CanMirrorMove
+#Description = The user cloaks itself in fire and charges into everything. May also burn the target.
+Description = 15% chance to Burn all on the Field. Pairs well with Flash Fire allies.
+#-------------------------------
+[SPARKLYSWIRL]
+Name = Sparkly Swirl
+Type = FAIRY
+Category = Special
+Power = 95
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = UseTargetSpecialAttackInsteadOfUserSpecialAttack
+Flags = CanProtect,CanMirrorMove
+#Description = The user turns the foe's power against it. It does more damage the higher the target's Sp.Attack stat.
+Description = Does more damage the higher the target's Sp.Atk stat. Lower Sp.Atk IVs to 0 to reduce damage.
+#-------------------------------
+[VEEVEEVOLLEY]
+Name = Veevee Volly
+Type = NORMAL
+Category = Physical
+Power = 110
+Accuracy = 85
+TotalPP = 5
+Target = NearOther
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+#Description = A strong friendship powers this attack.
+Description = An attack driven by a strong friendship. A Pokémon's Happiness does not change this move's Power.
+#-------------------------------
+[PIKAPAPOW]
+Name = Pika Papow
+Type = ELECTRIC
+Category = Physical
+Power = 110
+Accuracy = 85
+TotalPP = 5
+Target = NearOther
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+#Description = A strong friendship powers this attack.
+Description = An attack driven by a strong friendship. A Pokémon's Happiness does not change this move's Power.
+#-------------------------------

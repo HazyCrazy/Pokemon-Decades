@@ -1,0 +1,10 @@
+#-------------------------------
+[GOLDTEETH]
+Name = Gold Teeth
+NamePlural = Gold Teeth
+Pocket = 7#1
+Price = 15000
+Flags = Fling_30
+#Description = A set of sparkling false golden teeth that boost the holder's biting moves.
+Description = Boosts Biting moves by 20% and prevents direct contact. Pairs well with Strong Jaw (30%).
+#-------------------------------

@@ -1,0 +1,5 @@
+Name = Modular Pokemon Selection
+Version = 1.5
+Essentials = 21.1
+Website = https://eeveeexpo.com/resources/1159/
+Credits = ChampChar

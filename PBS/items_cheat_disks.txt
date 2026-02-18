@@ -1,0 +1,62 @@
+#-------------------------------
+[SETPOKEDOLLARSDISK]
+#Name = Set Poke Dollars Disk
+#NamePlural = Set Poke Dollars Disks
+Name = Poke Dollars Disk
+NamePlural = Poke Dollars Disks
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A disk that contains untraceable data of every ATM in the world. Can withdraw any amount. 
+#-------------------------------
+[ANYABILITYDISK]
+Name = Any Ability Disk
+NamePlural = Any Ability Disks
+Pocket = 4#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A disk that contains the data of every ability. Allows any Pokemon to learn any ability.
+#-------------------------------
+[ANYITEMDISK]
+Name = Any Item Disk
+NamePlural = Any Item Disks
+Pocket = 4#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A disk that contains the data of every item. Creates any item you want.
+#-------------------------------
+[POKEMONCENTERDISK]
+Name = Poké Vial
+NamePlural = Poké Vials
+#Name = Poké Center Disk
+#NamePlural = Poké Center Disks
+Pocket = 1#4#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+#Description = A disk that fully heals the HP/status/PP of all Pokémon in the party.
+Description = Fully heals all Pokémon in the party. Only Pokémon Centers recharge Tera/Dynamax.
+#-------------------------------
+[SETGYMBADGEDISK]
+Name = Set Gym Badges Disk
+NamePlural = Set Gym Badges Disks
+Pocket = 4#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A disk that gives perfect verifiable copies of the Pokemon League Challenge Gym Badges.
+#-------------------------------
+[NOCLIPDISK]
+Name = No Clip Disk
+NamePlural = No Clip Disks
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+#Description = A disk that toggles on and off the player's collision detection.
+#Description = Toggles Collision Detection. Exists for those who are curious, or want to look everywhere. 
+Description = Toggles No Clip. Required to reach the Mystery Zone, located beyond an area's boundary. 
+#-------------------------------

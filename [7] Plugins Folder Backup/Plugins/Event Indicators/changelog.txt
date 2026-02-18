@@ -1,0 +1,28 @@
+===Change Log===
+1.3
+- New feature: Conditions. By adding :condition and setting it to a proc, you can make an indicator only appear under certain conditions. For example, if you want an indicator for an NPC to only appear after game_switch 5 is true, but you don't want to include a whole new page for the event (maybe you're using a Conditional Branch, instead), you can do that using :condition.
+
+1.2.3
+- Fixed where the same indicator would get added again if the even was visible when changing maps.
+
+1.2.2
+- Fixed animation and movement handling if an event was constantly refreshed (like if it has a s:cooledDown? page condition on any of its pages).
+
+1.2.1
+- Fixed a crash that would occur if a scene didn't have a spriteset defined.
+
+1.2
+- New feature: Vertical movement. You can now set indicators to bob up and down instead of always being static. You can define different movement speeds per indicator using :movement_speed, and you can make some indicators not have movement using :no_movement. This is off by default, you can turn it on with the EVENT_INDICATOR_VERTICAL_MOVEMENT setting.
+- New feature: Animated indicators. You can set indicators to animate by having its graphic have multiple horizontal frames, and defining the number of frames using :animation_frames. You can also define different animation speeds per indicator using :animation_speed.
+- New feature: Options Menu Options. You can make it so options appear in the options menu to hide all indicators, and to turn off indicator movement.
+
+1.1.1
+- IMPORTANT: I've split out Settings from the 001_Script file. They are now in their own 000_Settings file. Please add all of your settings in that file, instead.
+- Made a change that will hopefully prevent a nil.id crash.
+
+1.1 
+- Reworked how you add x and y adjustments in the Comment command. Instructions have been updated in 001_Script.
+- New feature: X and y adjustments for definitions. Added x_adjustment and y_adjustment as optional parameters for EVENT_INDICATORS definitions. As a result, there are now 3 ways you can adjust the x and y positions of indicators: globally, per definition, and per event.
+
+1.0 
+- Initial Release

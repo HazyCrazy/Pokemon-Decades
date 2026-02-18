@@ -1,0 +1,22 @@
+#-------------------------------
+[SOUNDTRACKEARBUDS]
+Name = Music Earbuds
+NamePlural = Music Earbuds
+Pocket = 1#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Switches between the Upload Safe and Intended Soundtracks.
+#-------------------------------
+#[GBSOUNDS]
+#Name = GB Sounds 
+#NamePlural = GB Sounds's
+#Name = Wild Music Sounds
+#NamePlural = Wild Music Sounds's
+#Pocket = 1 #8
+#Price = 0
+#FieldUse = Direct 
+#Flags = KeyItem 
+#Description = Sets what music is played when encountering wild Pokemon.
+#Description = Sets music played when encountering Wild Pokemon. No exitWildVictoryBGM function exists in Essentials V21.1
+#-------------------------------

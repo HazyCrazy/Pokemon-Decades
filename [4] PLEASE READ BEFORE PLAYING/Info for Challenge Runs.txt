@@ -1,0 +1,8 @@
+Decades is not designed for Nuzlockes or Challenge Runs.
+There is nothing stopping you from giving it a go.
+
+But outside of the PSS (Pokemon Storage System) Suite, and the Trainer Suite.
+Decades will never be a Radical Red, Elite Redux or Run and Bun Pokemon fan game.
+
+Decades has no native support for Randomizers, and the Random Starters Option
+is the closest you will get to a Randomizer.

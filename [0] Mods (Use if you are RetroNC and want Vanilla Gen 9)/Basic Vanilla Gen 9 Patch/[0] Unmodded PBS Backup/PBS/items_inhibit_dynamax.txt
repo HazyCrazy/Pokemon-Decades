@@ -1,0 +1,12 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[DYNAMAXINHIBITOR]
+Name = Dynamax Inhibitor
+NamePlural = Dynamax Inhibitors
+Pocket = 1#6
+Price = 1000
+SellPrice = 500
+FieldUse = OnPokemon
+Flags = KeyItem,Fling_30
+Description = Toggles a Pokémon's capability to Dynamax alongside Teras, Megas, Z-Moves and Dynamax.
+#-------------------------------

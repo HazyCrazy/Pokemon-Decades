@@ -1,0 +1,30 @@
+Advanced Battle AI is the only Save File Safe Plugin
+that can be added in and removed.
+
+If you are facing Non Crashing Errors with Advanced Battle AI,
+you can remove the plugin altogether, but please move it out of the Plugins Folder,
+and do not delete it. 
+
+To apply the change after moving Advanced Battle AI out of the plugins folder,
+you must recompile the game.
+
+Step 1: Start the game by clicking [Game.exe - Debug Mode]. No extra steps are required. Exists to allow people without a copy of RPG Maker XP to still apply changes to Pokemon Decades.
+
+Step 2: While using Debug Mode, you must hold down the CTRL button to force the game to compile. Hold down the left or right CTRL key when the Pokemon Essentials V21.1 window is visible. The window must be in focus.
+
+How to pass the "debug" command line to the game 
+
+1. Right click on Game.exe (On Windows 10, select Show More Options)
+2. Create a Shortcut
+3. Rename the Shortcut to Game.exe - Debug Mode
+4. Right click on Game.exe - Debug Mode and select Properties (On Windows 10, select Show More Options)
+5. In Target, add debug at the end of the path like this:
+6. "C:\My Path\Decades 3.0.0\Game.exe" debug
+
+Turning off Advanced Battle AI will result in the AI working with Essentials's Stock AI System.
+This ensures stability, and can make the Final Boss more consistent with their intended Strategy.
+But it overall downgrades the intensity and engagement of Battles.
+
+Outside of the above, DO NOT REMOVE any other plugins.
+Unless you develop Pokemon fan games yourself and know what you are doing,
+I am not wasting my time with someone who fucked with the Plugins folder.

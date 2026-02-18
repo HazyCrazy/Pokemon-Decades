@@ -1,0 +1,12 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[ABILITYVIAL]
+Name = Ability Vial
+NamePlural = Ability Vial
+Pocket = 1
+Price = 10000
+FieldUse = OnPokemon
+Flags = KeyItem
+#Description = A special capsule that allows a Pokémon to choose one of any Ability it can learn.
+Description = Allows a Pokémon to choose any Ability it can learn. Pokémon usually learn 1 out of 6 Abilities.
+#-------------------------------

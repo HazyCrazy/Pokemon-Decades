@@ -1,0 +1,924 @@
+#-------------------------------
+[EXPPRECISION]
+#Name = Exp. Precision
+#NamePlural = Exp. Precisions
+Name = Reset Candy
+NamePlural = Reset Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem 
+#Description = Raises a Pokémon's Exp to just before the level is raised. Useful for Nuzlockes.
+#Description = Resets a Pokémon's Level back to it's PSS (Pokémon Storage System) Default.
+Description = Resets a Pokémon's Level. Auto Level Scaling and Ultimate Move Tutor replace Eggs/Breeding.
+#-------------------------------
+[DOOMCANDY]
+Name = Doom Candy
+NamePlural = Doom Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that is packed with doom. It lowers the level of a single Pokémon by one.
+#-------------------------------
+[LVL1CANDY]
+Name = Lvl.1 Candy
+NamePlural = Lvl.1 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Useful for the Move Endeavor.
+#-------------------------------
+[LVL2CANDY]
+Name = Lvl.2 Candy
+NamePlural = Lvl.2 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL3CANDY]
+Name = Lvl.3 Candy
+NamePlural = Lvl.3 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL4CANDY]
+Name = Lvl.4 Candy
+NamePlural = Lvl.4 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL5CANDY]
+Name = Lvl.5 Candy
+NamePlural = Lvl.5 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Little Cup's Format. Evolved Pokemon cannot partake in Little Cup.
+#-------------------------------
+[LVL6CANDY]
+Name = Lvl.6 Candy
+NamePlural = Lvl.6 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL7CANDY]
+Name = Lvl.7 Candy
+NamePlural = Lvl.7 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL8CANDY]
+Name = Lvl.8 Candy
+NamePlural = Lvl.8 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL9CANDY]
+Name = Lvl.9 Candy
+NamePlural = Lvl.9 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL10CANDY]
+Name = Lvl.10 Candy
+NamePlural = Lvl.10 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 1st Type Emerald Level Cap.
+#-------------------------------
+[LVL11CANDY]
+Name = Lvl.11 Candy
+NamePlural = Lvl.11 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL12CANDY]
+Name = Lvl.12 Candy
+NamePlural = Lvl.12 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL13CANDY]
+Name = Lvl.13 Candy
+NamePlural = Lvl.13 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL14CANDY]
+Name = Lvl.14 Candy
+NamePlural = Lvl.14 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL15CANDY]
+Name = Lvl.15 Candy
+NamePlural = Lvl.15 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 2nd Type Emerald Level Cap.
+#-------------------------------
+[LVL16CANDY]
+Name = Lvl.16 Candy
+NamePlural = Lvl.16 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL17CANDY]
+Name = Lvl.17 Candy
+NamePlural = Lvl.17 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL18CANDY]
+Name = Lvl.18 Candy
+NamePlural = Lvl.18 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL19CANDY]
+Name = Lvl.19 Candy
+NamePlural = Lvl.19 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL20CANDY]
+Name = Lvl.20 Candy
+NamePlural = Lvl.21 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 3rd Type Emerald Level Cap.
+#-------------------------------
+[LVL21CANDY]
+Name = Lvl.21 Candy
+NamePlural = Lvl.21 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL22CANDY]
+Name = Lvl.22 Candy
+NamePlural = Lvl.22 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL23CANDY]
+Name = Lvl.23 Candy
+NamePlural = Lvl.23 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL24CANDY]
+Name = Lvl.24 Candy
+NamePlural = Lvl.24 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL25CANDY]
+Name = Lvl.25 Candy
+NamePlural = Lvl.25 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 4th Type Emerald Level Cap.
+#-------------------------------
+[LVL26CANDY]
+Name = Lvl.26 Candy
+NamePlural = Lvl.26 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL27CANDY]
+Name = Lvl.27 Candy
+NamePlural = Lvl.27 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL28CANDY]
+Name = Lvl.28 Candy
+NamePlural = Lvl.28 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL29CANDY]
+Name = Lvl.29 Candy
+NamePlural = Lvl.29 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL30CANDY]
+Name = Lvl.30 Candy
+NamePlural = Lvl.30 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = Evolves 2 Stage Evolution Pokemon. Not Fully Evolved Cup's Format. Pre 5th Type Emerald Level Cap.
+#-------------------------------
+[LVL31CANDY]
+Name = Lvl.31 Candy
+NamePlural = Lvl.31 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = Evolves 1 Stage Evolution Pokemon. Evolved 1 Stage's cannot partake in Not Fully Evolved Cup.
+#-------------------------------
+[LVL32CANDY]
+Name = Lvl.32 Candy
+NamePlural = Lvl.32 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL33CANDY]
+Name = Lvl.33 Candy
+NamePlural = Lvl.33 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL34CANDY]
+Name = Lvl.34 Candy
+NamePlural = Lvl.34 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL35CANDY]
+Name = Lvl.35 Candy
+NamePlural = Lvl.35 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 6th Type Emerald Level Cap.
+#-------------------------------
+[LVL36CANDY]
+Name = Lvl.36 Candy
+NamePlural = Lvl.36 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL37CANDY]
+Name = Lvl.37 Candy
+NamePlural = Lvl.37 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL38CANDY]
+Name = Lvl.38 Candy
+NamePlural = Lvl.38 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL39CANDY]
+Name = Lvl.39 Candy
+NamePlural = Lvl.39 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL40CANDY]
+Name = Lvl.40 Candy
+NamePlural = Lvl.40 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 7th Type Emerald Level Cap.
+#-------------------------------
+[LVL41CANDY]
+Name = Lvl.41 Candy
+NamePlural = Lvl.41 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL42CANDY]
+Name = Lvl.42 Candy
+NamePlural = Lvl.42 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL43CANDY]
+Name = Lvl.43 Candy
+NamePlural = Lvl.43 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL44CANDY]
+Name = Lvl.44 Candy
+NamePlural = Lvl.44 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL45CANDY]
+Name = Lvl.45 Candy
+NamePlural = Lvl.45 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 8th Type Emerald Level Cap.
+#-------------------------------
+[LVL46CANDY]
+Name = Lvl.46 Candy
+NamePlural = Lvl.46 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL47CANDY]
+Name = Lvl.47 Candy
+NamePlural = Lvl.47 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL48CANDY]
+Name = Lvl.48 Candy
+NamePlural = Lvl.48 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL49CANDY]
+Name = Lvl.49 Candy
+NamePlural = Lvl.49 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL50CANDY]
+Name = Lvl.50 Candy
+NamePlural = Lvl.50 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = Evolves 2 Stage Evolution Pokemon. Video Game Championship's Format. Pre 9th Type Emerald Level Cap.
+#-------------------------------
+[LVL51CANDY]
+Name = Lvl.51 Candy
+NamePlural = Lvl.51 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL52CANDY]
+Name = Lvl.52 Candy
+NamePlural = Lvl.52 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL53CANDY]
+Name = Lvl.53 Candy
+NamePlural = Lvl.53 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL54CANDY]
+Name = Lvl.54 Candy
+NamePlural = Lvl.54 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL55CANDY]
+Name = Lvl.55 Candy
+NamePlural = Lvl.55 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 10th Type Emerald Level Cap.
+#-------------------------------
+[LVL56CANDY]
+Name = Lvl.56 Candy
+NamePlural = Lvl.56 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL57CANDY]
+Name = Lvl.57 Candy
+NamePlural = Lvl.57 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL58CANDY]
+Name = Lvl.58 Candy
+NamePlural = Lvl.58 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL59CANDY]
+Name = Lvl.59 Candy
+NamePlural = Lvl.59 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL60CANDY]
+Name = Lvl.60 Candy
+NamePlural = Lvl.60 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 11th Type Emerald Level Cap.
+#-------------------------------
+[LVL61CANDY]
+Name = Lvl.61 Candy
+NamePlural = Lvl.61 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL62CANDY]
+Name = Lvl.62 Candy
+NamePlural = Lv62 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL63CANDY]
+Name = Lvl.63 Candy
+NamePlural = Lvl.63 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL64CANDY]
+Name = Lvl.64 Candy
+NamePlural = Lvl.64 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL65CANDY]
+Name = Lvl.65 Candy
+NamePlural = Lvl.65 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 12th Type Emerald Level Cap.
+#-------------------------------
+[LVL66CANDY]
+Name = Lvl.66 Candy
+NamePlural = Lvl.66 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL67CANDY]
+Name = Lvl.67 Candy
+NamePlural = Lvl.67 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL68CANDY]
+Name = Lvl.68 Candy
+NamePlural = Lvl.68 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL69CANDY]
+Name = Lvl.69 Candy
+NamePlural = Lvl.69 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL70CANDY]
+Name = Lvl.70 Candy
+NamePlural = Lvl.70 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 13th Type Emerald Level Cap.
+#-------------------------------
+[LVL71CANDY]
+Name = Lvl.71 Candy
+NamePlural = Lvl.71 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL72CANDY]
+Name = Lvl.72 Candy
+NamePlural = Lvl.72 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL73CANDY]
+Name = Lvl.73 Candy
+NamePlural = Lvl.73 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL74CANDY]
+Name = Lvl.74 Candy
+NamePlural = Lvl.74 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL75CANDY]
+Name = Lvl.75 Candy
+NamePlural = Lvl.75 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 14th Type Emerald Level Cap.
+#-------------------------------
+[LVL76CANDY]
+Name = Lvl.76 Candy
+NamePlural = Lvl.76 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL77CANDY]
+Name = Lvl.77 Candy
+NamePlural = Lvl.77 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL78CANDY]
+Name = Lvl.78 Candy
+NamePlural = Lvl.78 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL79CANDY]
+Name = Lvl.79 Candy
+NamePlural = Lvl.79 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL80CANDY]
+Name = Lvl.80 Candy
+NamePlural = Lvl.80 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 15th Type Emerald Level Cap.
+#-------------------------------
+[LVL81CANDY]
+Name = Lvl.81 Candy
+NamePlural = Lvl.81 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL82CANDY]
+Name = Lvl.82 Candy
+NamePlural = Lvl.82 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL83CANDY]
+Name = Lvl.83 Candy
+NamePlural = Lvl.83 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL84CANDY]
+Name = Lvl.84 Candy
+NamePlural = Lvl.84 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL85CANDY]
+Name = Lvl.85 Candy
+NamePlural = Lvl.85 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 16th Type Emerald Level Cap.
+#-------------------------------
+[LVL86CANDY]
+Name = Lvl.86 Candy
+NamePlural = Lvl.86 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL87CANDY]
+Name = Lvl.87 Candy
+NamePlural = Lvl.87 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL88CANDY]
+Name = Lvl.88 Candy
+NamePlural = Lvl.88 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL89CANDY]
+Name = Lvl.89 Candy
+NamePlural = Lvl.89 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL90CANDY]
+Name = Lvl.90 Candy
+NamePlural = Lvl.90 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 17th Type Emerald Level Cap.
+#-------------------------------
+[LVL91CANDY]
+Name = Lvl.91 Candy
+NamePlural = Lvl.91 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL92CANDY]
+Name = Lvl.92 Candy
+NamePlural = Lvl.92 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL93CANDY]
+Name = Lvl.93 Candy
+NamePlural = Lvl.93 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL94CANDY]
+Name = Lvl.94 Candy
+NamePlural = Lvl.94 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL95CANDY]
+Name = Lvl.95 Candy
+NamePlural = Lvl.95 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level. Pre 18th Type Emerald Level Cap.
+#-------------------------------
+[LVL96CANDY]
+Name = Lvl.96 Candy
+NamePlural = Lvl.96 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL97CANDY]
+Name = Lvl.97 Candy
+NamePlural = Lvl.97 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL98CANDY]
+Name = Lvl.98 Candy
+NamePlural = Lvl.98 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL99CANDY]
+Name = Lvl.99 Candy
+NamePlural = Lvl.99 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+Description = A candy that sets a Pokémon's Level.
+#-------------------------------
+[LVL100CANDY]
+Name = Lvl.100 Candy
+NamePlural = Lvl.100 Candies
+Pocket = 4
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30,KeyItem
+#Description = Once used, a Pokémon cannot go back to a lower Level. Smogon's Format. Final/Super Boss Level Cap.
+Description = Once used, a Pokémon needs the Reset Candy to go back to a lower Level. Final/Super Boss Level Cap.
+#-------------------------------

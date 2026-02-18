@@ -1,0 +1,678 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[0]
+#Name = Essen
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+Filename = mapRegion0.png
+#-------------------------------
+# International Airport
+Point = 43,8,International Airport,,,,,,Size1x1
+#-------------------------------
+# Battle Paradise
+Point = 42,10,Battle Paradise 130,,33,30,19,,Size1x1
+Point = 45,10,Battle Paradise 230,,42,30,19,,Size1x1
+Point = 42,13,Battle Paradise 330,,43,30,19,,Size1x1
+Point = 45,13,Battle Paradise 430,,48,30,19,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Scatter Flood Islands
+Point = 33,37,Scatter Flood Islands,,154,40,22,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Shimmer Coast City
+Point = 42,35,Shimmer Coast City,Type Master 3 (Any order),87,36,26,,Size2x2Small
+Point = 41,35,Shimmer Coast City,Type Master 3 (Any order),87,36,26,,Size2x2Small
+Point = 41,34,Shimmer Coast City,Type Master 3 (Any order),87,36,26,,Size2x2Small
+Point = 42,34,Shimmer Coast City,Type Master 3 (Any order),87,36,26,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Route 1
+Point = 45,35,Route 1,,86,22,43,,Size1x1
+Point = 45,34,Underground 1,,86,22,43,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 2
+Point = 42,32,Route 2,,88,34,26,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 3
+Point = 45,31,Route 3,,89,24,45,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 4
+Point = 42,29,Route 4,,94,28,21,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 5
+Point = 36,29,Route 5,,100,20,32,,Size1x1
+Point = 36,27,Cave 5,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 6
+Point = 30,29,Route 6,,102,23,24,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 7
+Point = 30,25,Route 7,,109,14,20,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 8
+Point = 35,25,Route 8,,112,20,33,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 9
+Point = 35,22,Route 9,,114,33,26,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 10
+Point = 29,22,Route 10,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 11
+Point = 26,20,Route 11,,118,29,22,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 12
+Point = 22,18,Route 12,,120,24,14,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 13
+Point = 21,14,Route 13,,122,32,14,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 14
+Point = 21,12,Route 14,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 15
+Point = 23,9,Route 15,,126,34,32,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 16
+Point = 19,7,Route 16,,128,28,22,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 17
+Point = 13,5,Route 17,,130,42,30,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Route 18
+Point = 11,4,Route 18,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Cherryhill City
+Point = 44,32,Cherryhill City,Type Master 1 (Any order),77,19,17,,Size2x2Small
+Point = 44,33,Cherryhill City,Type Master 1 (Any order),77,19,17,,Size2x2Small
+Point = 45,32,Cherryhill City,Type Master 1 (Any order),77,19,17,,Size2x2Small
+Point = 45,33,Cherryhill City,Type Master 1 (Any order),77,19,17,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Cherryhill Gatehouses
+Point = 46,33,Cherryhill East Gatehouse,,,,,,Size1x1
+Point = 43,32,Cherryhill West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Cloakfall Forest
+Point = 47,33,Cloakfall Forest,Abandoned Cabin,82,18,17,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Obsidian Peak City
+Point = 44,29,Obsidian Peak City,Type Master 2 (Any order),90,26,21,,Size2x2Small
+Point = 45,29,Obsidian Peak City,Type Master 2 (Any order),90,26,21,,Size2x2Small
+Point = 44,30,Obsidian Peak City,Type Master 2 (Any order),90,26,21,,Size2x2Small
+Point = 45,30,Obsidian Peak City,Type Master 2 (Any order),90,26,21,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Obsidian Volcano 
+Point = 46,30,Obsidian Volcano Exterior,,93,19,21,,Size1x1
+Point = 46,29,Obsidian Volcano,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Obsidian Peak Gatehouses
+Point = 43,30,Obsidian Peak West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Mantic City Gatehouses
+Point = 40,29,Mantic City East Gatehouse,,,,,,Size1x1
+Point = 37,29,Mantic City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Mantic City
+Point = 39,29,Mantic City,Type Master 4 (Any order),96,25,26,,Size2x2Small
+Point = 38,29,Mantic City,Type Master 4 (Any order),96,25,26,,Size2x2Small
+Point = 38,28,Mantic City,Type Master 4 (Any order),96,25,26,,Size2x2Small
+Point = 39,28,Mantic City,Type Master 4 (Any order),96,25,26,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Timeline Grottos
+Point = 38,27,Prehistoric Grotto,,,,,,Size1x1
+Point = 40,27,Futuristic Grotto,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Boulevard City Gatehouses
+Point = 35,29,Boulevard City East Gatehouse,,,,,,Size1x1
+Point = 32,29,Boulevard City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Boulevard City
+Point = 34,29,Boulevard City,Type Master 5 (Any order),101,26,38,,Size2x2Small
+Point = 33,29,Boulevard City,Type Master 5 (Any order),101,26,38,,Size2x2Small
+Point = 33,28,Boulevard City,Type Master 5 (Any order),101,26,38,,Size2x2Small
+Point = 34,28,Boulevard City,Type Master 5 (Any order),101,26,38,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Penumbra City
+Point = 31,27,Penumbra City,Type Master 6 (Any order),103,24,21,,Size2x2Small
+Point = 30,27,Penumbra City,Type Master 6 (Any order),103,24,21,,Size2x2Small
+Point = 30,26,Penumbra City,Type Master 6 (Any order),103,24,21,,Size2x2Small
+Point = 31,26,Penumbra City,Type Master 6 (Any order),103,24,21,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Penumbra City Gatehouses
+Point = 29,27,Penumbra City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Stygian Cave
+Point = 28,26,Stygian Cave,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Stygian Woods
+Point = 28,27,Stygian Woods,,110,19,17,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Apterygota City
+Point = 32,25,Apterygota City,Type Master 7 (Any order),111,21,26,,Size2x2Small
+Point = 32,24,Apterygota City,Type Master 7 (Any order),111,21,26,,Size2x2Small
+Point = 33,24,Apterygota City,Type Master 7 (Any order),111,21,26,,Size2x2Small
+Point = 33,25,Apterygota City,Type Master 7 (Any order),111,21,26,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Apterygota Nest
+Point = 33,26,Apterygota Nest,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Apterygota City Gatehouses
+Point = 34,25,Apterygota City East Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Bulwark City
+Point = 35,24,Bulwark City,Type Master 8 (Any order),113,17,20,,Size2x2Small
+Point = 34,24,Bulwark City,Type Master 8 (Any order),113,17,20,,Size2x2Small
+Point = 34,23,Bulwark City,Type Master 8 (Any order),113,17,20,,Size2x2Small
+Point = 35,23,Bulwark City,Type Master 8 (Any order),113,17,20,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Gemstone Cave
+Point = 37,24,Gemstone Cave,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Virga City Gatehouses
+Point = 33,22,Virga City East Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Virga City
+Point = 32,22,Virga City,Type Master 9 (Any order),115,26,32,,Size2x2Small
+Point = 31,22,Virga City,Type Master 9 (Any order),115,26,32,,Size2x2Small
+Point = 31,21,Virga City,Type Master 9 (Any order),115,26,32,,Size2x2Small
+Point = 32,21,Virga City,Type Master 9 (Any order),115,26,32,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Virga Underpass
+Point = 31,20,Virga Underpass,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Lucid City
+Point = 29,20,Lucid City,Type Master 10 (Any order),117,25,20,,Size2x2Small
+Point = 28,20,Lucid City,Type Master 10 (Any order),117,25,20,,Size2x2Small
+Point = 28,19,Lucid City,Type Master 10 (Any order),117,25,20,,Size2x2Small
+Point = 29,19,Lucid City,Type Master 10 (Any order),117,25,20,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Safari Zones
+Point = 29,18,Generations Zone,,,,,,Size1x1
+Point = 29,14,Forest Zone,,,,,,Size1x1
+Point = 29,11,City Zone,,,,,,Size1x1
+Point = 30,12,Desert Zone,,,,,,Size1x1
+Point = 30,13,Scrublands Zone,,,,,,Size1x1
+Point = 31,12,Crag Zone,,,,,,Size1x1
+Point = 31,13,Volcano Zone,,,,,,Size1x1
+Point = 32,12,Tundra Zone,,,,,,Size1x1
+Point = 32,13,Cave Zone,,,,,,Size1x1
+Point = 33,12,Beach Zone,,,,,,Size1x1
+Point = 33,13,Seafloor Zone,,,,,,Size1x1
+Point = 34,12,River Zone,,,,,,Size1x1
+Point = 34,13,Sky Zone,,,,,,Size1x1
+Point = 35,11,Industral Zone,,,,,,Size1x1
+Point = 35,14,Simple Field,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Lucid City Gatehouses
+Point = 27,20,Lucid City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Circuit City Gatehouses
+Point = 25,19,Circuit City East Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Circuit City
+Point = 24,19,Circuit City,Type Master 11 (Any order),119,20,20,,Size2x2Small
+Point = 23,19,Circuit City,Type Master 11 (Any order),119,20,20,,Size2x2Small
+Point = 23,18,Circuit City,Type Master 11 (Any order),119,20,20,,Size2x2Small
+Point = 24,18,Circuit City,Type Master 11 (Any order),119,20,20,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Noxious City
+Point = 22,17,Noxious City,Type Master 12 (Any order),121,17,20,,Size2x2Small
+Point = 21,17,Noxious City,Type Master 12 (Any order),121,17,20,,Size2x2Small
+Point = 21,16,Noxious City,Type Master 12 (Any order),121,17,20,,Size2x2Small
+Point = 22,16,Noxious City,Type Master 12 (Any order),121,17,20,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Mt.Vile (Spelled Mt Vile due to a . causing a crash)
+Point = 24,16,Mt Vile,,173,41,15,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Sylph City
+Point = 20,12,Sylph City,Type Master 13 (Any order),123,18,28,,Size2x2Small
+Point = 19,12,Sylph City,Type Master 13 (Any order),123,18,28,,Size2x2Small
+Point = 19,11,Sylph City,Type Master 13 (Any order),123,18,28,,Size2x2Small
+Point = 20,11,Sylph City,Type Master 13 (Any order),123,18,28,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Revenant City
+Point = 23,12,Revenant City,Type Master 14 (Any order),125,18,20,,Size2x2Small
+Point = 23,11,Revenant City,Type Master 14 (Any order),125,18,20,,Size2x2Small
+Point = 24,11,Revenant City,Type Master 14 (Any order),125,18,20,,Size2x2Small
+Point = 24,12,Revenant City,Type Master 14 (Any order),125,18,20,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Revenant Tomb
+Point = 24,13,Revenant Tomb,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Draco City
+Point = 22,8,Draco City,Type Master 15 (Any order),127,22,39,,Size2x2Small
+Point = 21,8,Draco City,Type Master 15 (Any order),127,22,39,,Size2x2Small
+Point = 21,7,Draco City,Type Master 15 (Any order),127,22,39,,Size2x2Small
+Point = 22,7,Draco City,Type Master 15 (Any order),127,22,39,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Draco Cave
+Point = 22,6,Draco Cave,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Draco City Gatehouses
+Point = 20,8,Draco City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Iron City
+Point = 16,7,Iron City,Type Master 16 (Any order),129,24,21,,Size2x2Small
+Point = 15,7,Iron City,Type Master 16 (Any order),129,24,21,,Size2x2Small
+Point = 15,6,Iron City,Type Master 16 (Any order),129,24,21,,Size2x2Small
+Point = 16,6,Iron City,Type Master 16 (Any order),129,24,21,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Iron City Gatehouses
+Point = 17,6,Iron City East Gatehouse,,,,,,Size1x1
+Point = 14,6,Iron City West Gatehouse,,,,,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Crystal City
+Point = 11,5,Crystal City,Type Master 17 (Any order),131,18,29,,Size2x2Small
+Point = 10,5,Crystal City,Type Master 17 (Any order),131,18,29,,Size2x2Small
+Point = 10,6,Crystal City,Type Master 17 (Any order),131,18,29,,Size2x2Small
+Point = 11,6,Crystal City,Type Master 17 (Any order),131,18,29,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Crystal Lake
+Point = 10,7,Crystal Lake,,169,19,33,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Sub Zero Islands
+Point = 4,8,Sub Zero Islands,,179,40,20,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Stratos City
+Point = 11,3,Stratos City,Type Master 18 (Any order),133,36,21,,Size2x2Small
+Point = 10,3,Stratos City,Type Master 18 (Any order),133,36,21,,Size2x2Small
+Point = 10,2,Stratos City,Type Master 18 (Any order),133,36,21,,Size2x2Small
+Point = 11,2,Stratos City,Type Master 18 (Any order),133,36,21,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Stratos Horizon
+Point = 11,1,Stratos Horizon,,171,29,21,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Peninsula of Mastery
+Point = 9,3,Peninsula of Mastery,Final Boss Gate,135,19,24,,Size1x1
+#-------------------------------
+
+#-------------------------------
+# Zenith Domain
+Point = 9,2,Zenith Domain,18 Type Emeralds Needed,,,,,Size2x2Small
+Point = 8,2,Zenith Domain,18 Type Emeralds Needed,,,,,Size2x2Small
+Point = 8,1,Zenith Domain,18 Type Emeralds Needed,,,,,Size2x2Small
+Point = 9,1,Zenith Domain,18 Type Emeralds Needed,,,,,Size2x2Small
+#-------------------------------
+
+#-------------------------------
+# Mystery Zones
+Point = 19,37,Mystery Zone 0,,,,,,Size1x1
+Point = 17,37,Mystery Zone 1,,,,,,Size1x1
+Point = 16,37,Mystery Zone 2,,,,,,Size1x1
+Point = 15,37,Mystery Zone 3,,,,,,Size1x1
+Point = 14,37,Mystery Zone 4,,,,,,Size1x1
+Point = 13,37,Mystery Zone 5,,,,,,Size1x1
+
+Point = 16,35,Mystery Zone 6,,,,,,Size1x1
+Point = 15,35,Mystery Zone 7,,,,,,Size1x1
+Point = 14,35,Mystery Zone 8,,,,,,Size1x1
+Point = 13,35,Mystery Zone 9,,,,,,Size1x1
+Point = 12,35,Mystery Zone 10,,,,,,Size1x1
+
+Point = 15,33,Mystery Zone 11,,,,,,Size1x1
+Point = 14,33,Mystery Zone 12,,,,,,Size1x1
+Point = 13,33,Mystery Zone 13,,,,,,Size1x1
+Point = 12,33,Mystery Zone 14,,,,,,Size1x1
+Point = 11,33,Mystery Zone 15,,,,,,Size1x1
+
+Point = 14,31,Mystery Zone 16,,,,,,Size1x1
+Point = 13,31,Mystery Zone 17,,,,,,Size1x1
+Point = 12,31,Mystery Zone 18,,,,,,Size1x1
+Point = 11,31,Mystery Zone 19,,,,,,Size1x1
+Point = 10,31,Mystery Zone 20,,,,,,Size1x1
+
+Point = 13,29,Mystery Zone 21,,,,,,Size1x1
+Point = 12,29,Mystery Zone 22,,,,,,Size1x1
+Point = 11,29,Mystery Zone 23,,,,,,Size1x1
+Point = 10,29,Mystery Zone 24,,,,,,Size1x1
+Point = 9,29,Mystery Zone 25,,,,,,Size1x1
+
+Point = 12,27,Mystery Zone 26,,,,,,Size1x1
+Point = 11,27,Mystery Zone 27,,,,,,Size1x1
+Point = 10,27,Mystery Zone 28,,,,,,Size1x1
+Point = 9,27,Mystery Zone 29,,,,,,Size1x1
+Point = 8,27,Mystery Zone 30,,,,,,Size1x1
+
+Point = 11,25,Mystery Zone 31,,,,,,Size1x1
+Point = 10,25,Mystery Zone 32,,,,,,Size1x1
+Point = 9,25,Mystery Zone 33,,,,,,Size1x1
+Point = 8,25,Mystery Zone 34,,,,,,Size1x1
+Point = 7,25,Mystery Zone 35,,,,,,Size1x1
+
+Point = 10,23,Mystery Zone 36,,,,,,Size1x1
+Point = 9,23,Mystery Zone 37,,,,,,Size1x1
+Point = 8,23,Mystery Zone 38,,,,,,Size1x1
+Point = 7,23,Mystery Zone 39,,,,,,Size1x1
+Point = 6,23,Mystery Zone 40,,,,,,Size1x1
+
+Point = 9,21,Mystery Zone 41,,,,,,Size1x1
+Point = 8,21,Mystery Zone 42,,,,,,Size1x1
+Point = 7,21,Mystery Zone 43,,,,,,Size1x1
+Point = 6,21,Mystery Zone 44,,,,,,Size1x1
+Point = 5,21,Mystery Zone 45,,,,,,Size1x1
+
+Point = 8,19,Mystery Zone 46,,,,,,Size1x1
+Point = 7,19,Mystery Zone 47,,,,,,Size1x1
+Point = 6,19,Mystery Zone 48,,,,,,Size1x1
+Point = 5,19,Mystery Zone 49,,,,,,Size1x1
+Point = 4,19,Mystery Zone 50,,,,,,Size1x1
+
+Point = 4,17,Mystery Zone 51,,,,,,Size1x1
+#-------------------------------
+[1]
+#Name = Tiall
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+Filename = mapRegion0.png #mapRegion1.png
+Point = 13,16,Here
+#-------------------------------
+[2]
+#Name = Pokedex Info
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+Filename = mapRegion0.png #mapRegion2.png
+Point = 13,16,Here
+#-------------------------------
+[3]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info2
+Filename = mapRegion0.png #mapRegion3.png
+Point = 13,16,Here
+#-------------------------------
+[4]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info3
+Filename = mapRegion0.png #mapRegion4.png
+Point = 13,16,Here
+#-------------------------------
+[5]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info4
+Filename = mapRegion0.png #mapRegion5.png
+Point = 13,16,Here
+#-------------------------------
+[6]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info5
+Filename = mapRegion0.png #mapRegion6.png
+Point = 13,16,Here
+#-------------------------------
+[7]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info6
+Filename = mapRegion0.png #mapRegion7.png
+Point = 13,16,Here
+#-------------------------------
+[8]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info7
+Filename = mapRegion0.png #mapRegion8.png
+Point = 13,16,Here
+#-------------------------------
+[9]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info8
+Filename = mapRegion0.png #mapRegion9.png
+Point = 13,16,Here
+#-------------------------------
+[10]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info9
+Filename = mapRegion0.png #mapRegion10.png
+Point = 13,16,Here
+#-------------------------------
+[11]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info10
+Filename = mapRegion0.png #mapRegion11.png
+Point = 13,16,Here
+#-------------------------------
+[12]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info11
+Filename = mapRegion0.png #mapRegion12.png
+Point = 13,16,Here
+#-------------------------------
+[13]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info12
+Filename = mapRegion0.png #mapRegion13.png
+Point = 13,16,Here
+#-------------------------------
+[14]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info13
+Filename = mapRegion0.png #mapRegion14.png
+Point = 13,16,Here
+#-------------------------------
+[15]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info14
+Filename = mapRegion0.png #mapRegion15.png
+Point = 13,16,Here
+#-------------------------------
+[16]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info15
+Filename = mapRegion0.png #mapRegion16.png
+Point = 13,16,Here
+#-------------------------------
+[17]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info16
+Filename = mapRegion0.png #mapRegion17.png
+Point = 13,16,Here
+#-------------------------------
+[18]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info17
+Filename = mapRegion0.png #mapRegion18.png
+Point = 13,16,Here
+#-------------------------------
+[19]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info18
+Filename = mapRegion0.png #mapRegion19.png
+Point = 13,16,Here
+#-------------------------------
+[20]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info19
+Filename = mapRegion0.png #mapRegion20.png
+Point = 13,16,Here
+#-------------------------------
+[21]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info20
+Filename = mapRegion0.png #mapRegion21.png
+Point = 13,16,Here
+#-------------------------------
+[22]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info21
+Filename = mapRegion0.png #mapRegion22.png
+Point = 13,16,Here
+#-------------------------------
+[23]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info22
+Filename = mapRegion0.png #mapRegion23.png
+Point = 13,16,Here
+#-------------------------------
+[24]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info23
+Filename = mapRegion0.png #mapRegion24.png
+Point = 13,16,Here
+#-------------------------------
+[25]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info24
+Filename = mapRegion0.png #mapRegion25.png
+Point = 13,16,Here
+#-------------------------------
+[26]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info25
+Filename = mapRegion0.png #mapRegion26.png
+Point = 13,16,Here
+#-------------------------------
+[27]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info26
+Filename = mapRegion0.png #mapRegion27.png
+Point = 13,16,Here
+#-------------------------------
+[28]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info27
+Filename = # mapRegion0.pngmapRegion28.png
+Point = 13,16,Here
+#-------------------------------
+[29]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info28
+Filename = # mapRegion0.pngmapRegion29.png
+Point = 13,16,Here
+#-------------------------------
+[30]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info29
+Filename = # mapRegion0.pngmapRegion.png
+Point = 13,16,Here
+#-------------------------------
+[31]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info30
+Filename = # mapRegion0.pngmapRegion1.png
+Point = 13,16,Here
+#-------------------------------
+[32]
+Name = Beatha #(Life, Existnace in Gaelic. Placeholder name was Quoak)
+#Name = Pokedex Info31
+Filename = # mapRegion0.pngmapRegion1.png
+Point = 13,16,Here
+#-------------------------------

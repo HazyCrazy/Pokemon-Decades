@@ -1,0 +1,5 @@
+﻿Name       = Battle Size Options
+Version    = 1.0 
+Essentials = 20
+Link       = https://reliccastle.com/resources/643/
+Credits    = TechSkylander1518

@@ -1,0 +1,3598 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[PLAYER_TRAINER_FRLG_Red]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_FRLG_Leaf]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_HGSS_Ethan]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_HGSS_Lyra]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_COLO_Wes]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_GSC_Kris]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_ORAS_Brendan]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_ORAS_May]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_PL_Lucas]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_PL_Dawn]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_BW1_Hilbert]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_BW1_Hilda]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_B2W2_Nate]
+Name = Pokémon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PLAYER_TRAINER_B2W2_Rosa]
+Name = Pokémon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_ACETRAINER_MAN]
+Name = Alolan Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_ACETRAINER_WOMAN]
+Name = Alolan Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_AETHER_FOUNDATION_EMPLOYEE_MAN]
+Name = Aether Foundation Employee
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_AETHER_FOUNDATION_EMPLOYEE_WOMAN]
+Name = Aether Foundation Employee
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_BEAUTY]
+Name = Alolan Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_BELLHOP]
+Name = Alolan Bellhop
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_BLACK_BELT]
+Name = Alolan Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_COOK]
+Name = Alolan Cook
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_FIREFIGHTER]
+Name = Alolan Firefighter
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_FISHERMAN]
+Name = Alolan Fisherman
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_GENTLEMAN]
+Name = Alolan Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_GUZMA]
+Name = Team Skull's Boss
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_HAPU]
+Name = Alolan Island Kahuna
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_HAU]
+Name = Alolan Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_HIKER]
+Name = Alolan Hiker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_JANITOR]
+Name = Alolan Janitor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_KAHILI]
+Name = Alolan Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_KIAWE]
+Name = Alolan Trial Captain
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_KUKUI]
+Name = Alolan Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_LANA]
+Name = Alolan Trial Captain
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_LASS]
+Name = Alolan Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_LUSAMINE]
+Name = Aether President
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_MADAME]
+Name = Alolan Madame
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_NANU]
+Name = Alolan Island Kahuna
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_NURSE]
+Name = Alolan Nurse
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_OFFICE_WORKER_MAN]
+Name = Alolan Office Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_OFFICE_WORKER_WOMAN]
+Name = Alolan Office Worker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_OFFICER]
+Name = Alolan Officer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_OLIVIA]
+Name = Alolan Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_PALE_SWIMMER_WOMAN]
+Name = Alolan Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_PRESCHOOLER_BOY]
+Name = Alolan Preschooler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_PRESCHOOLER_GIRL]
+Name = Alolan Preschooler
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_PUNK_GIRL]
+Name = Alolan Punk
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_PUNK_GUY]
+Name = Alolan Punk
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_RISING_STAR_BOY]
+Name = Alolan Rising Star
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_RISING_STAR_GIRL]
+Name = Alolan Rising Star
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_ROCKET_GRUNT_MAN]
+Name = Team Rainbow Rocket Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_ROCKET_GRUNT_WOMAN]
+Name = Team Rainbow Rocket Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SAMSON_OAK]
+Name = Alolan Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SCIENTIST]
+Name = Alolan Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SIGHTSEER_MAN]
+Name = Alolan Sightseer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SIGHTSEER_WOMAN]
+Name = Alolan Sightseer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SKULL_GRUNT_MAN]
+Name = Team Skull Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SKULL_GRUNT_WOMAN]
+Name = Team Skull Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SURFER]
+Name = Alolan Surfer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_SWIMMER_MAN]
+Name = Alolan Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_TANNED_SWIMMER_WOMAN]
+Name = Alolan Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_TRIALGUIDE_MAN]
+Name = Alolan Trial Guide
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_VETERAN_MAN]
+Name = Alolan Veteran
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_VETERAN_WOMAN]
+Name = Alolan Veteran
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_WICKE]
+Name = Aether Foundation Assistant Chief
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_WORKER]
+Name = Alolan Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ALOLAN_USUM_YOUNGSTER]
+Name = Alolan Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_POKEMON_BREEDER_MAN]
+Name = Galarian Pokemon Breeder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_POKEMON_BREEDER_WOMAN]
+Name = Galarian Pokemon Breeder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_ARTIST_MAN]
+Name = Galarian Artist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_BALL_GUY]
+Name = Galarian
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_BEAUTY]
+Name = Galarian Beauty
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_BEDE]
+Name = Galarian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_BLACK_BELT]
+Name = Galarian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_CABBIE]
+Name = Galarian Cabbie
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_CAFE_MASTER]
+Name = Galarian Cafe Master
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_CAMERAMAN]
+Name = Galarian Cameraman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_COOK]
+Name = Galarian Cook
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_DANCER]
+Name = Galarian Dancer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_DOCTOR_MAN]
+Name = Galarian Doctor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_DOCTOR_WOMAN]
+Name = Galarian Doctor
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_FISHERWOMAN]
+Name = Galarian Fisherwoman
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_GENTLEMAN]
+Name = Galarian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_KABU]
+Name = Galarian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_KLARA]
+Name = Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_LASS]
+Name = Galarian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_LEAGUESTAFF_MAN]
+Name = Galarian League Staff
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_LEON]
+Name = Galar's Champion
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_MARNIE]
+Name = Galarian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_MILO]
+Name = Galarian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_MODEL]
+Name = Galarian Model
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_MOM]
+Name = Galarian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_NESSA]
+Name = Galarian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_OFFICE_WORKER_MAN]
+Name = Galarian Office Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_OFFICE_WORKER_WOMAN]
+Name = Galarian Office Worker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_OLEANA]
+Name = Macro Cosmos Vice President
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_PIERS]
+Name = Galarian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_POST_MAN]
+Name = Galarian Postman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_RAILSTAFF]
+Name = Galarian Rail Staff
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_REPORTER]
+Name = Galarian Reporter
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_ROSE]
+Name = Macro Cosmos President
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_WORKER_MAN]
+Name = Galarian Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_WORKER_WOMAN]
+Name = Galarian Worker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_YELL_GRUNT_MAN]
+Name = Team Yell Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_YELL_GRUNT_WOMAN]
+Name = Team Yell Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[GALARIAN_SWSH_YOUNGSTER]
+Name = Galarian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_BRAWLY]
+Name = Hoennian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_FLANNERY]
+Name = Hoennian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_JUAN]
+Name = Hoennian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_LIZA]
+Name = Hoennian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_LIZA_TATE]
+Name = Hoennian Gym Leader
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_NORMAN]
+Name = Hoennian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_ROXANNE]
+Name = Hoennian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_STEVEN_STONE]
+Name = Hoenn's Champion
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_TATE]
+Name = Hoennian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_WALLACE]
+Name = Former Hoenn Champion
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_WATTSON]
+Name = Hoennian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_B2W2_WINONA]
+Name = Hoennian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_ACETRAINER_MAN]
+Name = Hoennian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_ACETRAINER_WOMAN]
+Name = Hoennian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_AQUA_GRUNT_MAN]
+Name = Team Aqua Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_AQUA_GRUNT_WOMAN]
+Name = Team Aqua Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_ARCHIE]
+Name = Team Aqua Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_AROMALADY]
+Name = Hoennian Aroma Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BATTLE_GIRL]
+Name = Hoennian Battle Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BEAUTY]
+Name = Hoennian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BIRDKEEPER]
+Name = Hoennian Bird Keeper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BLACK_BELT]
+Name = Hoennian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BRIGETTE]
+Name = Pokemon Bank Developer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BUG_CATCHER]
+Name = Hoennian Bug Catcher
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_BUG_MANIAC]
+Name = Hoennian Bug Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_CAMERAMAN]
+Name = Hoennian Cameraman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_CAMPER_BOY]
+Name = Hoennian Camper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_CAMPER_GIRL]
+Name = Hoennian Camper
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_COLLECTOR]
+Name = Hoennian Collector
+Gender = Male
+SkillLevel = 100
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_COURTNEY]
+Name = Team Magma Admin
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_DELINQUENT]
+Name = Hoennian Delinquent
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_DIVER_MAN]
+Name = Hoennian Diver
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_DRAGON_TAMER]
+Name = Hoennian Dragon Tamer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_EXPERT_MAN]
+Name = Hoennian Expert
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_FISHER_MAN]
+Name = Hoennian Fisherman
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_GENTLEMAN]
+Name = Hoennian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_GLACIA]
+Name = Hoennian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_GUITARIST]
+Name = Hoennian Guitarist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_INTERVIEWERS]
+Name = Hoennian Interviewers
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_JOSEPH_STONE]
+Name = Devon Corp President
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_KINDLER]
+Name = Hoennian Kindler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_LADY]
+Name = Hoennian Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_LASS]
+Name = Hoennian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_LISIA]
+Name = Hoennian Pokémon Idol
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_MATT]
+Name = Team Aqua Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_MAXIE]
+Name = Team Magma Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_MOM]
+Name = Hoennian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_MR_BRINEY]
+Name = S.S Tidal Captain
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_NINJA_BOY]
+Name = Hoennian Ninja Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_PARASOL_LADY]
+Name = Hoennian Parasol Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_PHOEBE]
+Name = Hoennian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKE_MANIAC]
+Name = Hoennian Poke Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEFAN_MAN]
+Name = Hoennian Poke Fan
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEFAN_WOMAN]
+Name = Hoennian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEMON_BREEDER_MAN]
+Name = Hoennian Pokemon Breeder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEMON_BREEDER_WOMAN]
+Name = Hoennian Pokemon Breeder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEMON_RANGER_MAN]
+Name = Hoennian Pokemon Ranger
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_POKEMON_RANGER_WOMAN]
+Name = Hoennian Pokemon Ranger
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_PROFESSOR_BIRCH]
+Name = Hoennian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_REPORTER]
+Name = Hoennian Reporter
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_RICH_BOY]
+Name = Hoennian Rich Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SAILOR]
+Name = Hoennian Sailor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SCHOOLBOY]
+Name = Hoennian School Boy
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SCHOOLGIRL]
+Name = Hoennian School Girl
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SHELLY]
+Name = Team Aqua Admin
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SIDNEY]
+Name = Hoennian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_STREET_THUG]
+Name = Hoennian Street Thug
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_SWIMMER_WOMAN]
+Name = Hoennian Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TABITHA]
+Name = Team Magma Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TEAMMATES]
+Name = Hoennian Team Mates
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TRIATHLETE_BIKE]
+Name = Hoennian Triathlete
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TRIATHLETE_RUNNING]
+Name = Hoennian Triathlete
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TRIATHLETE_SWIMMING]
+Name = Hoennian Triathlete
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TUBER_BOY]
+Name = Hoennian Tuber Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_TUBER_GIRL]
+Name = Hoennian Tuber Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_WALLY]
+Name = Hoennian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_YOUNGCOUPLE]
+Name = Hoennian Young Couple
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_ORAS_YOUNGSTER]
+Name = Hoennian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_RSE_LUCY]
+Name = Battle Pike Queen
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_RSE_NINJA_BOY]
+Name = Hoennian Ninja Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_RSE_SCOTT]
+Name = Hoennian Battle Frontier Owner
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HOENNIAN_USUM_ANABEL]
+Name = International Police officer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HOMEIAN_HOME_GRAND_OAK]
+Name = Pokemon Home Developer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_BLUE_OFFICE_MAN]
+Name = Hubian Office Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_BOOK_GIRL]
+Name = Hubian Book Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_CAFE_MASTER]
+Name = Hubian Cafe Master
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_CHEERLEADER]
+Name = Hubian Cheerleader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_COURIER]
+Name = Hubian Courier
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_GARDENER]
+Name = Hubian Gardener
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_GENTLEMAN]
+Name = Hubian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_JOGGER]
+Name = Hubian Jogger
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_MADAME]
+Name = Hubian Madame
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_MODEL]
+Name = Hubian Model
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_PURPLE_OFFICE_MAN]
+Name = Hubian Office Man
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_RUIN_MANIAC]
+Name = Hubian Ruin Maniac
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_SAILOR]
+Name = Hubian Sailor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[HUBIAN_POKENGINE_SCIENTIST]
+Name = Hubian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_GSC_GENTLEMAN]
+Name = Johtoian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_GSC_MOM]
+Name = Johtoian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ACE_DUO]
+Name = Johtoian Ace Duo
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ACETRAINER_MAN]
+Name = Johtoian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ACETRAINER_WOMAN]
+Name = Johtoian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ARCHER]
+Name = Team Rocket Admim
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ARIANA]
+Name = Team Rocket Admim
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BATTLE_GIRL]
+Name = Johtoian Battle Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BEAUTY]
+Name = Johtoian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BIKER]
+Name = Johtoian Biker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BLACK_BELT]
+Name = Johtoian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BORDER]
+Name = Johtoian Border
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BUG_CATCHER]
+Name = Johtoian Bug Catcher
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BUGSY]
+Name = Johtoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_BURGLAR]
+Name = Johtoian Burglar
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_CHUCK]
+Name = Johtoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_CLAIR]
+Name = Johtoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_DJ_MARY]
+Name = Radio Celebrity
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ELDER]
+Name = Johtoian Elder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_EUSINE]
+Name = Mystery Man
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_FALKNER]
+Name = Johtoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_FIRE_BREATHER]
+Name = Johtoian Fire Breather
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_GENTLEMAN]
+Name = Johtoian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_GUITARIST]
+Name = Johtoian Guitarist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_JASMINE]
+Name = Johtoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_JUGGLER]
+Name = Johtoian Juggler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_KAREN]
+Name = Indigo League Champion
+Gender = Female
+BaseMoney = 100
+#-------------------------------
+[JOHTOIAN_HGSS_KIMONO_GIRL]
+Name = Johtoian Kimono Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_KURT]
+Name = Poke Ball Smith
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_LASS]
+Name = Johtoian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_MAGNUS]
+Name = Pokéathlon Founder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_MEDIUM]
+Name = Johtoian Medium
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_MORTY]
+Name = Johtoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_PETREL]
+Name = Team Rocket Admim
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_POKE_MANIAC]
+Name = Johtoian Poke Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_PROFESSOR_ELM]
+Name = Johtoian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_PROTO]
+Name = Team Rocket Admim
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_PRYCE]
+Name = Johtoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ROCKET_GRUNT_MAN]
+Name = Team Rocket Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_ROCKET_GRUNT_WOMAN]
+Name = Team Rocket Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SAGE]
+Name = Johtoian Sage
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SCHOOLKID]
+Name = Johtoian School Kid
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SCIENTIST]
+Name = Johtoian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SILVER]
+Name = Johtoian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SKIER]
+Name = Johtoian Skier
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SUPER_NERD]
+Name = Johtoian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SWIMMER_MAN]
+Name = Johtoian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_SWIMMER_WOMAN]
+Name = Johtoian Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_TEACHER]
+Name = Johtoian Teacher
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_TWINS]
+Name = Johtoian Twins
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_WHITNEY]
+Name = Johtoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_WILL]
+Name = Johtoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_YOUNG_COUPLE]
+Name = Johtoian Young Couple
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[JOHTOIAN_HGSS_YOUNGSTER]
+Name = Johtoian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ACETRAINER_MAN]
+Name = Kaloian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ACETRAINER_WOMAN]
+Name = Kaloian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ARTIST_MAN]
+Name = Kaloian Artist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ARTIST_WOMAN]
+Name = Kaloian Artist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_AUGUSTINE_SYCAMORE]
+Name = Kaloian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_AZ]
+Name = Eternal Wanderer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BACKPACKER]
+Name = Kaloian Backpacker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BEAUTY]
+Name = Kaloian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BLACK_BELT]
+Name = Kaloian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BLACK_FURISODE_GIRL]
+Name = Kaloian Furisode Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BLUE_FURISODE_GIRL]
+Name = Kaloian Furisode Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_BONNIE]
+Name = Clemont's Sister
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_CHEF]
+Name = Kaloian Chef
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_CLEMONT]
+Name = Kaloian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_CONSTRUCTION_WORKER]
+Name = Kaloian Construction Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_DIANTHA]
+Name = Kalos's Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_DRASNA]
+Name = Kaloian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_FAIRYTALE_GIRL]
+Name = Kaloian Fairytale Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_FISHERMAN]
+Name = Kaloian Fisherman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_GARDENER]
+Name = Kaloian Gardener
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_GRANT]
+Name = Kaloian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_GREEN_TOURIST]
+Name = Kaloian Tourist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_HEX_MANIAC]
+Name = Kaloian Hex Maniac
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_HIKER]
+Name = Kaloian Hiker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_KORINNA]
+Name = Kaloian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_LADY]
+Name = Kaloian Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_LASS]
+Name = Kaloian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_LYSANDRE]
+Name = Team Flare Boss
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_MADAME]
+Name = Kaloian Madame
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_MAID]
+Name = Kaloian Maid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_MALVA]
+Name = Kaloian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_OLYMPIA]
+Name = Kaloian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ORANGE_TOURIST]
+Name = Kaloian Tourist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_OWNER]
+Name = Kaloian Owner
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PINK_FURISODE_GIRL]
+Name = Kaloian Furisode Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEFAN_MAN]
+Name = Kaloian Poke Fan
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEFAN_WOMAN]
+Name = Kaloian Poke Fan
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEMON_BREEDER_MAN]
+Name = Kaloian Pokemon Breeder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEMON_BREEDER_WOMAN]
+Name = Kaloian Pokemon Breeder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEMON_RANGER_MAN]
+Name = Kaloian Pokemon Ranger
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_POKEMON_RANGER_WOMAN]
+Name = Kaloian Pokemon Ranger
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PRESCHOOLER_BOY]
+Name = Kaloian Preschooler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PRESCHOOLER_GIRL]
+Name = Kaloian Preschooler
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PSYCHIC]
+Name = Kaloian Psychic
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PUNK_TRAINER_MAN]
+Name = Kaloian Punk
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_PUNK_TRAINER_WOMAN]
+Name = Kaloian Punk
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_RAMOS]
+Name = Kaloian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_RICH_BOY]
+Name = Kaloian Rich Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_RISINGSTAR_BOY]
+Name = Kaloian Rising Star
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_RISINGSTAR_GIRL]
+Name = Kaloian Rising Star
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ROLLERSKATER_BOY]
+Name = Kaloian Roller Skater
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_ROLLERSKATER_GIRL]
+Name = Kaloian Roller Skater
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SCHOOL_BOY]
+Name = Kaloian School Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SCHOOL_GIRL]
+Name = Kaloian School Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SCIENTIST_MAN]
+Name = Kaloian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SCIENTIST_WOMAN]
+Name = Kaloian Scientist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SHAUNA]
+Name = Kaloian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SIEBOLD]
+Name = Kaloian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SKYTRAINER_MAN]
+Name = Kaloian Sky Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SKYTRAINER_WOMAN]
+Name = Kaloian Sky Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SWIMMER_MAN]
+Name = Kaloian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_SWIMMER_WOMAN]
+Name = Kaloian Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TEAM_FLARE_ADMIN_MAN]
+Name = Team Flare Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TEAM_FLARE_GRUNT_MAN]
+Name = Team Flare Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TEAM_FLARE_GRUNT_WOMAN]
+Name = Team Flare Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TECHNICAL_WORKER]
+Name = Kaloian Technical Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TIERNO]
+Name = Kaloian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TOURIST]
+Name = Kaloian Tourist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TREVOR]
+Name = Kaloian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_TWINS]
+Name = Kaloian Twins
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_VALERIE]
+Name = Kaloian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_VETERAN_MAN]
+Name = Kaloian Veteran
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_VETERAN_WOMAN]
+Name = Kaloian Veteran
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_VIOLA]
+Name = Kaloian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_WAITER]
+Name = Kaloian Waiter
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_WAITRESS]
+Name = Kaloian Waitress
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_WHITE_FURISODE_GIRL]
+Name = Kaloian Furisode Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_WIKSTROM]
+Name = Kaloian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_WULFRIC]
+Name = Kaloian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KALOIAN_XY_YOUNGSTER]
+Name = Kaloian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_DPP_PROFESSOR_OAK]
+Name = Kantoian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_BRUNO]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_DAISY_OAK]
+Name = Pokémon Coordinator
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_GENTLEMAN]
+Name = Kantoian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_LADY]
+Name = Kantoian Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_LASS]
+Name = Kantoian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_MR_FUJI]
+Name = Pokemon Caretaker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_RUIN_MANIAC]
+Name = Kantoian Ruin Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_FRLG_SABRINA]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_BILL]
+Name = Pokemon PC Storage Inventor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_BLAINE_CASUAL]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_BLUE_OAK]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_BROCK_CASUAL]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_BRUNO]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_ERIKA]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_GIOVANNI]
+Name = Former Team Rocket Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_JANINE]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_KOGA]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_LANCE]
+Name = Kantoian Elite Four #Johto's Champion
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_LT_SURGE]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_MISTY_SWIMSUIT]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_PROFESSOR_OAK]
+Name = Kantoian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_HGSS_SABRINA]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_AGATHA]
+Name = Kantoian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BAOBA]
+Name = Kantoian Safari Owner
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BILL]
+Name = Pokemon PC Storage Inventor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BIRD_KEEPER]
+Name = Kantoian Bird Keeper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BLACK_BELT]
+Name = Kantoian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BLANNE_SCIENCE]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BLUE_OAK]
+Name = Kantoian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BROCK_TRAVEL]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BRUNO]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BUG_CATCHER]
+Name = Kantoian Bug Catcher
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_BURGLAR]
+Name = Kantoian Burglar
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_CAMPER_BOY]
+Name = Kantoian Camper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_CAMPER_GIRL]
+Name = Kantoian Camper
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_CHANNELER]
+Name = Channeler
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_CRUSH_GIRL]
+Name = Kantoian Crush Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_CRUSH_KIN]
+Name = Kantoian Crush Kin
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_DAISY_OAK]
+Name = Pokémon Coordinator
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_ERIKA]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_FISHERMAN]
+Name = Kantoian Fisherman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_GAMBLER]
+Name = Kantoian Gambler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_GENTLEMAN]
+Name = Kantoian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_GIOVANNI]
+Name = Team Rocket Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_GYM_GUIDE]
+Name = Kantoian Gym Guide
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_HIKER]
+Name = Kantoian Kiker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_JUGGLER]
+Name = Kantoian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_KOGA]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_LANCE]
+Name = Kantoian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_LASS]
+Name = Kantoian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_LORELEI]
+Name = Kantoian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_LT_SURGE]
+Name = Kantoian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_MISTY_CASUAL]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_POKE_MANIAC]
+Name = Kantoian Poke Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_PROFESSOR_OAK]
+Name = Kantoian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_PSYCHIC]
+Name = Kantoian Psychic
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_PUNK_GUY]
+Name = Kantoian Punk Guy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_ROCKER]
+Name = Kantoian Rocker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_ROUGHNECK]
+Name = Kantoian Roughneck
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SABRINA]
+Name = Kantoian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SAILOR]
+Name = Kantoian Sailor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SCIENTIST]
+Name = Kantoian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SUPER_NERD]
+Name = Kantoian Super Nerd
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SWIMMER_MAN]
+Name = Kantoian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_SWIMMER_WOMAN]
+Name = Kantoian Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_TAMER]
+Name = Kantoian Tamer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KANTOIAN_LGPE_TRACE]
+Name = Master Trainer#Kanto's Champion
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KATOIAN_LGPE_WORKER]
+Name = Kantoian Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SEVIIAN_FRLG_CELIO]
+Name = Pokemon PC Storage Programmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_CARETAKER]
+Name = Kitakamian Caretaker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_DELINQUENT]
+Name = Kitakamian Delinquent
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_FESTIVAL_BOY]
+Name = Kitakamian Festival Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_NURSE]
+Name = Kitakamian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_OGRE_CLAN_MEMBER]
+Name = Kitakamian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_CARMINE]
+Name = Kitakamian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[KITAKAMIAN_SV_PERRIN]
+Name = Kitakamian Photographer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_BEAUTY]
+Name = Oerrian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_BODYBUILDER]
+Name = Oerrian Bodybuilder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CHASER_MAN]
+Name = Oerrian Chaser
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CHASER_WOMAN]
+Name = Oerrian Chaser
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_ADMIN_VENUS]
+Name = Team Cipher Admin
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_BLACK]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_BLUE]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_BROWN]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_GREEN]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_PINK]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_PURPLE]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_RED]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_CIPHER_PEON_YELLOW]
+Name = Oerrian Cipher Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_FUN_OLD_LADY]
+Name = Oerrian Fun Old Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_FUN_OLD_MAN]
+Name = Oerrian Fun Old Man
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_HUNTER_MAN]
+Name = Oerrian Hunter
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_MIRRORB_PEON_FOLLY]
+Name = Mirror B's Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_MIRRORB_PEON_TRUDLY]
+Name = Mirror B's Peon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_SNAGEM_GRUNT]
+Name = Team Snagem Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_SNAGEM_GRUNT_GLASSES]
+Name = Team Snagem Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_SNAGEM_LEADER_GONZAP]
+Name = Team Snagem Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_COLO_STREET_PERFORMER]
+Name = Oerrian Street Performer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_XD_CIPHER_ADMIN_ARDOS]
+Name = Team Cipher Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_XD_CIPHER_ADMIN_GORIGAN]
+Name = Team Cipher Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[OERRIAN_XD_MIROR_B]
+Name = Wanderer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[ORREAN_COLO_RIDER_WILLIE]
+Name = World Rider
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_ACE_TRAINER_WOMAN]
+Name = Paldean Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_ARTIST]
+Name = Paldean Artist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_BACKPACKER]
+Name = Paldean Backpacker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_BLACK_BELT]
+Name = Paldean Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_BODYBUILDER_MAN]
+Name = Paldean Bodybuilder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_BODYBUILDER_WOMAN]
+Name = Paldean Bodybuilder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_COURIER]
+Name = Paldean Courier
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_DRAGON_TAMER]
+Name = Paldean Dragon Tamer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_GEETA]
+Name = Paldea's Top Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_JANITOR]
+Name = Paldean Janitor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_KINGAMBIT]
+Name = Wild Overlord
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_MODEL]
+Name = Paldean Model
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_NEMONA]
+Name = Paldea's Champion Rank Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_OFFICE_WORKER_MAN]
+Name = Paldean Office Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_OFFICE_WORKER_WOMAN]
+Name = Paldean Office Worker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_PROFESSOR_SADA]
+Name = Ancient Past AI
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_PROFESSOR_TURO]
+Name = Distant Future AI
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_TIMEMACHINE_AIS_SADA_TURO]
+Name = Time Machine AI's
+Gender = Unknown 
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_RYME]
+Name = Paldean Gym leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_SCHOOLKID_GIRL]
+Name = Paldean School Kid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_SCIENTIST]
+Name = Paldean Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_WAITRESS]
+Name = Paldean Waitress
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_WORKER]
+Name = Paldean Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PALDEAN_SV_YOUNGSTER]
+Name = Paldean Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_BEAUTY]
+Name = Pasioian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_BELLIS]
+Name = Pasioian Pokemon Professor
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_COLLECTOR]
+Name = Pasioian Collector
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_PUNK_GIRL]
+Name = Pasioian Punk Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_STREET_THUG]
+Name = Pasioian Street Thug
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_SWIMMER]
+Name = Pasioian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[PASIOIAN_MAEX_YOUNGSTER]
+Name = Pasioian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_DUSTY]
+Name = Poketopia's Sunset Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_MARINA]
+Name = Poketopia's Waterfall Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_ROSIE]
+Name = Poketopia's Neon Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_TAYLOR]
+Name = Poketopia's Main Street Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_TERREL]
+Name = Poketopia's Magma Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[POKETOPIA_PBR_VOLDON]
+Name = Poketopia's Crystal Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_B2W2_CYNTHIA]
+Name = Sinnoh's Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_AARON]
+Name = Sinnohian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ACE_DUO]
+Name = Sinnohian Ace Duo
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ACETRAINER_MAN]
+Name = Sinnohian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ACETRAINER_WINTER_MAN]
+Name = Sinnohian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ACETRAINER_WINTER_WOMAN]
+Name = Sinnohian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ACETRAINER_WOMAN]
+Name = Sinnohian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ARGENTA]
+Name = Battle Hall Matron
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_AROMA_LADY]
+Name = Sinnohian Aroma Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ARTIST]
+Name = Sinnohian Artist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BARRY]
+Name = Sinnohian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BATTLE_GIRL]
+Name = Sinnohian Battle Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BEAUTY]
+Name = Sinnohian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BERTHA]
+Name = Sinnohian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BIRD_KEEPER_MAN]
+Name = Sinnohian Bird Keeper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BIRD_KEEPER_WOMAN]
+Name = Sinnohian Bird Keeper
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BLACK_BELT]
+Name = Sinnohian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BUCK]
+Name = Sinnohian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BUG_CATCHER]
+Name = Sinnohian Bug Catcher
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_BYRON]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CAITLIN]
+Name = Battle Castle Owner
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CAITLIN_DARACH]
+Name = Battle Castle Valet
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CAMERAMAN]
+Name = Sinnohian Cameraman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CAMPER_BOY]
+Name = Sinnohian Camper
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CAMPER_GIRL]
+Name = Sinnohian Camper
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CANDICE]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CHARON]
+Name = Team Galactic Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CHERYL]
+Name = Sinnohian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CLOWN]
+Name = Sinnohian Clown
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_COLLECTOR]
+Name = Sinnohian Collector
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_COWGIRL]
+Name = Sinnohian Cowgirl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CRASHER_WAKE]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CYCLIST_MAN]
+Name = Sinnohian Cyclist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CYCLIST_WOMAN]
+Name = Sinnohian Cyclist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CYNTHIA]
+Name = Sinnoh's Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_CYRUS]
+Name = Team Galactic Boss
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_DAHLIA]
+Name = Battle Arcade Star
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_DARACH]
+Name = Battle Castle Butler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_DRAGON_TAMER]
+Name = Sinnohian Dragon Tamer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_FANTINA]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_FISHERMAN]
+Name = Sinnohian Fisherman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_FLINT]
+Name = Sinnohian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_GALACTIC_GRUNT_MAN]
+Name = Team Galactic Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_GALACTIC_GRUNT_WOMAN]
+Name = Team Galactic Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_GARDENIA]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_GENTLEMAN]
+Name = Sinnohian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_HIKER]
+Name = Sinnohian Hiker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_IDOL]
+Name = Sinnohian Idol
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_JOGGER]
+Name = Sinnohian Jogger
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_JOHANNA]
+Name = Sinnohian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_JOHANNA_DRESS]
+Name = Master Rank Pokémon Coordinator
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_JUPITER]
+Name = Team Galactic Admim
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_LADY]
+Name = Sinnohian Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_LASS]
+Name = Sinnohian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_LUCIAN]
+Name = Sinnohian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MADAME]
+Name = Sinnohian Madame
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MAID]
+Name = Sinnohian Maid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MARLEY]
+Name = Sinnohian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MARS]
+Name = Team Galactic Admim
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MAYLENE]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_MIRA]
+Name = Sinnohian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_NINJA_BOY]
+Name = Sinnohian Ninja Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_NURSE]
+Name = Sinnohian Nurse
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_OFFICER]
+Name = Sinnohian Officer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_PALMER]
+Name = Battle Tower Tycoon
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_PARASOL_LADY]
+Name = Sinnohian Parasol Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEFAN_MAN]
+Name = Sinnohian Poke Fan
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEFAN_WOMAN]
+Name = Sinnohian Poke Fan
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEKID]
+Name = Sinnohian Poke Kid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEMON_BREEDER_MAN]
+Name = Sinnohian Pokemon Breeder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEMON_BREEDER_WOMAN]
+Name = Sinnohian Pokemon Breeder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEMON_RANGER_MAN]
+Name = Sinnohian Pokemon Ranger
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_POKEMON_RANGER_WOMAN]
+Name = Sinnohian Pokemon Ranger
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_PRIVATE_INVESTIGATOR]
+Name = Sinnohian Private Investigator
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_PROFESSOR_ROWAN_COAT]
+Name = Sinnohian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_RANCHER]
+Name = Sinnohian Rancher #A Farmer who
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_REPORTER]
+Name = Sinnohian Reporter
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_REPORTER_CAMERAMAN]
+Name = Sinnohian Interviewers
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_RILEY]
+Name = Sinnohian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ROARK]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ROUGHNECK]
+Name = Sinnohian Roughneck
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_ROWAN]
+Name = Sinnohian Pokemon Professor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_RUIN_MANIAC]
+Name = Sinnohian Ruin Maniac
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SAILOR]
+Name = Sinnohian Sailor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SATURN]
+Name = Team Galactic Admin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SCHOOLKID_BOY]
+Name = Sinnohian School Kid
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SCHOOLKID_GIRL]
+Name = Sinnohian School Kid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SCIENTIST]
+Name = Sinnohian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SKIER_MAN]
+Name = Sinnohian Skier
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SKIER_WOMAN]
+Name = Sinnohian Skier
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SWIMMER_MAN]
+Name = Sinnohian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SWIMMER_WOMAN]
+Name = Sinnohian Woman
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_SWIMMING_DUO]
+Name = Sinnohian Swimming Duo
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_THORTON]
+Name = Battle Factory Head
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_TUBER_BOY]
+Name = Sinnohian Tuber Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_TUBER_GIRL]
+Name = Sinnohian Tuber Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_TWINS]
+Name = Sinnohian Twins
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_VETERAN]
+Name = Sinnohian Veteran
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_VOLKNER]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_WAITER]
+Name = Sinnohian Waiter
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_WAITRESS]
+Name = Sinnohian Waitress
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_WESTERN_DUO]
+Name = Sinnohian Western Duo
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_WORKER]
+Name = Sinnohian Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_YOUNG_COUPLE]
+Name = Sinnohian Young Couple
+Gender = Unknown
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_DPP_YOUNGSTER]
+Name = Sinnohian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_BYRON]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_CANDICE]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_CRASHER_WAKE]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_DPP_CLOWN]
+Name = Sinnohian Clown
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_FANTINA]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_GARDENIA]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_MAYLENE]
+Name = Sinnohian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_ROARK]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_UNOFFICAL_VOLKNER]
+Name = Sinnohian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[SINNOHIAN_USUM_CYNTHIA_VACATION]
+Name = Sinnoh's Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_ANTHEA]
+Name = N's Sister
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_BIANCA]
+Name = Unovaian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_CHEREN]
+Name = Unovaian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_CONCORDIA]
+Name = N's Sister
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_ELESA]
+Name = Unovaian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_GHETSIS]
+Name = Team Plasma's Master
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_MOM]
+Name = Unovaian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_TEAM_PLASMA_MAN]
+Name = Team Plasma Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B1W1_TEAM_PLASMA_WOMAN]
+Name = Team Plasma Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ACETRAINER_BOY]
+Name = Unovaian Ace Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ACETRAINER_GIRL]
+Name = Unovaian Ace Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ALDER]
+Name = Teacher of Kind Strength
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ANTHEA]
+Name = N's Sister
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ARTIST]
+Name = Unovaian Artist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_AUREA_JUNIPER]
+Name = Unovaian Pokemon Professor
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BACKER_MEN]
+Name = Unovaian Backers
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BACKER_WOMEN]
+Name = Unovaian Backers
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BACKPACKER_MAN]
+Name = Unovaian Backpacker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BACKPACKER_WOMAN]
+Name = Unovaian Backpacker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BAKER]
+Name = Unovaian Baker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BATTLE_GIRL]
+Name = Unovaian Battle Girl
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BEAUTY]
+Name = Unovaian Beauty
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BENGA]
+Name = Unovaian Boss Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BIANCA]
+Name = Unovaian Pokemon Professor Assistant
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BIKER]
+Name = Unovaian Biker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BLACK_BELT]
+Name = Unovaian Black Belt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BRYCEN]
+Name = Unovaian Movie Star
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_BURGH]
+Name = Unovaian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CAITLIN]
+Name = Unovaian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CEDRIC_JUNIPER]
+Name = Juniper's Dad
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CHEREN]
+Name = Unovaian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CHILI]
+Name = Unovaian Retired Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CHRISTOPH]
+Name = Unovaian Pokémon Idol
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CILAN]
+Name = Unovaian Retired Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CLAY]
+Name = Unovaian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_COLRESS]
+Name = Team Plasma's Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CONCORDIA]
+Name = N's Sister
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CRESS]
+Name = Unovaian Retired Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CURTIS]
+Name = Unovaian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CYCLIST_MAN]
+Name = Unovaian Cyclist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CYCLIST_WOMAN]
+Name = Unovaian Cyclist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_DANCER]
+Name = Unovaian Dancer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_DEPOT_AGENT]
+Name = Unovaian Depot Agent
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_DOCTOR]
+Name = Unovaian Doctor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_DRAYDEN]
+Name = Unovaian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ELESA]
+Name = Unovaian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_EMMET]
+Name = Unovaian Subway Boss
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_EMMET_INGO]
+Name = Unovaian Subway Twins
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_FENNEL]
+Name = Researcher of Dreams
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_FISHERMAN]
+Name = Unovaian Fisherman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_GENTLEMAN]
+Name = Unovaian Gentleman
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_GHETSIS]
+Name = Team Plasma's Master
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_GRIMSLEY]
+Name = Unovaian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_GUITARIST_WOMAN]
+Name = Unovaian Guitarist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_HARLEQUIN]
+Name = Unovaian Harlequin
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_HIKER]
+Name = Unovaian Hiker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_HOOPSTER]
+Name = Unovaian Hoopster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MICHEAL_JORDAN]
+Name = THE
+Gender = Male 
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_CHARLES_BARKLEY]
+Name = THE
+Gender = Male 
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NBA_ICONS_MICHEAL_JORDAN_CHARLES_BARKLEY]
+Name = NBA Icons
+Gender = Male 
+BaseMoney = 100
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_HUGH]
+Name = Unovaian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_INFIELDER]
+Name = Unovaian Infielder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_INGO]
+Name = Unovaian Subway Boss
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_IRIS_CHAMPION]
+Name = Unova's Champion
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_JANITOR]
+Name = Unovaian Janitor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_LADY]
+Name = Unovaian Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_LASS]
+Name = Unovaian Lass
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_LENORA]
+Name = Unovaian Museum Director
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_LENORA_CAPE]
+Name = Unovaian Museum Director
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_LINEBACKER]
+Name = Unovaian Linebacker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MADAME]
+Name = Unovaian Madame
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MAID]
+Name = Unovaian Maid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MANAGER]
+Name = Unovaian Manager
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MARLON]
+Name = Unovaian Gym Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MARSHAL]
+Name = Unovaian Elite Four
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MINES_WORKER]
+Name = Unovaian Mine Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MOM]
+Name = Unovaian Mom
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_MUSICIAN]
+Name = Unovaian Musician
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_N]
+Name = Unovaian Pokemon Trainer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NANCY]
+Name = Pokémon Idol
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NEO_PLASMA_GRUNT_MAN]
+Name = Neo Team Plasma Grunt
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NEO_PLASMA_GRUNT_WOMAN]
+Name = Neo Team Plasma Grunt
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NURSE]
+Name = Unovaian Nurse
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_NURSERY_AIDE]
+Name = Unovaian Nursery Aide
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_OFFICE_MAN]
+Name = Unovaian Office Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_OFFICE_WOMAN]
+Name = Unovaian Office Worker
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_OFFICER]
+Name = Unovaian Officer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PARASOL_LADY]
+Name = Unovaian Parasol Lady
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PILOT]
+Name = Unovaian Pilot
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEFAN_MAN]
+Name = Unovaian Poke Fan
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEFAN_WOMAN]
+Name = Unovaian Poke Fan
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEMON_BREEDER_MAN]
+Name = Unovaian Pokemon Breeder
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEMON_BREEDER_WOMAN]
+Name = Unovaian Pokemon Breeder
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEMON_RANGER_MAN]
+Name = Unovaian Pokemon Ranger
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_POKEMON_RANGER_WOMAN]
+Name = Unovaian Pokemon Ranger
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PRESCHOOLER_BOY]
+Name = Unovaian Preschooler
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PRESCHOOLER_GIRL]
+Name = Unovaian Preschooler
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PSYCHIC_MAN]
+Name = Unovaian Psychic
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_PSYCHIC_WOMAN]
+Name = Unovaian Psychic
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_RICH_BOY]
+Name = Unovaian Rich Boy
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ROOD]
+Name = 3rd of the Seven Sages
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ROUGH_DUO]
+Name = Unovaian Rough Duo
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ROUGHNECK]
+Name = Unovaian Roughneck
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ROXIE]
+Name = Unovaian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SCHOOLKID_BOY]
+Name = Unovaian School Kid
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SCHOOLKID_GIRL]
+Name = Unovaian School Kid
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SCIENTIST_MAN]
+Name = Unovaian Scientist
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SCIENTIST_WOMAN]
+Name = Unovaian Scientist
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SHADOW_TRIAD]
+Name = Team Plasma's Elite
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SHAUNTAL]
+Name = Unovaian Elite Four
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SKYLA]
+Name = Unovaian Gym Leader
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SMASHER]
+Name = Unovaian Smasher
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SNOW_WORKER]
+Name = Unovaian Snow Worker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_STRIKER]
+Name = Unovaian Striker
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SUIT_ACTOR]
+Name = Unovaian Suit Actor
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SWIMMER_MAN]
+Name = Unovaian Swimmer
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_SWIMMER_WOMAN]
+Name = Unovaian Swimmer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_TWINS]
+Name = Unovaian Twins
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_VETERAN_MAN]
+Name = Unovaian Veteran
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_VETERAN_WOMAN]
+Name = Unovaian Veteran
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_WAITER]
+Name = Unovaian Waiter
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_WAITRESS]
+Name = Unovaian Waitress
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_YANCY]
+Name = Unovaian Pokemon Trainer
+Gender = Female
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_YOUNGSTER]
+Name = Unovaian Youngster
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_B2W2_ZINZOLIN]
+Name = 4th of the Seven Sages
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[UNOVAIAN_USUM_COLRESS]
+Name = Team Plasma's Leader
+Gender = Male
+SkillLevel = 100
+#-------------------------------
+[REALLIFEIAN_DEVELOPER_HAZY_CRAZY]
+Name = A Blue Guy Called
+Gender = Male
+SkillLevel = 100

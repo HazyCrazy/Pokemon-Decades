@@ -1,0 +1,3 @@
+Name       = Character Selection By FL
+Version    = 1.2
+Essentials = 21.1

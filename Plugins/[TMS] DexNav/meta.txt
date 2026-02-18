@@ -1,0 +1,6 @@
+Name       = Tamas's DexNav
+Version    = 1.2.0
+Essentials = 21.1
+Optional   = Automatic Level Scaling
+Optional   = Voltseon's Pause Menu
+Credits    = TamasNight, Baertierchen, Pawkkie, m, soupercell (Creator of Radical Red)

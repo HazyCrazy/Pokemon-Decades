@@ -1,0 +1,11 @@
+#-------------------------------
+[REPELCHARM]
+Name = Toggle Repel
+NamePlural = Toggle Repels
+Pocket = 1#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+#Description = Toggles on and off wild Pokémon encounters.
+Description = Toggles wild Pokémon encounters. The Dexnav can still find encounters when the Repel Toggle is on.
+#-------------------------------

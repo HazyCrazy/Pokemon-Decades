@@ -1,0 +1,714 @@
+# See the documentation on the wiki to learn how to edit this file.
+# https://essentialsengine.miraheze.org/wiki/Essentials_Engine_wiki
+# These dedicated Hidden Power type moves, 60 and 70 base power,
+# are for applying Hidden Power types to opponent trainer Pokemon.
+# Essentials's Hidden Power Value Types are different from the offical games, 
+# and figuring out the precise IV values for a Hidden Power type sucks.
+# Best used with Independent Hidden Power Type.
+# 13th October 2025: Dedicated Tera Type Base 80 Power Moves have been added
+# to assist Strong Jaw Ability users, due to the highly limited offical movepool distrbution for Strong Jaw users, beyond the Elemental Fang moves.
+#-------------------------------
+[TECHPOWERNORMAL]
+Name = THP Normal 
+Type = NORMAL 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERFIRE]
+Name = THP Fire
+Type = FIRE 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERWATER]
+Name = THP Water
+Type = WATER 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERELECTRIC]
+Name = THP Electric
+Type = ELECTRIC 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERGRASS]
+Name = THP Grass 
+Type = GRASS 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERFLYING]
+Name = THP Flying 
+Type = FLYING 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERFIGHTING]
+Name = THP Fighting 
+Type = FIGHTING 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERPOISON]
+Name = THP Poison 
+Type = POISON 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERROCK]
+Name = THP Rock 
+Type = ROCK 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERBUG]
+Name = THP Bug 
+Type = BUG 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERGROUND]
+Name = THP Ground 
+Type = GROUND 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERPSYCHIC]
+Name = THP Psychic 
+Type = PSYCHIC 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERICE]
+Name = THP Ice 
+Type = ICE 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERGHOST]
+Name = THP Ghost 
+Type = GHOST 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERDRAGON]
+Name = THP Dragon 
+Type = DRAGON 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERDARK]
+Name = THP Dark 
+Type = DARK 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERSTEEL]
+Name = THP Steel 
+Type = STEEL 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TECHPOWERFAIRY]
+Name = THP Fairy 
+Type = FAIRY 
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+#Description = A technical attack that uses the best attacking stat.
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERNORMAL]
+Name = HP Normal 
+Type = NORMAL
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERFIRE]
+Name = HP Fire
+Type = FIRE
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERWATER]
+Name = HP Water
+Type = WATER
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERELECTRIC]
+Name = HP Electric
+Type = ELECTRIC
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERGRASS]
+Name = HP Grass
+Type = GRASS
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERFLYING]
+Name = HP Flying
+Type = FLYING
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERFIGHTING]
+Name = HP Fighting
+Type = FIGHTING
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERPOISON]
+Name = HP Poison
+Type = POISON
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERROCK]
+Name = HP Rock
+Type = ROCK
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERBUG]
+Name = HP Bug
+Type = BUG
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+#Description = An attack that has become a single Type. Deals damage based on user's higher stat.
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERGROUND]
+Name = HP Ground
+Type = GROUND
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERPSYCHIC]
+Name = HP Psychic
+Type = PSYCHIC
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERICE]
+Name = HP Ice
+Type = ICE
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERGHOST]
+Name = HP Ghost
+Type = GHOST
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERDRAGON]
+Name = HP Dragon
+Type = DRAGON
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERDARK]
+Name = HP Dark
+Type = DARK
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERSTEEL]
+Name = HP Steel
+Type = STEEL
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[HIDDENPOWERFAIRY]
+Name = HP Fairy
+Type = FAIRY
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERABLASTNORMAL]
+Name = Tera Normal 
+Type = NORMAL
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERABLASTFIRE]
+Name = Tera Fire
+Type = FIRE
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAWATER]
+Name = Tera Water
+Type = WATER
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAELECTRIC]
+Name = Tera Electric
+Type = ELECTRIC
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAGRASS]
+Name = Tera Grass
+Type = GRASS
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAFLYING]
+Name = Tera Flying
+Type = FLYING
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAFIGHTING]
+Name = Tera Fighting
+Type = FIGHTING
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAPOISON]
+Name = Tera Poison
+Type = POISON
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAROCK]
+Name = Tera Rock
+Type = ROCK
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERABUG]
+Name = Tera Bug
+Type = BUG
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+#Description = An attack that has become a single Type. Deals damage based on user's higher stat.
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAGROUND]
+Name = Tera Ground
+Type = GROUND
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAPSYCHIC]
+Name = Tera Psychic
+Type = PSYCHIC
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAICE]
+Name = Tera Ice
+Type = ICE
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAGHOST]
+Name = Tera Ghost
+Type = GHOST
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERADRAGON]
+Name = Tera Dragon
+Type = DRAGON
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERADARK]
+Name = Tera Dark
+Type = DARK
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERASTEEL]
+Name = Tera Steel
+Type = STEEL
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.
+#-------------------------------
+[TERAFAIRY]
+Name = Tera Fairy
+Type = FAIRY
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = CategoryDependsOnHigherDamagePoisonTarget
+Flags = CanProtect,CanMirrorMove,Punching,Pulse,Contact,Slicing,Biting
+EffectChance = 1
+Description = Move Category is highest Attack/Sp.Atk stat. Many Abilities boost this move's power.

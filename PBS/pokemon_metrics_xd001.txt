@@ -1,0 +1,10 @@
+#-------------------------------
+[LUGIA,1]
+BackSprite = 2,66
+FrontSprite = 0,20
+ShadowSize = -2
+ShadowSprite = 4,-6,15
+DmaxBackSprite = 0,0
+DmaxFrontSprite = -1,9
+DmaxShadowX = 0
+#-------------------------------

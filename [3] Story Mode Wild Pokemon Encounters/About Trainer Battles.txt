@@ -1,0 +1,5 @@
+Sorry, but I could not find a tool to automate fully documenting every Story Mode and Battle Mode Trainer.
+You are going to have to view the below manually:
+
+trainers_battle_mode.txt (The PBS Folder)
+trainers_story_mode.txt (The PBS Folder)

@@ -1,0 +1,21 @@
+To apply the change after downgrading these plugins,
+you must recompile the game.
+
+PLEASE make a backup of the current versions plugins you have before doing this. DO NOT downgrade any other plugins, 
+than the ones listed in Older Plugin Versions. 
+
+Step 1: Start the game by clicking [Game.exe - Debug Mode]. No extra steps are required. Exists to allow people without a copy of RPG Maker XP to still apply changes to Pokemon Decades.
+
+Step 2: While using Debug Mode, you must hold down the CTRL button to force the game to compile. Hold down the left or right CTRL key when the Pokemon Essentials V21.1 window is visible. The window must be in focus.
+
+How to pass the "debug" command line to the game 
+
+1. Right click on Game.exe (On Windows 10, select Show More Options)
+2. Create a Shortcut
+3. Rename the Shortcut to Game.exe - Debug Mode
+4. Right click on Game.exe - Debug Mode and select Properties (On Windows 10, select Show More Options)
+5. In Target, add debug at the end of the path like this:
+6. "C:\My Path\Decades 3.0.0\Game.exe" debug
+
+These older plugin versions exist, because Story Mode and Battle Mode testing was finished,
+with these plugin versions, before updates. 

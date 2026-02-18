@@ -1,0 +1,36 @@
+Installation Steps
+
+Step 1: Drag and drop the PBS Folder into the Game Directory, Overwrite PBS. While a stock backup is included with this mod, it's best pratice to backup your PBS before applying a mod.
+
+Step 2: Start the game by clicking [Game.exe - Debug Mode]. No extra steps are required. Exists to allow people without a copy of RPG Maker XP to still apply changes to Pokemon Decades.
+
+Step 3: While using Debug Mode, you must hold down the CTRL button to force the game to compile. Hold down the left or right CTRL key when the Pokemon Essentials V21.1 window is visible. The window must be in focus.
+
+How to pass the "debug" command line to the game 
+
+1. Right click on Game.exe (On Windows 10, select Show More Options)
+2. Create a Shortcut
+3. Rename the Shortcut to Game.exe - Debug Mode
+4. Right click on Game.exe - Debug Mode and select Properties (On Windows 10, select Show More Options)
+5. In Target, add debug at the end of the path like this:
+6. "C:\My Path\Decades 3.0.0\Game.exe" debug
+
+Save Files and Modding
+
+For the sake of consistency with Save Files, choose a Metagame Mod and stick to it.
+It is your funeral if you experiment with PBS Mods and use your Playthrough Save File.
+
+What do I choose?
+
+Order of Operations 
+
+1. Decide what Type Matchups you want Decades to follow. Default is Decade's Type Matchup Changes.
+2. Select Decades, Patch [1] or Vanilla Type, Patch [2] Matchups PBS, follow the Installation Steps to install the patch.
+
+3. Decide what Metagame your Save File will commit to. Default is Stock Decades PBS.
+4. Select Stock Decades, Patch [3] or Stock Vanilla, Patch [4] PBS, follow the Installation Steps to install the patch. The Stock Patch fully commits to what you have chosen.
+
+Due to burnout and the DKB Plugins getting important updates before Decade's release, their sadly are no Patches for making exact changes to Canon Pokemon Typings and Canon Base Stat Totals (Patches [5] to [8]) 
+You are on your own, with making exact changes to every Pokemon. 
+
+Please read the disclaimer, if you expect this mod to do more than what the instructions tell you to do. 

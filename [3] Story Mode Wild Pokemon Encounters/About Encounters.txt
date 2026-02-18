@@ -1,0 +1,62 @@
+Region Encounter Numbers/Gens/Regions
+
+From the second you click New Game, The Wild Adjuster comes as part of your Trainer Suite
+
+0: Default Wild Encounters, the natural wildlife of the Beatha Region, consists of all 1025+ Pokemon across the region, as of Gen 9, pre Legends ZA
+
+1: Kanto/Gen 1 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+2: Johto/Gen 2 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+3: Hoenn/Gen 3 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+
+4: Sinnoh/Gen 4 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+5: Unova/Gen 5 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+6: Kalos/Gen 6 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+
+7: Alola/Gen 7 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+8: Galar/Gen 8 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+9: Paldea/Gen 9 Wild Encounters, use the Wild Adjuster Key Item to change the Region's Generation Encounter Version
+
+Every non Legendary Pokemon can be encountered in the wild.
+All Legendary Pokemon can be obtained via rewards from quests.
+
+All Regional, multiple and obscure Forms/Formes can be obtained via the Form Trader in any Pokemon Center.
+This includes Cosplay Pikachu, Spikey Eared Pichu, Shadow Lugia, Vivillon's Patterns, and Eternal Flower Floette.
+Traded Pokemon do not gain bonus experience. Traded Pokemon obey you at any level.
+
+The Level Scaling system auto evolves all wild 541 Pokemon with Evolution Lines, upon reaching either Lvl.31 (Two Stage Evoltions) or Lvl.50 (Three stage Evoltions)
+In the Pokedex, use the Obscure Evoltions Page to know what Pokemon is not able to conform to the following, and only accetable evolution methods:
+
+1. Level Up
+2. Evolution Stone
+3. Atk > Def 
+4. Atk < Def 
+5. Atk == Def
+6. Poke Ball in bag and space in party
+7. Level Up as a Specfic Gender
+
+The offical evolution methods not listed here have been replaced with the above.
+Novelty Evoltions do not make something unique. All they do is bloat Pokemon's scope,
+contribute to it's issues with carrying it's baggage, and just result in people
+breaking out of their immersion to go Google any Pokemon who is even slighty obscure in how they evolve.
+
+The Reset Candy can be used to obtain any Pokemon, at any level.
+The Exp Charm can toggle on and off a 1000% Exp Boost (a 10x exp Multiplier)
+The Level Candies exist for the benefit of the playing the game at whatever pace you want.
+Anti Grind Trainers at any Pokemon Centers have auto battles with Memento Blissey's.
+Blissey and Mega Audino's Exp Yields is 1000 in Pokemon Decades. Chansey and Audino has Blissey's offical Exp Yields (635), Happiny has Chansey's Exp Yields (395). 
+
+The Safari Zone can generate 1 of any Pokemon. It exists to be the ultimate failsafe, to ensure all 1025+ Pokemon are obtainable.
+The Beatha Region has 71 non Mystery Zone locations for obtaining Pokemon. This means Nuzlockes can make up to 11 full teams of 6 Pokemon.
+Pokemon Decades is not, and will not be designed around Nuzlockes. But nothing's stopping you from giving it a try.
+
+Mystery Zones can be accessed via the No Clip Disk Toggle. 
+To reach an area's Mystery Zone, walk beyond the far edge of a map's horizontal or vertical direction, that is outside the boundary of where player not using the No Clip Disk, cannot go. 
+Mystery Zones exist to expand Nuzlocke Encounters and to expand what is native to the Beatha Region's wildlife. 
+
+The Level Scaling System, Reset Candy and Ultimate Move Tutor, means Pokemon Breeding does not exist in Pokemon Decades.
+And good riddance to that dog shit waste of time.
+
+Shininess can be applied to any Pokemon with the Shiny and Super Glitter Key Items.
+If I could, I would make wild Shiny Pokemon be a 0% chance. But the odds for Pokemon Decades are 1600 : 800, or a 33% chance, no Shiny Charm needed (The offical game's chances as of Gen 9 are 1 : 4096, or a 0.0244%, and become 1 : 1024, or a 0.0977% with the Shiny Charm)
+Go ahead and waste your life gambling for color palettes, if the existance of these Key Items is somehow an issue to you.
+Anyone who attempts to justify 0.0244% to 0.0977% odds are the same people with gambling/gatcha addictions. 

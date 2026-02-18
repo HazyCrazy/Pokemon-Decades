@@ -1,0 +1,6 @@
+Name = Super Yellow Pack
+Version = 3.0.0
+Essentials = 21.1
+Requires = v21.1 Hotfixes,1.0.9
+Requires = Generation 9 Pack,3.3.1
+Credits = Hazy Crazy

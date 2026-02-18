@@ -1,0 +1,6 @@
+Name         = BOTW-Like Item Gathering v21.1 port
+Version      = 1.1
+Essentials   = 21.1
+Requires     = v21.1 Hotfixes
+Website      = https://eeveeexpo.com/resources/614/
+Credits      = Patoman (v21.1 port), Kyu (Original v18.1 script)

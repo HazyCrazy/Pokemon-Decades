@@ -1,0 +1,15 @@
+#-------------------------------
+# Pokemon Legends Z-A
+#-------------------------------
+
+#-------------------------------
+[CANARIBREAD]
+Name = Canari Bread
+NamePlural = Canari Breads
+Pocket = 2
+Price = 0
+FieldUse = OnPokemon
+BattleUse = OnPokemon
+Flags = Fling_30
+Description = A bun made to look like Canari's face. It can be used to restore 100 HP to a Pokémon.
+#-------------------------------

@@ -1,0 +1,5 @@
+Name       = Set Controls 
+Version    = 1.2.8
+Essentials = 21.1
+Website = https://www.pokecommunity.com/threads/v12-set-the-controls-screen-now-supporting-gamepad.309391/
+Credits = FL

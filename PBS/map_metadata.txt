@@ -1,0 +1,1076 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[001]   # Intro
+Name = Intro
+#-------------------------------
+[032]   # International Airport
+Name = International Airport
+MapPosition = 0,43,8
+#-------------------------------
+[033]   # Battle Paradise 130
+Name = Battle Paradise 130
+Outdoor = true
+ShowArea = true
+MapPosition = 0,42,10
+BattleBack = battleparadise
+#-------------------------------
+[042]   # Battle Paradise 230
+Name = Battle Paradise 230
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,10
+BattleBack = battleparadise
+#-------------------------------
+[043]   # Battle Paradise 330
+Name = Battle Paradise 330
+Outdoor = true
+ShowArea = true
+MapPosition = 0,42,13
+BattleBack = battleparadise
+#-------------------------------
+[048]   # Battle Paradise 430
+Name = Battle Paradise 430
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,13
+BattleBack = battleparadise
+#-------------------------------
+[077]   # Cherryhill City
+Name = Cherryhill City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,33
+BattleBack = field
+#-------------------------------
+[079]   # Cherryhill Center
+Name = Cherryhill Center
+MapPosition = 0,44,33
+#-------------------------------
+[080]   # Cherryhill Gym
+Name = Cherryhill Gym
+MapPosition = 0,44,32
+#-------------------------------
+[081]   # Cherryhill East Gatehouse
+Name = Cherryhill East Gatehouse
+MapPosition = 0,46,33
+#-------------------------------
+[082]   # Cloakfall Forest
+Name = Cloakfall Forest
+Outdoor = true
+ShowArea = true
+MapPosition = 0,47,33
+BattleBack = forest
+#-------------------------------
+[084]   # Abandoned Cabin
+Name = Abandoned Cabin
+MapPosition = 0,47,34
+#-------------------------------
+[086]   # Route 1
+Name = Route 1
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,35
+BattleBack = water
+#-------------------------------
+[087]   # Shimmer Coast City
+Name = Shimmer Coast City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,42,35
+BattleBack = water
+#-------------------------------
+[088]   # Route 2
+Name = Route 2
+Outdoor = true
+ShowArea = true
+MapPosition = 0,42,32
+BattleBack = desert
+Environment = None
+#-------------------------------
+[089]   # Route 3
+Name = Route 3
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,31
+BattleBack = field
+#-------------------------------
+[090]   # Obsidian Peak City
+Name = Obsidian Peak City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,45,30
+BattleBack = rocky
+#-------------------------------
+[091]   # Cherryhill West Gatehouse
+Name = Cherryhill West Gatehouse
+MapPosition = 0,43,32
+#-------------------------------
+[093]   # Obsidian Volcano Exterior
+Name = Obsidian Volcano Exterior
+Outdoor = true
+ShowArea = true
+MapPosition = 0,46,30
+BattleBack = rocky
+#-------------------------------
+[094]   # Route 4
+Name = Route 4
+Outdoor = true
+ShowArea = true
+MapPosition = 0,42,29
+BattleBack = deepforest
+#-------------------------------
+[095]   # Obsidian Peak West Gatehouse
+Name = Obsidian Peak West Gatehouse
+MapPosition = 0,43,30
+#-------------------------------
+[096]   # Mantic City
+Name = Mantic City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,39,29
+BattleBack = forest2
+#-------------------------------
+[098]   # Mantic City East Gatehouse
+Name = Mantic City East Gatehouse
+MapPosition = 0,40,29
+#-------------------------------
+[099]   # Mantic City West Gatehouse
+Name = Mantic City West Gatehouse
+MapPosition = 0,37,29
+#-------------------------------
+[100]   # Route 5
+Name = Route 5
+Outdoor = true
+ShowArea = true
+MapPosition = 0,36,29
+BattleBack = field
+#-------------------------------
+[101]   # Boulevard City
+Name = Boulevard City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,34,29
+BattleBack = city
+#-------------------------------
+[102]   # Route 6
+Name = Route 6
+Outdoor = true
+ShowArea = true
+MapPosition = 0,30,29
+BattleBack = forest
+#-------------------------------
+[103]   # Penumbra City
+Name = Penumbra City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,31,27
+BattleBack = forest
+#-------------------------------
+[105]   # Boulevard City East Gatehouse
+Name = Boulevard City East Gatehouse
+MapPosition = 0,35,29
+#-------------------------------
+[106]   # Boulevard City West Gatehouse
+Name = Boulevard City West Gatehouse
+MapPosition = 0,32,29
+#-------------------------------
+[108]   # Penumbra City West Gatehouse
+Name = Penumbra City West Gatehouse
+MapPosition = 0,29,27
+#-------------------------------
+[109]   # Route 7
+Name = Route 7
+Outdoor = true
+ShowArea = true
+MapPosition = 0,30,25
+BattleBack = field
+#-------------------------------
+[110]   # Stygian Woods
+Name = Stygian Woods
+Outdoor = true
+ShowArea = true
+MapPosition = 0,28,27
+BattleBack = deepforest
+#-------------------------------
+[111]   # Apterygota City
+Name = Apterygota City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,33,25
+BattleBack = forest
+#-------------------------------
+[112]   # Route 8
+Name = Route 8
+Outdoor = true
+ShowArea = true
+MapPosition = 0,35,25
+BattleBack = field
+#-------------------------------
+[113]   # Bulwark City
+Name = Bulwark City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,35,24
+BattleBack = rocky
+#-------------------------------
+[114]   # Route 9
+Name = Route 9
+Outdoor = true
+ShowArea = true
+MapPosition = 0,35,22
+BattleBack = desert
+#-------------------------------
+[115]   # Virga City
+Name = Virga City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,32,22
+BattleBack = desert
+#-------------------------------
+[116]   # Route 10
+Name = Route 10
+ShowArea = true
+MapPosition = 0,29,22
+DarkMap = true
+BattleBack = cave1
+#-------------------------------
+[117]   # Lucid City
+Name = Lucid City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,29,20
+BattleBack = city
+#-------------------------------
+[118]   # Route 11
+Name = Route 11
+Outdoor = true
+ShowArea = true
+MapPosition = 0,26,20
+BattleBack = field
+#-------------------------------
+[119]   # Circuit City
+Name = Circuit City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,24,19
+BattleBack = city
+#-------------------------------
+[120]   # Route 12
+Name = Route 12
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,18
+BattleBack = forest
+#-------------------------------
+[121]   # Noxious City
+Name = Noxious City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,17
+BattleBack = deepforest
+#-------------------------------
+[122]   # Route 13
+Name = Route 13
+Outdoor = true
+ShowArea = true
+MapPosition = 0,21,14
+BattleBack = field
+#-------------------------------
+[123]   # Sylph City
+Name = Sylph City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,20,12
+BattleBack = fairytale
+#-------------------------------
+[124]   # Route 14
+Name = Route 14
+ShowArea = true
+MapPosition = 0,21,12
+DarkMap = true
+BattleBack = darkcrystalcavern
+#-------------------------------
+[125]   # Revenant City
+Name = Revenant City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,24,12
+BattleBack = forest
+#-------------------------------
+[126]   # Route 15
+Name = Route 15
+Outdoor = true
+ShowArea = true
+MapPosition = 0,23,9
+BattleBack = rocky
+#-------------------------------
+[127]   # Draco City
+Name = Draco City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,8
+BattleBack = rocky
+#-------------------------------
+[128]   # Route 16
+Name = Route 16
+Outdoor = true
+ShowArea = true
+MapPosition = 0,19,8
+BattleBack = field
+#-------------------------------
+[129]   # Iron City
+Name = Iron City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,16,7
+BattleBack = city
+#-------------------------------
+[130]   # Route 17
+Name = Route 17
+Outdoor = true
+ShowArea = true
+MapPosition = 0,13,6
+BattleBack = field
+#-------------------------------
+[131]   # Crystal City
+Name = Crystal City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,6
+BattleBack = snow
+#-------------------------------
+[132]   # Route 18
+Name = Route 18
+ShowArea = true
+MapPosition = 0,11,4
+DarkMap = true
+BattleBack = cave3
+#-------------------------------
+[133]   # Stratos City
+Name = Stratos City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,3
+BattleBack = rocky
+#-------------------------------
+[134]   # Fun Domain
+Name = Fun Domain
+BattleBack = dimensional
+#-------------------------------
+[135]   # Peninsula of Mastery
+Name = Peninsula of Mastery
+Outdoor = true
+ShowArea = true
+MapPosition = 0,9,3
+#-------------------------------
+[136]   # Zenith Domain
+Name = Zenith Domain
+MapPosition = 0,9,2
+BattleBack = starlight
+#-------------------------------
+[137]   # Super Domain
+Name = Super Domain
+MapPosition = 0,9,1
+BattleBack = outerspace
+#-------------------------------
+[138]   # Route 1 Underground
+Name = Route 1 Underground
+MapPosition = 0,45,34
+BattleBack = cave1
+#-------------------------------
+[140]   # Forest Zone
+Name = Forest Zone
+MapPosition = 0,29,14
+BattleBack = forest
+#-------------------------------
+[142]   # Apterygota City East Gatehouse
+Name = Apterygota City East Gatehouse
+MapPosition = 0,34,25
+#-------------------------------
+[144]   # Virga City East Gatehouse
+Name = Virga City East Gatehouse
+MapPosition = 0,33,22
+#-------------------------------
+[146]   # Lucid City West Gatehouse
+Name = Lucid City West Gatehouse
+MapPosition = 0,27,20
+#-------------------------------
+[148]   # Circuit City East Gatehouse
+Name = Circuit City East Gatehouse
+MapPosition = 0,25,19
+#-------------------------------
+[150]   # Draco City West Gatehouse
+Name = Draco City West Gatehouse
+MapPosition = 0,20,8
+#-------------------------------
+[152]   # Iron City West Gatehouse
+Name = Iron City West Gatehouse
+MapPosition = 0,14,6
+#-------------------------------
+[153]   # Iron City East Gatehouse
+Name = Iron City East Gatehouse
+MapPosition = 0,17,6
+#-------------------------------
+[154]   # Scatter Flood Islands
+Name = Scatter Flood Islands
+Outdoor = true
+ShowArea = true
+MapPosition = 0,33,37
+BattleBack = water
+#-------------------------------
+[155]   # Obsidian Volcano
+Name = Obsidian Volcano
+ShowArea = true
+MapPosition = 0,46,29
+BattleBack = cave2
+#-------------------------------
+[156]   # Prehistoric Grotto
+Name = Prehistoric Grotto
+ShowArea = true
+MapPosition = 0,38,27
+BattleBack = distortion
+WildBattleBGM = SV 410 Battle! (Pokémon in Area Zero)
+#-------------------------------
+[157]   # Futuristic Grotto
+Name = Futuristic Grotto
+ShowArea = true
+MapPosition = 0,40,27
+BattleBack = distortion
+WildBattleBGM = SV 412 Battle! (Pokémon in Area Zero) 2
+#-------------------------------
+[158]   # Route 5 Cave
+Name = Route 5 Cave
+MapPosition = 0,36,27
+BattleBack = cave1
+#-------------------------------
+[159]   # Stygian Cave
+Name = Stygian Cave
+MapPosition = 0,28,26
+DarkMap = true
+BattleBack = darkcrystalcavern
+#-------------------------------
+[160]   # Apterygota Nest
+Name = Apterygota Nest
+MapPosition = 0,33,26
+BattleBack = cave1
+#-------------------------------
+[162]   # Gemstone Cave
+Name = Gemstone Cave
+ShowArea = true
+MapPosition = 0,37,24
+BattleBack = whitecrystalcavern
+#-------------------------------
+[163]   # Virga Underpass
+Name = Virga Underpass
+MapPosition = 0,31,20
+BattleBack = cave4
+#-------------------------------
+[164]   # Obsidian Peak Center
+Name = Obsidian Peak Center
+MapPosition = 0,44,30
+#-------------------------------
+[166]   # Revenant Tomb
+Name = Revenant Tomb
+MapPosition = 0,24,13
+DarkMap = true
+BattleBack = darkcrystalcavern
+#-------------------------------
+[167]   # Draco Cave
+Name = Draco Cave
+MapPosition = 0,22,6
+BattleBack = cave1
+#-------------------------------
+[169]   # Crystal Lake
+Name = Crystal Lake
+Outdoor = true
+ShowArea = true
+MapPosition = 0,10,7
+BattleBack = snow
+#-------------------------------
+[171]   # Stratos Horizon
+Name = Stratos Horizon
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,1
+BattleBack = rocky
+#-------------------------------
+[173]   # Mt.Vile
+Name = Mt.Vile
+Outdoor = true
+ShowArea = true
+MapPosition = 0,24,16
+BattleBack = rocky
+#-------------------------------
+[174]   # City Zone
+Name = City Zone
+MapPosition = 0,29,11
+BattleBack = city
+#-------------------------------
+[175]   # Desert Zone
+Name = Desert Zone
+MapPosition = 0,35,11
+BattleBack = desert
+#-------------------------------
+[177]   # Scrubland Zone
+Name = Scrubland Zone
+MapPosition = 0,35,14
+BattleBack = rocky
+#-------------------------------
+[178]   # Crag Zone
+Name = Crag Zone
+MapPosition = 0,30,12
+BattleBack = rocky
+#-------------------------------
+[179]   # Sub Zero Islands
+Name = Sub Zero Islands
+Outdoor = true
+ShowArea = true
+MapPosition = 0,4,8
+BattleBack = snow
+#-------------------------------
+[180]   # Volcano Zone
+Name = Volcano Zone
+MapPosition = 0,30,13
+BattleBack = cave3
+#-------------------------------
+[181]   # Tundra Zone
+Name = Tundra Zone
+MapPosition = 0,31,12
+BattleBack = snow
+#-------------------------------
+[182]   # Cave Zone
+Name = Cave Zone
+MapPosition = 0,31,13
+BattleBack = cave1
+#-------------------------------
+[183]   # Beach Zone
+Name = Beach Zone
+MapPosition = 0,32,12
+BattleBack = water
+#-------------------------------
+[184]   # Seafloor Zone
+Name = Seafloor Zone
+MapPosition = 0,32,13
+BattleBack = cave3
+#-------------------------------
+[185]   # River Zone
+Name = River Zone
+MapPosition = 0,33,12
+BattleBack = field
+#-------------------------------
+[186]   # Sky Zone
+Name = Sky Zone
+MapPosition = 0,33,13
+BattleBack = clouds
+#-------------------------------
+[187]   # Industral Zone
+Name = Industral Zone
+MapPosition = 0,34,12
+BattleBack = cave2
+#-------------------------------
+[188]   # Simple Field
+Name = Simple Field
+MapPosition = 0,34,13
+BattleBack = field
+#-------------------------------
+[190]   # Mystery Zone 0
+Name = Mystery Zone 0
+MapPosition = 0,19,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+Environment = None
+#-------------------------------
+[191]   # Mystery Zone 1
+Name = Mystery Zone 1
+MapPosition = 0,17,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[192]   # Mystery Zone 2
+Name = Mystery Zone 2
+MapPosition = 0,16,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[193]   # Generations Zone
+Name = Safari Zone
+MapPosition = 0,29,18
+#-------------------------------
+[194]   # Shimmer Coast Center
+Name = Shimmer Coast Center
+MapPosition = 0,41,35
+#-------------------------------
+[195]   # Shimmer Coast Gym
+Name = Shimmer Coast Gym
+MapPosition = 0,41,34
+#-------------------------------
+[196]   # Obsidian Peak Gym
+Name = Obsidian Peak Gym
+MapPosition = 0,45,29
+#-------------------------------
+[197]   # Mantic Center
+Name = Mantic Center
+MapPosition = 0,38,29
+#-------------------------------
+[198]   # Mantic Gym
+Name = Mantic Gym
+MapPosition = 0,38,28
+#-------------------------------
+[199]   # Boulevard Center
+Name = Boulevard Center
+MapPosition = 0,33,29
+#-------------------------------
+[200]   # Penumbra Center
+Name = Penumbra Center
+MapPosition = 0,30,27
+#-------------------------------
+[201]   # Apterygota Center
+Name = Apterygota Center
+MapPosition = 0,32,25
+#-------------------------------
+[202]   # Bulwark Center
+Name = Bulwark Center
+MapPosition = 0,34,24
+#-------------------------------
+[203]   # Virga Center
+Name = Virga Center
+MapPosition = 0,31,22
+#-------------------------------
+[204]   # Lucid Center
+Name = Lucid Center
+MapPosition = 0,28,20
+#-------------------------------
+[205]   # Circuit Center
+Name = Circuit Center
+MapPosition = 0,23,19
+#-------------------------------
+[206]   # Noxious Center
+Name = Noxious Center
+MapPosition = 0,21,17
+#-------------------------------
+[207]   # Sylph Center
+Name = Sylph Center
+MapPosition = 0,19,12
+#-------------------------------
+[208]   # Revenant Center
+Name = Revenant Center
+MapPosition = 0,23,12
+#-------------------------------
+[209]   # Draco Center
+Name = Draco Center
+MapPosition = 0,21,8
+#-------------------------------
+[210]   # Iron Center
+Name = Iron Center
+MapPosition = 0,15,7
+#-------------------------------
+[211]   # Crystal Center
+Name = Crystal Center
+MapPosition = 0,10,6
+#-------------------------------
+[212]   # Stratos Center
+Name = Stratos Center
+MapPosition = 0,10,3
+#-------------------------------
+[213]   # Boulevard Gym
+Name = Boulevard Gym
+MapPosition = 0,33,28
+#-------------------------------
+[214]   # Penumbra Gym
+Name = Penumbra Gym
+MapPosition = 0,30,26
+#-------------------------------
+[215]   # Apterygota Gym
+Name = Apterygota Gym
+MapPosition = 0,32,24
+#-------------------------------
+[216]   # Bulwark Gym
+Name = Bulwark Gym
+MapPosition = 0,34,23
+#-------------------------------
+[217]   # Virga Gym
+Name = Virga Gym
+MapPosition = 0,31,21
+#-------------------------------
+[218]   # Lucid Gym
+Name = Lucid Gym
+MapPosition = 0,28,19
+#-------------------------------
+[219]   # Circuit Gym
+Name = Circuit Gym
+MapPosition = 0,23,18
+#-------------------------------
+[220]   # Noxious Gym
+Name = Noxious Gym
+MapPosition = 0,21,16
+#-------------------------------
+[221]   # Sylph Gym
+Name = Sylph Gym
+MapPosition = 0,19,11
+#-------------------------------
+[222]   # Revenant Gym
+Name = Revenant Gym
+MapPosition = 0,23,11
+#-------------------------------
+[223]   # Draco Gym
+Name = Draco Gym
+MapPosition = 0,21,7
+#-------------------------------
+[224]   # Iron Gym
+Name = Iron Gym
+MapPosition = 0,15,6
+#-------------------------------
+[225]   # Crystal Gym
+Name = Crystal Gym
+MapPosition = 0,10,5
+#-------------------------------
+[226]   # Stratos Gym
+Name = Stratos Gym
+MapPosition = 0,10,2
+#-------------------------------
+[227]   # Mystery Zone 3
+Name = Mystery Zone 3
+MapPosition = 0,15,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[228]   # Mystery Zone 4
+Name = Mystery Zone 4
+MapPosition = 0,14,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[229]   # Mystery Zone 5
+Name = Mystery Zone 5
+MapPosition = 0,13,37
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[230]   # Mystery Zone 6
+Name = Mystery Zone 6
+MapPosition = 0,16,35
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[231]   # Mystery Zone 7
+Name = Mystery Zone 7
+MapPosition = 0,15,35
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[232]   # Mystery Zone 8
+Name = Mystery Zone 8
+MapPosition = 0,14,35
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[233]   # Mystery Zone 9
+Name = Mystery Zone 9
+MapPosition = 0,13,35
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[234]   # Mystery Zone 10
+Name = Mystery Zone 10
+MapPosition = 0,12,35
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[235]   # Mystery Zone 11
+Name = Mystery Zone 11
+MapPosition = 0,15,33
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[236]   # Mystery Zone 12
+Name = Mystery Zone 12
+MapPosition = 0,14,33
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[237]   # Mystery Zone 13
+Name = Mystery Zone 13
+MapPosition = 0,13,33
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[238]   # Mystery Zone 14
+Name = Mystery Zone 14
+MapPosition = 0,12,33
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[239]   # Mystery Zone 15
+Name = Mystery Zone 15
+MapPosition = 0,11,33
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[240]   # Mystery Zone 16
+Name = Mystery Zone 16
+MapPosition = 0,14,31
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[241]   # Mystery Zone 17
+Name = Mystery Zone 17
+MapPosition = 0,13,31
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[242]   # Mystery Zone 18
+Name = Mystery Zone 18
+MapPosition = 0,12,31
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[243]   # Mystery Zone 19
+Name = Mystery Zone 19
+MapPosition = 0,11,31
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[244]   # Mystery Zone 20
+Name = Mystery Zone 20
+MapPosition = 0,10,31
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[245]   # Mystery Zone 21
+Name = Mystery Zone 21
+MapPosition = 0,13,29
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[246]   # Mystery Zone 22
+Name = Mystery Zone 22
+MapPosition = 0,12,29
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[247]   # Mystery Zone 23
+Name = Mystery Zone 23
+MapPosition = 0,11,29
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[248]   # Mystery Zone 24
+Name = Mystery Zone 24
+MapPosition = 0,10,29
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[249]   # Mystery Zone 25
+Name = Mystery Zone 25
+MapPosition = 0,9,29
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[250]   # Mystery Zone 26
+Name = Mystery Zone 26
+MapPosition = 0,12,27
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[251]   # Mystery Zone 27
+Name = Mystery Zone 27
+MapPosition = 0,11,27
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[252]   # Mystery Zone 28
+Name = Mystery Zone 28
+MapPosition = 0,10,27
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[253]   # Mystery Zone 29
+Name = Mystery Zone 29
+MapPosition = 0,9,27
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[254]   # Mystery Zone 30
+Name = Mystery Zone 30
+MapPosition = 0,8,27
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[255]   # Mystery Zone 31
+Name = Mystery Zone 31
+MapPosition = 0,11,25
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[256]   # Mystery Zone 32
+Name = Mystery Zone 32
+MapPosition = 0,10,25
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[257]   # Mystery Zone 33
+Name = Mystery Zone 33
+MapPosition = 0,9,25
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[258]   # Mystery Zone 34
+Name = Mystery Zone 34
+MapPosition = 0,8,25
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[259]   # Mystery Zone 35
+Name = Mystery Zone 35
+MapPosition = 0,7,25
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[260]   # Mystery Zone 36
+Name = Mystery Zone 36
+MapPosition = 0,10,23
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[261]   # Mystery Zone 37
+Name = Mystery Zone 37
+MapPosition = 0,9,23
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[262]   # Mystery Zone 38
+Name = Mystery Zone 38
+MapPosition = 0,8,23
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[263]   # Mystery Zone 39
+Name = Mystery Zone 39
+MapPosition = 0,7,23
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[264]   # Mystery Zone 40
+Name = Mystery Zone 40
+MapPosition = 0,6,23
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[265]   # Mystery Zone 41
+Name = Mystery Zone 41
+MapPosition = 0,9,21
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[266]   # Mystery Zone 42
+Name = Mystery Zone 42
+MapPosition = 0,8,21
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[267]   # Mystery Zone 43
+Name = Mystery Zone 43
+MapPosition = 0,7,21
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[268]   # Mystery Zone 44
+Name = Mystery Zone 44
+MapPosition = 0,6,21
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[269]   # Mystery Zone 45
+Name = Mystery Zone 45
+MapPosition = 0,5,21
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[270]   # Mystery Zone 46
+Name = Mystery Zone 46
+MapPosition = 0,8,19
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[271]   # Mystery Zone 47
+Name = Mystery Zone 47
+MapPosition = 0,7,19
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[272]   # Mystery Zone 48
+Name = Mystery Zone 48
+MapPosition = 0,6,19
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[273]   # Mystery Zone 49
+Name = Mystery Zone 49
+MapPosition = 0,5,19
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[274]   # Mystery Zone 50
+Name = Mystery Zone 50
+MapPosition = 0,4,19
+BattleBack = newworld
+WildBattleBGM = TCG 25 Battle Center
+WildVictoryBGM = TCG 23 Challenge Hall
+#-------------------------------
+[275]   # Mystery Zone 51
+Name = Mystery Zone 51
+Outdoor = true
+MapPosition = 0,4,17
+BattleBack = newworld
+WildBattleBGM = ZA 097 Battle (Mega Pokemon Unleashed)
+WildVictoryBGM = ZA 056 A Strong Surge of Mega Power

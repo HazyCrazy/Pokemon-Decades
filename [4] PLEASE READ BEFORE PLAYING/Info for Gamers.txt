@@ -1,0 +1,18 @@
+Game Status: 100% Finished, all planned development content is implemented.
+
+Content: 1 Custom Region (Beatha), Megas, Z-Moves, Dynamax, Tera, all 900+ Moves, All Gen 1 to Gen 9 Pokemon, including the ZA Megas + ZA Mega DLC, 18 Type Masters, 1 Final Boss, 1 Super Boss
+Power Levelling all 1025+ Pokemon to Lvl.100 time: 1 minute with the Trainer Suite's Power Levelling tools (Pokemon Storage System, Exp Charm, Exp.All)
+
+Rough Play Time Estimate (Story Mode): 20 Hours (Stock Decades Gen 9 Metagame, no Vanilla Gen 9 Patch applied)
+Rough Play Time Estimate (Battle Mode): Extreme variation, depends on how much you enjoy competitive Pokemon Battles, or Pokemon's Sandbox
+
+What Games Decades is similiar to:
+
+Pokemon Tectonic (Decade's focus is changing Pokemon's Metagame Balance)
+Rejuvenation/Reborn (In that Decades uses a custom region, and NTAW STAB MYFT is Decade's version of a Battle Gimmick)
+Elite Redux/Radical Red
+Unbound
+Compact
+Eon Guardians
+Drayno’s Rom Hacks
+ROWE

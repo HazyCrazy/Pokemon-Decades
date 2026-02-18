@@ -1,0 +1,10 @@
+#-------------------------------
+[ULTRAMEMORY]
+Name = Ultra Memory
+NamePlural = Ultra Memories
+Pocket = 6#8
+Price = 0
+FieldUse = OnPokemon
+Flags = KeyItem
+Description = A memory disc containing data of all Types. Use to have Silvally become any Type.
+#-------------------------------

@@ -1,0 +1,7 @@
+﻿Name         = Hedgehog's Variety of Custom Items
+Version      = 0.0.1
+Essentials = 21.1
+Website = https://docs.google.com/spreadsheets/d/13oHQ6I0SaHnHIEAof3ILHPcD-FgkF_oaCXnqFzDvI6s/edit?gid=2051683572#gid=2051683572
+Requires = Generation 9 Pack,3.2.7
+Credits      = Hedgehog
+# Full credits can be found in the Read Me folder.

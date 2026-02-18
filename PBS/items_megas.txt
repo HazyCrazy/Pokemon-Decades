@@ -1,0 +1,48 @@
+#-------------------------------
+[MEGAITE]
+Name = Megaite
+NamePlural = Megaites
+Pocket = 6#1
+Price = 0
+BPPrice = 50
+Flags = MegaStone,Fling_80
+Description = A universal Mega Stone. Mega Evolves Pokémon with Mega Forms, including Rayquaza.
+#-------------------------------
+[MEGAITEX]
+Name = Megaite X
+NamePlural = Megaite X's
+Pocket = 6#1
+Price = 0
+BPPrice = 50
+Flags = MegaStone,Fling_80
+#Description = A universal Mega Stone. Mega Evolves Pokémon with X Forms, such as Mewtwo and Charizard.
+Description = A universal Mega Stone. Mega Evolves Pokémon with X Forms, such as Charizard and Urshifu (Single Strike).
+#-------------------------------
+[MEGAITEY]
+Name = Megaite Y
+NamePlural = Megaite Y's
+Pocket = 6#1
+Price = 0
+BPPrice = 50
+Flags = MegaStone,Fling_80
+#Description = A universal Mega Stone. Mega Evolves Pokémon with Y Forms, such as Mewtwo and Charizard.
+Description = A universal Mega Stone. Mega Evolves Pokémon with Y Forms, such as and Charizard and Urshifu (Single Strike).
+#-------------------------------
+[MEGAITEZ]
+Name = Megaite Z
+NamePlural = Megaite Z's
+Pocket = 6#1
+Price = 0
+BPPrice = 50
+Flags = MegaStone,Fling_80
+Description = A universal Mega Stone. Mega Evolves Pokémon with Z Forms, such as Absol and Lucario.
+#-------------------------------
+[GIGANTAITE]
+Name = Gigantaite
+NamePlural = Gigantaites
+Pocket = 6#1
+Price = 0
+BPPrice = 50
+Flags = MegaStone,Fling_80
+Description = A universal Mega Stone. Mega Evolves Pokémon with Gigantamax Forms. Not the same as regular Dynamax.
+#-------------------------------

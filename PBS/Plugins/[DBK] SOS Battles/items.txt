@@ -1,0 +1,4 @@
+### Apply changes by holding SHIFT while compiling. ###
+#-------------------------------
+[ADRENALINEORB]
+BattleUse = Direct

@@ -1,0 +1,30 @@
+#-------------------------------
+[ADVENTUREGUIDE]
+Name = Adventure Guide
+NamePlural = Adventure Guides
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Documentation on all information for mechanics and unoffical changes for Pokémon Decades.
+#Description = Documentation on all information for mechanics and unoffical changes for this game. 
+#Description = A convenient notebook that contains all the advice a Trainer receives on an adventure.
+#-------------------------------
+[EXPALL]
+Name = Exp.All
+NamePlural = Exp.Alls
+Pocket = 4#8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Toggles the Exp.All. When active, Non-participant Pokémon get 50% of the participant's Exp.
+#-------------------------------
+[DESIGNNOTES]
+Name = Design Notes
+NamePlural = Design Notes
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = The FAQ for Pokémon Decade's design decisions. #Exists as fuel for those that hate this game. 	
+#-------------------------------

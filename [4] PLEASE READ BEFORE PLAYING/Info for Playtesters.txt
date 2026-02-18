@@ -1,0 +1,22 @@
+During New Game, there is a Funbro Trap, made with intent to fuck with Speed Up Spamers.
+You can avoid this trap by simply chooseing the "I decide how I use it" Option, during the Delta Speed Up question.
+The Funbro trap is intentionally designed to be unwinnable, and unlosable. 
+
+Pokemon Decades is not designed for Nuzlockes and has free form Level Caps that the player manually enforces themselves. 
+Key Items such as the Auto Win Policy and No Clip Disk are intended parts of the Trainer Suite, and are not Debug Items.
+
+The Fast Travel Phone's Sequence Skip Option is an intended part of the Trainer Suite, and is not a Debug Item.
+It exists to allow the player to bypass parts of the game they are bored with, or don't care about.
+Sometimes, you just want to play a hyper specfic part of a video game. 
+And when you just want that, the idea of grinding through playtime hours you don't care about,
+is enough to kill all desire to play a video game. And it saves you time, if you want to show something to your friends.
+
+The Basic Vanilla Gen 9 Patch is unfinished. The minimum patches are finished,
+but Patches 5 to 8 are not done, due to burnout in the lead up to Decade's Beta release.
+
+The Item and PSS Suites exist for 2 purposes:
+
+1. Make the workload of a full region game feasible for a one person development team (The 10 month turnaround of Decades's development would not have been possible without these suites)
+2. Ensure that the time spent doing a challenge run is spent on engaging with the challenge run, and not the tedious setup to start a challenge run that adds up over hundreds of attempts (Radical Red in-game cheats, Elite Redex's early game slog, the slog of moving past the repeating welcome to the world of Pokemon and getting the Pokedex New Game start)
+
+Due to the open ended nature of Decade's design, I cannot ensure a strict Monotype Hardcore Nuzlocke is feasible.

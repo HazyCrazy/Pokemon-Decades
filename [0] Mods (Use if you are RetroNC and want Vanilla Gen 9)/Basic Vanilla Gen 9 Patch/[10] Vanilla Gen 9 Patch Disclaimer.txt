@@ -1,0 +1,53 @@
+This patch will only change the following to match Gen 9’s Vanilla Metagame:
+
+Canon Typing’s 
+Base Stat Totals
+Canon Type Matchups
+
+The patch cannot change the following back to Gen 9’s Vanilla Metagame:
+
+Ability Functions
+Item Functions
+Move Functions
+Starter Choices
+Story Mode Trainer Teams
+Battle Mode Trainer Teams
+Wild Pokémon Distributions 
+Quest Pokémon Rewards
+Ultimate Move Tutor Move Distributions
+Pokémon Family Line Learn Set Fusions
+Evolution Methods (All Evolution Methods, Modded and Stock, are standardized to Lvl.Up, Evolution Stone and Atk > Def / Atk < Def / Atk == Def)
+EV Yeilds (All EV Yeilds are standardized to one Stat, and give 84 Points for that Stat. Exists dispite having EV Allocator, if you want a fangame that makes EV Training a natural process)
+Catch Rates (All Catch Rates under 90 are now 90. Exists to combat RNG hating the player and wasting their time, and the player chooses not to use the Master Ball)
+BaseExp (Only the Happiny Line and Audino Line have buffed Exp Yeilds. Anti Grind Trainers exist in every Pokemon Center in Decades)
+
+This is because of how the Data Folder works, and Decade’s was too deep into its development by the time a viable solution to convert the PBS from Text files to Ruby files existed.
+Pokémon Decades is designed around its stock modded Gen 9 Metagame. If you use the Basic Vanilla Gen 9 Patch, you are choosing not to respect Pokémon Decades in the way it was designed. 
+It is your funeral if using the patch results in you facing progression problems. Your feedback will not be considered if you are using the Basic Vanilla Gen 9 Patch.
+
+What do you mean by my feedback will not be considered?
+
+When using the Basic Vanilla Gen 9 Patch, your feedback on these areas will not be considered:
+
+A specific Pokémon having a hard time against a Legendary (When using the Patch, the viability of every Pokémon will be the same as they are in the official game’s Gen 9 Meta) 
+A specific Pokémon being part of a Monotype choice (The Monotype choices are based on the stock modded Gen 9 Metagame)
+XYZ Pokémon that is part of a family line (Vulpix/Alolan Vulpix) learning moves from a Pokémon that is part of the Family Line. (Alolan Vulpix being able to learn Flamethrower) 
+Pokémon Decade’s Family Line Learn Set Fusions is necessary to reduce the workload to 541 Pokémon Family Lines, instead of 1025+, for giving every Pokémon the entire history of their Learn Sets, Gen 1 to Gen 9, pre-Legends ZA. 
+The same also applies to the stock modded Gen 9 Metagame.
+
+Your feedback in areas outside of what is listed above will still be considered. 
+But remember, if you use the Basic Vanilla Gen 9 Patch. You have chosen to not respect Pokémon Decades in the way it was designed.
+That means my tolerance for putting up with your complaints is non existant.
+
+The Basic Vanilla Gen 9 Patch will never expand beyond the three listed changes.
+This patch was made with great reluctance, because it's existance means I now
+have to deal with the headache of accessing if someone's feedback is based 
+on the stock state of Decade's Metagame, or if this patch was used. 
+
+And it wasted valuable time that could have been used 
+to get Pokemon Decades better prepared for it's Beta and Finished release.
+I only made this patch, to prove to RetroNC, that I did fix the nitpick they had.
+
+https://www.youtube.com/watch?v=czDHk62YtWc
+
+(12:35)   

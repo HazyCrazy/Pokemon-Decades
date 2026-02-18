@@ -1,0 +1,4 @@
+Name       = Bag Screen w/int. Party
+Version    = 2.5.0
+Essentials = 21
+Credits    = DiegoWT

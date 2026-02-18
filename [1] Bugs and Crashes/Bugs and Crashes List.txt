@@ -1,0 +1,54 @@
+Oversights
+
+With the Pokedex, you have to choose Metagame Wikidex,
+in order to search the Wild Location of a Pokemon in Beatha.
+
+This is a result of how the Pokedex in Essentials interacts with the Map Metadata.
+And I encountered errors attempting to make every Pokedex entry have Wild Location Map Data.
+
+Bugs
+
+When a Pokémon access the Gen 9 Move Relearner System, it's Ability resets to the Regular Ability. (Index 0)
+When a Pokémon uses Dynamax in battle, it's Ability resets to it's Natural Ability. (Index 0)
+
+When registering a Pokemon to search in the dexnav, the Dexnav saves the current level of the Pokemon registered.
+This means it's level is set upon being registered. To reset the level, stop using the dexnav and encounter a wild Pokemon naturally.
+
+When a Dynamax Inhibitor is used, a Pokemon's EV's go back to 0.
+If this annoys you, you can apply the Disable EV's/IV's setting in the Options Menu.
+
+At Lvl.100, with Story Mode Showdown Mode, the final boss might be at Lvl.98, when they are intended to be Lv.100.
+To fix this minor problem, go to Battle Paradise, set the Battle Mode Showdown Mode to Lvl.100, and set the Level Scale to Battle Mode Showdown Mode.
+
+Crashes
+
+When using the PSS Boxes, do not stay in them for longer than 5 minutes.
+An unknown memory leak causes the game to eventually crash after 5 to 10 minutes 
+of being idle in the PC Storage boxes. 
+
+Make sure to save before using the PSS Boxes, and after sorting 5 to 10 boxes, in less
+than 5 minutes.
+
+Closing and opening the PSS Storage Boxes resets the memory leak.
+
+15th February 2026
+
+Via updates to the DBK Plugins, version 1.3 of DBK, 
+and every add-on compatible with DBK 1.3.
+The PSS Box crashing issue should be fixed.
+
+I ended up making last minute plugin updates,
+as I waited for a response from the Eevee Expo Form Staff,
+on my question related to making sure the Intended Soundtrack
+isn't using music I don't have permission to use.
+
+I am aware of the fact it's the fangame creator's responsiblity 
+to not break Eevee Expo/Poke Community's rules of not using 
+non public no premissions granted assets. But I still needed 
+a second opinion, to make sure nothing was used without permission
+by accident. 
+
+16th February 2026
+
+I was able to get around to compressing the Audio Folder during the downtime.
+This reduced Decades's file size from 2.28 GB to 1.08 GB, at the cost of Audio quality.

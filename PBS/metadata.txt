@@ -1,0 +1,155 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[0]
+StartMoney = 3000
+StartItemStorage = POTION
+Home = 32,12,16,2
+StorageCreator = PSS
+#WildBattleBGM = Battle wild
+WildBattleBGM = RGS Wild Pokemon Battle Rip by Gladiogg
+TrainerBattleBGM = Battle trainer
+#WildVictoryBGM = Battle victory wild
+WildVictoryBGM = RGS Peaceful Aftermath Rip by Gladiogg
+TrainerVictoryBGM = Battle victory trainer
+SurfBGM = Surfing
+BicycleBGM = Bicycle
+#-------------------------------
+[1]
+TrainerType = PLAYER_TRAINER_FRLG_Red
+WalkCharset = trainer_PLAYER_TRAINER_FRLG_Red
+RunCharset = FRLG_boy_run
+CycleCharset = FRLG_boy_bike
+SurfCharset = FRLG_boy_surf
+DiveCharset = FRLG_boy_surf
+FishCharset = FRLG_boy_fish #FRLG_boy_fish_offset
+SurfFishCharset = FRLG_boy_fish #FRLG_boy_fish_offset
+#-------------------------------
+[2] # Sadly, I could not find public resources that made a full Gen 4 Art Style Leaf Sprite Sheet :(
+TrainerType = PLAYER_TRAINER_FRLG_Leaf
+WalkCharset = trainer_PLAYER_TRAINER_FRLG_Leaf
+RunCharset = trainer_PLAYER_TRAINER_FRLG_Leaf 
+CycleCharset = girl_bike
+SurfCharset = girl_surf
+DiveCharset = girl_surf
+FishCharset = girl_fish_offset
+SurfFishCharset = girl_fish_offset
+#-------------------------------
+[3]
+TrainerType = PLAYER_TRAINER_HGSS_Ethan
+WalkCharset = trainer_PLAYER_TRAINER_HGSS_Ethan
+RunCharset = HGSS_boy_run
+CycleCharset = HGSS_boy_bike
+SurfCharset = HGSS_boy_surf
+DiveCharset = HGSS_boy_surf
+FishCharset = HGSS_boy_fish
+SurfFishCharset = HGSS_boy_fish
+#-------------------------------
+[4]
+TrainerType = PLAYER_TRAINER_HGSS_Lyra
+WalkCharset = trainer_PLAYER_TRAINER_HGSS_Lyra
+RunCharset = HGSS_girl_run
+CycleCharset = HGSS_girl_bike
+SurfCharset = HGSS_girl_surf
+DiveCharset = HGSS_girl_surf
+FishCharset = HGSS_girl_fish
+SurfFishCharset = HGSS_girl_fish
+#-------------------------------
+[5]
+TrainerType = PLAYER_TRAINER_COLO_Wes
+WalkCharset = trainer_PLAYER_TRAINER_COLO_Wes
+RunCharset = COLO_boy_run
+CycleCharset = COLO_boy_bike
+SurfCharset = COLO_boy_surf
+DiveCharset = COLO_boy_surf
+FishCharset = COLO_boy_fish
+SurfFishCharset = COLO_boy_surf_fish
+#-------------------------------
+[6]
+TrainerType = PLAYER_TRAINER_GSC_Kris
+WalkCharset = trainer_PLAYER_TRAINER_GSC_Kris
+RunCharset = GSC_girl_run
+CycleCharset = GSC_girl_bike
+SurfCharset = GSC_girl_surf
+DiveCharset = GSC_girl_surf
+FishCharset = GSC_girl_fish
+SurfFishCharset = GSC_girl_fish
+#-------------------------------
+[7]
+TrainerType = PLAYER_TRAINER_ORAS_Brendan
+WalkCharset = trainer_PLAYER_TRAINER_ORAS_Brendan
+RunCharset = ORAS_boy_run
+CycleCharset = ORAS_boy_bike
+SurfCharset = ORAS_boy_surf
+DiveCharset = ORAS_boy_surf
+FishCharset = ORAS_boy_fish
+SurfFishCharset = ORAS_boy_fish
+#-------------------------------
+[8]
+TrainerType = PLAYER_TRAINER_ORAS_May
+WalkCharset = trainer_PLAYER_TRAINER_ORAS_May
+RunCharset = ORAS_girl_run
+CycleCharset = ORAS_girl_bike
+SurfCharset = ORAS_girl_surf
+DiveCharset = ORAS_girl_surf
+FishCharset = ORAS_girl_fish
+SurfFishCharset = ORAS_girl_fish
+#-------------------------------
+[9]
+TrainerType = PLAYER_TRAINER_PL_Lucas
+WalkCharset = trainer_PLAYER_TRAINER_PL_Lucas
+RunCharset = PL_boy_run
+CycleCharset = PL_boy_bike
+SurfCharset = PL_boy_surf
+DiveCharset = PL_boy_surf
+FishCharset = PL_boy_fish
+SurfFishCharset = PL_boy_fish
+#-------------------------------
+[10]
+TrainerType = PLAYER_TRAINER_PL_Dawn
+WalkCharset = trainer_PLAYER_TRAINER_PL_Dawn
+RunCharset = PL_girl_run
+CycleCharset = PL_girl_bike
+SurfCharset = PL_girl_surf
+DiveCharset = PL_girl_surf
+FishCharset = PL_girl_fish
+SurfFishCharset = PL_girl_fish
+#-------------------------------
+[11]
+TrainerType = PLAYER_TRAINER_BW1_Hilbert
+WalkCharset = trainer_PLAYER_TRAINER_BW1_Hilbert
+RunCharset = BW1_boy_run
+CycleCharset = BW1_boy_bike
+SurfCharset = BW1_boy_surf
+DiveCharset = BW1_boy_surf
+FishCharset = BW1_boy_fish
+SurfFishCharset = BW1_boy_fish
+#-------------------------------
+[12]
+TrainerType = PLAYER_TRAINER_BW1_Hilda
+WalkCharset = trainer_PLAYER_TRAINER_BW1_Hilda
+RunCharset = BW1_girl_run
+CycleCharset = BW1_girl_bike
+SurfCharset = BW1_girl_surf
+DiveCharset = BW1_girl_surf
+FishCharset = BW1_girl_fish
+SurfFishCharset = BW1_girl_fish
+#-------------------------------
+[13]
+TrainerType = PLAYER_TRAINER_B2W2_Nate
+WalkCharset = trainer_PLAYER_TRAINER_B2W2_Nate
+RunCharset = BW2_boy_run
+CycleCharset = BW2_boy_bike
+SurfCharset = BW2_boy_surf
+DiveCharset = BW2_boy_surf
+FishCharset = BW2_boy_fish
+SurfFishCharset = BW2_boy_fish
+#-------------------------------
+[14]
+TrainerType = PLAYER_TRAINER_B2W2_Rosa
+WalkCharset = trainer_PLAYER_TRAINER_B2W2_Rosa
+RunCharset = BW2_girl_run
+CycleCharset = BW2_girl_bike
+SurfCharset = BW2_girl_surf
+DiveCharset = BW2_girl_surf
+FishCharset = BW2_girl_fish
+SurfFishCharset = BW2_girl_fish

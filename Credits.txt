@@ -1,0 +1,1988 @@
+Shadow Lugia sprites for fangames by ShadowGate31 DeviantArt
+
+Link: https://www.deviantart.com/shadowgate31/art/Shadow-Lugia-sprites-for-fangames-410361664
+Artist: https://www.deviantart.com/shadowgate31
+
+Pokemon Essentials
+Created by:
+Flameguru Poccil (Peter O.) Maruno
+With contributions from:
+AvatarMonkeyKirby Marin Boushy MiDas Mike Brother1440 Near Fantastica FL. PinkMan Genzai Kawakami Popper Golisopod User Rataime help-14 Savordez IceGod64 SoundSpawn Jacob O. Wobbrock the__end KitsuneKouta Venom12 Lisa Anthony Wachunga Luka S.J. and everyone else who helped out 
+
+Pokemon Techtonic Tileset Assets
+
+Developer 	Role
+Brickbat 	Project Lead
+Zeu 	Lead Programmer, Lead Design
+Wakarimasensei 	Lead Writer
+Agentbla 	Lead Mapper
+Divock 	Lead Animator
+Drawingbox 	Lead Artist
+Dedrum 	Lead Composer
+Steeb 	Lead Battle Designer
+IgnitedxSoul 	Lead Publicist
+Darlvon 	AI Designer
+Valrex 	Spanish Translator
+Contributors
+
+Art Contributors
+ali760, Jaggedthorn, papper, LucaSantosSims, lichenprincess, ctWizard, Slaynoir, Maddie, BlueObelisk, Enigma
+
+QA Team
+
+Splitmoon, TikiShades, Steeb, Deeffect, Ghyst, Not Reese, Valrex, Ghost, Hannahs Ghost
+Other Contributors
+
+IgnitedxSoul, Arenastellez, Zufaix, Fbarbarosa, FurretKnight, Dtp81390, Gabs, derrondad, Dark?, MrPanda1, Angelcake, Darlvon, Valrex, Roxie 
+
+Asset Credits
+
+Pokemon Essentials
+Created by:
+Flameguru Poccil (Peter O.) Maruno
+With contributions from:
+AvatarMonkeyKirby Marin Boushy MiDas Mike Brother1440 Near Fantastica FL. PinkMan Genzai Kawakami Popper Golisopod User Rataime help-14 Savordez IceGod64 SoundSpawn Jacob O. Wobbrock the__end KitsuneKouta Venom12 Lisa Anthony Wachunga Luka S.J. and everyone else who helped out
+Generation 8 Project
+Battler Sprites Gen 1-5 Pokemon Sprites - veekun Gen 6 Pokemon Sprites - Smogon X/Y Sprite Project Gen 7 Pokemon Sprites - Smogon Sun/Moon Sprite Project Gen 8 Pokemon Sprites - Smogon Sword/Shield Sprite Project Overworld Sprites Gen 6 Pokemon Overworlds - princess-pheonix, LunarDusk, Wolfang62, TintjeMadelintje101, piphybuilder88 Gen 7 Pokemon Overworlds - Larry Turbo, princess-pheonix Gen 8 Pokemon Overworlds - SageDeoxys, Wolfang62 Gen 1-5 Pokemon Overworlds MissingLukey, help-14, Kymoyonian, cSc-A7X, 2and2makes5 Pokegirl4ever, Fernandojl, Silver-Skies, TyranitarDark Getsuei-H, Kid1513, Milomilotic11, Kyt666, kdiamo11 Chocosrawlooid, Syledude, Gallanty, Gizamimi-Pichu 2and2makes5, Zyon17,LarryTurbo, spritesstealer Icon Sprites Gen 1-6 Pokemon Icon Sprites - Alaguesia Gen 7 Pokemon Icon Sprites - Marin, MapleBranchWing, DS Styled Gen 7+ Repository Gen 8 Icon Sprites - Larry Turbo, Leparagon Cry Credits Gen 1-6 Pokemon Cries - Rhyden Gen 7 Pokemon Cries - Marin, Rhyden Gen 8 Pokemon Cries - Zeak6464 PBS Credits Golisopod User Zerokid TheToxic HM100 KyureJL ErwanBeurier EBS Bitmap Wrapper Luka S.J. Gen 8 Scripts Golisopod User Maruno Vendily TheToxic HM100 Aioross WolfPP MFilice lolface KyureJL DarrylBD99 Turn20Negate TheKandinavian ErwanBeurier Compilation of Resources Golisopod User UberDunsparce Porting to v19 Golisopod User Maruno 
+
+Tilesheets
+Kyle Dove (Kymotonian) Speedialga Sagaxxy Magiscarf KingTapir PkmnAlexandrite Phyromatical EVoLiNa Midnitez-REMIX ditto209 UltimoSpriter PeekyChew Cuddlesthefatcat Pablus94 Hydrargirium zetavares852 TyranitarDark ChaoticCherryCake AveonTrainer kane89 carchagui Princess-Phoenix DormDude Rayquaza-dot Vazquinho Yveltalchannel Magna-Ryunoid Plutomaniacx LilaTraube seiyouh SpritersResource Thatsowitty exiled-shadow ausberge supercow LunaMaddalena Alucus The English Kiwi calisprojects.com PandaInDaGame Hek-el-grande Kaliser SailorVicious Agentbla Shiney570 dirtywiggles Ekat MewTheMega Zeo254 Tristantine The Great HauntedArtStudio Wraitex YuukiMokuya CNickC WilsonScarloxy Minorthreat0987 PurpleZaffre Akizakura16 WildDeadHero Derlo Flurmimon The-Red-Ex The_Jacko_Art Voltseon WesleyFG Shawn Frost NSora-96 Minorthreat0987 DarkDragonn rafa-cac Newtiteuf moca
+
+Charsets
+DiegoWT PurpleZaffre Taiga
+
+Trainer Sprites
+Mr. Gela/theo#7722 Taiga DiegoWT Neo-Spriteman Vanilla Sunshine AtomicReactor izzyvivious Mademoiselle PizzaSun izzyvicious Wolfgang62 Somersault
+
+Megas/Gigantamax Overworld Sprites
+Kidkatt Larryturbo Princess-Phoenix Sagedeoxys
+
+Reborn Icons
+smeargletail ARandomTalkingBush
+
+Reborn Move Animations
+Smeargletail Mde2001 Autumn VulpesDraconis Amethyst Crim andracass Koyoss Jan
+
+Pre-looped Music Pack
+ENLS 
+
+
+Essentials Character Selection by FL 
+
+Audio Resources
+
+ENLS’s Pre-Looped Music Library by ENLS, Thundaga, YTKrakerwat, Sulucnal, FrivolousAqua
+
+Graphics Resources
+
+SWSH Trainer Class Sprites by Kyledove 
+USUM Trainer Classes by Kyledove 
+XY Trainer Class Sprites by Kyledove 
+ORAS Trainer Class Sprites by Kyledove 
+Gen 5 Characters in Gen 4 OW style by DiegoWT
+
+Ga-Olé Trainer Classes by kyledove
+Taigas Trainer Collection Other
+Taiga´s Trainer Collection XY
+
+Gen 4 OWs v1.5 - Vanilla Sunshine
+Gen 4 Partner Backsprites by Tsuka and Sylvecario
+Gen 4 and 5 Trainer sprites by Mr Gela
+
+Tales of the Outskirt Stand Resource Pack
+
+Mak
+Amethyst
+Jan
+Inuki
+Smeargletail
+Mde
+Koyo
+Vulpes Draconis
+andracass
+Slaqueen
+Zeo254
+Hek-el-grande
+PandaInDaGame
+DarkusShadow
+Ulithium_Dragon
+Larry-turbo
+WesleyFG
+GavZxHayley
+kaitodesign
+Kymotonian
+Dewitty
+Magiscarf
+princess-phoenix
+KingTapir
+Phyromatical
+EVoLiNa
+zetavares852
+Kyle-dove
+Manuxd789
+BlackPokeNinja
+DaNerdyDude
+ForeverXShoddyBattle
+DarkDragonn
+Akuma-Tsubasa
+LightningKillua15
+
+DP Beta Overworlds by PurpleZaffre
+Ultimate Gen 4 Overworlds Pack by PurpleZaffre
+Teraleak OWs & Assets by PurpleZaffre
+Lucas and Dawn Sprites by Zygoat
+Pokémon Battle Revolution - Colosseum Leader Front Sprites by jinxed
+Gmax, Mega and Primal OW Sprites Pack + Extras by Willøw
+HGSS Ethan and Lyra back sprites by Tsuka and Ozander
+
+Hoenn Gym Leader with ORAS Color Palette by ChromusSama
+Terrain Balls by NocTurn
+Those Chests from Colosseum by Nezzy
+
+Leaf - Sprite Overworld
+
+Wolfang62: https://www.deviantart.com/wolfang62/art/Leaf-Sprite-Overworld-887602743
+
+GSC Kris Gen 4 Sprites
+
+SirPeaches: https://www.deviantart.com/sirpeaches/art/HeartGold-SoulSilver-Kris-Ver-2-555601343
+
+Mid117
+
+Wes backsprite: https://www.deviantart.com/mid117/art/Commission-PKMN-Colosseum-Wes-Backsprite-842604661
+
+neosth2001
+
+Wes Gen 4 trainer sprite (Source links to a 404 Deviant Art page. Source link currently unknown)
+https://www.deviantart.com/neosth2001/art/Wes-Pokemon-Cobalt-364693531
+
+hyo-oppa
+
+Pokemon Trainer Battle Sprite Collection: https://www.deviantart.com/hyo-oppa/art/Hyo-s-Pokemon-Trainer-Battle-Sprite-Collection-878566572
+Pokemon ORAS Brendan DPPt/HGSS Gen IV Sprite Sheet: https://www.deviantart.com/hyo-oppa/art/Pokemon-ORAS-Brendan-DPPt-HGSS-Gen-IV-Sprite-Sheet-681502142
+
+skyin2020
+
+Pokemon Female Trainers VS Sprite: https://www.deviantart.com/skyin2020/art/Pokemon-Female-Trainers-VS-Sprite-788731786 \\
+
+Solo993
+
+PUBLIC OrAs Protagonists Gba back front sprites: https://www.deviantart.com/solo993/art/PUBLIC-OrAs-Protagonists-Gba-back-front-sprites-491737986
+
+PKMNTrainerRick
+
+POKEMON RED DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-RED-DPP-BACK-SPRITE-918844486
+POKEMON LEAF DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-LEAF-DPP-BACK-SPRITE-918844468
+
+Character Selection by FL 
+
+https://github.com/FL-/Essentials-CharacterSelection
+
+
+pokeengine Gen 4 Art Style Trainer Battler and Overworld Sprite Artists
+
+Jext
+kyledove
+hyo
+Rald
+
+Pokemon Showdown Trainer Battler Sprite Artists
+
+Beliot419
+Brumirage
+Fifty Shades of Rez
+Gnomowladny
+Grapo
+Horo
+Selena
+ZacWeavile
+hyo-oppa
+kyledove
+
+pokeengine Trainer Battle/Overworld Sprites
+
+https://pokengine.org/trainers
+https://pokengine.org/search?query=trainers
+https://pokengine.org/search?query=recent:168&tab=trainers
+https://pokengine.org/search?query=trainers+%23public%2Buse%2Bwith%2Bcredits 
+
+
+Pokemon Showdown Trainer Battle Sprites
+
+https://play.pokemonshowdown.com/sprites/trainers/
+https://play.pokemonshowdown.com/sprites/trainers/latest/
+https://play.pokemonshowdown.com/sprites/trainers/credits/
+
+Customizable Level Caps by 
+
+IndianAnimator, Yewchung, Vendily, ClaraDragon, Aiur Jordan, Wrigty12, Nononever, C.Ezra, Golisopod User
+
+Hedgie's Special Item Effects
+
+# ITEMS
+Any Nature Machine - lucidious89, Hedgehog, 44tim44
+CHOCOLATES - DarkYuan, AutumnMood
+Cherish Ball - Hedgehog
+Discount Coupon - Arcky, Hedgehog
+Geode Ball - AutumnMood, Hedgehog, wrigty12
+Gold Teeth - Hedgehog (Effect & AI only)
+Nature Changer - Hedgehog, 44tim44
+Safari Ball - Hedgehog (Effect only)
+Snow Orb - Hedghehog, Darius
+Sport Ball - Hedgehog
+Stale Candy - Hedgehog, BigFRIV, Darius
+Strange Ball _ hedgehog, wrigty12
+Super Capsule - Hedgehog
+Thumb Drive - Rejuvenation Dev Team
+Vial of Glitter - Asforcia, Hedgehog, Mikayla, BigFRIV
+Weathery Ball - Hedgehog
+
+# LGPE Items - 
+Hedgehog (Effects) & AutumnMood (Sprite Edits)
+
+# OTHER CODE
+Castform-Weather Ball Form Changes - Hedgehog, wrigty12
+
+Hedgehog's Variety of Custom Items by Hedgehog
+
+EZ EV IV Items by DrDesmond
+
+Gift Box Item by wrigty12
+
+LoakyModernTypeIcons by Loaky 
+
+Fancy Looking Type Icons by Sonicover
+
+Pokedex Screen Reskins by: Articuno :>
+
+Averaged Movesets for Pokemon Across Generations by InfinityPlus05 (Make a copy of this Google Sheets, in order to use this resource for your own use case)
+https://docs.google.com/spreadsheets/d/14E8juaMuYBsqHX_0HnxwDt7StoBHUVFW7z6KtW_a9yY/edit?gid=1621062029#gid=1621062029
+https://bulbapedia.bulbagarden.net/wiki/User:MasterBraixen96/List_of_event-only_moves
+
+Pokedex Evolution Page by ChampChar110
+
+Following Pokemon EX (21.1 port)
+
+NoNoNever
+Golisopod User
+Help-14
+zingzags
+Rayd12smitty
+mej71
+PurpleZaffre
+Akizakura16
+Thundaga
+Armin (Fairies Resource Pack)
+Maruno
+Chubbichu
+
+
+Endless Plains Backgrounds by princess-phoenix
+
+https://www.deviantart.com/princess-phoenix/art/Endless-Plains-Background-817379184
+
+battlebgRoute by aveontrainer
+
+https://www.deviantart.com/aveontrainer/art/battlebgRoute-829526311
+
+battlebgBeach by aveontrainer
+
+https://www.deviantart.com/aveontrainer/art/battlebgBeach-811716694
+
+A Beach Background by princess-phoenix
+
+https://www.deviantart.com/princess-phoenix/art/A-Beach-Background-812487302
+
+Woodland Wall Background by princess-phoenix
+
+https://www.deviantart.com/princess-phoenix/art/Woodland-Wall-Background-814980517
+
+Defiance-styled Region Map Kit by Mak 
+
+https://eeveeexpo.com/resources/34/
+
+Pokemon Mystery Dungeon Sprite Repository Contributors List 
+
+https://sprites.pmdcollab.org/#/Contributors
+
+Generation 9 Resource Pack [v21.1]
+
+
+    Scripts:
+    -Caruban
+    -Lucidious89
+    -Eskiss (Original Legend Plate script)
+    -StCooler (Original PLA Expansion script for Gen 8 Project in v18 and Status sprites)
+    -PorousMist and curryofthepast (Adapting the PLA Expansion script script for v19.1 use)
+
+    PBS:
+    -Caruban
+    -Lucidious89
+    -PorousMist (Updated the abilities, items, and moves description)
+    -DJChaos (TM Items)
+    -Futuresushi (Shortened abilities and moves description)
+
+    Pokemon Battler Sprites:
+    -Gen 1-5 Pokemon Sprites - veekun
+    -Gen 6 Pokemon Sprites - All Contributors To Smogon X/Y Sprite Project
+    -Gen 7 Pokemon Sprites - All Contributors To Smogon Sun/Moon Sprite Project
+    -Gen 8 Pokemon Sprites - All Contributors To Smogon Sword/Shield Sprite Project
+    -PLA Pokemon Sprites - Smogon Sprite Project https://www.smogon.com/forums/threads/smogon-sprite-project.3647722/
+    Blaquaza, KingOfThe-X-Roads, KattenK, Travis, G.E.Z., SpheX, Hematite, SelenaArmorclaw
+    -Gen 9 Pokemon Sprites - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura,
+    JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara, Skyflyer, AshnixsLaw, ace_stryfe
+    -Gen 9 Vanilla style sprites - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura, JordanosArt, Scept, NanaelJustice, SoyChim, KRLW890, AnonAlpaca, PokeJminer, Red7246, Carmanekko, Eduar, Lykeron, GriloKapu10, Mesayas, Erkey830, QDylm, PorousMist, OldSoulja, AlexandreV2.0, Z-nogyroP, lennybitao, Ruben1986, GRAFAIAIMX
+    Blaquaza, KattenK, Travis, G.E.Z., SpheX, Hematite
+
+    Pokemon Icon Sprites:
+    -Gen 1-6 Pokemon Icon Sprites - Alaguesia, harveydentmd
+    -Gen 7 Pokemon Icon Sprites - Marin, MapleBranchWing, Contributors to the DS Styled Gen 7+ Repository
+    -Gen 8 Icon Sprites - Larry Turbo, Leparagon
+    -Shiny Icon Sprites - StarrWolf, Pokemon Shattered Light Team
+    -PLA Pokemon Icon Sprites - LuigiTKO
+    -Gen 9 Icon Sprites - ezerart, JordanosArt
+    -PLA Vanilla Icon Sprites - LuigiTKO, Pikafan2000, Cesare_CBass, Vent, Cesare_Cbass, MultiDiegoDani, leParagon, JWNutz
+    and thanks for Pokémon Icons Act 2.9 - Teracristalizando https://whackahack.com/foro/threads/pokemon-icons-act-3-5-mega-dimension-14-12-2025.63896/
+    -Gen 9 Vanilla Icon Sprites - Vent, Katten, leParagon, Cesare_CBass, AlexandreV2.0, Carmanekko, GRAFAIAIMX
+    also thanks to Axel Loquendo, CarmaNekko, Divaruta 666, Okyo, JLauz735, and ClaraDragon for Iconos 9na Gen gba completos https://whackahack.com/foro/threads/iconos-9na-gen-gba-completos-act-04-03-2023.67908/
+
+    Pokemon Gen 9 Overworld sprites:
+    -Gen 1-5 Pokemon Overworlds - MissingLukey, help-14, Kymoyonian, cSc-A7X, 2and2makes5, Pokegirl4ever, Fernandojl, Silver-Skies, TyranitarDark, Getsuei-H, Kid1513, Milomilotic11, Kyt666, kdiamo11, Chocosrawlooid, Syledude, Gallanty, Gizamimi-Pichu, 2and2makes5, Zyon17,LarryTurbo, spritesstealer, LarryTurbo
+    -Gen 6+ Berry Tree Overworlds - Anarlaurendil
+    -Gen 6 Pokemon Overworlds - princess-pheonix, LunarDusk, Wolfang62, TintjeMadelintje101, piphybuilder88
+    -Gen 7 Pokemon Overworlds - Larry Turbo, princess-pheonix
+    -Gen 8 Pokemon Overworlds - SageDeoxys, Wolfang62, LarryTurbo, tammyclaydon
+    -PLA Pokemon Overworlds - Boonzeet, DarkusShadow, princess-phoenix, Ezeart, WolfPP
+    -Gen 9 Pokemon Overworlds - Azria, DarkusShadow, EduarPokeN, Carmanekko, StarWolff, Caruban
+
+    Pokemon Footprints :
+    -Gen PLA-9 Pokemon Footprints - Caruban
+
+    Pokemon Cries:
+    -Gen 1-6 Pokemon Cries - Rhyden
+    -Gen 7 Pokemon Cries - Marin, Rhyden
+    -Gen 8 Pokemon Cries - Zeak6464
+    -PLA Pokemon Cries - Morningdew
+    -Gen 9 Pokemon Cries -
+    Edited from Lightblade Absol's Gen 9 Cries compilation video https://www.youtube.com/watch?v=KV6k3G62oT0
+    Edited from HeroLinik's Pokemon Scarlet and Violet - Walking Wake and Iron Leaves Cries video https://www.youtube.com/watch?v=weH2W3mQ35Y
+    Edited from HeroLinik's Pokemon Scarlet and Violet - All Teal Mask Cries video https://www.youtube.com/watch?v=pQr9z4ryE40
+
+    Item sprites:
+    -Gen 9 item sprites - lichenprincess https://eeveeexpo.com/members/7136/, Caruban, jinxed https://eeveeexpo.com/members/16982/
+    -PLA item sprites - AztecCroc, 3DJackArt, Caruban, lichenprincess
+
+    Pokeballs battle animation and summary icon:
+    -Caruban
+    -WolfPP (Beast ball battle animation)
+
+    Compilation of Resources:
+    -Gen 9 Pack - Caruban
+    -Gen 8/9 Resized Sprites - http404error
+    -Gen 8 Pack - Golisopod User, UberDunsparce
+
+    Full Sprites Credit List:
+	https://docs.google.com/spreadsheets/d/1T-KC-4XDOeFKq0Z6tfN6Sz4JIlpaK7B8A0lbmBg9fNY/edit?gid=0#gid=0
+	
+Pokémon Vault (Home-like Storage) by ReallyBoredCoder
+
+Pokemon Decades Music List (Music files with SD at the end means Standard Defintion)
+
+HipHopFightsBack - Toxic Coffee (Britney Spears Mashup)
+Amaranthe The Nexus 2013 Invincible Nightcore Mix by NTZ Studios
+Amaranthe The Nexus 2013 Invincible
+Antonblast Takin Back What's Mine in Hell Manor (Labelled Man With a Mission When My Devil Rises SD (1.99 MB). Was replaced because this song is a smaller file size (558 kb)) 
+Auto Modellista Fully Scaled
+Autopilot Off What I Want
+B2W2 107 Battle! (Wild Pokemon)
+B2W2 111 Battle! (Rival)
+B2W2 116 Filming Underway at Pokestar Studios
+B2W2 139 Battle! (Trainer)
+B2W2 147 Battle! (Gym Leader)
+B2W2 148 Victory Lies Before You!
+B2W2 204 Battle! (Gym Leader Kanto)
+B2W2 205 Battle! (Champion Kanto)
+B2W2 206 Battle! (Gym Leader Johto)
+B2W2 207 Battle! (Champion Johto)
+B2W2 208 Battle! (Gym Leader Hoenn)
+B2W2 209 Battle! (Champion Hoenn)
+B2W2 210 Battle! (Gym Leader Sinnoh)
+B2W2 211 Battle! (Champion Sinnoh)
+B2W2 212 PWT Final Round!
+B2W2 213 Winning in the PWT!
+B2W2 214 PWT Victor!
+B2W2 224 The Road to Reversal Mountain
+B2W2 227 Strange House
+B2W2 302 Battle! (Colress)
+B2W2 308 Battle! (Ghetsis)
+B2W2 313 Battle! (N)
+B2W2 329 Battle! (Champion Iris)
+B2W2 336 Pokemon World Championships Final
+Battle Gym Leader LGPE
+Battle Master Trainer LGPE
+Battle Wild Pokemon LGPE
+Battle! Rock Type Cragspur Remaster Pokémon Conquest by Zame
+Beethoven Virus Orginal by Diana Boncheva Nightcore Remix by Zero.Miz-Kun
+Best VGM 614 - Shatter - Kinetic Harvest
+Best VGM 1572 - Ragnarok Online - Desert
+Best VGM 1982 - Mighty Switch Force - Love You Love You Love
+BR 01 Title Screen
+BR 02 Minor Boss Theme
+BR 03 Colosseum Leader (Kruger)
+BR 05 Colosseum Leader (Sashay) Copy
+BR 13 Gateway Colosseum (Labled BR 05 Colosseum Leader (Sashay) in the Audio Folder)
+BR 06 Final Battle Theme (Mysterial)
+BR 07 Waterfall Colosseum
+BR 08 Magma Colosseum
+BR 10 Sunny Park Colosseum
+BR 11 Sunset Colosseum
+BR 12 Stargazer Colosseum
+BR 13 Gateway Colosseum (Labelled BR 05 Colosseum Leader (Sashay) Copy. This is due to how big the Dev Cameo Battle Event is)
+BR 14 Neon Colosseum
+BR 15 Main Street Colosseum
+BR 16 Crystal Colosseum
+BR 17 Ending to Poketopia
+BR 29 Choose a Colosseum
+BR 31 Reception Desk
+BR 32 Beta Track
+BR 33 Select your Pokemon
+BR 35 Battle Tutorial Menu
+BR 36 What_s Your Name
+BW 107 Battle! (Cheren _ Bianca)
+BW 113 Route 1
+BW 115 Victory! (Wild Pokemon)
+BW 127 Victory! (Trainer Battle)
+BW 135 Victory! (Team Plasma)
+BW 144 Battle! (Gym Leader)
+BW 146 Victory! (Gym Leader)
+BW 149 Gate
+BW 207 Chargestone Cave
+BW 223 Opelucid City (Pokemon Black)
+BW 229 Battle! (Elite Four)
+BW 239 Battle! (Ghetsis)
+BW 313 Battle! (Subway Trainer)
+BW 332b Route 12 (Summer)
+BW 351 Lostlorn Forest
+BW 352 Battle! (Strong Wild Pokemon)
+BW 412 Battle! (Champion)
+BW 413 Victory! (Champion)
+BW 999 Battle! (World Champion)
+Catch Wild Pokemon LGPE
+Caught Wild Pokemon LGPE
+Conquest 04 Map Theme 1
+Conquest 09 Dungeon Theme 4
+Conquest 11 Event Theme 2
+Conquest 16 Normal Battle
+Conquest 17 Fire Battle
+Conquest 18 Water Battle
+Conquest 19 Electric Battle
+Conquest 20 Grass Battle
+Conquest 21 Ice Battle
+Conquest 22 Fighting Battle
+Conquest 23 Poison Battle
+Conquest 24 Ground Battle
+Conquest 25 Flying Battle
+Conquest 26 Psychic Battle
+Conquest 27 Bug Battle
+Conquest 28 Rock Battle
+Conquest 29 Ghost Battle
+Conquest 30 Steel Battle
+Conquest 31 Dragon Battle
+Conquest 32 Dark Battle
+Conquest 33 Legendary Battle
+Conquest 36 Credits
+Conquest 38 Fanfare (Pokemon Evolution)
+Cooking Guide Cant Decide What to Eat OST Menu
+Disgaea 4 Arranged Sparkling by Tenpei Sato
+DJ Sharpnel - Pretty Green Onions
+DPPT 009 Lake
+DPPT 011 Battle! (Wild Pokemon)
+DPPT 012 Victory! (Wild Pokemon)
+DPPT 023 Battle! (Trainer Battle)
+DPPT 024 Victory! (Trainer Battle)
+DPPT 028 Route 203 (Day)
+DPPT 029 Battle! (Rival)
+DPPT 030 Oreburgh Gate
+DPPT 035 Battle! (Gym Leader)
+DPPT 036 Victory! (Gym Leader)
+DPPT 040 Floaroma Town (Day)
+DPPT 044 Eterna Forest
+DPPT 048 Battle! (Team Galactic Admin)
+DPPT 049 Victory! (Team Galactic)
+DPPT 067 Battle! (Team Galactic Boss)
+DPPT 079 Route 225 (Day)
+DPPT 080 Route 228 (Day)
+DPPT 091 Old Chateau
+DPPT 109 Dance! (Difficult)
+DPPT 111 Winning The Contest!
+DPPT 113 Stark Mountain
+DPPT 114 Battle! (Legendary Pokemon)
+DPPT 118 Battle! (Elite Four)
+DPPT 119 Victory! (Elite Four)
+DPPT 121 Battle! (Champion)
+DPPT 122 Victory! (Champion)
+DPPT 123 Hall Of Fame
+DPPT 124 Congratulations To Your Induction
+DPPT 151 Battle! Frontier Brain
+DPPT 152 Defeated! Frontier Brain
+Dragon Ball Z Gohan Powers Up Julius Dobos Remake by Gladius
+Dragon Quest 8 Heavenly Flight
+Dust An Elysian Tail Abadis Forest
+Earthworm Jim 2 (PS1) Subterranean SD (Lorenzens Soil ISO 9001)
+EOTS Battle Against Dusknoir
+EOTS Boss Battle
+EOTS Craggy Coast
+EOTS Deep Dusk Forest
+EOTS Good Night
+EOTS Job Clear
+EOTS My Body Feels Heavy
+EOTS Northern Desert
+EOTS Outlaw
+EOTS Planet's Paralysis
+EOTS Sky Peak Snowfield
+EOTS Southern Jungle
+EOTS Temporal Pinnacle
+EOTS They're Above Us
+Etrian Odyssey III Super Arrange Battlefield Those that Slay and Fall
+Falling Apart By Zebrahead
+Fear & Hunger Instant Pulse and Anxiety
+FFXIV OST The Aetherochemical Research Facility Theme (Imagination)
+Fichtl's Lied (Remastered)
+File Select Shantae and the Pirate's Curse
+Final Battle (Champion) LGPE
+Fox Capture Plan Butterfly Effect
+Freak Kitchen Freak of the Week
+Freedom Planet Official Soundtrack 12 Major Boss Battle
+Grandia Xtreme Combat 4
+Gravity Rush Pleasure Quarter
+HGSS 110 Battle! (Wild Pokemon Johto)
+HGSS 111 Victory! (Wild Pokemon)
+HGSS 118 Battle! (Trainer Battle Johto)
+HGSS 135 Battle! (Team Rocket)
+HGSS 138 Battle! (Rival)
+HGSS 143 Battle! (Gym Leader Johto)
+HGSS 144 Victory! (Gym Leader)
+HGSS 166 Route 38
+HGSS 204 Battle! (Gym Leader Kanto)
+HGSS 206 Rock Tunnel
+HGSS 244 Pokeathlon Event Time!
+HGSS 249 Pokeathlon Winner!
+HGSS 266 Wi-Fi Plaza Plaza Games
+HGSS 268 Wi-Fi Plaza Parade
+HGSS 271 Pokewalker
+HGSS 278 Battle! (Champion)
+HGSS 279 The Hall of Fame
+HOME 02 Title Screen
+HOME 03 Grand Oak_s Theme
+Jam of Burbank by Asamuret also Muramasa
+Korn Coming Undone But Its Pony By Ginuwine by William Maranci Mashups
+KSI Thick of It But Its by Hans Zimmer by Carameii
+LAVACHICKENLOVANIA by Moikey
+Main Theme Sonic Adventure 3 SilvaGunner
+MDBRT Escape Through The Snow
+MDBRT Final Island
+MDBRT Lab
+MDBRT Tiny Woods
+Mega Man ZX Advent Oriental Sentinels Remastered By ZeroGamer
+Monster Boy and the Cursed Kingdom Misty Woods
+Muramasa The Demon Blade OST Deep in Mountain and Valley Battle Theme
+Odyssey I Breathe Fire
+One Winged Angel Sephiroth Theme Super Smash Bros Ultimate
+ORAS 008 Battle! (Wild Pokemon)
+ORAS 009 Victory! (Wild Pokemon)
+ORAS 017 Battle! (Trainer Battle)
+ORAS 018 Victory! (Trainer Battle)
+ORAS 023 Petalburg Forest
+ORAS 025 Battle! (Team Magma - Team Aqua)
+ORAS 026 Victory! (Team Magma - Team Aqua)
+ORAS 044 Mt. Chimney
+ORAS 046 Route 113
+ORAS 048 Battle! (Gym Leader)
+ORAS 049 Victory! (Gym Leader)
+ORAS 057 Safari Zone
+ORAS 062 Battle! (Brendan-May)
+ORAS 072 Battle! (Team Magma _ Aqua Leader)
+ORAS 085 Contest Winner
+ORAS 094 Battle! (Elite Four)
+ORAS 096 Battle! (Steven)
+ORAS 097 Victory! (Steven)
+ORAS 108 The Sky
+ORAS 121 Battle! (Frontier Brain)
+ORAS 140 Battle! (World Champion)
+Pacman World 2 Blade Mountain
+Persona 4 Arena Ultimax Margaret Theme
+Pharrell Williams PISS'N'POO'D ON by Nick Robinson or Babylonian
+PLA 009 Battle! (Pokemon Wielder)
+PLA 013 Battle! (Wild Pokemon)
+PLA 034 Battle! (Noble Pokemon) - Medley
+PLA 035 Noble Pokemon Calmed!
+PLA 092 Battle! (Legendary Pokemon)
+PLA 101 Hall of Origin
+PLA 128 Battle! (Arceus) Funbro Loop
+Pokemon B2W2 Hidden Grotto
+Pokémon BDSP Champion Battle Music (HQ)
+Pokémon BDSP Champion Battle Victory Music (HQ)
+Pokémon BDSP Contest Winner Music (HQ)
+Pokémon BDSP Dance Difficult Music (HQ)
+Pokémon BDSP Elite Four Battle Music (HQ)
+Pokémon BDSP Elite Four Battle Victory Music (HQ)
+Pokémon BDSP Galactic Boss Battle Music (HQ)
+Pokémon BDSP Galactic Commander Battle Music (HQ)
+Pokémon BDSP Galactic Grunt Battle Music (HQ)
+Pokémon BDSP Gym Leader Battle Music (HQ)
+Pokémon BDSP Gym Leader Battle Victory Music (HQ)
+Pokémon BDSP Rival Battle Music (HQ)
+Pokémon BDSP Team Galactic Battle Victory Music (HQ)
+Pokémon BDSP Trainer Battle Music (HQ)
+Pokémon BDSP Trainer Battle Victory Music (HQ)
+Pokémon BDSP Wild Pokemon Battle Music (HQ)
+Pokémon BDSP Wild Pokemon Victory Music (HQ)
+Pokemon Colosseum Cipher Peon Battle Remastered Zame
+Pokemon Colosseum Nascour Battle Crowd Noise
+Pokemon Colosseum Round 3 Remaster Zame
+Pokemon Conquest Battle! Ice Type Nixtorm Remaster by Zame
+Pokemon Kanto Gym Leader Battle Theme Remix KokiRemix
+Pokemon LGPE OST Trainer Battle
+Pokemon LGPE OST Victory Trainer
+Pokemon MAEX Vs Agatha
+Pokemon MAEX Vs Bruno
+Pokemon MAEX Vs Lance
+Pokemon MAEX Vs Lisia
+Pokemon MAEX Vs Lorelei
+Pokemon MAEX Vs. Eusine
+Pokemon Masters EX Battle Pasio Boss
+Pokemon Masters EX Battle Pasio Trainer
+Pokemon Masters EX Normal Victory Theme
+Pokémon Mystery Dungeon Rescue Team DX Rayquazas Domain
+Pokemon Stadium 2 Red Battle
+Pokemon SV AI Professor Defeat
+Pokemon SV AI Sada Turo Battle
+Pokemon SV Battle Sada Turo Remix by Zame
+Pokemon SV BBA Elite Four Battle
+Pokemon SV Carmine Battle
+Pokemon SV Champion Battle Theme
+Pokemon SV Champion Nemona Battle
+Pokemon SV Gym Leader Battle
+Pokemon SV Gym Leader Victory
+Pokemon SV Tera Wild Pokemon Unova Battle
+Pokemon SV To a Different Time
+Pokemon SV Top Champion Victory Geeta
+Pokemon SV Trainer Battle
+Pokemon SV Treasures of Ruin
+Pokémon SV Unova Trainer Battle SD
+Pokemon SV Victory Nemona
+Pokemon SV Victory Trainer Battle
+Pokemon SV Wild Pokemon Unova Battle
+Pokemon Ultra Sun Ultra Moon Rocket Boss Giovanni Battle Music
+Pokémon Ultra Sun Ultra Moon Team Rainbow Rocket Battle
+Pokemon ZA Eternal Flower Battle Fanmade by Raushna
+Pokkén Tournament Tellur Town Autumn
+Power Through The Heartbeats & Heartbreak by EnglishNarwhal
+PP2WB Battle Theme 2
+PP2WB Good Moments
+PPF (DS) 07 Puyo Puyo FUNderworld!
+PPF (DS) 17 Laid-back Endless Puyo
+PPF (DS) 22 Raffine_s Reward
+Professor Layton Last Specter Puzzle Deductions Remix By Mewmore
+Quest OST 4 Expedition Results
+Quest OST 8 Boss Battle 1
+Quest OST 18 Nightlight Nook
+Quest OST 27 Happenstance Island (Mountain)
+Racing Apex Jackpot (Labelled Super Mario Bros CD OST Beach Vacation Bouba in Audio Folder. Bouba was removed due to personal concern of it's origins being from a fangame unrelated to Pokemon) 
+Ranger 108 Lyra Forest
+Ranger 110 Capture Complete (Bridge)
+Ranger 115 Wild Boss Pokemon Battle
+Ranger 130 Wintown
+Ranger 150 Field (Unused Track)
+Ranger SOA 109 Peaceful Aftermath
+Ranger SOA 135 Battle! (Sinis Trio)
+Return All Robots Training Montage
+Reverse Of Arcadia NDS - 5D's Mode Duel Music 8
+RGS Peaceful Aftermath Rip by Gladiogg
+RGS Wild Pokemon Battle Rip by Gladiogg
+Rift of the NecroDancer RAVEVENGE by Alex Moukala Aram Zero
+Rising Fear Pokémon Mystery Dungeon Explorers of Sky
+RSE 314 Battle! Frontier Brain
+Shin Megami Tensei V OST Battle Beelzebub
+Silvagunner Battle Against a True Hero (Beta Mix) - Undertale
+SilvaGunner Resist and Disorder OST Version Cyberpunk 2077
+SilvaGunner Universal Dance Vib Ribbon
+Slam of the North Star by GARticuno
+SM 018 Battle! (Hau)
+SM 021 Battle! (Wild Pokemon)
+SM 022 Victory! (Wild Pokemon)
+SM 025 Battle! (Trainer)
+SM 026 Victory! (Trainer)
+SM 059 Victory! (Team Skull)
+SM 063 Battle! (Totem Pokemon)
+SM 064 Victory! (Totem Pokemon)
+SM 068 Battle! (Island Kahuna)
+SM 069 Victory! (Island Kahuna)
+SM 086 Battle! (Battle Royale)
+SM 087 Battle Royale Results
+SM 107 Battle! (Team Skull Boss)
+SM 117 Battle! (Aether Foundation)
+SM 122 Battle! (Lusamine)
+SM 139 Victory! (Aether Foundation)
+SM 146 Battle! (Battle Tree Boss)
+SM 150 Battle! (Elite Four)
+SM 151 The Battle at the Summit!
+Sonic 3 Re-Imagined - Ice Cap Zone by Tee Lopes
+Sounds Alike Cheetahd Ace Attorney 52 by DjtheSdotcom
+Spyro Enter The Dragonfly Master Disc OST Track 14 Oasis Speedway
+Super Death Battle 2024 Remaster by Brandon Yates
+Super Hang-On Music - Outride a Crisis (Arranged Version)
+Super Smash Bros Ultimate Battle Elite Four Solgaleo and Lunala
+Super Smash Bros Ultimate Kass Theme Remix
+SV 011 Victory! (Wild Pokémon)
+SV 410 Battle! (Pokémon in Area Zero)
+SV 412 Battle! (Pokémon in Area Zero) 2
+SV Wild Battle Area Zero
+SV Wild Battle Poco Path
+SwSh 010 Battle! (Wild Pokémon)
+SwSh 011 Victory! (Wild Pokémon)
+SwSh 024 Battle! (Trainer)
+SwSh 025 Victory! (Trainer)
+SwSh 041 Battle! (Team Yell)
+SwSh 050 Battle! (Bede)
+SwSh 060 Battle! (Gym Leader)
+SwSh 062 Victory! (Gym Leader)
+SwSh 068 Battle! (Marnie)
+SwSh 079 Glimwood Tangle
+SwSh 084 Battle! (Gym Leader Piers)
+SwSh 090 Showdown! (Marnie)
+SwSh 094 Battle! (Oleana)
+SwSh 096 Battle! (Pokemon League Tournament)
+SwSh 098 Victory! (Pokemon League Tournament)
+SwSh 103 Battle! (Chairman Rose)
+SwSh 108 Captured Eternatus!
+SwSh 109 Battle! (Champion Leon)
+SwSh 110 Victory! (Champion Leon)
+SwSh 115 Battle! (Battle Tower)
+SwSh 122 Battle! (Klara)
+SwSh 140 Battle! (Peony)
+SwSh 143 Battle! (Legendary Max Raid)
+SwSh 152 Battle! (Ice Rider  -  Shadow Rider Calyrex)
+TA 02 Main Menu
+TA 03 Deerling Park
+TA 05 Blastoise_s Resort
+TA 06 Space Hiking
+TA 07 Zorua Archipelago
+TA 09 Boss Battle
+TA 11 Pikachu Park
+TA 12 Bright Sunshine
+TA 13 Great Paradise
+TA 14 Glalie_s Snow-Covered Road
+TA 15 Caps Lock Museum
+TCG 09 Pause Menu
+TCG 23 Challenge Hall
+TCG 25 Battle Center
+Tekken 8 Mashup My Last Stand x Heat Haze Shadow by harrenysk
+Tekken 8 Urban Square 1st Neo City
+Tekken 8 Urban Square 2nd Neo City Climax
+Terraria Calamity Outcast of the Sulpher Seas Aquatic Scourge by DM Dokuro
+Tetrisphere Learn
+The Midnight - The Equaliser (Not Alone)
+The Urbz Sims in the City Soul Music
+TimeSplitters 2 Wild West
+title_br
+title_bw
+title_dppt
+title_frlg
+title_hgss
+title_origin
+title_rse
+title_sm
+title_xy
+Trauma Center DS Under the Knife Opening Heart Beat
+Twister Ice Fun OST (TORNADO Mix) by Somebakedgood
+Unlimited Justice Extreme Mashup Medley By IschmarVI Mashups
+Unreal Tournament OST Razorback Remastered
+Victory Gym Leader LGPE
+Victory! (Trainer) LGPE
+XD 03 Battle SIM
+XD 06 Dr. Kaminko_s Yard
+XD 08 Normal Battle
+XD 11 Cipher Battle
+XD 21 Mt. Battle
+XD 26 Cipher Admin Battle
+XD 31 Purification Chamber - Very Good
+XD 34 Orre Colosseum
+XD 35 Colosseum - 1st Round
+XD 36 Colesseum - 2nd Round
+XD 37 Colosseum - Semi-Finals
+XD 38 Colosseum - Finals
+XD 41 Wild Pokemon Battle
+XD 42 Mirror B_s Theme
+XD 44 Mirror B. Battle
+XD 48 Realgam Tower
+XD 49 Battle Bingo - Board
+XD 52 Phenac City
+XD 57 Rider Willie Battle
+XD 66 Master Greevil Defeated
+XD 78 Last Battle (Unused)
+XY 011 Battle! (Friend)
+XY 014 Santalune Forest
+XY 016 Battle! (Wild Pokemon)
+XY 017 Victory! (Wild Pokemon)
+XY 021 Battle! (Trainer Battle)
+XY 022 Victory! (Trainer Battle)
+XY 029 Battle! (Gym Leader)
+XY 030 Victory! (Gym Leader)
+XY 037 Lumiose City
+XY 038 The Sycamore Pokemon Lab
+XY 039 Professor Sycamore_s Theme
+XY 054 Glittering Cave
+XY 072 Battle! (Successor Korrina)
+XY 080 Battle! (Team Flare)
+XY 090 Route 15
+XY 104 Battle! (Lysandre)
+XY 105 Victory! (Team Flare)
+XY 111 Snowbelle City
+XY 114 Pokemon Village
+XY 119 Battle! (Elite Four)
+XY 120 Battle! (Champion)
+XY 121 Victory! (Champion)
+XY 123 The Sun Shines Down
+XY 143 PR Video Studio
+XY 189 Super Training!
+XY 190 Success!
+XY 191 Try Again.
+XY 193 Secret Super Training!
+XY 206 Battle! (Wild Pokemon) [Pokemon Origins Version] (Bonus Track) Tweak
+XY 208 Battle! (Trainer Battle) [Pokemon Origins Version] (Bonus Track)Tweak
+Yakuza Like a Dragon Receive You The Hyperactive
+ZA 056 A Strong Surge of Mega Power
+ZA 057 Battle (Rogue Mega Pokemon) SD
+ZA 097 Battle (Mega Pokemon Unleashed)
+ZA 112 Ranked Battle Results
+Zame Pokemon Conquest Bug Type Battle
+Zame Pokemon Conquest Dark Type Battle
+Zame Pokemon Conquest Dragon Type Battle
+Zame Pokemon Conquest Electric Type Battle
+Zame Pokemon Conquest Fighting Type Battle
+Zame Pokemon Conquest Fire Type Battle
+Zame Pokemon Conquest Flying Type Battle
+Zame Pokemon Conquest Ghost Type Battle
+Zame Pokemon Conquest Grass Type Battle
+Zame Pokemon Conquest Ground Type Battle
+Zame Pokemon Conquest Normal Type Battle
+Zame Pokemon Conquest Poison Type Battle
+Zame Pokemon Conquest Psychic Type Battle
+Zame Pokemon Conquest Steel Type Battle
+Zame Pokemon Conquest Water Type Battle
+
+Past Releases Credits (Super Yellow/Sunshine Yellow)
+
+############################################################
+Credits Compendium V2.0.0
+############################################################
+Pokemon Essentials is made by:
+
+Flameguru, Poccil (Peter O.), Maruno
+https://github.com/Maruno17/pokemon-essentials
+
+With contributors by:
+
+Maruno17
+jonisavo
+Marin-MK
+Golisopod-User
+Keyacom
+Nathan-MV
+DerxwnaKapsyla
+FL-
+aprogergely
+HM100
+mlequime
+Conmh
+ENLSLive
+jvpr94
+Kaividian
+Vendily
+CorvusAtrox
+luka-sj
+Hollow-Ego
+
+Music Used
+
+ENLS's Pre-Looped Music Libray Tracks : https://www.enls.eu/prelooped/
+Looped and compiled by: ENLS, Thundaga, KrakerwatYT, Sulucnal, FrivolousAqua
+
+B2W2 111 Battle! (Rival)
+B2W2 116 Filming Underway at Pokestar Studios
+B2W2 139 Battle! (Trainer)
+B2W2 147 Battle! (Gym Leader)
+B2W2 204 Battle! (Gym Leader Kanto)
+B2W2 205 Battle! (Champion Kanto)
+B2W2 206 Battle! (Gym Leader Johto)
+B2W2 207 Battle! (Champion Johto)
+B2W2 208 Battle! (Gym Leader Hoenn)
+B2W2 209 Battle! (Champion Hoenn)
+B2W2 210 Battle! (Gym Leader Sinnoh)
+B2W2 211 Battle! (Champion Sinnoh)
+B2W2 213 Winning in the PWT!
+B2W2 233 Battle! (Team Plasma)
+B2W2 302 Battle! (Colress)
+B2W2 307 Battle! (Black Kyurem _ White Kyurem)
+B2W2 308 Battle! (Ghetsis)
+B2W2 313 Battle! (N)
+B2W2 329 Battle! (Champion Iris)
+B2W2 448 Battle! (Frontier Brain - Sinnoh)
+BR 02 Minor Boss Theme
+BR 03 Colosseum Leader (Kruger)
+BR 05 Colosseum Leader (Sashay)
+BR 06 Final Battle Theme (Mysterial)
+BR 07 Waterfall Colosseum
+BR 08 Magma Colosseum
+BR 10 Sunny Park Colosseum
+BR 11 Sunset Colosseum
+BR 12 Stargazer Colosseum
+BR 13 Gateway Colosseum
+BR 14 Neon Colosseum
+BR 15 Main Street Colosseum
+BR 16 Crystal Colosseum
+BR 17 Ending to Poketopia
+BR 28 Lagoon Colosseum
+BW 107 Battle! (Cheren _ Bianca)
+BW 229 Battle! (Elite Four)
+BW 239 Battle! (Ghetsis)
+BW 336 Poke Transfer Catch Your Pokemon!
+BW 412 Battle! (Champion)
+Conquest 05 Map Theme 2
+Conquest 07 Dungeon Theme 2
+Conquest 16 Normal Battle
+Conquest 17 Fire Battle
+Conquest 18 Water Battle
+Conquest 19 Electric Battle
+Conquest 20 Grass Battle
+Conquest 21 Ice Battle
+Conquest 22 Fighting Battle
+Conquest 23 Poison Battle
+Conquest 24 Ground Battle
+Conquest 25 Flying Battle
+Conquest 26 Psychic Battle
+Conquest 27 Bug Battle
+Conquest 28 Rock Battle
+Conquest 29 Ghost Battle
+Conquest 30 Steel Battle
+Conquest 31 Dragon Battle
+Conquest 32 Dark Battle
+Conquest 33 Legendary Battle
+DPPT 023 Battle! (Trainer Battle)
+DPPT 029 Battle! (Rival)
+DPPT 043 Battle! (Team Galactic)
+DPPT 048 Battle! (Team Galactic Admin)
+DPPT 067 Battle! (Team Galactic Boss)
+DPPT 118 Battle! (Elite Four)
+HGSS 118 Battle! (Trainer Battle Johto)
+HGSS 135 Battle! (Team Rocket)
+HGSS 138 Battle! (Rival)
+HGSS 244 Pokeathlon Event Time!
+HGSS 260 Battle! (Frontier Brain)
+HGSS 266 Wi-Fi Plaza Plaza Games
+HGSS 278 Battle! (Champion)
+HGSS 279 The Hall of Fame
+ORAS 017 Battle! (Trainer Battle)
+ORAS 025 Battle! (Team Magma - Team Aqua)
+ORAS 072 Battle! (Team Magma _ Aqua Leader)
+ORAS 094 Battle! (Elite Four)
+ORAS 096 Battle! (Steven)
+ORAS 121 Battle! (Frontier Brain)
+PLA 009 Battle! (Pokemon Wielder)
+PLA 085 Battle! (Dialga Origin Form  Palkia Origin Form)
+RSE 314 Battle! Frontier Brain
+SM 018 Battle! (Hau)
+SM 025 Battle! (Trainer)
+SM 058 Battle! (Team Skull)
+SM 063 Battle! (Totem Pokemon)
+SM 086 Battle! (Battle Royale)
+SM 107 Battle! (Team Skull Boss)
+SM 117 Battle! (Aether Foundation)
+SM 122 Battle! (Lusamine)
+SM 150 Battle! (Elite Four)
+SM 151 The Battle at the Summit!
+SwSh 024 Battle! (Trainer)
+SwSh 041 Battle! (Team Yell)
+SwSh 060 Battle! (Gym Leader)
+SwSh 068 Battle! (Marnie)
+SwSh 096 Battle! (Pokemon League Tournament)
+SwSh 115 Battle! (Battle Tower)
+TA 01 Title Screen
+TA 03 Deerling Park
+TA 05 Blastoise_s Resort
+TA 06 Space Hiking
+TA 07 Zorua Archipelago
+TA 08 Emolga_s Tall Forest
+TA 09 Boss Battle
+TA 11 Pikachu Park
+TA 12 Bright Sunshine
+TA 13 Great Paradise
+TA 14 Glalie_s Snow-Covered Road
+TA 15 Caps Lock Museum
+XD 03 Battle SIM
+XD 08 Normal Battle
+XD 11 Cipher Battle
+XD 26 Cipher Admin Battle
+XD 36 Colesseum - 2nd Round
+XD 41 Wild Pokemon Battle
+XD 44 Mirror B. Battle
+XD 49 Battle Bingo - Board
+XD 57 Rider Willie Battle
+XD 73 VS Mode Menu
+XD 75 VS Battle Mode (Version 1)
+XD 78 Last Battle (Unused)
+XY 011 Battle! (Friend)
+XY 021 Battle! (Trainer Battle)
+XY 029 Battle! (Gym Leader)
+XY 039 Professor Sycamore_s Theme
+XY 072 Battle! (Successor Korrina)
+XY 080 Battle! (Team Flare)
+XY 103 Battle! (Xerneas _ Yveltal)
+XY 104 Battle! (Lysandre)
+XY 119 Battle! (Elite Four)
+XY 120 Battle! (Champion)
+XY 189 Super Training!
+XY 193 Secret Super Training!
+XY 206 Battle! (Wild Pokemon) [Pokemon Origins Version] (Bonus Track)
+XY 208 Battle! (Trainer Battle) [Pokemon Origins Version] (Bonus Track)
+
+Other Tracks 
+
+16 Bit Genesis Pepperman Strikes Pizza Tower By JX
+16-Bit Genesis What I'm Made Of Sonic Heroes by JX
+Autopilot Off What I Want
+Beethoven Virus Orginal by Diana Boncheva Nightcore Remix by Zero.Miz-Kun
+Big Iron But it's Been Shagged by an Audiophile and Rendered Using a Biscuit Tin By DominantChris
+Break Through The Kingdoms Control Sonic Frontiers vs Linkin Park by Hyper Shan
+Can You Feel My Honour Epic Samurai Version By Carameii
+Cold Rain Bloody Power Fame
+Digimon Rumble Arena Soundtrack - Crazy Battlefield
+Disgaea 2 Spread Your Wings
+Disgaea 4 Arranged Sparkling by Tenpei Sato
+Dragon Ball Z Gohan Powers Up Julius Dobos Remake by Gladius
+Etrian Odyssey III Super Arrange Battlefield Those that Slay and Fall
+Falling Apart By Zebrahead
+Fear & Hunger Instant Pulse and Anxiety
+First by Triple Q
+Freedom Planet Official Soundtrack 12 Major Boss Battle
+Fresno Lay it Down
+Gakken DS File Select
+Korn Coming Undone But Its Pony By Ginuwine
+Magnolia YM2151 and Sega PCM by MegaBaz
+Man With a Mission When My Devil Rises
+Mega Man ZX Advent Oriental Sentinels Remastered By Someone
+Muramasa The Demon Blade OST Deep in Mountain and Valley Battle Theme
+Namco x Capcom Facing the Wind
+Odyssey I Breathe Fire
+Our God is an Awesome God techno by wierdpride
+Ozempic Anthem William Maranci Mashups
+Pacman World 2 Blade Mountain
+Paper Mario The Thousand Year Door Remake Rogueport
+Pharrell Williams PISS'N'POO'D ON by Nick Robinson or Babylonian
+Phoenix Wright Ace Attorney Pursuit Cornered Beta Mix
+PIC 02 Bgm Daily
+Please Help I've Imagined Too Many Dragons by William Maranci Mashups
+Pokemon Colosseum Cipher Peon Battle Remastered by Zame
+Pokemon Colosseum Round 3 Semifinal Battle Remaster by Zame
+Pokemon LGPE OST Trainer Battle
+Pokemon MAEX Vs Agatha
+Pokemon MAEX Vs Bruno
+Pokemon MAEX Vs Johto Elite Four Karen
+Pokemon MAEX Vs Lance
+Pokemon MAEX Vs Lisia
+Pokemon MAEX Vs Lorelei
+Pokemon MAEX Vs. Eusine
+Pokemon Scarlet and Violet Battle! Terapagos
+Pokemon SV Academy Ace Tournament Battle
+Pokemon SV AI Sada Turo Battle
+Pokemon SV Battle Sada Turo Remix by Zame
+Pokemon SV Champion Battle Theme
+Pokemon SV Champion Nemona Battle
+Pokemon SV Gym Leader Battle
+Pokemon SV Trainer Battle
+Pokémon SV Unova Trainer Battle
+Pokemon Ultra Sun Ultra Moon Rocket Boss Giovanni Battle Music
+Pokémon Ultra Sun Ultra Moon Team Rainbow Rocket Battle
+Pokemon ZA Eternal Flower Battle Fanmade by Raushna
+Pokkén Tournament Tellur Town Autumn
+PPF (DS) 13 Ultimate Legend of the Untrained Demon King
+PPF2 (DS) 16 Crimson Wave!
+PPF2 (OST) 19 Last from Puyo Puyo 2
+Professor Layton Last Specter Puzzle Deductions Remix By Mewmore
+Puyo Puyo 20th Anniversary Satan's Theme
+Radiant Historia Unending Clear Blue Sky
+Reverse Of Arcadia NDS - 5D's Mode Duel Music 8
+Scott Lloyd Shelly – Terraria Soundtrack Volume 4 – 15 Town Day
+Shin Megami Tensei V OST Battle Beelzebub
+SilvaGunner EA Sports FC 25 Cheerleader
+SilvaGunner Map Plok
+SilvaGunner Resist and Disorder OST Version Cyberpunk 2077
+SilvaGunner Universal Dance Vib Ribbon
+Slam of the North Star by GARticuno
+Sonic & All Stars Racing Transformed Ocean View
+Sonic Forces Imperial Tower Fading World
+Sonic Frontiers OST Action Chain Challenge
+Sonic R Super Sonic Racing
+Sonic Rush Adventure Sky Babylon Act 1&2 Mix
+Soul Blade Kkaduri
+Soul Calibur 3 Water Dance
+Sounds Alike Cheetahd Ace Attorney 52 by DjtheSdotcom
+Spyro A Heros Tail Moneybags Shop
+Spyro Enter The Dragonfly Master Disc OST Track 09 Platform Peril
+Super Hang-On Music - Outride a Crisis (Arranged Version)
+Super Mario Bros CD OST Beach Vacation Bouba
+Super Smash Bros Ultimate Battle! Lorekeeper Zinnia
+Super Smash Bros Ultimate Menu
+Super Smash Bros. Brawl Main Theme Final Destination Mashup by Aeon
+t+pazolite - Oshama Scramble! (uncut edition)
+Tekken 2 - Morning Field (Jun's Theme)
+Tekken 8 Arcade Battle Arena
+Tekken 8 Arena 1st The Decisive Blow
+Tekken 8 Celebration on the Seine 1st Twilight Party Cruise
+Tekken 8 Character Select Rude and Reckless
+Tekken 8 Mashup My Last Stand x Heat Haze Shadow by harrenysk
+Tekken 8 Urban Square 1st Neo City
+Tekken 8 Urban Square 2nd Neo City Climax
+Terraria Calamity Mod Outcast of the Sulphurous Seas Aquatic Scourge Theme by DM Dokuro
+Tetrisphere Learn
+The Midnight - The Equaliser (Not Alone)
+Tomodachi Life Office Personality Chart
+Tough Guy Alert! Mario & Luigi Bowser's Inside Story
+Tower of Heaven Full Moon Revenge Cover by Yuuyu Orginal by Flashygoodness
+Ultrakill Meganeko The Cyber Grind
+Unlimited Justice Extreme Mashup Medley By IschmarVI Mashups
+Viva Pinata Trouble in Paradise Oven Fresh Day
+Yu Go Oh Duel Links Gong Strong ARC V Theme
+
+Plugin Resources Sounds
+
+Battle low HP (Deluxe Battle Kit Audio Track)
+title_bw (Modular Title Screen)
+title_dppt (Modular Title Screen)
+title_frlg (Modular Title Screen)
+title_hgss (Modular Title Screen)
+title_origin (Modular Title Screen)
+title_rse (Modular Title Screen)
+title_sm (Modular Title Screen)
+title_xy (Modular Title Screen)
+
+Sound Effects
+
+Do You Honestly Think Your Fucking Funny
+Im a Pussy and I Use a Riot Shield
+Main Theme Sonic Adventure 3 SilvaGunner
+Trauma Center DS Under the Knife Opening Heart Beat
+Unfortunate Doesnt't Begin To Describe My Ragequit Speech by Pokemon Showdown Lavous
+
+
+Public Graphics Resources 
+
+Graphics Resources
+
+Leaf - Sprite Overworld
+
+Wolfang62: https://www.deviantart.com/wolfang62/art/Leaf-Sprite-Overworld-887602743
+
+Various Gen 4 Art Style trainer and overworld sprites
+
+Kyledove: https://pokengine.org/trainers/017gkf02/Brock
+Kyledove: https://pokengine.org/trainers/018np8rv/Misty?collection=105var2c
+Kyledove: https://pokengine.org/trainers/01hf2258/Leaf?collection=105var2c
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/agatha-lgpe.png
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/lorelei-lgpe.png
+hyo-oppa: https://play.pokemonshowdown.com/sprites/trainers/brendan.png
+hyo-oppa: https://play.pokemonshowdown.com/sprites/trainers/may.png
+Beliot: https://play.pokemonshowdown.com/sprites/trainers/beauty-gen7.png
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/marnie.png
+
+Pokémon Battle Revolution - Colosseum Leader Front Sprites
+
+jinxed
+
+Gen 4 and 5 Trainer sprites and PBS
+
+Mr. Gela
+
+Taiga´s Trainer Collections
+
+Taiga
+DiegoWT
+Neo-Spriteman
+Vanilla Sunshine
+AtomicReactor
+PizzaSun
+Tebited
+
+Offical games Trainer Classes
+
+Kyledove
+
+Pokémon Essentials Deluxe Battle Kit Suite
+
+Lucidious89
+
+Generation 9 Resources Pack
+
+Scripts:
+-Caruban
+-Lucidious89
+-Eskiss (Legend Plate script based on)
+-StCooler (Original PLA Expansion script for Gen 8 Project in v18 and Status sprites)
+-PorousMist and curryofthepast (Adapting the PLA Expansion script script for v19.1 use)
+
+PBS:
+-Caruban
+-Lucidious89
+-PorousMist (Updated the abilities, items, and moves description)
+-DJChaos (TM Items)
+-Futuresushi (Shortened abilities and moves description)
+
+Pokemon Battler Sprites:
+-Gen 1-5 Pokemon Sprites    - veekun
+-Gen 6 Pokemon Sprites        - All Contributors To Smogon X/Y Sprite Project
+-Gen 7 Pokemon Sprites        - All Contributors To Smogon Sun/Moon Sprite Project
+-Gen 8 Pokemon Sprites        - All Contributors To Smogon Sword/Shield Sprite Project
+-PLA Pokemon Sprites        - Smogon Gen8 Sprite Project
+(https://www.smogon.com/forums/threads/smogon-sprite-project.3647722/)
+Blaquaza, KingOfThe-X-Roads, KattenK, Travis, G.E.Z., SpheX, Hematite, SelenaArmorclaw
+-Gen 9 Pokemon Sprites        - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura,
+JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara, Skyflyer, AshnixsLaw, ace_stryfe
+-Gen 9 Vanilla style sprites    - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura, JordanosArt, Scept, NanaelJustice, SoyChim, KRLW890, AnonAlpaca, PokeJminer, Red7246, Carmanekko, Eduar, Lykeron, GriloKapu10, Mesayas, Erkey830, QDylm, PorousMist, OldSoulja, AlexandreV2.0, Z-nogyroP, lennybitao, Ruben1986, GRAFAIAIMX
+Blaquaza, KattenK, Travis, G.E.Z., SpheX, Hematite
+
+Pokemon Icon Sprites:
+-Gen 1-6 Pokemon Icon Sprites    - Alaguesia, harveydentmd
+-Gen 7 Pokemon Icon Sprites    - Marin, MapleBranchWing, Contributors to the DS Styled Gen 7+ Repository
+-Gen 8 Icon Sprites        - Larry Turbo, Leparagon
+-Shiny Icon Sprites        - StarrWolf, Pokemon Shattered Light Team
+-PLA Pokemon Icon Sprites    - LuigiTKO
+-Shiny PLA Pokemon Icon Sprites    - StarrWolf (recolored from LuigiTKO icons)
+-Gen 9 Icon Sprites        - ezerart, JordanosArt
+-Shiny Gen 9 Icon Sprites    - ezerart, JordanosArt
+-PLA Vanilla Icon Sprites    - LuigiTKO, Pikafan2000, Cesare_CBass, Vent, Cesare_Cbass, MultiDiegoDani, leParagon, JWNutz
+and thanks for
+Pokémon Icons Act 2.9 - Teracristalizando
+(https://whackahack.com/foro/threads/pokemon-icons-act-2-9-teracristalizando-07-08-2022.63896/)
+-Gen 9 Vanilla Icon Sprites    - Vent, Katten, leParagon, Cesare_CBass, AlexandreV2.0, Carmanekko, GRAFAIAIMX
+also thanks to Axel Loquendo, CarmaNekko, Divaruta 666, Okyo, JLauz735, and ClaraDragon for
+Iconos 9na Gen gba completos (https://whackahack.com/foro/threads/iconos-9na-gen-gba-completos-act-04-03-2023.67908/)
+
+Pokemon Gen 9 Overworld sprites:
+-Gen 1-5 Pokemon Overworlds    - MissingLukey, help-14, Kymoyonian, cSc-A7X, 2and2makes5, Pokegirl4ever, Fernandojl, Silver-Skies, TyranitarDark, Getsuei-H, Kid1513, Milomilotic11, Kyt666, kdiamo11, Chocosrawlooid, Syledude, Gallanty, Gizamimi-Pichu, 2and2makes5, Zyon17,LarryTurbo, spritesstealer, LarryTurbo
+-Gen 6+ Berry Tree Overworlds    - Anarlaurendil
+-Gen 6 Pokemon Overworlds    - princess-pheonix, LunarDusk, Wolfang62, TintjeMadelintje101, piphybuilder88
+-Gen 7 Pokemon Overworlds    - Larry Turbo, princess-pheonix
+-Gen 8 Pokemon Overworlds    - SageDeoxys, Wolfang62, LarryTurbo, tammyclaydon
+-PLA Pokemon Overworlds        - Boonzeet, DarkusShadow, princess-phoenix, Ezeart, WolfPP
+-Gen 9 Pokemon Overworlds    - Azria, DarkusShadow, EduarPokeN, Carmanekko, StarWolff, Caruban
+
+Pokemon Footprints :
+-Gen PLA-9 Pokemon Footprints    - Caruban
+
+Pokemon Cries:
+-Gen 1-6 Pokemon Cries        - Rhyden
+-Gen 7 Pokemon Cries        - Marin, Rhyden
+-Gen 8 Pokemon Cries        - Zeak6464
+-PLA Pokemon Cries        - Morningdew
+-Gen 9 Pokemon Cries        -
+Edited from Lightblade's Absol Gen 9 Cries compilation video
+https://www.youtube.com/watch?v=KV6k3G62oT0
+Edited from HeroLinik's Pokemon Scarlet and Violet - Walking Wake and Iron Leaves Cries video
+https://www.youtube.com/watch?v=weH2W3mQ35Y
+Edited from HeroLinik's Pokemon Scarlet and Violet - All Teal Mask Cries video
+https://www.youtube.com/watch?v=pQr9z4ryE40
+Edited from Joya in UK's Indigo Disk Cries video
+https://www.youtube.com/watch?v=2Qqr9IzgcKE
+
+Item sprites:
+-Gen 9 item sprites    - lichenprincess, Caruban, jinxed
+-PLA item sprites    - AztecCroc, 3DJackArt, Caruban, lichenprincess
+
+Pokeballs battle animation and summary icon:
+-Caruban
+-WolfPP (Beast ball battle animation)
+
+Compilation of Resources:
+-Gen 9 Pack        - Caruban
+-Gen 8/9 Resized Sprites- http404error
+-Gen 8 Pack        - Golisopod User, UberDunsparce
+
+Full PLA-Gen 9 Sprites Credit List:
+https://docs.google.com/spreadsheets/d/1T-KC-4XDOeFKq0Z6tfN6Sz4JIlpaK7B8A0lbmBg9fNY/edit?usp=sharing
+
+Full Deluxe Battle Kit + Add-Ons
+
+Lucidious89
+Deluxe Battle Kit Website Guide        = https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial
+
+The Full Deulxe Battle Kit consists of:
+
+Deluxe Battle Kit (Covers Mega Evolution and various under the hood changes to Pokemon Essentials)
+Modular UI Scenes
+Enhanced Pokemon UI
+Enhanced Battle UI
+Pokedex Data Page
+Z-Power
+SOS Battles
+Dynamax
+Terastallization
+Improved Field Skills
+
+As of the 24th April 2024, the Raid Battles Add-On has not been released.
+
+Generation 9 Animation Project
+
+Project Host: KRLW890
+Website        = https://www.pokecommunity.com/threads/the-gen-9-move-animation-project.526189/       
+Thanks to the Reborn team for letting people use their resources. You are awesome.
+Gen 8 Animation Project lead by StCooler, with additional contributions by DarrylBD99, WolfPP, ardicoozer, riddlemeree
+Thanks to BellBlitzKing for his Pokemon Sound Effects Pack: Gen 1 to Gen 7 - All Attacks SFX.
+Gen 9 Animation Project led by KRLW890 and Nut0066, with additional contributions by Toxillian, QuahogTheCreator, Lcorp, and Shashu-Greninja
+
+Independent Hidden Power Type (Adapted for V21.1)
+
+DemICE
+
+Legends Arceus Move Relearner
+
+Kotaro,IndianAnimator
+
+Normal-Type Attacks without STAB match your first Type instead
+
+Jason Godwyn
+
+User's Speed is used instead of user's Attack for this move's calculations
+
+Jason Godwyn
+
+Type Icons in Battle
+
+Golisopod User, Hubercioch
+
+Type Matchup UI
+
+ThatWelshOne_
+
+Pokemon Form Trader
+
+Dr.Doom76
+
+Sparling Vial
+
+Apples, Asforcia, BigFriv
+
+Any Nature Mint
+
+Appletun's Apples
+
+Automatic Level Scaling
+
+Benitex, Joltik, Umbreon
+
+Jason Godwyn Poke Editor
+
+Jason Godwyn
+
+NPB's Battle UI
+
+No pro bro,BiggusWeeabus,Taiga,Ardicoozer(for v21.1 script)
+
+Fancy looking type icons and Tera-Type Icons made Sol Emeralds
+
+Eevee Exo/Relic Castle: Sonicover
+Deviantart: Banjo2015
+
+Trainer Transitions
+
+Wes by Meme Galactic: https://tumblunni.tumblr.com/post/132880703981/im-trying-to-make-some-wes-sprites-and-i-found-a
+Leaf by Nyjee: https://www.deviantart.com/nyjee/art/VS-Trainer-SPECIAL-Portrait-165669863
+Red by iTheRealPikachuV2: https://www.deviantart.com/itherealpikachuv2/art/Pokemon-Vs-Red-Mugshot-213466606
+Breandan by hyo-oppa: https://www.deviantart.com/hyo-oppa/art/Pokemon-ORAS-Brendan-DPPt-HGSS-Gen-IV-Sprite-Sheet-681502142
+May by skyin2020: https://www.deviantart.com/skyin2020/art/Pokemon-Female-Trainers-VS-Sprite-788731786
+
+Character Selection By FL
+
+FL
+
+Gen 5 VS Sprite Pack
+
+BW VS rips came from Barubary on spriters-resource
+B2W2 VS rips came from redblueyellow on spriters-resource
+VS bars came from TechSkylander1518
+
+GSC Kris Gen 4 Sprites (Artist has given permission for the character sprites to be used in Super Yellow Gameplay Edition, evidence is in the Misc Folder)
+
+SirPeaches: https://www.deviantart.com/sirpeaches/art/HeartGold-SoulSilver-Kris-Ver-2-555601343
+
+DeigoWT Character sprites
+
+Wes: https://www.deviantart.com/diegowt/art/Wes-Sprite-Pack-842134086
+ORAS May: https://www.deviantart.com/diegowt/art/Sprite-Pack-ORAS-May-976413120
+ORAS Bredan: https://www.deviantart.com/diegowt/art/Sprite-Pack-ORAS-Brendan-976412704
+    
+Mid117
+
+Wes backsprite: https://www.deviantart.com/mid117/art/Commission-PKMN-Colosseum-Wes-Backsprite-842604661
+
+neosth2001
+
+Wes Gen 4 trainer sprite (Source links to a 404 Deviant Art page. Source link currently unknown)
+https://www.deviantart.com/neosth2001/art/Wes-Pokemon-Cobalt-364693531
+    
+hyo-oppa
+
+Pokemon Trainer Battle Sprite Collection: https://www.deviantart.com/hyo-oppa/art/Hyo-s-Pokemon-Trainer-Battle-Sprite-Collection-878566572
+Pokemon ORAS Brendan DPPt/HGSS Gen IV Sprite Sheet: https://www.deviantart.com/hyo-oppa/art/Pokemon-ORAS-Brendan-DPPt-HGSS-Gen-IV-Sprite-Sheet-681502142
+
+skyin2020
+
+Pokemon Female Trainers VS Sprite: https://www.deviantart.com/skyin2020/art/Pokemon-Female-Trainers-VS-Sprite-788731786 \\
+
+Solo993
+
+PUBLIC OrAs Protagonists Gba back front sprites: https://www.deviantart.com/solo993/art/PUBLIC-OrAs-Protagonists-Gba-back-front-sprites-491737986
+
+PKMNTrainerRick
+
+POKEMON RED DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-RED-DPP-BACK-SPRITE-918844486
+POKEMON LEAF DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-LEAF-DPP-BACK-SPRITE-918844468
+
+Brumirage
+
+cynthia-gen7 sprite from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/cynthia-gen7.png
+leon-tower sprite from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/leon-tower.png
+diantha from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/diantha.png
+
+Kyledove
+
+leon overworld sprite: https://pokengine.org/trainers/011rh3ku/Leon
+Diantha over sprite: https://pokengine.org/trainers/018pukjr/Diantha
+
+Pokengine: https://pokengine.org/trainers
+Pokemon Showdown Gen 4 Style Trainer Battle Sprites: https://play.pokemonshowdown.com/sprites/trainers/
+
+Pokemon Bushido Resource Pack Grasslands Environment
+Gen 9 Animation Protect battle backgrounds
+
+Preconfigured Gen 4 Artstle Tileset are from Pokemon Vanguard,
+that were based on a public tileset resource. 
+
+During development, I needed a Gen 4 Artstle Tileset, 
+where all 32 x 32 chunks were fully configured within RPG Maker XP.
+During research, I found that Pokemon Vanguard was the only fangame,
+that had Gen 4 artstyle tilesets, and the source project was included
+with the download, allowing me to not waste development time configuring
+every 32 x 32 chuck within a tileset .png. 
+
+If it is an issue that the decision I made very early in development 
+ended up being a poor decision, I will replace each chunk in the png tileset 
+with HGSS tileset rips.
+
+Plugin Resources 
+
+Deluxe Battle Kit by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial
+Enhanced Battle UI by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/enhanced-battle-ui
+SOS Battles by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/sos-battles
+Z-Power by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/z-power
+Dynamax by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/dynamax
+Terastallization by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/terastallization
+Animated Pokemon System by Lucidious89: https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial/deluxe-battle-kit-for-v21.1/add-on-tutorials/animated-pokemon-system
+
+############################################################
+# Sprite Credits
+############################################################
+# Battler Sprites
+#-----------------------------------------------------------
+#   Gen 1-5: Luka S.J.
+#   Gen 6: All Contributors To Smogon X/Y Sprite Project
+#   Gen 7: All Contributors To Smogon Sun/Moon Sprite Project
+#   Gen 8: All Contributors To Smogon Sword/Shield Sprite Project
+#   Gen 9: All Contributors To Smogon Scarlet/Violet Sprite Project
+#   Contributors to the original "Sprites Animados" spanish plugin:
+#     Tenshi of War, DPertierra, Skyflyer, Hellfire_raptor, Antiant, AshnixsLaw, AyanoCloud, Azrita, BR0DE0, Caruban, Creobnil, DanEx, Diegotoon20, dimbly, ekurepu, Ebaru, EricLostie, Falcon7, Federico97_ez, Fleimer_, Franark122k, Hellfire0raptor, HM100, HyperactiveFlummi, iametrine, Involuntary-Twitch, ItsYugen, jinta, justnyxnow, KingOfThe-X-Roads, kiriaura, Legitimate Username, localghost, lucasomi, MallowOut, mangalos810, MCH4R1Z4RD, N-Kin, NoelleMBrooks, Noobiess, Nolo33, OldSoulja, OmegalingYT, PKMarioG, PomPomKing, Poki Papillon, PumpkinPastel, RetroNC, RadicalCharizard, seleccion, SelenaArmorclaw, SkidMarc25, Snivy101, Sopita_Yorita, SoulWardenInfinity, TheAetherPlayer, TheCynicalPoet, Typhlito, uppababy
+#   Other Contributors: Lucidious89, Regis, Rod, Kayzering, LcorpOfficial
+#-----------------------------------------------------------
+# Icon Sprites
+#-----------------------------------------------------------
+#   Gen 1-6: Alaguesia, harveydentmd
+#   Gen 7: Marin, MapleBranchWing, Contributors to the DS Styled Gen 7+ Repository
+#   Gen 8: Larry Turbo, Leparagon
+#   Gen 1-8 (Shiny): StarrWolf, Pokemon Shattered Light Team
+#   PLA Icons: LuigiTKO
+#   Gen 9: ezerart, JordanosArt
+#   Resource Compilation: Golisopod User, UberDunsparce, Caruban
+#-----------------------------------------------------------
+# Footprint Sprites
+#-----------------------------------------------------------
+#   Gen 6: भाग्य ज्योति
+#   Gen 7-8: WolfPP
+#   Gen 9 & PLA: Caruban
+#   Resource Compilation: komeiji514
+#-----------------------------------------------------------
+
+Modular UI Scenes by Lucidious89: https://eeveeexpo.com/resources/1325/
+Enhanced Pokemon UI by Lucidious89: https://eeveeexpo.com/resources/1387/
+Pokedex Data Page by Lucidious89: https://eeveeexpo.com/resources/1380/
+Improved Mementos by Lucidious89: https://eeveeexpo.com/resources/1381/
+Improved Field Skills by Lucidious89: https://eeveeexpo.com/resources/1401/
+Auto Multi Save by http404error: https://eeveeexpo.com/resources/1059/
+Automatic Level Scaling by Benitex, Joltik and Umbreon: https://github.com/Benitex/Automatic-Level-Scaling
+Automatic Trainer Generator by ChampChar110: https://eeveeexpo.com/resources/1190/
+Character Selection by FL: https://www.pokecommunity.com/threads/v13-character-selection.338481/
+Delta Speed Up by Marin (og speed up script), Phantombass (19.1 version), Mashirosakura, Golisopod User, D0vid (v21.1 version), Manurocker95(bug fixes): https://eeveeexpo.com/resources/1379/updates
+Following Pokemon EX by Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno,Chubbichu: https://eeveeexpo.com/resources/1464/
+Form Trader by Dr.Doom76: https://eeveeexpo.com/resources/1425/updates
+Generation 9 Resource Pack by Caruban: https://eeveeexpo.com/resources/1101/
+Independent Hidden Power Type by DemICE
+Infinite Save Backups (Auto Multi Save Dependency) by DemICE,http404error
+Legends Arceus More Reminder by Kotaro,IndianAnimator
+Level Based Mixed EV System and Allocator by DemICE, grogro(v21.1 compatibility edits)
+Lin's IV EV Summary Screen by LinKazamine, Lucidious89
+Luka's Scripting Utilities by Luka S.J.
+Modular Pokemon Selection by ChampChar
+Modular Title Screen v21 by Luka S.J., port by http404error
+Near Universal TMs by FL
+Nuzlocke X for v20+ by Luka S.J.,  A.I.R 
+Randomizer X for v20+ by Luka S.J., A.I.R
+Set Controls by FL 
+Set Initial Pokemon Values by DemICE
+Storage System Utilities by Swdfm
+Super Yellow Pack Scripts by Hazy Crazy/4AllNighterGrinder64/OrgeDevil632. Aka, me writing this credits list.
+Tip Cards by wrigty12
+Type Icons in Battle by Golisopod User
+Type Matchup UI by Gameguy39, ThatWelshOne_
+v21.1 Hotfixes by Maruno, Creator of Pokemon Essentials: https://github.com/Maruno17/pokemon-essentials
+
+############################################################
+Old Credits Compendium V1.0.1
+############################################################
+
+Pokemon Essentials is made by:
+
+Flameguru, Poccil (Peter O.), Maruno
+https://github.com/Maruno17/pokemon-essentials
+
+With contributors by:
+
+Maruno17
+jonisavo
+Marin-MK
+Golisopod-User
+Keyacom
+Nathan-MV
+DerxwnaKapsyla
+FL-
+aprogergely
+HM100
+mlequime
+Conmh
+ENLSLive
+jvpr94
+Kaividian
+Vendily
+CorvusAtrox
+luka-sj
+Hollow-Ego
+
+Audio
+
+ENLS's Pre-Looped Music Library
+    
+Looped and compiled by:
+@ENLS
+@Thundaga
+@KrakerwatYT
+@Sulucnal
+@FrivolousAqua
+
+ENLS's Pre Looped Music: Pokemon Typing Adventure 09 Boss Battle
+ENLS's Pre Looped Music: Pokemon Battle Revolution 05 Colosseum Leader (Sashay)
+ENLS's Pre Looped Music: Pokemon Black 2 and White 2 213 Winning in the PWT!
+ENLS's Pre Looped Music: Pokemon Heart Gold and Soul Silver 279 The Hall of Fame
+ENLS's Pre Looped Music: Puyo Puyo Feaver 2 DS 16 Crimson Wave!
+Tekken 2 - Morning Field (Jun's Theme)
+Slame of the Northstar - Quad City DJs vs Crystal Kings by GAR
+ENLS's Pre Looped Music: Puyo Puyo Feaver DS 13 Ultimate Legend of the Untrained Demon King
+ENLS's Pre Looped Music: Pokemon Black 2 and White 2 204 Battle! (Gym Leader Kanto)
+16 Bit Genesis Pepperman Strikes Pizza Tower By JX
+Big Iron But it's Been Shagged by an Audiophile and Rendered Using a Biscuit Tin By DominantChris
+Gigachad Theme Hans Zimmer Can you Feel My Heart by Carameii
+Main Theme Sonic Adventure 3 SilvaGunner
+Please Help I've Imagined Too Many Dragons by William Maranci Mashups
+Yu Go Oh Duel Links Gong Strong ARC V Theme
+ENLS's Pre Looped Music: PLA 085 Battle! (Dialga Origin Form  Palkia Origin Form)
+ENLS's Pre Looped Music: BR 07 Waterfall Colosseum
+ENLS's Pre Looped Music: BR 08 Magma Colosseum
+ENLS's Pre Looped Music: BR 11 Sunset Colosseum
+ENLS's Pre Looped Music: BR 14 Neon Colosseum
+ENLS's Pre Looped Music: BR 15 Main Street Colosseum
+ENLS's Pre Looped Music: BR 16 Crystal Colosseum
+ENLS's Pre Looped Music: Conquest 23 Poison Battle
+ENLS's Pre Looped Music: HGSS 260 Battle! (Frontier Brain)
+ENLS's Pre Looped Music: HGSS 135 Battle! (Team Rocket)
+Pokemon Ultra Sun Ultra Moon Rocket Boss Giovanni Battle Music
+ENLS's Pre Looped Music: SM 086 Battle! (Battle Royale)
+ENLS's Pre Looped Music: XD 57 Rider Willie Battle
+ENLS's Pre Looped Music: HGSS 135 Battle! (Team Rocket)
+Pokemon Ultra Sun Ultra Moon Rocket Boss Giovanni Battle Music
+ENLS's Pre Looped Music: ORAS 096 Battle! (Steven)
+ENLS's Pre Looped Music: BW 412 Battle! (Champion)
+ENLS's Pre Looped Music: PLA 096 Battle! (Pokemon Wielder Volo)
+ENLS's Pre Looped Music: XY 120 Battle! (Champion)
+ENLS's Pre Looped Music: SwSh 115 Battle! (Battle Tower)
+ENLS's Pre Looped Music: HGSS 138 Battle! (Rival)
+ENLS's Pre Looped Music: SwSh 024 Battle! (Trainer)
+ENLS's Pre Looped Music: SwSh 096 Battle! (Pokemon League Tournament)
+ENLS's Pre Looped Music: SM 150 Battle! (Elite Four)
+ENLS's Pre Looped Music: XY 021 Battle! (Trainer Battle)
+ENLS's Pre Looped Music: XY 119 Battle! (Elite Four)
+ENLS's Pre Looped Music: B2W2 139 Battle! (Trainer)
+Pokémon Scarlet & Violet Unova Trainer Battle Music
+ENLS's Pre Looped Music: DPPT 023 Battle! (Trainer Battle)
+ENLS's Pre Looped Music: BR 10 Sunny Park Colosseum
+ENLS's Pre Looped Music: PLA 009 Battle! (Pokemon Wielder)
+ENLS's Pre Looped Music: ORAS 017 Battle! (Trainer Battle)
+ENLS's Pre Looped Music: XD 36 Colesseum - 2nd Round
+ENLS's Pre Looped Music: HGSS 118 Battle! (Trainer Battle Johto)
+ENLS's Pre Looped Music: BR 13 Gateway Colosseum
+ENLS's Pre Looped Music: BR 28 Lagoon Colosseum
+ENLS's Pre Looped Music: XY 208 Battle! (Trainer Battle) [Pokemon Origins Version] (Bonus Track)
+ENLS's Pre Looped Music: XY 206 Battle! (Wild Pokemon) [Pokemon Origins Version] (Bonus Track)
+ENLS's Pre Looped Music: Conquest 32 Dark Battle
+ENLS's Pre Looped Music: Conquest 31 Dragon Battle
+ENLS's Pre Looped Music: Conquest 30 Steel Battle
+ENLS's Pre Looped Music: Conquest 29 Ghost Battle
+ENLS's Pre Looped Music: Conquest 28 Rock Battle
+ENLS's Pre Looped Music: Conquest 27 Bug Battle
+ENLS's Pre Looped Music: Conquest 26 Psychic Battle
+ENLS's Pre Looped Music: Conquest 25 Flying Battle
+ENLS's Pre Looped Music: Conquest 24 Ground Battle
+ENLS's Pre Looped Music: Conquest 22 Fighting Battle
+ENLS's Pre Looped Music: Conquest 21 Ice Battle
+ENLS's Pre Looped Music: Conquest 20 Grass Battle
+ENLS's Pre Looped Music: Conquest 19 Electric Battle
+ENLS's Pre Looped Music: Conquest 18 Water Battle
+ENLS's Pre Looped Music: Conquest 17 Fire Battle
+ENLS's Pre Looped Music: Conquest 16 Normal Battle
+ENLS's Pre Looped Music: Conquest 33 Legendary Battle
+ENLS's Pre Looped Music: BR 02 Minor Boss Theme
+16-Bit Genesis What I'm Made Of Sonic Heroes by JX
+Disgaea 2 Spread Your Wings
+ENLS's Pre Looped Music: TA 08 Emolga_s Tall Forest
+ENLS's Pre Looped Music: TA 06 Space Hiking
+ENLS's Pre Looped Music: TA 03 Deerling Park
+ENLS's Pre Looped Music: TA 05 Blastoise_s Resort
+ENLS's Pre Looped Music: TA 12 Bright Sunshine
+ENLS's Pre Looped Music: TA 14 Glalie_s Snow-Covered Road
+ENLS's Pre Looped Music: TA 13 Great Paradise
+ENLS's Pre Looped Music: DPPT 029 Battle! (Rival)
+Pokkén Tournament DX Tellur Town Autumn
+Pokémon Ultra Sun Ultra Moon Team Rainbow Rocket Battle
+Trauma Center DS Under the Knife Opening Heart Beat
+Slam of the North Star by GARticuno (High Quality)
+ENLS's Pre Looped Music: SM 025 Battle! (Trainer)
+ENLS's Pre Looped Misic: BR 03 Colosseum Leader (Kruger)
+Tough Guy Alert! Mario & Luigi Bowser's Inside Story
+Digimon Rumble Arena Soundtrack - Crazy Battlefield
+Etrian Odyssey III Super Arrange Battlefield Those that Slay and Fall
+ENLS's Pre Looped Music: XD 08 Normal Battle
+Digimon Rumble Arena Soundtrack - Crazy Battlefield
+Reverse Of Arcadia NDS - 5D's Mode Duel Music 8
+Xristos Anesti in da club techno remix by Le Mpa or megalostafili1
+ENLS's Pre Looped Music: BR 05 Colosseum Leader (Sashay)
+ENLS's Pre Looped Music: PPF (DS) 13 Ultimate Legend of the Untrained Demon King
+ENLS's Pre Looped Music: PPF2 (DS) 16 Crimson Wave!
+Trauma Center DS Under the Knife Opening Heart Beat
+Slam of the North Star by GARticuno
+ENLS's Pre Looped Music: B2W2 204 Battle! (Gym Leader Kanto)
+ENLS's Pre Looped Music: BR 12 Stargazer Colosseum
+ENLS's Pre Looped Music: B2W2 307 Battle! (Black Kyurem _ White Kyurem)
+Pokkén Tournament Tellur Town Autumn
+ENLS's Pre Looped Music: B2W2 211 Battle! (Champion Sinnoh)
+ENLS's Pre Looped Music: B2W2 329 Battle! (Champion Iris)
+ENLS's Pre Looped Music: TA 09 Boss Battle
+ENLS's Pre Looped Music: Conquest 24 Ground Battle
+Man With a Mission When My Devil Rises
+ENLS's Pre Looped Music: TA 01 Title Screen
+
+Graphics Resources
+
+Leaf - Sprite Overworld
+
+Wolfang62: https://www.deviantart.com/wolfang62/art/Leaf-Sprite-Overworld-887602743
+
+Various Gen 4 Art Style trainer and overworld sprites
+
+Kyledove: https://pokengine.org/trainers/017gkf02/Brock
+Kyledove: https://pokengine.org/trainers/018np8rv/Misty?collection=105var2c
+Kyledove: https://pokengine.org/trainers/01hf2258/Leaf?collection=105var2c
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/agatha-lgpe.png
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/lorelei-lgpe.png
+hyo-oppa: https://play.pokemonshowdown.com/sprites/trainers/brendan.png
+hyo-oppa: https://play.pokemonshowdown.com/sprites/trainers/may.png
+Beliot: https://play.pokemonshowdown.com/sprites/trainers/beauty-gen7.png
+Brumirage: https://play.pokemonshowdown.com/sprites/trainers/marnie.png
+
+Pokémon Battle Revolution - Colosseum Leader Front Sprites
+
+jinxed
+
+Gen 4 and 5 Trainer sprites and PBS
+
+Mr. Gela
+
+Taiga´s Trainer Collections
+
+Taiga
+DiegoWT
+Neo-Spriteman
+Vanilla Sunshine
+AtomicReactor
+PizzaSun
+Tebited
+
+Offical games Trainer Classes
+
+Kyledove
+
+Pokémon Essentials Deluxe Battle Kit Suite
+
+Lucidious89
+
+Generation 9 Resources Pack
+
+Scripts:
+-Caruban
+-Lucidious89
+-Eskiss (Legend Plate script based on)
+-StCooler (Original PLA Expansion script for Gen 8 Project in v18 and Status sprites)
+-PorousMist and curryofthepast (Adapting the PLA Expansion script script for v19.1 use)
+
+PBS:
+-Caruban
+-Lucidious89
+-PorousMist (Updated the abilities, items, and moves description)
+-DJChaos (TM Items)
+-Futuresushi (Shortened abilities and moves description)
+
+Pokemon Battler Sprites:
+-Gen 1-5 Pokemon Sprites    - veekun
+-Gen 6 Pokemon Sprites        - All Contributors To Smogon X/Y Sprite Project
+-Gen 7 Pokemon Sprites        - All Contributors To Smogon Sun/Moon Sprite Project
+-Gen 8 Pokemon Sprites        - All Contributors To Smogon Sword/Shield Sprite Project
+-PLA Pokemon Sprites        - Smogon Gen8 Sprite Project
+(https://www.smogon.com/forums/threads/smogon-sprite-project.3647722/)
+Blaquaza, KingOfThe-X-Roads, KattenK, Travis, G.E.Z., SpheX, Hematite, SelenaArmorclaw
+-Gen 9 Pokemon Sprites        - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura,
+JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara, Skyflyer, AshnixsLaw, ace_stryfe
+-Gen 9 Vanilla style sprites    - KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria, Mashirosakura, JordanosArt, Scept, NanaelJustice, SoyChim, KRLW890, AnonAlpaca, PokeJminer, Red7246, Carmanekko, Eduar, Lykeron, GriloKapu10, Mesayas, Erkey830, QDylm, PorousMist, OldSoulja, AlexandreV2.0, Z-nogyroP, lennybitao, Ruben1986, GRAFAIAIMX
+Blaquaza, KattenK, Travis, G.E.Z., SpheX, Hematite
+
+Pokemon Icon Sprites:
+-Gen 1-6 Pokemon Icon Sprites    - Alaguesia, harveydentmd
+-Gen 7 Pokemon Icon Sprites    - Marin, MapleBranchWing, Contributors to the DS Styled Gen 7+ Repository
+-Gen 8 Icon Sprites        - Larry Turbo, Leparagon
+-Shiny Icon Sprites        - StarrWolf, Pokemon Shattered Light Team
+-PLA Pokemon Icon Sprites    - LuigiTKO
+-Shiny PLA Pokemon Icon Sprites    - StarrWolf (recolored from LuigiTKO icons)
+-Gen 9 Icon Sprites        - ezerart, JordanosArt
+-Shiny Gen 9 Icon Sprites    - ezerart, JordanosArt
+-PLA Vanilla Icon Sprites    - LuigiTKO, Pikafan2000, Cesare_CBass, Vent, Cesare_Cbass, MultiDiegoDani, leParagon, JWNutz
+and thanks for
+Pokémon Icons Act 2.9 - Teracristalizando
+(https://whackahack.com/foro/threads/pokemon-icons-act-2-9-teracristalizando-07-08-2022.63896/)
+-Gen 9 Vanilla Icon Sprites    - Vent, Katten, leParagon, Cesare_CBass, AlexandreV2.0, Carmanekko, GRAFAIAIMX
+also thanks to Axel Loquendo, CarmaNekko, Divaruta 666, Okyo, JLauz735, and ClaraDragon for
+Iconos 9na Gen gba completos (https://whackahack.com/foro/threads/iconos-9na-gen-gba-completos-act-04-03-2023.67908/)
+
+Pokemon Gen 9 Overworld sprites:
+-Gen 1-5 Pokemon Overworlds    - MissingLukey, help-14, Kymoyonian, cSc-A7X, 2and2makes5, Pokegirl4ever, Fernandojl, Silver-Skies, TyranitarDark, Getsuei-H, Kid1513, Milomilotic11, Kyt666, kdiamo11, Chocosrawlooid, Syledude, Gallanty, Gizamimi-Pichu, 2and2makes5, Zyon17,LarryTurbo, spritesstealer, LarryTurbo
+-Gen 6+ Berry Tree Overworlds    - Anarlaurendil
+-Gen 6 Pokemon Overworlds    - princess-pheonix, LunarDusk, Wolfang62, TintjeMadelintje101, piphybuilder88
+-Gen 7 Pokemon Overworlds    - Larry Turbo, princess-pheonix
+-Gen 8 Pokemon Overworlds    - SageDeoxys, Wolfang62, LarryTurbo, tammyclaydon
+-PLA Pokemon Overworlds        - Boonzeet, DarkusShadow, princess-phoenix, Ezeart, WolfPP
+-Gen 9 Pokemon Overworlds    - Azria, DarkusShadow, EduarPokeN, Carmanekko, StarWolff, Caruban
+
+Pokemon Footprints :
+-Gen PLA-9 Pokemon Footprints    - Caruban
+
+Pokemon Cries:
+-Gen 1-6 Pokemon Cries        - Rhyden
+-Gen 7 Pokemon Cries        - Marin, Rhyden
+-Gen 8 Pokemon Cries        - Zeak6464
+-PLA Pokemon Cries        - Morningdew
+-Gen 9 Pokemon Cries        -
+Edited from Lightblade's Absol Gen 9 Cries compilation video
+https://www.youtube.com/watch?v=KV6k3G62oT0
+Edited from HeroLinik's Pokemon Scarlet and Violet - Walking Wake and Iron Leaves Cries video
+https://www.youtube.com/watch?v=weH2W3mQ35Y
+Edited from HeroLinik's Pokemon Scarlet and Violet - All Teal Mask Cries video
+https://www.youtube.com/watch?v=pQr9z4ryE40
+Edited from Joya in UK's Indigo Disk Cries video
+https://www.youtube.com/watch?v=2Qqr9IzgcKE
+
+Item sprites:
+-Gen 9 item sprites    - lichenprincess, Caruban, jinxed
+-PLA item sprites    - AztecCroc, 3DJackArt, Caruban, lichenprincess
+
+Pokeballs battle animation and summary icon:
+-Caruban
+-WolfPP (Beast ball battle animation)
+
+Compilation of Resources:
+-Gen 9 Pack        - Caruban
+-Gen 8/9 Resized Sprites- http404error
+-Gen 8 Pack        - Golisopod User, UberDunsparce
+
+Full PLA-Gen 9 Sprites Credit List:
+https://docs.google.com/spreadsheets/d/1T-KC-4XDOeFKq0Z6tfN6Sz4JIlpaK7B8A0lbmBg9fNY/edit?usp=sharing
+
+Full Deluxe Battle Kit + Add-Ons
+
+Lucidious89
+Deluxe Battle Kit Website Guide        = https://lucidious89-tutorials.gitbook.io/deluxe-battle-kit-tutorial
+
+The Full Deulxe Battle Kit consists of:
+
+Deluxe Battle Kit (Covers Mega Evolution and various under the hood changes to Pokemon Essentials)
+Modular UI Scenes
+Enhanced Pokemon UI
+Enhanced Battle UI
+Pokedex Data Page
+Z-Power
+SOS Battles
+Dynamax
+Terastallization
+Improved Field Skills
+
+As of the 24th April 2024, the Raid Battles Add-On has not been released.
+
+Generation 9 Animation Project
+
+Project Host: KRLW890
+Website        = https://www.pokecommunity.com/threads/the-gen-9-move-animation-project.526189/       
+Thanks to the Reborn team for letting people use their resources. You are awesome.
+Gen 8 Animation Project lead by StCooler, with additional contributions by DarrylBD99, WolfPP, ardicoozer, riddlemeree
+Thanks to BellBlitzKing for his Pokemon Sound Effects Pack: Gen 1 to Gen 7 - All Attacks SFX.
+Gen 9 Animation Project led by KRLW890 and Nut0066, with additional contributions by Toxillian, QuahogTheCreator, Lcorp, and Shashu-Greninja
+
+Independent Hidden Power Type (Adapted for V21.1)
+
+DemICE
+
+Legends Arceus Move Relearner
+
+Kotaro,IndianAnimator
+
+Normal-Type Attacks without STAB match your first Type instead
+
+Jason Godwyn
+
+User's Speed is used instead of user's Attack for this move's calculations
+
+Jason Godwyn
+
+Type Icons in Battle
+
+Golisopod User, Hubercioch
+
+Type Matchup UI
+
+ThatWelshOne_
+
+Pokemon Form Trader
+
+Dr.Doom76
+
+Sparling Vial
+
+Apples, Asforcia, BigFriv
+
+Any Nature Mint
+
+Appletun's Apples
+
+Automatic Level Scaling
+
+Benitex, Joltik, Umbreon
+
+Jason Godwyn Poke Editor
+
+Jason Godwyn
+
+NPB's Battle UI
+
+No pro bro,BiggusWeeabus,Taiga,Ardicoozer(for v21.1 script)
+
+Fancy looking type icons and Tera-Type Icons made Sol Emeralds
+
+Eevee Exo/Relic Castle: Sonicover
+Deviantart: Banjo2015
+
+Trainer Transitions
+
+Wes by Meme Galactic: https://tumblunni.tumblr.com/post/132880703981/im-trying-to-make-some-wes-sprites-and-i-found-a
+Leaf by Nyjee: https://www.deviantart.com/nyjee/art/VS-Trainer-SPECIAL-Portrait-165669863
+Red by iTheRealPikachuV2: https://www.deviantart.com/itherealpikachuv2/art/Pokemon-Vs-Red-Mugshot-213466606
+Breandan by hyo-oppa: https://www.deviantart.com/hyo-oppa/art/Pokemon-ORAS-Brendan-DPPt-HGSS-Gen-IV-Sprite-Sheet-681502142
+May by skyin2020: https://www.deviantart.com/skyin2020/art/Pokemon-Female-Trainers-VS-Sprite-788731786
+
+Character Selection By FL
+
+FL
+
+Gen 5 VS Sprite Pack
+
+BW VS rips came from Barubary on spriters-resource
+B2W2 VS rips came from redblueyellow on spriters-resource
+VS bars came from TechSkylander1518
+
+GSC Kris Gen 4 Sprites (Artist has given permission for the character sprites to be used in Super Yellow Gameplay Edition, evidence is in the Misc Folder)
+
+SirPeaches: https://www.deviantart.com/sirpeaches/art/HeartGold-SoulSilver-Kris-Ver-2-555601343
+
+DeigoWT Character sprites
+
+Wes: https://www.deviantart.com/diegowt/art/Wes-Sprite-Pack-842134086
+ORAS May: https://www.deviantart.com/diegowt/art/Sprite-Pack-ORAS-May-976413120
+ORAS Bredan: https://www.deviantart.com/diegowt/art/Sprite-Pack-ORAS-Brendan-976412704
+    
+Mid117
+
+Wes backsprite: https://www.deviantart.com/mid117/art/Commission-PKMN-Colosseum-Wes-Backsprite-842604661
+
+neosth2001
+
+Wes Gen 4 trainer sprite (Source links to a 404 Deviant Art page. Source link currently unknown)
+https://www.deviantart.com/neosth2001/art/Wes-Pokemon-Cobalt-364693531
+    
+hyo-oppa
+
+Pokemon Trainer Battle Sprite Collection: https://www.deviantart.com/hyo-oppa/art/Hyo-s-Pokemon-Trainer-Battle-Sprite-Collection-878566572
+Pokemon ORAS Brendan DPPt/HGSS Gen IV Sprite Sheet: https://www.deviantart.com/hyo-oppa/art/Pokemon-ORAS-Brendan-DPPt-HGSS-Gen-IV-Sprite-Sheet-681502142
+
+skyin2020
+
+Pokemon Female Trainers VS Sprite: https://www.deviantart.com/skyin2020/art/Pokemon-Female-Trainers-VS-Sprite-788731786 \\
+
+Solo993
+
+PUBLIC OrAs Protagonists Gba back front sprites: https://www.deviantart.com/solo993/art/PUBLIC-OrAs-Protagonists-Gba-back-front-sprites-491737986
+
+PKMNTrainerRick
+
+POKEMON RED DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-RED-DPP-BACK-SPRITE-918844486
+POKEMON LEAF DPP BACK SPRITE: https://www.deviantart.com/pkmntrainerrick/art/POKEMON-LEAF-DPP-BACK-SPRITE-918844468
+
+Brumirage
+
+cynthia-gen7 sprite from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/cynthia-gen7.png
+leon-tower sprite from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/leon-tower.png
+diantha from Pokemon Showdown: https://play.pokemonshowdown.com/sprites/trainers/diantha.png
+
+Kyledove
+
+leon overworld sprite: https://pokengine.org/trainers/011rh3ku/Leon
+Diantha over sprite: https://pokengine.org/trainers/018pukjr/Diantha	

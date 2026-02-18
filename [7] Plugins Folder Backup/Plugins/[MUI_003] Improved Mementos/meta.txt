@@ -1,0 +1,7 @@
+Name       = [MUI] Improved Mementos
+Version    = 1.0.4
+Essentials = 21.1
+Requires   = Modular UI Scenes,2.0.8
+Requires   = Deluxe Battle Kit,1.2.6
+Website    = https://eeveeexpo.com/resources/1381/
+Credits    = Lucidious89

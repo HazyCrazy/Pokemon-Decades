@@ -1,0 +1,11 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[HIDDENORB]
+Name = Hidden Orb
+NamePlural = Hidden Orbs
+Pocket = 1
+Price = 0
+FieldUse = OnPokemon
+Flags = KeyItem
+#Description = An orb that holds hidden potential. When used, it changes a Pokémon's Hidden Power.
+Description = Can change a Pokémon's Hidden Power Type. IV's do not affect Hidden Power's Type.

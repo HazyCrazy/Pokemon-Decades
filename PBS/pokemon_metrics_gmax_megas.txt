@@ -1,0 +1,199 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[VENUSAUR,3]
+BackSprite = 10,50
+FrontSprite = 0,12
+ShadowSprite = 2,0,7
+#-------------------------------
+[CHARIZARD,4]
+BackSprite = 0,44
+FrontSprite = 9,9
+ShadowSprite = 4,9,8
+#-------------------------------
+[BLASTOISE,3]
+BackSprite = 0,40
+FrontSprite = 0,10
+ShadowSprite = 4,-10,8
+#-------------------------------
+[BUTTERFREE,2]
+BackSprite = 0,52
+FrontSprite = 0,13
+ShadowSprite = 4,0,15
+AnimationSpeed = 1,2
+#-------------------------------
+[PIKACHU,18]
+BackSprite = 0,29
+FrontSprite = 6,5
+ShadowSprite = 2,23,10
+#-------------------------------
+[MEOWTH,4]
+BackSprite = 3,46
+FrontSprite = -2,8
+ShadowSprite = 2,12,7
+AnimationSpeed = 3
+#-------------------------------
+[MACHAMP,2]
+BackSprite = 0,38
+FrontSprite = -6,3
+ShadowSprite = 1,20,9
+#-------------------------------
+[GENGAR,3]
+BackSprite = 0,38
+FrontSprite = 2,16
+ShadowSprite = 0,2,6
+#-------------------------------
+[KINGLER,2]
+BackSprite = 8,42
+FrontSprite = 0,10
+ShadowSprite = 0,8,7
+#-------------------------------
+[LAPRAS,2]
+BackSprite = 6,36
+FrontSprite = 0,7
+ShadowSprite = 2,-11,7
+#-------------------------------
+[EEVEE,3]
+BackSprite = 0,40
+FrontSprite = 3,10
+ShadowSprite = 2,17,5
+#-------------------------------
+[SNORLAX,2]
+BackSprite = 5,49
+FrontSprite = 0,15
+ShadowSprite = 1,-15,4
+AnimationSpeed = 3
+#-------------------------------
+[GARBODOR,2]
+BackSprite = 6,45
+FrontSprite = -7,18
+ShadowSprite = 9,-12,-3
+#-------------------------------
+[GRENINJA,3]
+BackSprite = -29,41
+FrontSprite = 18,10
+ShadowSprite = 0,9,6
+#-------------------------------
+[MARSHADOW,1]
+BackSprite = 5,53
+FrontSprite = 1,1
+ShadowSprite = 3,-21,6
+#-------------------------------
+[MELMETAL,2]
+BackSprite = 9,43
+FrontSprite = 0,5
+ShadowSprite = 6,17,10
+#-------------------------------
+[RILLABOOM,2]
+BackSprite = 12,70
+FrontSprite = -2,12
+ShadowSprite = 1,6,5
+AnimationSpeed = 2,3
+#-------------------------------
+[CINDERACE,2]
+BackSprite = -11,45
+FrontSprite = 9,8
+ShadowSprite = 1,12,12
+#-------------------------------
+[INTELEON,2]
+BackSprite = 0,37
+FrontSprite = -3,4
+ShadowSprite = 3,13,8
+#-------------------------------
+[CORVIKNIGHT,2]
+BackSprite = 0,85
+FrontSprite = 7,71
+ShadowSize = -3
+ShadowSprite = 4,0,-10
+#-------------------------------
+[ORBEETLE,2]
+BackSprite = 4,57
+FrontSprite = 1,15
+ShadowSize = -1
+ShadowSprite = 2,-15,0
+#-------------------------------
+[DREDNAW,2]
+BackSprite = 0,40
+FrontSprite = -4,15
+ShadowSprite = 3,15,6
+AnimationSpeed = 3
+#-------------------------------
+[COALOSSAL,2]
+BackSprite = 0,47
+FrontSprite = 4,16
+ShadowSprite = 0,13,5
+#-------------------------------
+[FLAPPLE,2]
+BackSprite = 0,34
+FrontSprite = 0,4
+ShadowSize = 2
+ShadowSprite = 5,11,13
+#-------------------------------
+[APPLETUN,2]
+BackSprite = 0,34
+FrontSprite = 0,4
+ShadowSize = 2
+ShadowSprite = 5,11,13
+#-------------------------------
+[SANDACONDA,2]
+BackSprite = 2,50
+FrontSprite = -1,8
+ShadowSprite = 3,19,10
+#-------------------------------
+[TOXTRICITY,4]
+BackSprite = 5,45
+FrontSprite = -1,6
+ShadowSprite = 0,17,3
+#-------------------------------
+[TOXTRICITY,5]
+BackSprite = 5,45
+FrontSprite = -1,6
+ShadowSprite = 0,17,3
+#-------------------------------
+[CENTISKORCH,2]
+BackSprite = 10,61
+FrontSprite = -7,13
+ShadowSprite = 2,0,6
+AnimationSpeed = 3,2
+#-------------------------------
+[HATTERENE,2]
+BackSprite = 0,38
+FrontSprite = 5,4
+ShadowSprite = 2,19,8
+#-------------------------------
+[GRIMMSNARL,2]
+BackSprite = 0,41
+FrontSprite = 0,4
+ShadowSprite = 2,15,11
+#-------------------------------
+[ALCREMIE,64]
+BackSprite = 0,42
+FrontSprite = 1,5
+ShadowSize = 4
+ShadowSprite = 12,11,5
+#-------------------------------
+[COPPERAJAH,2]
+BackSprite = 0,39
+FrontSprite = -5,15
+ShadowSprite = 4,10,1
+#-------------------------------
+[DURALUDON,2]
+BackSprite = 0,40
+FrontSprite = -4,7
+ShadowSprite = 2,14,9
+#-------------------------------
+[ETERNATUS,2]
+BackSprite = -14,64
+FrontSprite = 0,4
+ShadowSize = -1
+ShadowSprite = 0,3,22
+AnimationSpeed = 3,2
+#-------------------------------
+[URSHIFU,4]
+BackSprite = 0,48
+FrontSprite = 2,5
+ShadowSprite = 0,14,9
+#-------------------------------
+[URSHIFU,5]
+BackSprite = 1,53
+FrontSprite = 1,6
+ShadowSprite = 0,27,11

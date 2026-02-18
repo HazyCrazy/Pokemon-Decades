@@ -1,0 +1,13 @@
+#-------------------------------
+[NIHILLIGHT]
+Name = Nihil Light
+Type = DRAGON
+Category = Special
+Power = 200
+Accuracy = 100
+TotalPP = 10
+Target = AllNearFoes
+FunctionCode = IgnoreTargetDefSpDefEvaStatStagesHitFairyType
+Flags = CanProtect,CanMirrorMove
+Description = A powerful light that defies nature, striking Fairy types and ignoring target stat changes.
+#-------------------------------

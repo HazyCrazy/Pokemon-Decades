@@ -1,0 +1,6 @@
+Name       = Pokémon Vault
+Version    = 1.0.1
+Essentials = 21.1
+Requires   = v21.1 Hotfixes,1.0.9
+Website    = https://eeveeexpo.com/resources/1828/
+Credits    = ReallyBoredCoder

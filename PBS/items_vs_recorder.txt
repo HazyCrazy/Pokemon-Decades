@@ -1,0 +1,25 @@
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[VSRECORDER]
+Name = Wild Adjuster
+NamePlural = Wild Adjuster's
+#Name = Vs.Recorder
+#NamePlural = Vs.Recorder's
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Changes the Pokémon you can find. Can narrow down to specfic Pokémon, from Gen 1 (Kanto) to Gen 9 (Paldea).
+#Description = A device that changes the Wild Pokémon you can find in an area with wild Pokémon. 
+#Description = An amazing device that can record a battle either between friends or at a special battle facility.
+#-------------------------------
+[AUTOWINPOLICY]
+Name = Auto Win Policy
+NamePlural = Auto Win Policy's
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Toggles bypassing Wild and Trainer battles. Gives the winning outcome when active.
+#Description = Toggles on and off bypassing wild and trainer battles. Gives the winning outcome when active.
+#-------------------------------

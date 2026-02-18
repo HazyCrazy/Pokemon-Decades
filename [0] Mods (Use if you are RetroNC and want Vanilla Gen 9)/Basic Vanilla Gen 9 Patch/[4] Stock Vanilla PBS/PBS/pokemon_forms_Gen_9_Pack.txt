@@ -1,0 +1,502 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[GROWLITHE,1]
+FormName = Hisuian
+Types = ROCK,FIRE
+BaseStats = 60,75,45,55,65,50
+Abilities = INTIMIDATE
+HiddenAbilities = FLASHFIRE,ROCKHEAD,GUARDDOG,RECKLESS,STALWART
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,HEADSMASH,1,FLAREBLITZ,1,EXTREMESPEED,1,CLOSECOMBAT
+Height = 0.8
+Weight = 22.7
+Category = Scout
+Pokedex = They patrol their territory in pairs. I believe the igneous rock components in the fur of this species are the result of volcanic activity in its habitat.
+Generation = 8
+Flags = InheritFormWithEverStone
+#-------------------------------
+[ARCANINE,1]
+FormName = Hisuian
+Types = ROCK,FIRE
+BaseStats = 95,115,80,90,95,80
+Abilities = INTIMIDATE
+HiddenAbilities = FLASHFIRE,ROCKHEAD,GUARDDOG,RECKLESS,STALWART
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,HEADSMASH,1,FLAREBLITZ,1,EXTREMESPEED,1,CLOSECOMBAT
+Height = 2.0
+Weight = 168.0
+Pokedex = Snaps at its foes with fangs cloaked in blazing flame. Despite its bulk, it deftly feints every which way, leading opponents on a deceptively merry chase as it all but dances around them.
+Generation = 8
+Flags = InheritFormWithEverStone
+#-------------------------------
+[VOLTORB,1]
+FormName = Hisuian
+Types = GRASS,ELECTRIC
+Abilities = AFTERMATH
+HiddenAbilities = GRASSYSURGE,NATURALCURE,PROTOSYNTHESIS,SAPSIPPER,SOUNDPROOF
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,VOLTSWITCH,1,LEAFSTORM,1,FOULPLAY,1,SIGNALBEAM
+Weight = 13.0
+Habitat = Grassland
+Category = Sphere
+Pokedex = An enigmatic Pokémon that happens to bear a resemblance to a Poké Ball. When excited, it discharges the electric current it has stored in its belly, then lets out a great, uproarious laugh.
+Generation = 8
+Flags = InheritFormWithEverStone
+#Evolutions = ELECTRODE,Item,LEAFSTONE
+Evolutions = ELECTRODE,Level,31
+#-------------------------------
+[ELECTRODE,1]
+FormName = Hisuian
+Types = GRASS,ELECTRIC
+Abilities = AFTERMATH
+HiddenAbilities = GRASSYSURGE,NATURALCURE,PROTOSYNTHESIS,SAPSIPPER,SOUNDPROOF
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,VOLTSWITCH,1,LEAFSTORM,1,FOULPLAY,1,SIGNALBEAM
+Weight = 71.0
+Habitat = Grassland
+Category = Sphere
+Pokedex = The tissue on the surface of its body is curiously similar in composition to an Apricorn. When irritated, this Pokémon lets loose an electric current equal to 20 lightning bolts.
+Generation = 8
+Flags = InheritFormWithEverStone
+#-------------------------------
+[TAUROS,1]
+FormName = Paldean (Combat Breed)
+Types = FIGHTING
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,DOUBLEEDGE,1,CLOSECOMBAT,1,FLAREBLITZ,1,WAVECRASH
+Weight = 115.0
+Color = Black
+Pokedex = This kind of Tauros, known as the Combat Breed, is distinguished by its thick, powerful muscles and its fierce disposition.
+Generation = 9
+Flags = InheritFormWithEverStone
+#-------------------------------
+[TAUROS,2]
+FormName = Paldean (Blaze Breed)
+Types = FIGHTING,FIRE
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,BULKUP,1,CLOSECOMBAT,1,FLAREBLITZ,1,TRAILBLAZE
+Weight = 85.0
+Color = Black
+Pokedex = People call this kind of Tauros the Blaze Breed due to the hot air it snorts from its nostrils. Its three tails are intertwined.
+Generation = 9
+Flags = InheritFormWithEverStone
+#-------------------------------
+[TAUROS,3]
+FormName = Paldean (Aqua Breed)
+Types = FIGHTING,WATER
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,WAVECRASH,1,CLOSECOMBAT,1,RAGINGBULL,1,ZENHEADBUTT
+Weight = 110.0
+Color = Black
+Pokedex = It swims by jetting water from its horns. The most notable characteristic of the Aqua Breed is its high body fat, which allows it to float easily.
+Generation = 9
+Flags = InheritFormWithEverStone
+#-------------------------------
+[TYPHLOSION,1]
+FormName = Hisuian
+Types = GHOST,FIRE
+BaseStats = 73,84,78,95,119,85
+Abilities = SOULHEART
+HiddenAbilities = PERISHBODY,FLASHFIRE,FRISK,BERSERK,BATTLEBOND
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,ERUPTION,1,FIREBLAST,1,HEX,1,WILLOWISP
+Height = 1.6
+Weight = 69.7
+Category = Ghost Flame
+Pokedex = Said to purify lost, forsaken souls with its flames and guide them to the afterlife. I believe its form has been influenced by the energy of the sacred mountain towering at Hisui's center.
+Generation = 8
+#-------------------------------
+[WOOPER,1]
+FormName = Paldean
+Types = POISON,GROUND
+Abilities = UNAWARE
+HiddenAbilities = POISONPOINT,WATERABSORB,EARTHEATER,DAMP,OBLIVIOUS
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,EARTHQUAKE,1,TOXIC,1,RECOVER,1,TOXICSPIKES
+Weight = 11.0
+Color = Brown
+Category = Poison Fish
+Pokedex = After losing a territorial struggle, Wooper began living on land. The Pokémon changed over time, developing a poisonous film to protect its body.
+Generation = 9
+Flags = InheritFormWithEverStone
+Evolutions = CLODSIRE,Level,31
+SpeciesSOS = WOOPER,CLODSIRE
+#-------------------------------
+[QWILFISH,1]
+FormName = Hisuian
+Types = DARK,POISON
+BaseStats = 75,100,100,85,55,85
+Abilities = TOXICDEBRIS
+HiddenAbilities = INTIMIDATE,WATERABSORB,MERCILESS,AFTERMATH,WATERVEIL
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,GUNKSHOT,1,CRUNCH,1,AQUAJET,1,SWORDSDANCE
+Pokedex = Fishers detest this troublesome Pokémon because it sprays poison from its spines, getting it everywhere. A different form of Qwilfish lives in other regions.
+Generation = 8
+Flags = InheritFormWithEverStone
+#Evolutions = OVERQWIL,LevelUseMoveCount,BARBBARRAGE
+Evolutions = OVERQWIL,Level,31
+#-------------------------------
+[SNEASEL,1]
+FormName = Hisuian
+Types = FIGHTING,POISON
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,CLOSECOMBAT,1,DIRECLAW,1,THROATCHOP,1,SWORDSDANCE
+Weight = 27.0
+Color = Gray
+Habitat = Mountain
+Pokedex = Its sturdy, curved claws are ideal for traversing precipitous cliffs. From the tips of these claws drips a venom that infiltrates the nerves of any prey caught in Sneasel's grasp.
+Generation = 8
+Flags = InheritFormWithEverStone,HasGenderedSprites
+#Evolutions = SNEASLER,DayHoldItem,RAZORCLAW
+Evolutions = SNEASLER,Level,31
+#-------------------------------
+[DIALGA,1]
+FormName = Origin Forme
+BaseStats = 100,100,120,90,150,120
+Height = 7.0
+Weight = 848.7
+Pokedex = Radiant light caused Dialga to take on a form bearing a striking resemblance to the creator Pokémon. Dialga now wields such colossal strength that one must conclude this is its true form.
+#-------------------------------
+[PALKIA,1]
+FormName = Origin Forme
+BaseStats = 90,100,100,120,150,120
+Height = 6.3
+Weight = 659.0
+Pokedex = It soars across the sky in a form that greatly resembles the creator of all things. Perhaps this imitation of appearance is Palkia's strategy for gaining Arceus's powers.
+#-------------------------------
+[SAMUROTT,1]
+FormName = Hisuian
+Types = DARK,WATER
+BaseStats = 90,108,80,85,100,65
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,AQUACUTTER,1,CEASELESSEDGE,1,SUCKERPUNCH,1,SWORDSDANCE
+Weight = 58.2
+Pokedex = Hard of heart and deft of blade, this rare form of Samurott is a product of the Pokémon's evolution in the region of Hisui. Its turbulent blows crash into foes like ceaseless pounding waves.
+Generation = 8
+#-------------------------------
+[LILLIGANT,1]
+FormName = Hisuian
+Types = FIGHTING,GRASS
+BaseStats = 70,105,75,105,50,75
+Abilities = HUSTLE
+HiddenAbilities = CHLOROPHYLL,OWNTEMPO,DANCER,SERENEGRACE,FLOWERVEIL
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,VICTORYDANCE,1,CLOSECOMBAT,1,LEAFBLADE,1,ICESPINNER
+Height = 1.2
+Weight = 19.2
+Category = Spinning
+Pokedex = They suspect that its well-developed legs are the result of a life spent on mountains covered in deep snow. The scent it exudes from its flower crown heartens those in proximity.
+Generation = 8
+#-------------------------------
+[BASCULIN,2]
+FormName = White-Striped
+Types = WATER
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,WAVECRASH,1,CRUNCH,1,HEADSMASH,1,PSYCHICFANGS
+Category = Mellow
+Pokedex = Though it differs from other Basculin in several respects, including demeanor—this one is gentle—people have categorized it as a regional form given the vast array of shared qualities.
+Generation = 8
+Flags = InheritFormWithEverStone
+#Evolutions = BASCULEGION,LevelRecoilDamage,294
+Evolutions = BASCULEGION,Level,31
+#-------------------------------
+[ZORUA,1]
+FormName = Hisuian
+Types = NORMAL,GHOST
+BaseStats = 35,60,40,70,85,40
+Abilities = TRACE
+HiddenAbilities = WIMPOUT,BERSERK,ILLUSION,OPPORTUNIST,SOULHEART
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,SHADOWBALL,1,FOCUSBLAST,1,GRASSKNOT,1,NASTYPLOT
+Color = White
+Category = Spiteful Fox
+Pokedex = A once-departed soul, returned to life in Hisui. Derives power from resentment, which rises as energy atop its head and takes on the forms of foes. In this way, Zorua vents lingering malice.
+Generation = 8
+Flags = InheritFormWithEverStone
+#-------------------------------
+[ZOROARK,1]
+FormName = Hisuian
+Types = NORMAL,GHOST
+BaseStats = 55,100,60,110,125,60
+Abilities = MOXIE
+HiddenAbilities = SNIPER,BERSERK,ILLUSION,OPPORTUNIST,INTIMIDATE
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,SHADOWBALL,1,FOCUSBLAST,1,GRASSKNOT,1,NASTYPLOT
+Weight = 73.0
+Category = Baneful Fox
+Pokedex = With its disheveled white fur, it looks like an embodiment of death. Heedless of its own safety, Zoroark attacks its nemeses with a bitter energy so intense, it lacerates Zoroark's own body.
+Generation = 8
+Flags = InheritFormWithEverStone
+#-------------------------------
+[BRAVIARY,1]
+FormName = Hisuian
+Types = FLYING,PSYCHIC
+BaseStats = 110,83,70,65,112,70
+Abilities = TINTEDLENS
+HiddenAbilities = WINDRIDER,COMPETITIVE,SHEERFORCE,GALEWINGS,HUGEPOWER
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,PSYCHIC,1,HURRICANE,1,HEATWAVE,1,AGILITY
+Height = 1.7
+Weight = 43.4
+Color = White
+Category = Battle Cry
+Pokedex = Screaming a bloodcurdling battle cry, this huge and ferocious bird Pokémon goes out on the hunt. It blasts lakes with shock waves, then scoops up any prey that float to the water's surface.
+Generation = 8
+#-------------------------------
+[SLIGGOO,1]
+FormName = Hisuian
+Types = STEEL,DRAGON
+BaseStats = 58,75,83,40,83,113
+Abilities = REGENERATOR
+HiddenAbilities = SHELLARMOR,WATERBUBBLE,BULLETPROOF,FILTER,GOOEY
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,DRAGONPULSE,1,FLASHCANNON,1,FLAMETHROWER,1,ICEBEAM
+Height = 0.7
+Weight = 68.5
+Category = Snail
+Pokedex = A creature given to melancholy. I suspect its metallic shell developed as a result of the mucus on its skin reacting with the iron in Hisui's water.
+Generation = 8
+#-------------------------------
+[GOODRA,1]
+FormName = Hisuian
+Types = STEEL,DRAGON
+BaseStats = 80,100,100,60,110,150
+Abilities = REGENERATOR
+HiddenAbilities = SHELLARMOR,WATERBUBBLE,BULLETPROOF,FILTER,GOOEY
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,DRAGONPULSE,1,FLASHCANNON,1,FLAMETHROWER,1,ICEBEAM
+Height = 1.7
+Weight = 334.1
+Category = Shell Bunker
+Pokedex = Able to freely control the hardness of its metallic shell. It loathes solitude and is extremely clingy—it will fume and run riot if those dearest to it ever leave its side.
+Generation = 8
+#-------------------------------
+[AVALUGG,1]
+FormName = Hisuian
+Types = ROCK,ICE
+BaseStats = 95,127,184,38,34,36
+Abilities = STRONGJAW
+HiddenAbilities = REGENERATOR,SHEERFORCE,PURIFYINGSALT,BULLETPROOF,ICESCALES
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,MOUNTAINGALE,1,STONEEDGE,1,BODYPRESS,1,STEALTHROCK
+Height = 1.4
+Weight = 262.4
+Pokedex = The armor of ice covering its lower jaw puts steel to shame and can shatter rocks with ease. This Pokémon barrels along steep mountain paths, cleaving through the deep snow.
+Generation = 8
+#-------------------------------
+[DECIDUEYE,1]
+FormName = Hisuian
+Types = FIGHTING,GRASS
+BaseStats = 88,112,80,60,95,95
+Abilities = LONGREACH
+HiddenAbilities = BATTLEBOND,SCRAPPY,GALEWINGS,LEVITATE,WINDRIDER
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,TRIPLEARROWS,1,LEAFBLADE,1,UTURN,1,BRAVEBIRD
+Weight = 37.0
+Pokedex = The air stored inside the rachises of Decidueye's feathers insulates the Pokémon against Hisui's extreme cold. This is firm proof that evolution can be influenced by environment.
+Generation = 8
+#-------------------------------
+[URSALUNA,1]
+FormName = Bloodmoon Ursaluna
+BaseStats = 113,70,120,52,135,65
+Abilities = MINDSEYE
+HiddenAbilities = INTIMIDATE,DARKAURA,THICKFAT,BULLETPROOF,PICKUP
+Moves = 1,TACKLE,1,LEER,1,HIDDENPOWER,1,SECRETPOWER,1,BLOODMOON,1,EARTHPOWER,1,CALMMIND,1,MOONLIGHT
+Height = 2.7
+Weight = 333.0
+Generation = 9
+#-------------------------------
+[BASCULEGION,1]
+FormName = Female
+BaseStats = 120,92,65,78,100,75
+Flags = DefaultForm_2,InheritFormWithEverStone
+#-------------------------------
+[ENAMORUS,1]
+FormName = Therian Form
+BaseStats = 74,115,110,46,135,100
+Abilities = DELTASTREAM
+HiddenAbilities = MULTISCALE,CONTRARY,WINDRIDER,QUEENLYMAJESTY,CUTECHARM
+Shape = Quadruped
+Pokedex = A different guise from its feminine humanoid form. From the clouds, it descends upon those who treat any form of life with disrespect and metes out wrathful, ruthless punishment.
+#-------------------------------
+[OINKOLOGNE,1]
+FormName = Female
+BaseStats = 115,90,70,65,59,90
+Pokedex = This is a meticulous Pokémon that likes to keep things tidy. It shrouds itself in a floral aroma that soothes the Pokémon around it.
+#-------------------------------
+[DUDUNSPARCE,1]
+FormName = Three-Segment Form
+Height = 4.5
+Weight = 47.4
+#-------------------------------
+[PALAFIN,1]
+FormName = Hero Form
+BaseStats = 100,160,97,100,106,87
+BaseExp = 228
+Height = 1.8
+Weight = 97.4
+Category = Hero
+#-------------------------------
+[MAUSHOLD,1]
+FormName = Family of Three
+Weight = 2.3
+#-------------------------------
+[REVAVROOM,1]
+Types = STEEL,FIRE
+Abilities = SPEEDBOOST
+HiddenAbilities = STAMINA,INTIMIDATE,FLAMEBODY,FLASHFIRE,DROUGHT
+CallRateSOS = 0
+#-------------------------------
+[REVAVROOM,2]
+Types = STEEL,FAIRY
+Abilities = SPEEDBOOST
+HiddenAbilities = STAMINA,INTIMIDATE,MISTYSURGE,FLASHFIRE,CUTECHARM
+CallRateSOS = 0
+#-------------------------------
+[REVAVROOM,3]
+Types = STEEL,FIGHTING
+Abilities = SPEEDBOOST
+HiddenAbilities = STAMINA,INTIMIDATE,ADAPTABILITY,FLASHFIRE,INNERFOCUS
+CallRateSOS = 0
+#-------------------------------
+[REVAVROOM,4]
+Types = STEEL,PSYCHIC
+Abilities = SPEEDBOOST
+HiddenAbilities = STAMINA,INTIMIDATE,PSYCHICSURGE,FLASHFIRE,TELEPATHY
+CallRateSOS = 0
+#-------------------------------
+[REVAVROOM,5]
+Types = STEEL,DARK
+Abilities = SPEEDBOOST
+HiddenAbilities = STAMINA,INTIMIDATE,MOXIE,FLASHFIRE,PRANKSTER
+CallRateSOS = 0
+#-------------------------------
+[TATSUGIRI,1]
+FormName = Droopy Form
+Color = Red
+Pokedex = This species’ differing colors and patterns are apparently the result of Tatsugiri changing itself to suit the preferences of the prey it lures in.
+#-------------------------------
+[TATSUGIRI,2]
+FormName = Stretchy Form
+Color = Yellow
+Pokedex = Bird Pokémon are its main prey. This Pokémon knows it’s weak, so it hunts with a partner.
+#-------------------------------
+[SQUAWKABILLY,1]
+FormName = Blue Plumage
+Color = Blue
+Pokedex = Blue-feathered Squawkabilly view their green- feathered counterparts as rivals, since the latter make up the largest, most powerful groups.
+#-------------------------------
+[SQUAWKABILLY,2]
+FormName = Yellow Plumage
+Color = Yellow
+Pokedex = The yellow Squawkabilly are especially fierce. They've even been known to drive other bird Pokémon out of town.
+#-------------------------------
+[SQUAWKABILLY,3]
+FormName = White Plumage
+Color = White
+Pokedex = Though these Squawkabilly are the fewest in number, they have no trouble living in towns since they blend in with the white buildings.
+#-------------------------------
+[GIMMIGHOUL,1]
+FormName = Roaming Form
+Height = 0.1
+Weight = 0.1
+Color = Blue
+Shape = Bipedal
+Category = Coin Hunter
+Pokedex = This Pokémon was born from passion that seeped into a coin. It wanders, apparently seeking to return to the treasure chest it once inhabited.
+Evolutions = GHOLDENGO,None,
+#-------------------------------
+[POLTCHAGEIST,1]
+FormName = Artisan Form
+Pokedex = It sprinkles some of its powdery body onto food and drains the life-force from those who so much as lick it.
+Evolutions = SINISTCHA,Item,MASTERPIECETEACUP
+#-------------------------------
+[SINISTCHA,1]
+FormName = Masterpiece Form
+Pokedex = It lives inside a superb teacup that was crafted by a potter of great renown. Collectors positively adore this Pokémon.
+#-------------------------------
+[OGERPON,1]
+FormName = Wellspring Mask
+Types = WATER,GRASS
+Abilities = WATERABSORB
+HiddenAbilities = LONGREACH,PRANKSTER,WATERVEIL,DRIZZLE,DAMP
+Color = Blue
+Pokedex = This form excels in both attack and defense. It ceaselessly unleashes moves like a spring gushes water.
+Flags = Legendary,TeraType_WATER
+#-------------------------------
+[OGERPON,2]
+FormName = Hearthflame Mask
+Types = FIRE,GRASS
+Abilities = MOLDBREAKER
+HiddenAbilities = LONGREACH,PRANKSTER,FLASHFIRE,DROUGHT,SOLARPOWER
+Color = Red
+Pokedex = This form is the most aggressive, bombarding enemies with the intensity of flames blazing within a hearth.
+Flags = Legendary,TeraType_FIRE
+#-------------------------------
+[OGERPON,3]
+FormName = Cornerstone Mask
+Types = ROCK,GRASS
+Abilities = STURDY
+HiddenAbilities = LONGREACH,PRANKSTER,SOLIDROCK,SANDSTREAM,ROCKHEAD
+Color = Gray
+Pokedex = This form has excellent defenses, absorbing impacts solidly like the cornerstones that support houses.
+Flags = Legendary,TeraType_ROCK
+#-------------------------------
+[OGERPON,4]
+PokedexForm = 0
+Flags = Legendary,TeraType_GRASS
+#-------------------------------
+[OGERPON,5]
+FormName = Wellspring Mask
+PokedexForm = 1
+Types = GRASS,WATER
+Abilities = WATERABSORB
+HiddenAbilities = LONGREACH,PRANKSTER,WATERVEIL,HYDRATION,DAMP
+Color = Blue
+Flags = Legendary,TeraType_WATER
+#-------------------------------
+[OGERPON,6]
+FormName = Hearthflame Mask
+PokedexForm = 2
+Types = GRASS,FIRE
+Abilities = MOLDBREAKER
+HiddenAbilities = LONGREACH,PRANKSTER,FLASHFIRE,DROUGHT,SOLARPOWER
+Color = Red
+Flags = Legendary,TeraType_FIRE
+#-------------------------------
+[OGERPON,7]
+FormName = Cornerstone Mask
+PokedexForm = 3
+Types = GRASS,ROCK
+Abilities = STURDY
+HiddenAbilities = LONGREACH,PRANKSTER,SOLIDROCK,SANDSTREAM,ROCKHEAD
+Color = Gray
+Flags = Legendary,TeraType_ROCK
+#-------------------------------
+[OGERPON,8]
+FormName = Terastal Teal Mask
+Abilities = EMBODYASPECT
+Flags = Legendary,CannotDynamax,TeraType_GRASS
+#-------------------------------
+[OGERPON,9]
+FormName = Terastal Wellspring Mask
+Types = GRASS,WATER
+Abilities = EMBODYASPECT_1
+Color = Blue
+Flags = Legendary,TeraType_WATER,CannotDynamax
+#-------------------------------
+[OGERPON,10]
+FormName = Terastal Hearthflame Mask
+Types = GRASS,FIRE
+Abilities = EMBODYASPECT_2
+Color = Red
+Flags = Legendary,TeraType_FIRE,CannotDynamax
+#-------------------------------
+[OGERPON,11]
+FormName = Terastal Cornerstone Mask
+Types = GRASS,ROCK
+Abilities = EMBODYASPECT_3
+Color = Gray
+Flags = Legendary,TeraType_ROCK,CannotDynamax
+#-------------------------------
+[TERAPAGOS,1]
+FormName = Terastal Form
+BaseStats = 95,95,110,85,105,110
+Abilities = TERASHELL
+Height = 0.3
+Weight = 16.0
+Shape = Head
+Pokedex = The shell is made of crystallized Terastal energy. When struck by a move, this shell absorbs the move’s energy and transfers it to Terapagos.
+Flags = Legendary,TeraType_STELLAR
+#-------------------------------
+[TERAPAGOS,2]
+FormName = Stellar Form
+BaseStats = 160,105,110,85,130,110
+Abilities = TERAFORMZERO
+Height = 1.7
+Weight = 77.0
+Shape = Head
+Pokedex = In this form, Terapagos resembles the world as the ancients saw it, and its Terastal energy is abnormally amplified.
+Flags = Legendary,TeraType_STELLAR,CannotDynamax

@@ -1,0 +1,465 @@
+#-------------------------------
+[VENUSAUR,3]
+FormName = Giga Venusaur
+MegaStone = GIGANTAITE
+BaseStats = 80,122,123,40,130,130
+BaseExp = 313
+Abilities = LONGREACH # OVERGROW
+HiddenAbilities = LONGREACH # OVERGROW
+Height = 24.0
+Weight = 9999.9
+Pokedex = In battle, this Pokémon swings around two thick vines. If these vines slammed into a 10-story building, they could easily topple it.
+Generation = 8
+#-------------------------------
+[CHARIZARD,4]
+FormName = Giga Charizard
+MegaStone = GIGANTAITE
+Types = DRAGON,FIRE
+BaseStats = 78,109,103,50,159,135
+BaseExp = 317
+Abilities = FLAMEBODY # BLAZE
+HiddenAbilities = FLAMEBODY # BLAZE
+Height = 28.0
+Weight = 9999.9
+Pokedex = This colossal, flame-winged figure of a Charizard was brought about by Gigantamax energy.
+Generation = 8
+#-------------------------------
+[BLASTOISE,3]
+FormName = Giga Blastoise
+MegaStone = GIGANTAITE
+BaseStats = 79,100,127,30,149,145
+BaseExp = 315
+Abilities = STAMINA # TORRENT
+HiddenAbilities = STAMINA # TORRENT
+Height = 25.0
+Weight = 9999.9
+Pokedex = Water fired from this Pokémon's central main cannon has enough power to blast a hole into a mountain.
+Generation = 8
+#-------------------------------
+[BUTTERFREE,2]
+FormName = Giga Butterfree
+MegaStone = GIGANTAITE
+Types = BUG,PSYCHIC
+BaseStats = 60,25,80,100,120,100
+BaseExp = 284
+Abilities = LEVITATE
+HiddenAbilities = LEVITATE
+Height = 17.0
+Weight = 9999.9
+Pokedex = Crystallized Gigantamax energy makes up this Pokémon's blindingly bright and toxic resistant scales.
+Generation = 8
+#-------------------------------
+[PIKACHU,18]
+FormName = Giga Pikachu
+MegaStone = GIGANTAITE
+BaseStats = 35,80,50,120,75,60
+BaseExp = 198
+Abilities = TRANSISTOR
+HiddenAbilities = TRANSISTOR
+Height = 21.0
+Weight = 9999.9
+Pokedex = When it smashes its opponents with its bolt-shaped tail, it delivers a surge of electricity equivalent to a lightning strike.
+Generation = 8
+#-------------------------------
+[MEOWTH,4]
+FormName = Giga Meowth
+MegaStone = GIGANTAITE
+BaseStats = 40,75,35,125,75,40
+BaseExp = 198
+Abilities = GOODASGOLD
+HiddenAbilities = GOODASGOLD
+Height = 33.0
+Weight = 9999.9
+Pokedex = The pattern that has appeared on its giant coin is thought to be the key to unlocking the secrets of the Dynamax phenomenon.
+Generation = 8
+#-------------------------------
+[MACHAMP,2]
+FormName = Giga Machamp
+MegaStone = GIGANTAITE
+BaseStats = 90,170,105,55,75,110
+BaseExp = 303
+Abilities = PARENTALBOND
+HiddenAbilities = PARENTALBOND
+Height = 25.0
+Weight = 9999.9
+Pokedex = The Gigantamax energy coursing through its arms makes its punches hit as hard as bomb blasts.
+Generation = 8
+#-------------------------------
+[GENGAR,3]
+FormName = Giga Gengar
+MegaStone = GIGANTAITE
+BaseStats = 60,170,95,130,65,80
+BaseExp = 300
+Abilities = EARTHEATER
+HiddenAbilities = EARTHEATER
+Height = 20.0
+Weight = 9999.9
+Pokedex = Rumor has it that its gigantic mouth leads not into its body, filled with cursed energy, but instead directly to the afterlife.
+Generation = 8
+#-------------------------------
+[KINGLER,2]
+FormName = Giga Kingler
+MegaStone = GIGANTAITE
+BaseStats = 55,170,135,100,30,85 # 575
+BaseExp = 232
+Abilities = TOUGHCLAWS
+HiddenAbilities = TOUGHCLAWS
+Height = 19.0
+Weight = 9999.9
+Pokedex = The flow of Gigantamax energy has spurred this Pokémon's left pincer to grow to an enormous size. That claw can pulverize anything.
+Generation = 8
+#-------------------------------
+[LAPRAS,2]
+FormName = Giga Lapras
+MegaStone = GIGANTAITE
+BaseStats = 130,105,110,50,125,115
+BaseExp = 274
+Abilities = ICESCALES
+HiddenAbilities = ICESCALES
+Height = 24.0
+Weight = 9999.9
+Pokedex = Over 5,000 people can ride on its shell at once. And it's a very comfortable ride, without the slightest shaking or swaying.
+Generation = 8
+#-------------------------------
+[EEVEE,3]
+FormName = Giga Eevee
+MegaStone = GIGANTAITE
+BaseStats = 55,75,70,75,65,85
+BaseExp = 130
+Abilities = SCRAPPY
+HiddenAbilities = SCRAPPY
+Height = 18.0
+Weight = 9999.9
+Pokedex = Having gotten even friendlier and more innocent, Eevee tries to play with anyone around, only to end up crushing them with its immense body.
+Generation = 8
+#-------------------------------
+[SNORLAX,2]
+FormName = Giga Snorlax
+MegaStone = GIGANTAITE
+Types = NORMAL,GRASS
+BaseStats = 160,130,75,30,85,160
+BaseExp = 278
+Abilities = COMATOSE
+HiddenAbilities = COMATOSE
+Height = 35.0
+Weight = 9999.9
+Pokedex = Terrifyingly strong, this Pokémon is the size of a mountain. And moves about as much as one as well.
+Generation = 8
+#-------------------------------
+[GARBODOR,2]
+FormName = Giga Garbodor
+MegaStone = GIGANTAITE
+Types = STEEL,POISON
+BaseStats = 80,110,117,55,105,107
+BaseExp = 232
+Abilities = STEELYSPIRIT
+HiddenAbilities = STEELYSPIRIT
+Height = 21.0
+Weight = 9999.9
+Pokedex = Due to Gigantamax energy, this Pokémon's toxic gas has become much thicker, congealing into masses shaped like discarded toys.
+Generation = 8
+#-------------------------------
+[GRENINJA,3]
+#FormName = Ash Greninja
+FormName = Greninja X
+MegaStone = MEGAITEX
+BaseStats = 72,145,67,132,143,71
+BaseExp = 330
+Abilities = BATTLEBOND
+HiddenAbilities = BATTLEBOND
+Height = 1.5
+Weight = 40.0
+Pokedex = The power of Mega Evolution has transformed Greninja. It is said to resemble a Pokémon Trainer who mastered the potential of trusting in a Pokémon's power.
+Generation = 7
+#-------------------------------
+[MARSHADOW,1]
+FormName = Zenith Marshadow
+MegaStone = MEGAITE
+BaseStats = 90,150,100,150,100,110
+BaseExp = 600
+Abilities = UNSEENFIST
+HiddenAbilities = UNSEENFIST
+Height = 0.7
+Weight = 22.2
+Pokedex = By slipping into the shadow of a martial arts master and copying their movements, this Pokémon learned the ultimate techniques.
+Generation = 7
+#-------------------------------
+[MELMETAL,2]
+FormName = Giga Melmetal
+MegaStone = GIGANTAITE
+BaseStats = 135,183,183,24,110,65
+BaseExp = 600
+Abilities = TRANSISTOR
+HiddenAbilities = TRANSISTOR
+Height = 25.0
+Weight = 9999.9
+Pokedex = In a distant land, there are legends about a cyclopean giant. In fact, the giant was a Melmetal that was flooded with Gigantamax energy.
+Generation = 8
+#-------------------------------
+[RILLABOOM,2]
+FormName = Giga Rillaboom
+MegaStone = GIGANTAITE
+BaseStats = 100,150,105,65,105,105
+BaseExp = 330
+Abilities = GRASSYSURGE
+HiddenAbilities = GRASSYSURGE
+Height = 28.0
+Weight = 9999.9
+Pokedex = Gigantamax energy has caused Rillaboom's stump to grow into a drum set that resembles a forest.
+Generation = 8
+#-------------------------------
+[CINDERACE,2]
+FormName = Giga Cinderace
+MegaStone = GIGANTAITE
+BaseStats = 80,145,90,140,95,80
+BaseExp = 330
+Abilities = QUICKFEET
+HiddenAbilities = QUICKFEET
+Height = 27.0
+Weight = 9999.9
+Pokedex = Infused with Cinderace's fighting spirit, the gigantic Pyro Ball never misses its targets and completely roasts opponents.
+Generation = 8
+#-------------------------------
+[INTELEON,2]
+FormName = Giga Inteleon
+MegaStone = GIGANTAITE
+BaseStats = 70,125,70,145,150,70
+BaseExp = 330
+Abilities = SUPERLUCK
+HiddenAbilities = SUPERLUCK
+Height = 40.0
+Weight = 9999.9
+Pokedex = Gigantamax Inteleon's Water Gun move fires at Mach 7. As the Pokémon takes aim, it uses the crest on its head to gauge wind and temperature.
+Generation = 8
+#-------------------------------
+[CORVIKNIGHT,2]
+FormName = Giga Corviknight
+MegaStone = GIGANTAITE
+BaseStats = 98,112,130,57,53,145 
+BaseExp = 330
+Abilities = MIRRORARMOR
+HiddenAbilities = MIRRORARMOR
+Height = 14.0
+Weight = 9999.9
+Pokedex = Imbued with Gigantamax energy, its wings can whip up winds more forceful than any a hurricane could muster. The gusts blow everything away.
+Generation = 8
+#-------------------------------
+[ORBEETLE,2]
+FormName = Giga Orbeetle
+MegaStone = GIGANTAITE
+BaseStats = 60,45,130,100,120,150
+BaseExp = 306
+Abilities = MAGICBOUNCE
+HiddenAbilities = MAGICBOUNCE
+Height = 14.0
+Weight = 9999.9
+Pokedex = If it were to utilize every last bit of its power, it could control the minds of every living being in its vicinity.
+Generation = 8
+#-------------------------------
+[DREDNAW,2]
+FormName = Giga Drednaw
+MegaStone = GIGANTAITE
+Types = DRAGON,WATER
+BaseStats = 90,145,120,84,68,78
+BaseExp = 240
+Abilities = ROCKYPAYLOAD
+HiddenAbilities = ROCKYPAYLOAD
+Height = 24.0
+Weight = 9999.9
+Pokedex = In the Galar region, there's a tale about this Pokémon chewing up a mountain and using the rubble to stop a flood. 
+Generation = 8
+#-------------------------------
+[COALOSSAL,2]
+FormName = Giga Coalossal
+MegaStone = GIGANTAITE
+BaseStats = 110,110,140,10,140,100
+BaseExp = 310
+Abilities = SANDSTREAM
+HiddenAbilities = SANDSTREAM
+Height = 42.0
+Weight = 9999.9
+Pokedex = When Galar was hit by a harsh cold winter, this Pokémon served as a giant heating stove and saved many lives.
+Generation = 8
+#-------------------------------
+[FLAPPLE,2]
+FormName = Giga Flapple
+MegaStone = GIGANTAITE
+BaseStats = 70,130,100,110,95,80
+BaseExp = 240
+Abilities = HUSTLE
+HiddenAbilities = HUSTLE
+Height = 24.0
+Weight = 9999.9
+Pokedex = If it stretches its neck, the strong aroma of its nectar pours out. The scent is so sickeningly sweet that one whiff makes other Pokémon faint.
+Generation = 8
+#-------------------------------
+[APPLETUN,2]
+FormName = Giga Appletun
+MegaStone = GIGANTAITE
+BaseStats = 110,85,125,30,110,125
+BaseExp = 240
+Abilities = THICKFAT
+HiddenAbilities = THICKFAT
+Height = 24.0
+Weight = 9999.9
+Pokedex = Due to Gigantamax energy, this Pokémon's nectar has thickened. The increased viscosity lets the nectar absorb more damage than before.
+Generation = 8
+#-------------------------------
+[SANDACONDA,2]
+FormName = Giga Sandaconda
+MegaStone = GIGANTAITE
+Types = FLYING,GROUND
+BaseStats = 72,142,135,106,70,85
+BaseExp = 240
+Abilities = SHEDSKIN
+HiddenAbilities = SHEDSKIN
+Height = 22.0
+Weight = 9999.9
+Pokedex = Its sand pouch has grown to tremendous proportions. More than 1,000,000 tons of sand now swirl around its body.
+Generation = 8
+#-------------------------------
+[TOXTRICITY,4]
+FormName = Toxtricity X
+MegaStone = MEGAITEX
+BaseStats = 75,82,90,121,144,90 
+BaseExp = 252
+Abilities = PUNKROCK
+HiddenAbilities = PUNKROCK
+Height = 24.0
+Weight = 9999.9
+Pokedex = Its excessive electric energy is its weapon. This Pokémon can build up more electricity than any thundercloud.
+Generation = 8
+#-------------------------------
+[TOXTRICITY,5]
+FormName = Toxtricity Y
+MegaStone = MEGAITEY
+BaseStats = 75,82,90,121,144,90 
+BaseExp = 252
+Abilities = SOUNDPROOF
+HiddenAbilities = SOUNDPROOF
+Height = 24.0
+Weight = 9999.9
+Pokedex = Its excessive electric energy is its weapon. This Pokémon can build up more electricity than any thundercloud.
+Generation = 8
+#-------------------------------
+[CENTISKORCH,2]
+FormName = Giga Centiskorch
+MegaStone = GIGANTAITE
+BaseStats = 100,165,90,105,75,90
+BaseExp = 268
+Abilities = PARENTALBOND
+HiddenAbilities = PARENTALBOND
+Height = 75.0
+Weight = 9999.9
+Pokedex = The heat that comes off a Gigantamax Centiskorch may destabilize air currents. Sometimes it can even cause storms.
+Generation = 8
+#-------------------------------
+[HATTERENE,2]
+FormName = Giga Hatterene
+MegaStone = GIGANTAITE
+BaseStats = 57,110,95,49,166,133
+BaseExp = 310
+Abilities = PARENTALBOND
+HiddenAbilities = PARENTALBOND
+Height = 26.0
+Weight = 9999.9
+Pokedex = This Pokémon can read the emotions of creatures over 30 miles away. The minute it senses hostility, it goes on the attack. Known to some as the Raging Goddess.
+Generation = 8
+#-------------------------------
+[GRIMMSNARL,2]
+FormName = Giga Grimmsnarl
+MegaStone = GIGANTAITE
+BaseStats = 95,135,75,85,110,105
+BaseExp = 310
+Abilities = TANGLINGHAIR
+HiddenAbilities = TANGLINGHAIR
+Height = 26.0
+Weight = 9999.9
+Pokedex = Gigantamax energy has caused more hair to sprout all over its body. With the added strength, it can jump over the world's tallest building.
+Generation = 8
+#-------------------------------
+[ALCREMIE,64]
+FormName = Giga Alcremie
+MegaStone = GIGANTAITE
+BaseStats = 65,80,80,84,140,146
+BaseExp = 246
+Abilities = WELLBAKEDBODY
+HiddenAbilities = WELLBAKEDBODY
+Height = 30.0
+Weight = 9999.9
+Pokedex = Cream pours endlessly from this Pokémon's body. The cream stiffens when compressed by an impact. A harder impact results in harder cream.
+Generation = 8
+#-------------------------------
+[COPPERAJAH,2]
+FormName = Giga Copperajah
+MegaStone = GIGANTAITE
+Types = WATER,STEEL
+BaseStats = 122,160,89,30,89,110
+BaseExp = 250
+Abilities = HEAVYMETAL
+HiddenAbilities = HEAVYMETAL
+Height = 23.0
+Weight = 9999.9
+Pokedex = So much power is packed within its trunk that if it were to unleash that power, the resulting blast could level mountains and change the landscape.
+Generation = 8
+#-------------------------------
+[DURALUDON,2]
+FormName = Giga Duraludon
+MegaStone = GIGANTAITE
+BaseStats = 70,155,135,90,110,75
+BaseExp = 274
+Abilities = LONGREACH
+HiddenAbilities = LONGREACH
+Height = 43.0
+Weight = 9999.9
+Pokedex = It's grown to resemble a skyscraper. Parts of its towering body glow due to a profusion of energy.
+Generation = 8
+#-------------------------------
+[ETERNATUS,2]
+FormName = Eternamax Eternatus
+MegaStone = GIGANTAITE
+BaseStats = 140,149,119,124,149,119
+BaseExp = 690
+Abilities = CORROSION
+HiddenAbilities = CORROSION
+Height = 100.0
+Weight = 9999.9
+Pokedex = Infinite amounts of energy pour from this Pokémon's enlarged core, warping the surrounding space-time.
+Generation = 8
+#-------------------------------
+[URSHIFU,4]
+FormName = Urshifu X
+MegaStone = MEGAITEX
+Types = FIGHTING,DARK
+BaseStats = 100,180,120,110,60,80
+BaseExp = 350
+Abilities = UNSEENFIST
+HiddenAbilities = UNSEENFIST
+Height = 26.0
+Weight = 9999.9
+Pokedex = People call it the embodiment of rage. It's said that this Pokémon's terrifying expression and shout will rid the world of malevolence.
+Generation = 8
+#-------------------------------
+[URSHIFU,5]
+FormName = Urshifu Y
+MegaStone = MEGAITEY
+Types = FIGHTING,WATER
+BaseStats = 100,100,105,180,60,105 
+BaseExp = 350
+Abilities = TECHNICIAN
+HiddenAbilities = TECHNICIAN
+Height = 29.0
+Weight = 9999.9
+Pokedex = As it waits for the right moment to unleash its Gigantamax power, this Pokémon maintains a perfect one-legged stance. It won't even twitch.
+Generation = 8
+#-------------------------------
+[ZARUDE,1]
+FormName = Dada Zarude
+MegaStone = MEGAITE
+BaseStats = 105,130,105,135,130,95
+BaseExp = 600
+Abilities = BATTLEBOND
+HiddenAbilities = BATTLEBOND
+Pokedex = Zarude's strength has surged from Mega Evolution's energy forming a cloth, that has the same scent as an orphaned human child that the Pokémon has raised since the child's infancy.
+Generation = 8
+#-------------------------------

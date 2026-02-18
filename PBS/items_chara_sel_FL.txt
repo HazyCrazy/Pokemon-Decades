@@ -1,0 +1,10 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[PORTABLEWARDROBE]
+Name = Portable Wardrobe
+NamePlural = Portable Wardrobes
+Pocket = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A fully sized wardrobe that lets a trainer freely change their appearance.

@@ -1,0 +1,27 @@
+Debug mode can be enabled without the use of RPG Maker Xp 
+by passing the command line argument "debug" 
+
+How to pass the "debug" command line to the game 
+
+1. Right click on Game.exe (On Windows 10, select Show More Options)
+2. Create a Shortcut
+3. Rename the Shortcut to Game.exe - Debug Mode
+4. Right click on Game.exe - Debug Mode and select Properties (On Windows 10, select Show More Options)
+5. In Target, add debug at the end of the path like this:
+6. "C:\My Path\SYGE 2.0.0\Game.exe" debug
+
+When using the Debug Mode Shortcut, you must hold down the CTRL button to force the game to compile.
+Hold down the left or right CTRL key when Pokemon Essentials V21.1 window is visible. The window must be in focus.
+
+Super Shiny Hue Editing
+
+1. Press Z to open the pause menu 
+2. Choose Debug
+3. Choose PSB file editor...
+4. Choose Edit pokemon_metrics.txt (When editing PBS files, make sure you don't have Notepad or other Text editor apps open when editing them within Essentials)
+5. In the Metrics Editor, choose a Pokemon or press Z to search a Pokemon's name
+6. Choose Set Super Shiny Hue 
+7. Set the value to whatever you like. Left subtracts by 10, Right adds by 10, Up adds by 1, Down subtracts by 1
+8. Press X to exit out of a chosen option. 
+9. When happy with your changes, keep pressing X to exit out of the metrics menu. 
+10. On Save Changes, choose yes to apply your edits.

@@ -1,0 +1,13 @@
+﻿Name       = Independent Hidden Power Type
+Version    = 1.0
+Essentials = 21.1
+Optional   = BW Summary Screen,1.0
+Optional   = Enhanced UI,1.0
+Website    = https://eeveeexpo.com/resources/1235/
+Credits    = DemICE
+#====================================================================
+# Change log
+#====================================================================
+#
+# 1.0.0:
+# - Plugin Creation

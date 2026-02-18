@@ -1,0 +1,32 @@
+Name       = Level Based Mixed EV System and Allocator
+Version    = 1.0.5
+Essentials = 21.1
+Optional   = Generation 9 Pack,1.0
+Optional   = Essentials Deluxe,1.0
+Optional   = Enhanced UI,1.1.1
+Optional   = EVs and IVs in Summary v20,1.0
+Optional   = BW Summary Screen,1.0
+Website    = https://eeveeexpo.com/resources/1241/
+Credits    = DemICE, grogro(v21.1 compatibility edits)
+#-v1.0.5
+# An Essentials v21.1 version is now available.
+# Fixed not being able to swap moves if not using the BW Summary Screen.
+#
+#-v1.0.4
+#------
+# Fixes the pbDisplayIVRatings error for games that don't have the Enhanced UI plugin
+#
+#-v1.0.3
+#------
+# BW Summary: the SHOW_EV_IV and SHOW_IV_RATINGS now behave independently. 
+# SHOW_EV_IV turning off will only disable IVs visibility. 
+# An edited BW summary graphics image for the invisible IVs is included
+#
+#-v1.0.2
+#------
+# Made the plugin compatible with the new Enhanced UI update
+# Incorporated a general improvement for the summary options from the Enhanced UI (which also doubles as a compatibility change)
+#
+#-v1.0.1
+#------
+# Fixed an important dumb error that was breaking battles when trying to switch.
