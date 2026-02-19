@@ -183,6 +183,164 @@ module AdvancedAI
         threat += 0.4  # Rock-type boost
       end
       
+      # === RUIN ABILITIES (Gen 9 Treasures of Ruin) ===
+      # These passively weaken ALL other Pokemon on the field
+      if ability == :SWORDOFRUIN
+        # -25% Defense to all others — Chien-Pao meta, extreme physical threat
+        threat += 1.0
+      end
+      
+      if ability == :BEADSOFRUIN
+        # -25% SpDef to all others — Chi-Yu meta, extreme special threat
+        threat += 1.0
+      end
+      
+      if ability == :TABLETSOFRUIN
+        # -25% Attack to all others — reduces OUR physical damage
+        threat += 0.5  # Defensive for them, threat to us
+      end
+      
+      if ability == :VESSELOFRUIN
+        # -25% SpAtk to all others — reduces OUR special damage
+        threat += 0.5  # Defensive for them, threat to us
+      end
+      
+      # === ICE SCALES (Frosmoth) ===
+      if ability == :ICESCALES
+        # Halves special damage taken — extremely tanky vs special attackers
+        if attacker.spatk > attacker.attack
+          threat += 0.6  # Our special attacks are halved
+        else
+          threat += 0.2
+        end
+      end
+      
+      # === STAMINA (Mudsdale, Archaludon) ===
+      if ability == :STAMINA
+        # +1 Defense when hit — gets tankier every time we attack
+        threat += 0.4
+      end
+      
+      # === WEAK ARMOR ===
+      if ability == :WEAKARMOR
+        # Physical hit: -1 Def, +2 Speed — risky but fast
+        threat += 0.3
+      end
+      
+      # === ANGER SHELL (Klawf) ===
+      if ability == :ANGERSHELL
+        # Below 50% HP: +1 Atk/SpAtk/Speed, -1 Def/SpDef
+        hp_percent = opponent.hp.to_f / opponent.totalhp
+        if hp_percent > 0.5
+          threat += 0.5  # Could activate if we hit them
+        else
+          threat += 0.3  # Already activated
+        end
+      end
+      
+      # === ELECTROMORPHOSIS (Bellibolt) ===
+      if ability == :ELECTROMORPHOSIS
+        # When hit, gains Charge effect (2x next Electric move)
+        threat += 0.3
+      end
+      
+      # === WIND POWER (Wattrel, Kilowattrel) ===
+      if ability == :WINDPOWER
+        # When hit by wind move, gains Charge effect
+        threat += 0.2
+      end
+      
+      # === TOXIC BOOST (Zangoose line) ===
+      if ability == :TOXICBOOST
+        # 1.5x physical power when poisoned
+        if opponent.poisoned?
+          threat += 0.8  # Active — scary physical threat
+        else
+          threat += 0.3
+        end
+      end
+      
+      # === FLARE BOOST (Drifblim) ===
+      if ability == :FLAREBOOST
+        # 1.5x special power when burned
+        if opponent.burned?
+          threat += 0.8  # Active — scary special threat
+        else
+          threat += 0.3
+        end
+      end
+      
+      # === COTTON DOWN (Eldegoss) ===
+      if ability == :COTTONDOWN
+        # When hit: -1 Speed to all other Pokemon on field
+        threat += 0.2
+      end
+      
+      # === ZERO TO HERO (Palafin) ===
+      if ability == :ZEROTOHERO
+        # After switching in once, becomes Hero form (massive stat boost)
+        if opponent.respond_to?(:form) && opponent.form == 1
+          threat += 1.5  # Hero form Palafin is extremely dangerous
+        else
+          threat += 0.3  # Not yet transformed
+        end
+      end
+      
+      # === DLC LEGENDARY ABILITIES ===
+      if ability == :SUPERSWEETSYRUP
+        # Lowers evasion of all opponents on entry
+        threat += 0.3
+      end
+      
+      if ability == :POISONPUPPETEER
+        # Pecharunt: Poisoned targets also become confused
+        threat += 0.6
+      end
+      
+      if ability == :EMBODYASPECT
+        # Ogerpon: +1 to a stat on entry (form-dependent)
+        threat += 0.5
+      end
+      
+      if ability == :TERASHELL
+        # Terapagos: All hits become NVE at full HP
+        if opponent.hp == opponent.totalhp
+          threat += 0.8  # Extremely tanky at full HP
+        end
+      end
+      
+      if ability == :TERAFORMZERO
+        # Terapagos Stellar: Removes weather and terrain
+        threat += 0.4
+      end
+      
+      if ability == :TERASHIFT
+        # Terapagos: Auto-transforms to Terastal form
+        threat += 0.3
+      end
+      
+      # === AS ONE (Calyrex - Glastrier/Spectrier) ===
+      if ability == :ASONEGLASTRIER
+        # Unnerve + Chilling Neigh: +1 Atk on KO + suppresses berries
+        threat += 1.2
+      end
+      if ability == :ASONESPECTRIER
+        # Unnerve + Grim Neigh: +1 SpAtk on KO + suppresses berries
+        threat += 1.2
+      end
+      
+      # === SEED SOWER (Arboliva) ===
+      if ability == :SEEDSOWER
+        # Sets Grassy Terrain when hit - terrain control + passive healing
+        threat += 0.4
+      end
+      
+      # === MIND'S EYE (Gen 9) ===
+      if ability == :MINDSEYE
+        # Ignore evasion + hit Ghost with Normal/Fighting (Scrappy on steroids)
+        threat += 0.5
+      end
+      
       # Priority Abilities
       if [:GALEWINGS, :PRANKSTER, :QUICKDRAW].include?(ability)
         threat += 0.6
@@ -232,7 +390,7 @@ module AdvancedAI
         threat += 0.2
       end
       
-      return [threat, 2.0].min  # Raised cap for all the new abilities
+      return [threat, 3.0].min  # Raised cap for all the new abilities (Ruin can exceed 2.0)
     end
     
     # HP Modifier

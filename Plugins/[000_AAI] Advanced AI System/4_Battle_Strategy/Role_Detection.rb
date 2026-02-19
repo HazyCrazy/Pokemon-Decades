@@ -9,6 +9,7 @@ module AdvancedAI
     ROLES = {
       :sweeper     => "Fast offensive Pokemon (Speed 100+, Atk/SpAtk 100+)",
       :wall        => "Defensive Pokemon (HP/Def/SpDef 100+, Speed <70)",
+      :stall       => "Defensive Pokemon with stall moveset (Toxic/Protect/Recovery)",
       :tank        => "Bulky offensive (HP 90+, Atk/SpAtk 100+)",
       :support     => "Support moves (Screens, Hazards, Status)",
       :wallbreaker => "High power breaker (Atk/SpAtk 120+)",
@@ -41,6 +42,19 @@ module AdvancedAI
       defensive_total = stats[:hp] + stats[:defense] + stats[:spdef]
       if defensive_total >= 300 && stats[:speed] < 70
         roles << :wall
+      end
+      
+      # === STALL ===
+      # Stall is a Wall with stall-specific moveset (Toxic/Protect/Recovery combos)
+      if AdvancedAI::MoveCategories.has_stall_moveset?(battler)
+        # Prioritize :stall over :wall if they have the right moves
+        if roles.include?(:wall)
+          roles.delete(:wall)
+          roles.unshift(:stall)  # Stall becomes primary role
+        else
+          # Can be a stall mon even without pure wall stats (e.g., Toxapex)
+          roles << :stall
+        end
       end
       
       # === TANK ===
@@ -105,20 +119,24 @@ module AdvancedAI
       # Analyze opponent role
       opp_role, _ = detect_roles(opponent)
       
-      # Counter-Pick
+      # Counter-Pick: each role has a natural counter
       case opp_role
       when :sweeper
-        return :wall  # Wall stops Sweeper
-      when :wall
-        return :wallbreaker  # Wallbreaker breaks Wall
+        return :wall           # Wall stops Sweeper
+      when :wall, :stall
+        return :wallbreaker    # Wallbreaker breaks Wall/Stall
       when :wallbreaker
-        return :sweeper  # Outspeed Wallbreaker
+        return :sweeper        # Outspeed Wallbreaker
       when :support
-        return :sweeper  # Pressure Support
+        return :lead           # Lead (Taunt/Hazards) shuts down Support
       when :tank
-        return :wallbreaker  # Break Tank
+        return :wallbreaker    # Break through Tank's bulk
+      when :pivot
+        return :tank           # Tank facetanks pivots and doesn't mind chip
+      when :lead
+        return :lead           # Mirror lead: Taunt their hazards
       else
-        return :balanced
+        return :sweeper        # Default: bring offense
       end
     end
     
@@ -170,7 +188,7 @@ module AdvancedAI
       when :sweeper
         score += pkmn.speed / 2
         score += [pkmn.attack, pkmn.spatk].max / 2
-      when :wall
+      when :wall, :stall
         score += pkmn.totalhp / 3
         score += pkmn.defense / 3
         score += pkmn.spdef / 3
@@ -181,10 +199,17 @@ module AdvancedAI
         score += [pkmn.attack, pkmn.spatk].max / 2
       when :support
         score += 100 if has_support_moves?(pkmn)
+        score += pkmn.totalhp / 4  # Bulk helps supports survive to do their job
       when :pivot
         score += 100 if has_pivot_moves?(pkmn)
+        score += pkmn.speed / 3    # Speed matters for momentum
       when :lead
         score += 100 if has_lead_moves?(pkmn)
+        score += pkmn.speed / 3    # Fast leads set up first
+      when :balanced
+        # Balanced mons are generalists — rate by overall stat total
+        score += (pkmn.totalhp + pkmn.attack + pkmn.defense +
+                  pkmn.spatk + pkmn.spdef + pkmn.speed) / 10
       end
       
       score
@@ -211,41 +236,33 @@ module AdvancedAI
   end
 end
 
-# Integration in Switch Intelligence
+# Integration in Switch Intelligence — Role Counter-Pick Bonus
+# Used by find_best_switch_advanced to boost candidates that counter the opponent's role.
 class Battle::AI
-  def evaluate_switch_with_roles(user, opponent, skill_level)
-    return [] unless skill_level >= 55
+  # Returns a score bonus (0-30) for how well a bench Pokemon counters the opponent
+  def role_counter_pick_bonus(pkmn, user, skill_level)
+    return 0 unless skill_level >= 55
     
-    # Analyze Situation
-    situation = analyze_situation(user, opponent)
+    opponent = @battle.allOtherSideBattlers(get_battler_index(user)).find { |b| b && !b.fainted? }
+    return 0 unless opponent
+    
     recommended_role = AdvancedAI.recommend_role_for_situation(@battle, user.index, opponent, skill_level)
+    return 0 unless recommended_role
     
-    # Find Pokemon with recommended role
-    best_index = AdvancedAI.best_for_role(@battle, user.index, recommended_role)
+    # Check if this bench Pokemon fills the recommended role
+    pkmn_role, pkmn_secondary = AdvancedAI.detect_roles(pkmn)
     
-    AdvancedAI.log("Recommended role: #{recommended_role} for situation vs #{opponent.pbThis}", "Role")
-    
-    best_index ? [best_index, 100] : []
-  end
-  
-  private
-  
-  def analyze_situation(user, opponent)
-    {
-      hp_disadvantage: user.hp < user.totalhp * 0.5,
-      type_disadvantage: type_disadvantage?(user, opponent),
-      speed_disadvantage: opponent.pbSpeed > user.pbSpeed,
-      threat_level: AdvancedAI.assess_threat(@battle, user, opponent, 100)
-    }
-  end
-  
-  def type_disadvantage?(user, opponent)
-    opponent.moves.any? do |move|
-      next false unless move && move.damagingMove?
-      type_mod = Effectiveness.calculate(move.type, user.pbTypes[0], user.pbTypes[1])
-      Effectiveness.super_effective?(type_mod)
+    bonus = 0
+    if pkmn_role == recommended_role
+      bonus += 25  # Perfect counter-pick
+    elsif pkmn_secondary == recommended_role
+      bonus += 15  # Secondary role matches
     end
+    
+    AdvancedAI.log("Role counter-pick: #{pkmn.name} (#{pkmn_role}) vs recommended #{recommended_role} → +#{bonus}", "Role") if bonus > 0
+    
+    return bonus
   end
 end
 
-AdvancedAI.log("Role Detection System loaded (7 roles)", "Role")
+AdvancedAI.log("Role Detection System loaded (9 roles)", "Role")

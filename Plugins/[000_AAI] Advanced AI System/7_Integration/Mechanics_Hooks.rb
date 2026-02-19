@@ -74,7 +74,8 @@ class Battle::AI
     
     return unless AdvancedAI.qualifies_for_advanced_ai?(skill)
     
-    AdvancedAI.log("Qualified for Advanced AI - checking gimmicks for #{@user.name}", "Hooks")
+    battler = @battle.battlers[idxBattler]
+    AdvancedAI.log("Qualified for Advanced AI - checking gimmicks for #{battler.name}", "Hooks")
     
     # 3. Decision Pipeline
     # Priority: Mega > Z-Move > Dynamax > Tera

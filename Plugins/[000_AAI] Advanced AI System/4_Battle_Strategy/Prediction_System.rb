@@ -27,8 +27,8 @@ module AdvancedAI
       user = battle.battlers[(opponent.index + 2) % 4]  # Opposite battler
       if user
         memory = AdvancedAI.get_memory(battle, user)
-        if memory && memory[:moves_seen]
-          memory[:moves_seen].each do |move_id|
+        if memory && memory[:moves]
+          memory[:moves].each do |move_id|
             move = GameData::Move.try_get(move_id)
             next if !move
             
@@ -195,7 +195,7 @@ module AdvancedAI
       
       # 2. Resistance against predicted Move (+25)
       if move.category != :Status
-        effectiveness = Effectiveness.calculate(predicted_move_data.type, user.type1, user.type2)
+        effectiveness = AdvancedAI::Utilities.type_mod(predicted_move_data.type, user)
         if Effectiveness.not_very_effective?(effectiveness) || Effectiveness.ineffective?(effectiveness)
           bonus += 25
         end
@@ -333,8 +333,9 @@ module AdvancedAI
       attack = move.physicalMove? ? attacker.attack : attacker.spatk
       defense = move.physicalMove? ? defender.defense : defender.spdef
       
-      effectiveness = Effectiveness.calculate(move.type, defender.type1, defender.type2)
-      multiplier = Effectiveness.calculate_multiplier(effectiveness)
+      effectiveness = AdvancedAI::Utilities.type_mod(move.type, defender)
+      # Effectiveness.calculate already returns the multiplier directly
+      multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER.to_f
       
       damage = ((2 * attacker.level / 5 + 2) * move.power * attack / defense / 50 + 2) * multiplier
       return damage.to_i
@@ -373,5 +374,33 @@ module AdvancedAI
   
   def self.should_double_switch?(battle, user, predicted_switch)
     PredictionSystem.should_double_switch?(battle, user, predicted_switch)
+  end
+end
+
+#===============================================================================
+# Integration in Battle::AI - Wires prediction logic into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_prediction_logic(score, move, user, target)
+    return score unless move && target
+    skill = @trainer&.skill || 100
+    
+    # Predict opponent's next move
+    predicted_move = AdvancedAI.predict_next_move(@battle, target)
+    if predicted_move
+      bonus = AdvancedAI.score_prediction_bonus(@battle, user, target, move, predicted_move)
+      score += bonus if bonus && bonus > 0
+    end
+    
+    # If opponent likely to switch, boost pursuit/pivot moves
+    switch_chance = AdvancedAI.predict_switch_chance(@battle, target)
+    if switch_chance && switch_chance > 0.5
+      # Pivot moves are great when opponent is about to switch
+      score += 15 if AdvancedAI.pivot_move?(move.id)
+      # Pursuit-like trapping
+      score += 20 if move.id == :PURSUIT
+    end
+    
+    return score
   end
 end

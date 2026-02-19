@@ -24,7 +24,7 @@ module AdvancedAI
   DEBUG_SWITCH_INTELLIGENCE = false
   
   # Show move explanations in battle text (e.g., "Thunder Wave (Paralyze fast threat)")
-  SHOW_MOVE_EXPLANATIONS = false
+  SHOW_MOVE_EXPLANATIONS = false#true
   
   # Logging options
   LOG_TO_CONSOLE = false  # Print logs to console window
@@ -35,7 +35,7 @@ module AdvancedAI
   # ============================================================================
   
   # Enable smart AI for wild Pokemon (uses move scoring instead of random selection)
-  ENABLE_WILD_POKEMON_AI = false
+  ENABLE_WILD_POKEMON_AI = false#true
   
   # Skill level for wild Pokemon when AI is enabled (0-100)
   # 0     = Random moves (vanilla behavior)
@@ -214,7 +214,9 @@ module AdvancedAI
   def self.log(message, source = "AAI")
     return unless DEBUG_MODE || LOG_TO_CONSOLE || LOG_TO_FILE
     
-    formatted = "[#{source}] #{message}"
+    # Escape % characters to prevent printf formatting issues
+    safe_message = message.to_s.gsub('%', '%%')
+    formatted = "[#{source}] #{safe_message}"
     
     # Console output
     if DEBUG_MODE || LOG_TO_CONSOLE
@@ -340,14 +342,6 @@ module AdvancedAI
     else
       return false
     end
-  end
-  
-  # Debug logging
-  def self.log(message, category = "AI")
-    return unless DEBUG_MODE
-    # Escape % characters to prevent printf formatting issues
-    safe_message = message.to_s.gsub('%', '%%')
-    Console.echoln_li("[#{category}] #{safe_message}")
   end
 end
 

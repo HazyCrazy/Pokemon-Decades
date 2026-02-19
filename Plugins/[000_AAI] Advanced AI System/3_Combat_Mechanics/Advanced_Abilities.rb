@@ -11,6 +11,8 @@ module AdvancedAI
     :SOULDEVOURING => 1.8,  # +1 all stats on KO (custom)
     :CHILLINGNEIGH => 1.7,  # +1 Atk on KO (Ice)
     :GRIMNEIGH     => 1.7,  # +1 SpAtk on KO (Dark)
+    :ASONEGLASTRIER => 1.9, # Unnerve + Chilling Neigh (+1 Atk on KO)
+    :ASONESPECTRIER => 1.9, # Unnerve + Grim Neigh (+1 SpAtk on KO)
   }
   
   SPEED_SHIFT_ABILITIES = {

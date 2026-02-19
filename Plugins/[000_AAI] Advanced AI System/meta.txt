@@ -1,5 +1,5 @@
 Name         = Advanced AI System
-Version      = 2.0.3
+Version      = 2.4.0
 Essentials   = 21.1
 Optional     = [DBK] Enhanced Battle UI,[DBK] Terastallization,[DBK] Dynamax
 Credits      = Nononever

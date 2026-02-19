@@ -267,7 +267,13 @@ module AdvancedAI
       PERISHBODY: { damage: 0, type: :special },
       WANDERINGSPIRIT: { damage: 0, type: :special },
       MUMMY: { damage: 0, type: :special },
-      LINGERINGAROMA: { damage: 0, type: :special }
+      LINGERINGAROMA: { damage: 0, type: :special },
+      COTTONDOWN: { damage: 0, type: :stat, stat: :SPEED, stages: -1, aoe: true },
+      STAMINA: { damage: 0, type: :self_boost, stat: :DEFENSE, stages: 1 },
+      WEAKARMOR: { damage: 0, type: :self_mixed, speed_up: 2, def_down: 1 },
+      ELECTROMORPHOSIS: { damage: 0, type: :charge },
+      WINDPOWER: { damage: 0, type: :charge, condition: :wind_move },
+      ANGERSHELL: { damage: 0, type: :conditional_boost, threshold: 0.5 },
     }
     
     # Calculate contact move punishment
@@ -293,6 +299,20 @@ module AdvancedAI
             score_penalty += 10
           when :special
             score_penalty += 20
+          when :self_boost
+            # Target gets a DEF boost when hit — penalize physical attacks
+            score_penalty += 12
+          when :self_mixed
+            # Weak Armor: -1 Def but +2 Speed — net threat increase
+            score_penalty += 8
+          when :charge
+            # Electromorphosis/Wind Power: target gains Charge (2x electric)
+            score_penalty += 10
+          when :conditional_boost
+            # Anger Shell: below 50% HP triggers multi-stat boost
+            if defender.hp > defender.totalhp * (ability_data[:threshold] || 0.5)
+              score_penalty += 15  # Could trigger the boost
+            end
           end
         end
       end
@@ -540,7 +560,18 @@ module AdvancedAI
       TOXICCHAIN: { poison_chance: 30 },
       SHARPNESS: { boost: 1.5, condition: :slicing_move },
       ROCKYPAYLOAD: { boost: 1.5, type: :ROCK },
-      WINDPOWER: { sets_charge: true, condition: :wind_move_hit }
+      WINDPOWER: { sets_charge: true, condition: :wind_move_hit },
+      ELECTROMORPHOSIS: { sets_charge: true, condition: :any_hit },
+      SWORDOFRUIN: { aura: true, reduces: :DEF, amount: 0.75 },
+      BEADSOFRUIN: { aura: true, reduces: :SPDEF, amount: 0.75 },
+      TOXICBOOST: { boost: 1.5, condition: :poisoned, category: :physical },
+      FLAREBOOST: { boost: 1.5, condition: :burned, category: :special },
+      ZEROTOHERO: { form_change: true, hero_form: 1 },
+      POISONPUPPETEER: { poison_confuse: true },
+      EMBODYASPECT: { boost_on_entry: true },
+      ASONEGLASTRIER: { ko_boost: :ATK, includes: :UNNERVE },
+      ASONESPECTRIER: { ko_boost: :SPATK, includes: :UNNERVE },
+      MINDSEYE: { ignore_evasion: true, ghost_hit: true },
     }
     
     GEN9_DEFENSIVE_ABILITIES = {
@@ -551,7 +582,19 @@ module AdvancedAI
       GUARDDOG: { intimidate_immune: true, attack_boost: true },
       WELLBAKEDBODY: { fire_immune: true, defense_boost: true },
       EARTHEATER: { ground_immune: true, heal: true },
-      HOSPITALITY: { heal_ally_on_entry: true }
+      HOSPITALITY: { heal_ally_on_entry: true },
+      ICESCALES: { special_halved: true },
+      STAMINA: { def_boost_on_hit: true },
+      WEAKARMOR: { def_down_speed_up_on_physical: true },
+      ANGERSHELL: { below_half_boost: true },
+      COTTONDOWN: { speed_drop_all_on_hit: true },
+      TABLETSOFRUIN: { aura: true, reduces: :ATK, amount: 0.75 },
+      VESSELOFRUIN: { aura: true, reduces: :SPATK, amount: 0.75 },
+      TERASHELL: { all_nve_at_full_hp: true },
+      TERAFORMZERO: { removes_weather_terrain: true },
+      TERASHIFT: { auto_transform: true },
+      SUPERSWEETSYRUP: { evasion_drop_on_entry: true },
+      SEEDSOWER: { sets_terrain: :Grassy, condition: :hit },
     }
     
     def self.has_gen9_offensive_ability?(battler)

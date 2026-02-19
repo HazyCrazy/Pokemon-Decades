@@ -120,6 +120,12 @@ module AdvancedAI
       
       # Heavy-Duty Boots (ignore entry hazards)
       :HEAVYDUTYBOOTS => { hazard_immunity: true },
+      
+      # Ability Shield (protects ability from being changed or suppressed)
+      :ABILITYSHIELD => { ability_protection: true },
+      
+      # Shed Shell (guarantees switch-out from trapping)
+      :SHEDSHELL    => { trap_escape: true },
     }
     
     #===========================================================================
@@ -226,6 +232,26 @@ module AdvancedAI
         multiplier *= 1.1
       end
       
+      # Light Ball (Pikachu-exclusive: 2x Atk and SpAtk)
+      if item == :LIGHTBALL
+        species = battler.respond_to?(:species) ? battler.species : nil
+        if species == :PIKACHU || species == :PIKACHUORIGINAL || 
+           species == :PIKACHUHOENN || species == :PIKACHUSINNOH ||
+           species == :PIKACHUUNOVA || species == :PIKACHUKALOS ||
+           species == :PIKACHUALOLA || species == :PIKACHUPARTNER ||
+           species == :PIKACHUCOSPLAY
+          multiplier *= 2.0  # Doubles both Atk and SpAtk
+        end
+      end
+      
+      # Thick Club (Cubone/Marowak-exclusive: 2x Atk)
+      if item == :THICKCLUB && move.physicalMove?
+        species = battler.respond_to?(:species) ? battler.species : nil
+        if [:CUBONE, :MAROWAK, :MAROWAKALOHA].include?(species)
+          multiplier *= 2.0  # Doubles Attack stat
+        end
+      end
+      
       return multiplier
     end
     
@@ -271,6 +297,18 @@ module AdvancedAI
       
       # Heavy-Duty Boots = -0.2 threat (ignores hazards)
       modifier -= 0.2 if item == :HEAVYDUTYBOOTS
+      
+      # Ability Shield = -0.3 threat (protects ability)
+      modifier -= 0.3 if item == :ABILITYSHIELD
+      
+      # Light Ball = +0.8 threat (Pikachu doubles damage)
+      modifier += 0.8 if item == :LIGHTBALL
+      
+      # Thick Club = +0.8 threat (Cubone/Marowak doubles Attack)
+      modifier += 0.8 if item == :THICKCLUB
+      
+      # Shed Shell = -0.2 threat (can always escape trapping)
+      modifier -= 0.2 if item == :SHEDSHELL
       
       return modifier
     end
@@ -321,6 +359,99 @@ module AdvancedAI
       
       return nil
     end
+
+    #===========================================================================
+    # #18: Additional Item Awareness
+    #===========================================================================
+
+    # Utility Umbrella: ignores weather effects on moves/abilities
+    def self.has_utility_umbrella?(battler)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      item == :UTILITYUMBRELLA
+    end
+
+    # Type Gems: consume for 1.3x type damage (Gen 5+ = 1.3x, not 1.5x)
+    TYPE_GEMS = {
+      :NORMALGEM   => :NORMAL,   :FIREGEM    => :FIRE,    :WATERGEM   => :WATER,
+      :ELECTRICGEM => :ELECTRIC, :GRASSGEM   => :GRASS,   :ICEGEM     => :ICE,
+      :FIGHTINGGEM => :FIGHTING, :POISONGEM  => :POISON,  :GROUNDGEM  => :GROUND,
+      :FLYINGGEM   => :FLYING,   :PSYCHICGEM => :PSYCHIC, :BUGGEM     => :BUG,
+      :ROCKGEM     => :ROCK,     :GHOSTGEM   => :GHOST,   :DRAGONGEM  => :DRAGON,
+      :DARKGEM     => :DARK,     :STEELGEM   => :STEEL,   :FAIRYGEM   => :FAIRY,
+    }
+
+    def self.has_type_gem?(battler, move_type = nil)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      return false unless item && TYPE_GEMS.key?(item)
+      return true unless move_type
+      TYPE_GEMS[item] == move_type
+    end
+
+    # Sticky Barb: damages holder, transfers on contact
+    def self.has_sticky_barb?(battler)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      item == :STICKYBARB
+    end
+
+    # Mental Herb: cures Taunt/Encore/Disable/Torment once
+    def self.has_mental_herb?(battler)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      item == :MENTALHERB
+    end
+
+    # Ability Shield: protects ability from being changed/suppressed
+    def self.has_ability_shield?(battler)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      item == :ABILITYSHIELD
+    end
+
+    # Shed Shell: guarantees switch-out from trapping
+    def self.has_shed_shell?(battler)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      item == :SHEDSHELL
+    end
+
+    # Weather extender evaluation: does holder extend weather?
+    def self.extends_weather?(battler, weather_type = nil)
+      return false unless battler
+      item = battler.respond_to?(:item_id) ? battler.item_id : nil
+      return false unless item && EXTENDER_ITEMS.key?(item)
+      return true unless weather_type
+      ext = EXTENDER_ITEMS[item]
+      ext[:weather].to_s.downcase == weather_type.to_s.downcase
+    end
+
+    # Calculate gem bonus for move scoring
+    def self.gem_damage_bonus(battler, move)
+      return 0 unless battler && move && move.damagingMove?
+      return 0 unless has_type_gem?(battler, move.type)
+      # Gem gives 1.3x, translated to ~ +15 score points
+      15
+    end
+
+    # Score penalty for attacking a Mental Herb holder with Taunt/Encore
+    def self.mental_herb_penalty(target, move)
+      return 0 unless target && move
+      return 0 unless [:TAUNT, :ENCORE, :DISABLE, :TORMENT].include?(move.id)
+      return 0 unless has_mental_herb?(target)
+      -25  # They'll cure it immediately
+    end
+
+    # Score adjustment for Utility Umbrella (weather moves less effective)
+    def self.utility_umbrella_penalty(target, move)
+      return 0 unless target && move
+      return 0 unless has_utility_umbrella?(target)
+      # If our move relies on weather (Thunder/Hurricane in Rain, Solar Beam in Sun)
+      weather_boosted = [:THUNDER, :HURRICANE, :SOLARBEAM, :SOLARBLADE, :WEATHERBALL, :BLIZZARD]
+      return -20 if weather_boosted.include?(move.id)
+      0
+    end
     
   end
 end
@@ -351,5 +482,179 @@ module AdvancedAI
   
   def self.recommend_item_for_role(pokemon, role)
     ItemIntelligence.recommend_item_for_role(pokemon, role)
+  end
+
+  def self.has_utility_umbrella?(battler)
+    ItemIntelligence.has_utility_umbrella?(battler)
+  end
+
+  def self.has_type_gem?(battler, move_type = nil)
+    ItemIntelligence.has_type_gem?(battler, move_type)
+  end
+
+  def self.has_sticky_barb?(battler)
+    ItemIntelligence.has_sticky_barb?(battler)
+  end
+
+  def self.has_mental_herb?(battler)
+    ItemIntelligence.has_mental_herb?(battler)
+  end
+
+  def self.has_ability_shield?(battler)
+    ItemIntelligence.has_ability_shield?(battler)
+  end
+
+  def self.has_shed_shell?(battler)
+    ItemIntelligence.has_shed_shell?(battler)
+  end
+
+  def self.gem_damage_bonus(battler, move)
+    ItemIntelligence.gem_damage_bonus(battler, move)
+  end
+
+  def self.mental_herb_penalty(target, move)
+    ItemIntelligence.mental_herb_penalty(target, move)
+  end
+
+  def self.utility_umbrella_penalty(target, move)
+    ItemIntelligence.utility_umbrella_penalty(target, move)
+  end
+end
+
+#===============================================================================
+# Integration in Battle::AI - Wires item intelligence into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_item_intelligence(score, move, user, target)
+    return score unless move && user
+    
+    # Factor in our item's effect on move damage
+    if move.damagingMove?
+      real_user = user.respond_to?(:battler) ? user.battler : user
+      multiplier = AdvancedAI.calculate_item_multiplier(real_user, move)
+      if multiplier > 1.0
+        # Boost score proportionally (e.g., Life Orb 1.3x → +15 points)
+        bonus = ((multiplier - 1.0) * 50).to_i
+        score += bonus
+      end
+    end
+    
+    # If choice-locked, penalize non-locked moves (they'll fail)
+    if target
+      real_user = user.respond_to?(:battler) ? user.battler : user
+      if AdvancedAI.choice_locked?(real_user)
+        last = real_user.lastMoveUsed rescue nil
+        if last && move.id != last
+          score -= 100  # Can't use this move while choice-locked
+        end
+      end
+      
+      # If target blocks status, penalize status moves
+      real_target = target.respond_to?(:battler) ? target.battler : target
+      if move.category == :Status && AdvancedAI.blocks_status_moves?(real_target)
+        score -= 30
+      end
+    end
+
+    #--- #18: Advanced Item Awareness ---
+    real_user = user.respond_to?(:battler) ? user.battler : user
+
+    # Gem damage bonus
+    score += AdvancedAI.gem_damage_bonus(real_user, move)
+
+    if target
+      real_target = target.respond_to?(:battler) ? target.battler : target
+
+      # Utility Umbrella on target: penalize weather-dependent moves
+      score += AdvancedAI.utility_umbrella_penalty(real_target, move)
+
+      # Mental Herb on target: penalize Taunt/Encore/Disable/Torment
+      score += AdvancedAI.mental_herb_penalty(real_target, move)
+
+      # Sticky Barb on target: penalize contact moves (barb transfers to us)
+      if move.respond_to?(:contactMove?) && move.contactMove? && AdvancedAI.has_sticky_barb?(real_target)
+        score -= 10  # Risk inheriting Sticky Barb
+      end
+    end
+
+    # Weather extender: boost weather-setting moves if we hold extender
+    if move.respond_to?(:id)
+      weather_moves = {
+        :RAINDANCE  => "rain",  :SUNNYDAY    => "sun",
+        :SANDSTORM  => "sand",  :HAIL        => "hail",
+        :SNOWSCAPE  => "hail",
+      }
+      wtype = weather_moves[move.id]
+      if wtype && ItemIntelligence.extends_weather?(real_user, wtype)
+        score += 10  # 8 turns instead of 5 is significant
+      end
+    end
+
+    #--- Power Herb: instantly execute charge moves ---
+    user_item = real_user.respond_to?(:item_id) ? real_user.item_id : nil
+    charge_moves = [:SOLARBEAM, :SOLARBLADE, :METEORBEAM, :PHANTOMFORCE,
+                    :SHADOWFORCE, :SKULLBASH, :SKYATTACK, :FLY, :DIG, :DIVE,
+                    :BOUNCE, :GEOMANCY, :FREEZESHOCK, :ICEBURN, :RAZORWIND, :ELECTROSHOT]
+    if user_item == :POWERHERB && charge_moves.include?(move.id)
+      bonus = 35
+      bonus += 15 if move.id == :METEORBEAM  # Also raises SpAtk
+      bonus += 25 if move.id == :GEOMANCY    # +1 SpAtk/SpDef/Speed
+      score += bonus
+    end
+
+    #--- Ability Shield: penalize ability-changing moves against holders ---
+    if target
+      real_target = target.respond_to?(:battler) ? target.battler : target
+      target_item = real_target.respond_to?(:item_id) ? real_target.item_id : nil
+      if target_item == :ABILITYSHIELD
+        ability_change_moves = [:GASTROACID, :WORRYSEED, :SIMPLEBEAM, :ENTRAINMENT,
+                                :SKILLSWAP, :ROLEPLAY, :DOODLE, :CORROSIVEGAS]
+        if ability_change_moves.include?(move.id)
+          score -= 40  # Move will fail against Ability Shield
+          AdvancedAI.log("#{move.name} blocked by Ability Shield", "Item") rescue nil
+        end
+        # Also penalize Mummy/Lingering Aroma contact (won't change ability)
+        if move.respond_to?(:contactMove?) && move.contactMove?
+          if [:MUMMY, :LINGERINGAROMA, :WANDERINGSPIRIT].include?(real_target.ability_id)
+            # Actually Ability Shield protects the HOLDER, so if target has it,
+            # they keep their ability. No penalty needed for us attacking.
+          end
+        end
+      end
+      # If WE have Ability Shield, boost if our ability is critical
+      if user_item == :ABILITYSHIELD
+        critical_abilities = [:HUGEPOWER, :PUREPOWER, :SPEEDBOOST, :MAGICGUARD,
+                              :WONDERGUARD, :PROTEAN, :LIBERO, :UNBURDEN, :POISONHEAL]
+        if critical_abilities.include?(real_user.ability_id)
+          # We benefit from protected ability — slightly prefer staying in
+          score += 5 if move.damagingMove?
+        end
+      end
+    end
+
+    #--- White Herb: negate self-stat-drops ---
+    stat_drop_moves = [:SHELLSMASH, :CLOSECOMBAT, :SUPERPOWER, :OVERHEAT,
+                       :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST, :VCREATE]
+    if user_item == :WHITEHERB && stat_drop_moves.include?(move.id)
+      bonus = move.id == :SHELLSMASH ? 35 : 15
+      score += bonus
+    end
+
+    #--- Booster Energy: Paradox ability activation ---
+    user_ability = real_user.respond_to?(:ability_id) ? real_user.ability_id : nil
+    if user_item == :BOOSTERENERGY && [:PROTOSYNTHESIS, :QUARKDRIVE].include?(user_ability)
+      # Stat already boosted — favor moves that match the boosted offensive stat
+      if move.damagingMove?
+        atk = real_user.respond_to?(:attack) ? real_user.attack : 0
+        spa = real_user.respond_to?(:spatk) ? real_user.spatk : 0
+        if atk > spa
+          score += 10 if move.physicalMove?
+        else
+          score += 10 if move.specialMove?
+        end
+      end
+    end
+
+    return score
   end
 end

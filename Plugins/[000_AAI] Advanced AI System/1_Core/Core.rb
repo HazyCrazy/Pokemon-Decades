@@ -100,83 +100,144 @@ class Battle::AI
     # Apply Advanced AI enhancements (Layers on top of base advanced score)
     score = apply_advanced_modifiers(score, @move, @user, target, skill)
     
+    # === DEBUG: Per-factor move score breakdown ===
+    if $DEBUG && @_score_factors && !@_score_factors.empty?
+      move_name = @move.name rescue @move.id.to_s
+      target_name = target.name rescue "???"
+      user_name = @user.name rescue "???"
+      echoln "  ┌─ MOVE SCORE: #{move_name} (#{user_name} vs #{target_name}) ─┐"
+      echoln "    Base Score:                  100"
+      @_score_factors.each do |name, value|
+        next if value == 0
+        sign = value >= 0 ? "+" : "-"
+        padded_name = "#{sign} #{name}:".ljust(33)
+        formatted_val = value >= 0 ? "+#{value}" : "#{value}"
+        echoln "    #{padded_name}#{formatted_val}"
+      end
+      echoln "    ─────────────────────────────────"
+      echoln "    = Final Score:               #{score}"
+      echoln "  └───────────────────────────────────┘"
+    end
+    @_score_factors = nil
+    
     return score
   end
   
   private
   
   def apply_advanced_modifiers(score, move, user, target, skill)
+    factors = @_score_factors  # May be nil if not debugging
+    
     # Core Systems (50+)
     if AdvancedAI.feature_enabled?(:core, skill)
-      score = apply_move_memory(score, move, user, target) if target
-      score = apply_threat_assessment(score, move, user, target) if target
-      score = apply_field_effects(score, move, user, target) if target
-      score = apply_doubles_coordination(score, move, user, target, skill) if @battle.pbSideSize(0) > 1 && target
+      if target
+        pre = score; score = apply_move_memory(score, move, user, target)
+        factors["Move Memory"] = score - pre if factors && score != pre
+        
+        pre = score; score = apply_threat_assessment(score, move, user, target)
+        factors["Threat Assessment"] = score - pre if factors && score != pre
+        
+        pre = score; score = apply_field_effects(score, move, user, target)
+        factors["Field Effects"] = score - pre if factors && score != pre
+      end
+      if @battle.pbSideSize(0) > 1 && target
+        pre = score; score = apply_doubles_coordination(score, move, user, target, skill)
+        factors["Doubles Coordination"] = score - pre if factors && score != pre
+      end
     end
     
     # Setup Recognition (55+)
     if AdvancedAI.feature_enabled?(:setup, skill)
-      score = apply_setup_evaluation(score, move, user, target)
+      pre = score; score = apply_setup_evaluation(score, move, user, target)
+      factors["Setup Recognition"] = score - pre if factors && score != pre
     end
     
     # Endgame Scenarios (60+)
     if AdvancedAI.feature_enabled?(:endgame, skill)
-      score = apply_endgame_logic(score, move, user, target)
+      pre = score; score = apply_endgame_logic(score, move, user, target)
+      factors["Endgame Logic"] = score - pre if factors && score != pre
     end
     
     # Battle Personalities (65+)
     if AdvancedAI.feature_enabled?(:personalities, skill)
-      score = apply_personality_modifiers(score, move, user, target)
+      pre = score; score = apply_personality_modifiers(score, move, user, target)
+      factors["Personality"] = score - pre if factors && score != pre
+    end
+    
+    # Strategic Awareness (70+) — archetype counters, win condition shifts,
+    # coverage gaps, sacking, collective health, threat persistence, cores
+    if skill >= 70
+      pre = score; score = apply_strategic_awareness(score, move, user, target, skill)
+      factors["Strategic Awareness"] = score - pre if factors && score != pre
+    end
+    
+    # Tactical Enhancements (50+) — ability/item/move awareness, multi-turn planning
+    if skill >= 50
+      pre = score; score = apply_tactical_enhancements(score, move, user, target, skill)
+      factors["Tactical Enhancements"] = score - pre if factors && score != pre
     end
     
     # Item Intelligence (85+)
     if AdvancedAI.feature_enabled?(:items, skill)
-      score = apply_item_intelligence(score, move, user, target)
+      pre = score; score = apply_item_intelligence(score, move, user, target)
+      factors["Item Intelligence"] = score - pre if factors && score != pre
     end
     
     # Prediction System (85+)
     if AdvancedAI.feature_enabled?(:prediction, skill)
-      score = apply_prediction_logic(score, move, user, target) if target
+      if target
+        pre = score; score = apply_prediction_logic(score, move, user, target)
+        factors["Prediction"] = score - pre if factors && score != pre
+      end
     end
     
     return score
   end
   
-  # Placeholder methods (will be implemented in separate files)
+  # Placeholder methods — overridden by their respective module files
+  # These stubs ensure the pipeline works even if a module isn't loaded
   def apply_move_memory(score, move, user, target)
-    return score  # Implemented in [007] Move_Memory.rb
+    return score  # Overridden in Move_Memory.rb
   end
   
   def apply_threat_assessment(score, move, user, target)
-    return score  # Implemented in [008] Threat_Assessment.rb
+    return score  # Overridden in Threat_Assessment.rb
   end
   
   def apply_field_effects(score, move, user, target)
-    return score  # Implemented in [010] Field_Effects.rb
+    return score  # Overridden in Field_Effects.rb
   end
   
   def apply_doubles_coordination(score, move, user, target, skill = 100)
-    return score  # Implemented in [009] Doubles_Coordination.rb
+    return score  # Overridden in Doubles_Coordination.rb
   end
   
   def apply_setup_evaluation(score, move, user, target)
-    return score  # Implemented in [019] Setup_Recognition.rb
+    return score  # Overridden in Setup_Recognition.rb
   end
   
   def apply_endgame_logic(score, move, user, target)
-    return score  # Implemented in [020] Endgame_Scenarios.rb
+    return score  # Overridden in Endgame_Scenarios.rb
   end
   
   def apply_personality_modifiers(score, move, user, target)
-    return score  # Implemented in [021] Battle_Personalities.rb
+    return score  # Overridden in Battle_Personalities.rb
+  end
+  
+  def apply_strategic_awareness(score, move, user, target, skill = 100)
+    return score  # Overridden in Strategic_Awareness.rb
+  end
+  
+  def apply_tactical_enhancements(score, move, user, target, skill = 100)
+    return score  # Overridden in Tactical_Enhancements.rb
   end
   
   def apply_item_intelligence(score, move, user, target)
-    return score  # Implemented in [015] Item_Intelligence.rb
+    return score  # Overridden in Item_Intelligence.rb
   end
   
   def apply_prediction_logic(score, move, user, target)
-    return score  # Implemented in [016] Prediction_System.rb
+    return score  # Overridden in Prediction_System.rb
   end
 end
 
@@ -293,6 +354,56 @@ class Battle::AI
       echoln "  Trainer Skill: #{skill}"
       echoln "  Forced Switch: #{terrible_moves}"
       
+      # Anti-ping-pong: If this Pokemon just switched in, don't switch out
+      # due to "terrible moves". Stall teams have low-scoring moves that are
+      # still strategically correct (Toxic, Protect, Recover, etc.).
+      # This prevents Blissey <-> Toxapex infinite switching loops.
+      if terrible_moves && @user.turnCount < 2 && !@user.fainted?
+        echoln "  >>> Anti-ping-pong: #{@user.name} just switched in (turn #{@user.turnCount})"
+        echoln "  >>> Staying to use available moves instead of switching"
+        echoln "========================================"
+        return -1
+      end
+      
+      # Stall archetype protection: Stall mons should NOT switch out due to
+      # "terrible moves" when their stall gameplan is active (Toxic/Burn ticking,
+      # Leech Seed draining). Their moves ARE the strategy.
+      if terrible_moves && !@user.fainted? && AdvancedAI.has_stall_moveset?(@user)
+        # Check if stall gameplan is working (opponent has passive damage)
+        stall_working = false
+        @battle.allOtherSideBattlers(@user.index).each do |target|
+          next unless target && !target.fainted?
+          leech_seed_val = (target.effects[PBEffects::LeechSeed] rescue -1)
+          if target.poisoned? || target.burned? ||
+             (leech_seed_val.is_a?(Numeric) && leech_seed_val >= 0)
+            stall_working = true
+            break
+          end
+        end
+        
+        if stall_working
+          echoln "  >>> Stall Archetype: #{@user.name} has active stall gameplan"
+          echoln "  >>> Staying to continue stalling (passive damage ticking)"
+          echoln "========================================"
+          return -1
+        end
+        
+        # Even without active status, stall mons with recovery should stay
+        has_recovery = @user.battler.moves.any? do |m|
+          m && AdvancedAI.healing_move?(m.id)
+        end
+        has_useful_status = @user.battler.moves.any? do |m|
+          next false unless m
+          [:TOXIC, :WILLOWISP, :THUNDERWAVE, :LEECHSEED, :SCALD].include?(m.id)
+        end
+        if has_recovery && has_useful_status
+          echoln "  >>> Stall Archetype: #{@user.name} has recovery + status moves"
+          echoln "  >>> Staying to execute stall strategy"
+          echoln "========================================"
+          return -1
+        end
+      end
+      
       # Debug: Check all conditions
       qualifies = AdvancedAI.qualifies_for_advanced_ai?(skill)
       feature_enabled = AdvancedAI.feature_enabled?(:switch_intelligence, skill)
@@ -309,8 +420,8 @@ class Battle::AI
         
         # Call our advanced switch finder from [012] Switch_Intelligence.rb
         # Use send to bypass visibility restrictions
-        # Returns party index directly
-        best_idx = send(:find_best_switch_advanced, @user, skill)
+        # Returns party index directly (pass terrible_moves as forced_switch)
+        best_idx = send(:find_best_switch_advanced, @user, skill, terrible_moves)
         if best_idx && @battle.pbCanSwitchIn?(idxBattler, best_idx)
           party = @battle.pbParty(idxBattler)
           best_pkmn = party[best_idx]
@@ -327,14 +438,18 @@ class Battle::AI
           echoln "      Reason: Skill too low (need 50+)"
         elsif !feature_enabled
           echoln "      Reason: Feature not enabled"
-        elsif !has_method
-          echoln "      Reason: Method not found"
         end
       end
       echoln "=============================="
     rescue => e
-      echoln "[AAI ERROR] #{e.class}: #{e.message}"
-      echoln e.backtrace.first(3).join("\n")
+      begin
+        msg = "[AAI ERROR] #{e.class}: #{e.message}".gsub('%', '%%')
+        bt  = e.backtrace.first(3).join("\n").gsub('%', '%%')
+        echoln msg
+        echoln bt
+      rescue
+        echoln "[AAI ERROR] (could not format error message)"
+      end
       echoln "=============================="
     end
     

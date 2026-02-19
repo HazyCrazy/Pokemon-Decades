@@ -273,7 +273,8 @@ module AdvancedAI
         next if !move || move.category == :Status
         
         effectiveness = Effectiveness.calculate(move.type, defender.type1, defender.type2)
-        multiplier = Effectiveness.calculate_multiplier(effectiveness)
+        # Effectiveness.calculate already returns the multiplier directly
+        multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER.to_f
         
         total_multiplier += multiplier
         move_count += 1

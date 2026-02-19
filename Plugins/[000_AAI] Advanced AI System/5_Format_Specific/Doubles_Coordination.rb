@@ -335,6 +335,22 @@ module AdvancedAI
         score = 0
         partner = DoublesCoordination.find_partner(battle, attacker)
         return 0 unless partner
+
+        # === CONFLICT GUARD ===
+        # If partner is using Helping Hand / another redirect / Protect,
+        # redirecting serves no purpose — nobody is attacking.
+        partner_move = DoublesCoordination.partner_planned_move_id(battle, partner)
+        if partner_move
+          if partner_move == :HELPINGHAND
+            score -= 200  # Redirect + Helping Hand = zero offense
+          end
+          if DoublesCoordination::REDIRECT_MOVE_IDS.include?(partner_move)
+            score -= 150  # Both redirecting = wasted
+          end
+          if DoublesCoordination::PROTECT_MOVE_IDS.include?(partner_move)
+            score -= 100  # Redirect + Protect = partner is safe already
+          end
+        end
         
         # Check for Ghost-type opponents (Follow Me doesn't work on them)
         if move.id == :FOLLOWME
@@ -837,6 +853,22 @@ module AdvancedAI
         score = 0
         partner = DoublesCoordination.find_partner(battle, attacker)
         return -50 unless partner  # No partner to help
+
+        # === CONFLICT GUARD ===
+        # If partner is using Follow Me / Rage Powder / Protect / Helping Hand,
+        # Helping Hand produces zero offensive value — both mons do nothing.
+        partner_move = DoublesCoordination.partner_planned_move_id(battle, partner)
+        if partner_move
+          if DoublesCoordination::REDIRECT_MOVE_IDS.include?(partner_move)
+            return -200  # Redirect + Helping Hand = wasted turn
+          end
+          if DoublesCoordination::PROTECT_MOVE_IDS.include?(partner_move)
+            return -150  # Protect + Helping Hand = wasted turn
+          end
+          if partner_move == :HELPINGHAND
+            return -100  # Both using Helping Hand = no attacks
+          end
+        end
         
         # Partner has high-damage moves
         if partner.attack > 120 || partner.spatk > 120
@@ -3022,11 +3054,58 @@ module AdvancedAI
     def self.find_partner(battle, attacker)
       battle.allSameSideBattlers(attacker.index).find { |b| b && b != attacker && !b.fainted? }
     end
+
+    # Peek at what move the partner has already registered this turn.
+    # Returns the move ID symbol (e.g. :FOLLOWME, :HELPINGHAND) or nil.
+    # In doubles, the AI picks moves sequentially — if the partner chose
+    # first, its choice is already stored in battle.choices.
+    def self.partner_planned_move_id(battle, partner)
+      return nil unless partner
+      begin
+        choice = battle.choices[partner.index] rescue nil
+        if choice && choice[0] == :UseMove && choice[2]
+          return choice[2].id rescue nil
+        end
+      rescue
+      end
+      nil
+    end
+
+    # Returns true when the partner has registered a non-attacking move
+    # this turn — Helping Hand, Follow Me, Rage Powder, Protect, etc.
+    # Used to prevent "double support" turns that produce zero offense.
+    REDIRECT_MOVE_IDS  = [:FOLLOWME, :RAGEPOWDER, :SPOTLIGHT]
+    PROTECT_MOVE_IDS   = [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD,
+                          :BANEFULBUNKER, :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK]
+    SUPPORT_ONLY_MOVES = REDIRECT_MOVE_IDS + PROTECT_MOVE_IDS + [:HELPINGHAND]
+
+    def self.partner_planned_support_only?(battle, partner)
+      mid = partner_planned_move_id(battle, partner)
+      return false unless mid
+      SUPPORT_ONLY_MOVES.include?(mid)
+    end
     
     def self.partner_targets?(battle, partner, target)
-      # Simplified: Assumption partner attacks same target
-      # In real implementation one would track AI decisions
-      return false
+      return false unless partner && target
+      # Check if partner's chosen action targets the same opponent
+      # In Battle::AI, choices are stored in @battle.choices
+      begin
+        partner_choice = battle.choices[partner.index] rescue nil
+        if partner_choice && partner_choice[0] == :UseMove
+          partner_target_idx = partner_choice[3]  # Target index
+          return partner_target_idx == target.index if partner_target_idx
+        end
+      rescue
+        # Fall back to heuristic: does partner have moves that target this foe?
+      end
+
+      # Heuristic: if partner is a physical/special attacker and target is low HP,
+      # assume they're likely targeting it
+      if target.hp < target.totalhp * 0.35
+        return true  # Low HP target is a likely shared target
+      end
+
+      false
     end
     
     def self.hits_partner?(move, attacker, partner)
@@ -3527,7 +3606,72 @@ class Battle::AI
     score += AdvancedAI.predict_weather_switch(@battle, user, skill)
     score += AdvancedAI.predict_terrain_switch(@battle, user, skill)
     
+    # #19: Joint Target Selection
+    if target
+      real_user = user.respond_to?(:battler) ? user.battler : user
+      real_target = target.respond_to?(:battler) ? target.battler : target
+      score += DoublesCoordination.joint_target_bonus(@battle, real_user, move, real_target, skill) rescue 0
+    end
+    
     return score
+  end
+end
+
+#===============================================================================
+# #19: Joint Target Selection — optimize who attacks what in doubles
+#===============================================================================
+module AdvancedAI
+  module DoublesCoordination
+    # Returns a bonus/penalty for attacking a specific target in doubles
+    # Considers partner's likely action to avoid overkill and optimize KOs
+    def self.joint_target_bonus(battle, attacker, move, target, skill_level = 100)
+      return 0 unless skill_level >= 60
+      return 0 unless battle.pbSideSize(0) > 1
+      return 0 unless target && move
+
+      partner = find_partner(battle, attacker)
+      return 0 unless partner
+
+      bonus = 0
+      enemies = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
+      return 0 if enemies.length < 2  # Only one target anyway
+
+      # Estimate our damage to this target
+      our_damage = CombatUtilities.estimate_damage(attacker, move, target, as_percent: true) rescue 0
+
+      # Check if partner is likely targeting the same foe
+      partner_on_same = partner_targets?(battle, partner, target)
+
+      if partner_on_same && our_damage >= target.hp.to_f / target.totalhp
+        # We can KO alone — partner should attack the other target
+        # Slight penalty to encourage partner to spread attacks
+        bonus -= 10
+      end
+
+      if partner_on_same && our_damage < 0.5
+        # Neither of us can KO this target → might be better to focus the other one
+        other_targets = enemies.reject { |e| e == target }
+        other_targets.each do |other|
+          other_hp_pct = other.hp.to_f / other.totalhp
+          if other_hp_pct < 0.4
+            bonus -= 15  # Other target is low, pick them off instead
+            break
+          end
+        end
+      end
+
+      # If we have type advantage on this target but partner doesn't, focus here
+      if move.damagingMove?
+        target_types = target.respond_to?(:pbTypes) ? target.pbTypes : [:NORMAL]
+        eff = 1.0
+        target_types.each { |t| eff *= Effectiveness.calculate_one(move.type, t) rescue 1.0 }
+        if eff > 1.0
+          bonus += 10  # We have SE on this target
+        end
+      end
+
+      bonus
+    end
   end
 end
 
@@ -3553,3 +3697,5 @@ AdvancedAI.log("  - Ally-boosting abilities (Power Spot, Battery, Steely Spirit,
 AdvancedAI.log("  - VGC Meta strategies (Perish Trap, Taunt, Encore, Imprison)", "Doubles")
 AdvancedAI.log("  - Switch-In awareness (Intimidate, Weather, Terrain)", "Doubles")
 AdvancedAI.log("  - Spread move 75% damage reduction awareness", "Doubles")
+AdvancedAI.log("  - #8 Intimidate cycling switch bonus", "Doubles")
+AdvancedAI.log("  - #20 Ally Switch awareness + TR setter coordination", "Doubles")

@@ -27,6 +27,7 @@ module AdvancedAI
           healing_penalty: -30,      # -30 for Healing (defensive = bad)
           priority_bonus: 15,        # +15 for Priority Moves
           ohko_bonus: 40,            # +40 for OHKO Moves (risky but strong)
+          coverage_bonus: 10,        # +10 for super-effective coverage moves
           switch_threshold: 55,      # Higher threshold = fewer Switches
         }
       },
@@ -41,6 +42,7 @@ module AdvancedAI
           status_bonus: 30,          # +30 for Status Moves (Burn/Para)
           protect_bonus: 35,         # +35 for Protect (stalling)
           hazard_bonus: 25,          # +25 for Hazards
+          stall_bonus: 45,           # +45 for Stall Moves (Toxic stall loop)
           switch_threshold: 35,      # Low threshold = more Switches
         }
       },
@@ -53,6 +55,7 @@ module AdvancedAI
           setup_bonus: 10,           # +10 for Setup
           healing_bonus: 15,         # +15 for Healing
           status_bonus: 15,          # +15 for Status
+          pivot_bonus: 15,           # +15 for Pivot Moves (momentum control)
           switch_threshold: 45,      # Medium
         }
       },
@@ -86,8 +89,12 @@ module AdvancedAI
       # Count Pokemon Roles
       sweeper_count = 0
       wall_count = 0
+      stall_count = 0
       tank_count = 0
       support_count = 0
+      pivot_count = 0
+      wallbreaker_count = 0
+      lead_count = 0
       
       party.each do |pokemon|
         next if !pokemon || pokemon.egg?
@@ -96,14 +103,18 @@ module AdvancedAI
         next if !roles
         
         sweeper_count += 1 if roles.include?(:sweeper)
-        wall_count += 1 if roles.include?(:wall)
+        wall_count += 1 if roles.include?(:wall) || roles.include?(:stall)
+        stall_count += 1 if roles.include?(:stall)
         tank_count += 1 if roles.include?(:tank)
         support_count += 1 if roles.include?(:support)
+        pivot_count += 1 if roles.include?(:pivot)
+        wallbreaker_count += 1 if roles.include?(:wallbreaker)
+        lead_count += 1 if roles.include?(:lead)
       end
       
       total = party.count { |p| p && !p.egg? }
       
-      # Hyper Offensive: Many Sweepers + Setup
+      # Hyper Offensive: Many Sweepers + Setup OR many Wallbreakers
       if sweeper_count >= total * 0.6
         setup_count = 0
         party.each do |pokemon|
@@ -115,14 +126,23 @@ module AdvancedAI
         return :hyper_offensive if setup_count >= 4
       end
       
-      # Defensive: Many Walls + Recovery
-      if wall_count >= total * 0.5
+      # Defensive/Stall: Many Walls/Stall mons OR 2+ stall mons
+      # Stall teams are a sub-type of defensive but with stronger stall identity
+      if wall_count >= total * 0.5 || stall_count >= 2
         return :defensive
       end
       
-      # Aggressive: High Damage, little Setup
-      if sweeper_count >= total * 0.4 && wall_count <= 1
+      # Aggressive: Sweepers + Wallbreakers focused on raw damage
+      # Also aggressive if heavy on wallbreakers (Trick Room-style)
+      offensive_count = sweeper_count + wallbreaker_count
+      if offensive_count >= total * 0.5 && wall_count <= 1
         return :aggressive
+      end
+      
+      # Balanced: Mix of roles, pivots encourage balanced play
+      # Teams with lots of pivots and tanks tend to play balanced/bulky offense
+      if pivot_count >= 2 || (tank_count >= 2 && support_count >= 1)
+        return :balanced
       end
       
       # Default: Balanced
@@ -191,6 +211,16 @@ module AdvancedAI
       # Spread Moves
       if AdvancedAI.spread_move?(move.id)
         score += modifiers[:spread_bonus] if modifiers[:spread_bonus]
+      end
+      
+      # Stall Moves (Toxic stall, Protect stall, recovery in stall context)
+      if AdvancedAI.stall_move?(move.id)
+        score += modifiers[:stall_bonus] if modifiers[:stall_bonus]
+      end
+      
+      # Pivot Moves (U-turn, Volt Switch, Flip Turn)
+      if AdvancedAI.pivot_move?(move.id)
+        score += modifiers[:pivot_bonus] if modifiers[:pivot_bonus]
       end
       
       return score
@@ -273,5 +303,25 @@ module AdvancedAI
   
   def self.get_personality_switch_threshold(personality)
     BattlePersonalities.get_switch_threshold(personality)
+  end
+end
+
+#===============================================================================
+# Integration in Battle::AI - Wires personality modifiers into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_personality_modifiers(score, move, user, target)
+    return score unless move
+    skill = @trainer&.skill || 100
+    
+    # Determine trainer personality
+    trainer_index = user.respond_to?(:index) ? user.index : 1
+    personality = AdvancedAI.get_personality(@battle, trainer_index)
+    return score unless personality
+    
+    # Apply personality-driven score modifiers
+    score = AdvancedAI.apply_personality(score, move, personality)
+    
+    return score
   end
 end

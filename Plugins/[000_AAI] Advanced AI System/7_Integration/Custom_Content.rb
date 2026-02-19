@@ -2,8 +2,6 @@
 # [013] Custom Content - Gen 1-9 Abilities & Type Recognition
 #===============================================================================
 # Recognizes and evaluates 267+ Abilities from Gen 1-9
-# Supports Custom Abilities from Plugins (DBK, Reborn, etc.)
-#
 # Categories:
 # - Offensive Abilities (Huge Power, Adaptability, Technician, etc.)
 # - Defensive Abilities (Multiscale, Fur Coat, Filter, etc.)
@@ -66,6 +64,29 @@ module AdvancedAI
       :PROTOSYNTHESIS     => 1.8,  # Highest stat x1.3 in Sun
       :QUARKDRIVE         => 1.8,  # Highest stat x1.3 in Electric Terrain
       :TOXICDEBRIS        => 1.5,  # Sets Toxic Spikes on hit
+      
+      # Gen 9 Ruin Abilities (Treasures of Ruin)
+      :SWORDOFRUIN        => 2.5,  # -25% Def to all others (Chien-Pao)
+      :BEADSOFRUIN        => 2.5,  # -25% SpDef to all others (Chi-Yu)
+      :TABLETSOFRUIN      => 1.5,  # -25% Atk to all others (Wo-Chien)
+      :VESSELOFRUIN       => 1.5,  # -25% SpAtk to all others (Ting-Lu)
+      
+      # Status-Boost Offense
+      :TOXICBOOST         => 2.0,  # 1.5x physical when poisoned
+      :FLAREBOOST         => 2.0,  # 1.5x special when burned
+      
+      # Gen 9 DLC
+      :POISONPUPPETEER    => 2.0,  # Poison also confuses (Pecharunt)
+      :SUPERSWEETSYRUP    => 1.5,  # -1 Evasion to all opponents on entry
+      :EMBODYASPECT       => 1.8,  # +1 stat on entry (Ogerpon)
+      :ZEROTOHERO         => 2.5,  # Hero form Palafin = massive stats
+      
+      # As One (Calyrex fusions) - Unnerve + KO momentum
+      :ASONEGLASTRIER     => 2.5,  # Unnerve + Chilling Neigh (+1 Atk on KO)
+      :ASONESPECTRIER     => 2.5,  # Unnerve + Grim Neigh (+1 SpAtk on KO)
+      
+      # Mind's Eye - ignore evasion + hit Ghost with Normal/Fighting
+      :MINDSEYE           => 1.5,  # Scrappy + accuracy bypass
     }
     
     #===========================================================================
@@ -126,6 +147,25 @@ module AdvancedAI
       :WINDRIDER          => -1.8, # Wind immunity + Atk boost
       :GUARDDOG           => -1.0, # Intimidate immunity + Atk boost
       :PURIFYINGSALT      => -2.0, # Ghost resist + status immunity
+      
+      # Ice Scales (Frosmoth) - halves special damage
+      :ICESCALES          => -2.5, # 50% special damage taken
+      
+      # Reactive Defensive
+      :STAMINA            => -1.5, # +1 Def when hit
+      :COTTONDOWN         => -0.5, # -1 Speed to all when hit
+      :WEAKARMOR          => -0.5, # Physical hit: -1 Def, +2 Speed (mixed)
+      :ANGERSHELL         => -0.5, # Below 50%: +1 Atk/SpAtk/Speed, -1 Def/SpDef
+      :ELECTROMORPHOSIS   => -0.5, # Gains Charge when hit
+      :WINDPOWER          => -0.3, # Gains Charge from wind moves
+      
+      # Gen 9 DLC Defensive
+      :TERASHELL          => -3.0, # All hits NVE at full HP (Terapagos)
+      :TERAFORMZERO       => -1.0, # Removes weather/terrain (Terapagos)
+      :TERASHIFT          => -0.5, # Auto-transform to Terastal (Terapagos)
+      
+      # Seed Sower (Arboliva) - sets Grassy Terrain when hit
+      :SEEDSOWER          => -1.0, # Sets Grassy Terrain on contact (healing + Grass boost)
     }
     
     #===========================================================================
@@ -187,6 +227,7 @@ module AdvancedAI
       :COSTAR             => 1.5,  # Copy ally stat changes
       :OPPORTUNIST        => 1.8,  # Copy opponent stat boosts
       :COMMANDER          => 2.0,  # Dondozo synergy (Hidden)
+      :HOSPITALITY        => 1.0,  # Heal ally on entry
     }
     
     #===========================================================================
@@ -340,7 +381,8 @@ module AdvancedAI
         when :HUGEPOWER, :PUREPOWER
           modifier *= 2.0 if move.physicalMove?
         when :ADAPTABILITY
-          modifier *= 2.0 if move.type == attacker.type1 || move.type == attacker.type2
+          atk_types = attacker.respond_to?(:pbTypes) ? attacker.pbTypes(true) : [attacker.type1, attacker.type2].compact
+          modifier *= 2.0 if atk_types.include?(move.type)
         when :TOUGHCLAWS
           modifier *= 1.3 if move.contactMove?
         when :SHEERFORCE
@@ -352,8 +394,13 @@ module AdvancedAI
         when :STRONGJAW
           modifier *= 1.5 if move.biting_move?
         when :TINTEDLENS
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           modifier *= 2.0 if Effectiveness.not_very_effective?(effectiveness)
+        when :MINDSEYE
+          # Ignore target evasion stages and hit Ghost with Normal/Fighting
+          # This is handled in accuracy/type calcs, but bump modifier slightly
+          # for coverage value (treats Ghost as hittable by Normal/Fighting)
+          modifier *= 1.0  # No direct damage mod, but prevents immunity
         end
       end
       
@@ -363,7 +410,7 @@ module AdvancedAI
         when :MULTISCALE, :SHADOWSHIELD
           modifier *= 0.5 if target.hp == target.totalhp
         when :FILTER, :SOLIDROCK, :PRISMARMOR
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           modifier *= 0.75 if Effectiveness.super_effective?(effectiveness)
         when :FURCOAT
           modifier *= 0.5 if move.physicalMove?
@@ -372,7 +419,51 @@ module AdvancedAI
           modifier *= 2.0 if move.type == :FIRE
         when :THICKFAT
           modifier *= 0.5 if [:FIRE, :ICE].include?(move.type)
+        when :ICESCALES
+          modifier *= 0.5 if move.specialMove?  # Halves special damage
+        when :TERASHELL
+          # All hits become NVE at full HP
+          modifier *= 0.5 if target.hp == target.totalhp
         end
+      end
+      
+      # Ruin Abilities (affect ALL other Pokemon on field)
+      # These are field-wide auras, not target-specific
+      if attacker.respond_to?(:ability_id)
+        # Sword of Ruin (Chien-Pao): -25% Def to all others
+        # If opponent has it, our physical Defense is lowered
+        if target_ability == :SWORDOFRUIN && move.physicalMove?
+          modifier *= 1.0  # Already factored into target's damage calc
+        end
+        # Beads of Ruin (Chi-Yu): -25% SpDef to all others  
+        # If opponent has it, our special Defense is lowered
+        if target_ability == :BEADSOFRUIN && move.specialMove?
+          modifier *= 1.0  # Already factored into target's damage calc
+        end
+      end
+      
+      # Attacker has Ruin ability: boosts our effective damage
+      if attacker_ability == :SWORDOFRUIN && move.physicalMove?
+        modifier *= 1.25  # Target's Def is lowered by 25%
+      end
+      if attacker_ability == :BEADSOFRUIN && move.specialMove?
+        modifier *= 1.25  # Target's SpDef is lowered by 25%
+      end
+      # Opponent has Tablets of Ruin: our Atk is lowered
+      if target_ability == :TABLETSOFRUIN && move.physicalMove?
+        modifier *= 0.75  # Our Atk is lowered by 25%
+      end
+      # Opponent has Vessel of Ruin: our SpAtk is lowered
+      if target_ability == :VESSELOFRUIN && move.specialMove?
+        modifier *= 0.75  # Our SpAtk is lowered by 25%
+      end
+      
+      # Toxic Boost / Flare Boost
+      if attacker_ability == :TOXICBOOST && attacker.respond_to?(:poisoned?) && attacker.poisoned? && move.physicalMove?
+        modifier *= 1.5
+      end
+      if attacker_ability == :FLAREBOOST && attacker.respond_to?(:burned?) && attacker.burned? && move.specialMove?
+        modifier *= 1.5
       end
       
       return modifier

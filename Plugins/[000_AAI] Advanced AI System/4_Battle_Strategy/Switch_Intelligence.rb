@@ -134,6 +134,36 @@ class Battle::AI
       echoln("  [12/12] Can Secure KO (malus): -60")
     end
     
+    # 13. PENALTY: Stall Gameplan Active (-25 to -50 Points)
+    # Stall mons should NOT switch when their passive damage is ticking
+    if AdvancedAI.has_stall_moveset?(user)
+      stall_penalty = 0
+      @battle.allOtherSideBattlers(user.index).each do |target|
+        next unless target && !target.fainted?
+        leech_seed_val = (target.effects[PBEffects::LeechSeed] rescue -1)
+        stall_penalty += 15 if target.poisoned?
+        stall_penalty += 20 if target.status == :POISON && target.statusCount > 0  # Toxic
+        stall_penalty += 10 if target.burned?
+        stall_penalty += 15 if leech_seed_val.is_a?(Numeric) && leech_seed_val >= 0
+      end
+      if stall_penalty > 0
+        stall_penalty = [stall_penalty, 50].min
+        score -= stall_penalty
+        echoln("  [13/13] Stall Gameplan Active (malus): -#{stall_penalty}")
+      end
+      
+      # Additional: stall mons with recovery at decent HP should stay
+      hp_percent = user.hp.to_f / user.totalhp
+      has_recovery = user.moves.any? do |m|
+        next false unless m
+        AdvancedAI.healing_move?(m.id)
+      end
+      if has_recovery && hp_percent > 0.35
+        score -= 20
+        echoln("  [13/13] Stall Mon w/Recovery (malus): -20")
+      end
+    end
+    
     echoln "  ─────────────────────────────────────"
     echoln "  TOTAL SWITCH SCORE: #{score}"
     
@@ -142,6 +172,43 @@ class Battle::AI
     threshold = AdvancedAI::SWITCH_THRESHOLDS[tier] || 50
     echoln "  Threshold (#{tier}): #{threshold}"
     echoln "  Decision: #{score >= threshold ? 'SWITCH' : 'STAY'}"
+    
+    # === USER-FRIENDLY SWITCH SUMMARY ===
+    # Produces the [Switch] lines matching the showcase debug output
+    if type_score > 0
+      # Find which opponent type is threatening
+      my_types = get_real_types(user)
+      @battle.allOtherSideBattlers(user.index).each do |target|
+        next unless target && !target.fainted?
+        target.moves.each do |m|
+          next unless m && m.damagingMove? && m.type
+          type_mod = Effectiveness.calculate(m.type, *my_types)
+          if Effectiveness.super_effective?(type_mod)
+            echoln "[Switch] Type disadvantage detected: #{m.type} vs #{user.name}"
+            break
+          end
+        end
+      end
+    end
+    if survival_score > 0
+      # Show estimated incoming damage
+      @battle.allOtherSideBattlers(user.index).each do |target|
+        next unless target && !target.fainted?
+        max_dmg_pct = 0
+        best_move_name = nil
+        target.moves.each do |m|
+          next unless m && m.damagingMove?
+          dmg = estimate_incoming_damage_percent(user, m, target) rescue 0
+          if dmg > max_dmg_pct
+            max_dmg_pct = dmg
+            best_move_name = m.name
+          end
+        end
+        if max_dmg_pct > 0 && best_move_name
+          echoln "[Switch] Survival concern: incoming #{best_move_name} ~#{(max_dmg_pct * 100).to_i}%% estimated damage"
+        end
+      end
+    end
     
     return score
   end
@@ -311,12 +378,26 @@ class Battle::AI
       reserved_idx = party.length - 1
       echoln "[AAI DEBUG] ReserveLastPokemon Active! Reserved Index: #{reserved_idx}"
       
-      # Only filter if we have more than 1 option (never restrict the last available mon)
+      # Smart reserve: allow the Ace through if it's dramatically better than alternatives
       if available_switches.length > 1
-        available_switches.reject! do |pkmn| 
-          is_reserved = (party.index(pkmn) == reserved_idx)
-          echoln "[AAI DEBUG] Filtering #{pkmn.name} (Index #{party.index(pkmn)})? #{is_reserved}" if is_reserved
-          is_reserved
+        ace_mon = available_switches.find { |pkmn| party.index(pkmn) == reserved_idx }
+        non_ace = available_switches.reject { |pkmn| party.index(pkmn) == reserved_idx }
+        
+        if ace_mon && non_ace.length > 0
+          # Compare matchups to decide if we should override the reserve
+          ace_matchup = evaluate_switch_matchup(ace_mon, current_user)
+          best_non_ace_matchup = non_ace.map { |p| evaluate_switch_matchup(p, current_user) }.max
+          ace_advantage = ace_matchup - best_non_ace_matchup
+          
+          if ace_advantage >= 30
+            echoln "[AAI DEBUG] Ace #{ace_mon.name} has +#{ace_advantage} matchup advantage — keeping in options"
+            # Don't filter — leave the Ace in available_switches
+          else
+            available_switches = non_ace
+            echoln "[AAI DEBUG] Filtering Ace #{ace_mon.name} (advantage only +#{ace_advantage})"
+          end
+        else
+          available_switches = non_ace unless non_ace.empty?
         end
       end
     else
@@ -463,6 +544,10 @@ class Battle::AI
     role_bonus = evaluate_switch_role(pkmn, current_user, skill)
     score += role_bonus
     
+    # 4b. ROLE COUNTER-PICK (0-25 Points)
+    counter_bonus = role_counter_pick_bonus(pkmn, current_user, skill)
+    score += counter_bonus
+    
     # 5. ENTRY HAZARDS RESISTANCE (0-15 Points)
     if @battle.pbOwnedByPlayer?(get_battler_index(current_user))
       opponent_side = @battle.sides[1]
@@ -585,25 +670,54 @@ class Battle::AI
     return 0 unless skill >= 55
     score = 0
     
-    # Determine Role of current Pokemon
+    # Determine roles using the full 9-role detection system
     current_role = determine_pokemon_role(current_user)
     switch_role = determine_pokemon_role_from_stats(pkmn)
     
-    # Prefer Complementary Roles
+    # Also check the opponent's role for smart counter-switching
+    opponent = @battle.allOtherSideBattlers(get_battler_index(current_user)).find { |b| b && !b.fainted? }
+    opponent_role = opponent ? determine_pokemon_role(opponent) : :balanced
+    
+    # === Complementary Role Preferences ===
+    # Switch to something that covers the current mon's weaknesses
     case current_role
     when :sweeper
-      score += 15 if [:wall, :tank].include?(switch_role)
-    when :wall
+      score += 15 if [:wall, :stall, :tank].include?(switch_role)
+    when :wall, :stall
       score += 15 if [:sweeper, :wallbreaker].include?(switch_role)
+    when :tank
+      score += 15 if [:wallbreaker, :sweeper].include?(switch_role)
     when :support
-      score += 20 if [:sweeper, :wallbreaker].include?(switch_role)
+      score += 20 if [:sweeper, :wallbreaker].include?(switch_role)  # Support done → bring attacker
+    when :wallbreaker
+      score += 15 if [:wall, :stall, :tank].include?(switch_role)
+    when :pivot
+      score += 10 if [:sweeper, :wallbreaker, :tank].include?(switch_role)
+    when :lead
+      score += 15 if [:sweeper, :wallbreaker, :pivot].include?(switch_role)  # Lead done → bring offense
+    end
+    
+    # === Counter-Pick the Opponent ===
+    # Bring in something that beats what the opponent is doing
+    case opponent_role
+    when :sweeper
+      score += 20 if [:wall, :stall].include?(switch_role)  # Wall the sweeper
+    when :wall, :stall
+      score += 20 if switch_role == :wallbreaker  # Break the wall
+    when :wallbreaker
+      score += 15 if switch_role == :sweeper  # Outspeed the breaker
+    when :support
+      score += 15 if [:sweeper, :lead].include?(switch_role)  # Pressure before setup completes
+    when :tank
+      score += 15 if switch_role == :wallbreaker  # Break bulky offense
     end
     
     return score
   end
   
   # Find best switch Pokemon (public for Core.rb integration)
-  def find_best_switch_advanced(user, skill)
+  # forced_switch: true when terrible_moves triggered the switch (not voluntary)
+  def find_best_switch_advanced(user, skill, forced_switch = false)
     echoln "  ┌─────────────────────────────────────┐"
     echoln "  │ FINDING BEST REPLACEMENT            │"
     echoln "  └─────────────────────────────────────┘"
@@ -627,31 +741,40 @@ class Battle::AI
       echoln "  • #{pkmn.name}: Matchup = #{matchup_score}"
     end
     
-    # Filter reserved Pokemon
-    # 1. If we have multiple options, always save the Ace
-    # 2. If we only have the Ace left:
-    #    - If VOLUNTARY switch (user not fainted), save the Ace (stay in and die)
-    #    - If FORCED switch (user fainted), we must use the Ace (no choice)
+    # Filter reserved Pokemon (smart reserve)
+    # The Ace (last party slot) is normally kept in reserve, BUT:
+    # - If the Ace has a dramatically better matchup than all alternatives,
+    #   it makes no strategic sense to hold it back.
+    # - If forced (fainted/terrible_moves) and Ace is the only option, allow it.
     
-    is_voluntary_switch = user && !user.fainted?
+    is_voluntary_switch = user && !user.fainted? && !forced_switch
     
     if reserved_idx >= 0
-      should_filter = false
+      ace_entry = available_switches.find { |item| item[2] == reserved_idx }
+      non_ace   = available_switches.reject { |item| item[2] == reserved_idx }
       
-      if available_switches.length > 1
-        should_filter = true
-      elsif is_voluntary_switch && available_switches.length == 1
-        # Strict Mode: Don't bring out Ace to save a dying mon
-        should_filter = true
-        echoln "  [AAI] ReserveLastPokemon: Blocking voluntary switch to Ace"
-      end
-      
-      if should_filter
-        available_switches.reject! { |item| item[2] == reserved_idx }
-        if available_switches.empty?
-          echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded (No other options)"
+      if ace_entry && non_ace.length > 0
+        # We have both the Ace and other options — check if Ace is dramatically better
+        best_non_ace_score = non_ace.max_by { |_, s, _| s }[1]
+        ace_advantage = ace_entry[1] - best_non_ace_score
+        
+        if ace_advantage >= 30
+          # Ace is overwhelmingly better (e.g. Mega Houndoom vs Psychic/Ice)
+          # Let it through — holding it back would be strategically terrible
+          echoln "  [AAI] ReserveLastPokemon: Ace has +#{ace_advantage} matchup advantage — overriding reserve"
         else
+          # Ace is not dramatically better — save it for later
+          available_switches = non_ace
           echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from options"
+        end
+      elsif ace_entry && non_ace.empty?
+        # Ace is the only option
+        if is_voluntary_switch
+          # Voluntary switch with only Ace left — block it
+          available_switches = []
+          echoln "  [AAI] ReserveLastPokemon: Blocking voluntary switch to Ace (only option)"
+        else
+          echoln "  [AAI] ReserveLastPokemon: Forced switch — Ace is only option, allowing"
         end
       end
     end
@@ -668,6 +791,47 @@ class Battle::AI
     echoln "  ─────────────────────────────────────"
     echoln "  ✅ BEST OPTION: #{best_pkmn.name}"
     echoln "  Matchup Score: #{best_score}"
+    
+    # === [Switch] BEST SWITCH SUMMARY ===
+    echoln "[Switch] Best switch: #{best_pkmn.name} (Score: #{best_score})"
+    
+    # Sub-bullet: Type advantage vs opponents
+    switch_types = best_pkmn.types.compact
+    @battle.allOtherSideBattlers(user.index).each do |target|
+      next unless target && !target.fainted?
+      target_types = target.pbTypes(true).compact rescue []
+      next if target_types.empty?
+      
+      # Check for immunities and resistances
+      switch_types.each do |st|
+        next unless st
+        eff = Effectiveness.calculate(st, *target_types) rescue nil
+        next unless eff
+        if Effectiveness.ineffective?(eff)
+          echoln "  - Type advantage: #{target_types.first} immune (#{st})"
+        end
+      end
+    end
+    
+    # Sub-bullet: Role synergy
+    switch_roles = AdvancedAI.detect_roles(best_pkmn) rescue [:balanced]
+    user_roles = AdvancedAI.detect_roles(user) rescue [:balanced]
+    if switch_roles.any? && user_roles.any?
+      echoln "  - Role synergy: #{user_roles.first} → #{switch_roles.first}"
+    end
+    
+    # Sub-bullet: Entry hazard cost
+    hazard_dmg = calculate_entry_hazard_damage(best_pkmn, user) rescue 0
+    if hazard_dmg > 0
+      hazard_source = []
+      side = @battle.sides[user.index % 2]
+      hazard_source << "Stealth Rock" if side.effects[PBEffects::StealthRock]
+      hazard_source << "Spikes" if side.effects[PBEffects::Spikes] > 0
+      hazard_source << "Toxic Spikes" if side.effects[PBEffects::ToxicSpikes] > 0
+      hazard_source << "Sticky Web" if side.effects[PBEffects::StickyWeb]
+      source_str = hazard_source.empty? ? "hazards" : hazard_source.join(", ")
+      echoln "  - Entry hazard cost: #{(hazard_dmg * 100).round(0)}%% (#{source_str})"
+    end
     
     # Return party index directly (Core.rb expects integer)
     return best_idx
@@ -1015,7 +1179,7 @@ class Battle::AI
     if hazard_damage > 0
       hazard_penalty = (hazard_damage * 100).to_i  # Scale: 50% hazard damage = -50 points
       score -= hazard_penalty
-      echoln "[HAZARD] #{(hazard_damage * 100).round(1)}% HP on switch-in [-#{hazard_penalty}]"
+      echoln "[HAZARD] #{(hazard_damage * 100).round(1)}%% HP on switch-in [-#{hazard_penalty}]"
       
       # Extra penalty if hazards would faint us immediately
       if hazard_damage >= 1.0
@@ -1023,7 +1187,7 @@ class Battle::AI
         echoln "FATAL] Hazards would KO on switch-in! [-100]"
       elsif hazard_damage >= 0.50
         score -= 30   # Massive damage = very risky switch
-        echoln "[CRITICAL] 50%+ hazard damage! [-30]"
+        echoln "[CRITICAL] 50%%+ hazard damage! [-30]"
       end
     end
     
@@ -1081,17 +1245,17 @@ class Battle::AI
           # Convert damage to a penalty (higher damage = worse score)
           damage_penalty = (damage_percent * 50).to_i  # Scale: 100% damage = -50 points
           score -= damage_penalty
-          echoln "    [DAMAGE] #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-#{damage_penalty}]"
+          echoln "    [DAMAGE] #{move.name} (~#{(damage_percent * 100).to_i}%% HP) [-#{damage_penalty}]"
         else
           # Normal scenario: Penalize based on OHKO/2HKO thresholds
           if damage_percent >= 0.85
             # Likely OHKO - this is a FATAL switch!
             score -= 60
-            echoln "    [OHKO RISK] #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-60]"
+            echoln "    [OHKO RISK] #{move.name} (~#{(damage_percent * 100).to_i}%% HP) [-60]"
           elsif damage_percent >= 0.45
             # Likely 2HKO - risky switch
             score -= 30
-            echoln "    [2HKO RISK] #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-30]"
+            echoln "    [2HKO RISK] #{move.name} (~#{(damage_percent * 100).to_i}%% HP) [-30]"
           elsif damage_percent >= 0.30
             # Moderate damage - somewhat risky
             score -= 10
@@ -1155,14 +1319,9 @@ class Battle::AI
   end
   
   def determine_pokemon_role(battler)
-    # Simplified role detection (will be expanded in [011])
-    if battler.attack > battler.spatk && battler.speed > 100
-      return :sweeper
-    elsif battler.defense > 100 || battler.spdef > 100
-      return :wall
-    else
-      return :balanced
-    end
+    # Use the full 9-role detection system from RoleDetection
+    primary, _secondary = AdvancedAI.detect_roles(battler)
+    return primary || :balanced
   end
   
   # Helper to get REAL types (ignoring Illusion)
@@ -1179,14 +1338,9 @@ class Battle::AI
   end
   
   def determine_pokemon_role_from_stats(pkmn)
-    # Simplified role detection
-    if pkmn.attack > pkmn.spatk && pkmn.speed > 100
-      return :sweeper
-    elsif pkmn.defense > 100 || pkmn.spdef > 100
-      return :wall
-    else
-      return :balanced
-    end
+    # Use the full 9-role detection system from RoleDetection
+    primary, _secondary = AdvancedAI.detect_roles(pkmn)
+    return primary || :balanced
   end
   
   # Check if current Pokemon can KO any opponent
@@ -1495,29 +1649,13 @@ class Battle::AI
     
     # Check if opponent used setup move last turn
     last_move = opponent.battler.lastMoveUsed rescue nil
-    return true if last_move && is_setup_move?(last_move)
+    return true if last_move && AdvancedAI.setup_move?(last_move)
     
     false
   end
   
-  # Check if move is a setup move
-  def is_setup_move?(move_id)
-    @setup_move_cache ||= {}
-    return @setup_move_cache[move_id] if @setup_move_cache.key?(move_id)
-    
-    setup_moves = [
-      :SWORDSDANCE, :DRAGONDANCE, :NASTYPLOT, :CALMMIND, :QUIVERDANCE,
-      :BULKUP, :CURSE, :AGILITY, :ROCKPOLISH, :AUTOTOMIZE,
-      :TAILWIND, :TRICKROOM, :SHELLSMASH, :GEOMANCY, :GROWTH,
-      :HONECLAWS, :WORKUP, :MEDITATE, :SHARPEN, :DEFENSECURL,
-      :WITHDRAW, :HARDENPOKEMON, :ACIDARMOR, :BARRIER, :IRONDEFENSE,
-      :AMNESIA, :COSMICPOWER, :STOCKPILE, :COIL, :VICTORYDANCE
-    ]
-    
-    result = setup_moves.include?(move_id)
-    @setup_move_cache[move_id] = result
-    result
-  end
+  # Setup move check - delegated to AdvancedAI.setup_move? (Move_Categories.rb)
+  # Uses the comprehensive SETUP_MOVES hash instead of a local hardcoded list
   
   # Evaluate setup threat level
   def evaluate_setup_threat(opponent)
@@ -1536,7 +1674,7 @@ class Battle::AI
     # Check if opponent has setup moves in their moveset
     opponent.moves.each do |move|
       next unless move
-      if is_setup_move?(move.id)
+      if AdvancedAI.setup_move?(move.id)
         threat += 10  # Has setup potential
       end
     end

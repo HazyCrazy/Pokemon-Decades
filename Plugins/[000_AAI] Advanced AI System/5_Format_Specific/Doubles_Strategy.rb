@@ -115,6 +115,18 @@ module AdvancedAI
       elsif user_hp_percent < 0.50
         score -= 30
       end
+
+      # === CONFLICT GUARD ===
+      # If partner already registered Helping Hand / Protect, redirect is pointless.
+      partner_move = DoublesCoordination.partner_planned_move_id(battle, partner) rescue nil
+      if partner_move
+        if partner_move == :HELPINGHAND
+          score -= 200  # Redirect + Helping Hand = zero offense
+        end
+        if DoublesCoordination::PROTECT_MOVE_IDS.include?(partner_move)
+          score -= 100  # Partner protected — doesn't need redirect cover
+        end
+      end
       
       return score
     end
@@ -132,6 +144,19 @@ module AdvancedAI
       # Only useful for partner (not user)
       return 0 if target.index == user.index
       return 0 unless user.allAllies.include?(target)
+
+      # === CONFLICT GUARD ===
+      # If partner already registered a non-attacking move (Follow Me,
+      # Rage Powder, Protect, etc.), Helping Hand is wasted.
+      partner_move = DoublesCoordination.partner_planned_move_id(battle, target) rescue nil
+      if partner_move
+        if DoublesCoordination::REDIRECT_MOVE_IDS.include?(partner_move)
+          return -200  # Redirect + Helping Hand = zero offense turn
+        end
+        if DoublesCoordination::PROTECT_MOVE_IDS.include?(partner_move)
+          return -150  # Protect + Helping Hand = wasted
+        end
+      end
       
       # Check if partner has strong attacking move ready
       partner_has_strong_move = target.moves.any? do |m|

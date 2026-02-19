@@ -67,7 +67,21 @@ module AdvancedAI
       return {} unless battle && battler
       initialize_battle(battle)
       
-      battler_key = "#{battler.index}_#{battler.pokemon.personalID}"
+      # Handle both Battler/AIBattler (have .index) and Pokemon (no .index)
+      if battler.respond_to?(:index)
+        pkmn = battler.respond_to?(:pokemon) ? battler.pokemon : battler
+        battler_key = "#{battler.index}_#{pkmn.personalID}"
+      elsif battler.respond_to?(:personalID)
+        # Pokemon object — search all keys for matching personalID
+        pid = battler.personalID
+        store = @battle_memory[battle.object_id]
+        store.each do |key, val|
+          return val if key.end_with?("_#{pid}")
+        end
+        return {}
+      else
+        return {}
+      end
       @battle_memory[battle.object_id][battler_key] || {}
     end
     
@@ -214,3 +228,37 @@ module AdvancedAI
 end
 
 AdvancedAI.log("Move Memory System loaded (Reborn-inspired)", "Memory")
+
+#===============================================================================
+# Integration in Battle::AI - Wires move memory into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_move_memory(score, move, user, target)
+    return score unless move && target
+    
+    # Penalize overly repetitive moves (predictable play)
+    freq = AdvancedAI.move_frequency(@battle, user, move.id)
+    if freq >= 3
+      score -= 10  # Slight penalty for using same move 3+ times
+    end
+    
+    # If we know the opponent has a priority move, slight boost to bulky plays
+    if AdvancedAI.has_priority_move?(@battle, target)
+      if AdvancedAI.protect_move?(move.id)
+        score += 10  # Protect is good against priority users
+      end
+    end
+    
+    # If opponent has healing, boost status/setup over weak attacks
+    if AdvancedAI.has_healing_move?(@battle, target)
+      if move.damagingMove? && move.power < 60
+        score -= 10  # Weak attacks get outhealed
+      end
+      if AdvancedAI.setup_move?(move.id)
+        score += 5  # Setup to overpower healing
+      end
+    end
+    
+    return score
+  end
+end

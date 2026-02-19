@@ -261,7 +261,8 @@ module AdvancedAI
         next if setup_moves.empty?
         
         # Check if setup would enable sweep
-        current_stages = mon.stages[:ATTACK] + mon.stages[:SPECIAL_ATTACK]
+        mon_stages = mon.respond_to?(:stages) ? mon.stages : {}
+        current_stages = (mon_stages[:ATTACK] || 0) + (mon_stages[:SPECIAL_ATTACK] || 0)
         
         if current_stages >= 2
           # Already set up - can we sweep?
@@ -303,8 +304,8 @@ module AdvancedAI
       our_side.each do |mon|
         next unless mon && !mon.fainted?
         
-        priority_moves = mon.moves.select do |m|
-          m && m.priority > 0 && m.damagingMove?
+        priority_moves = mon.moves.map { |m| resolve_move(m) }.compact.select do |rm|
+          rm.priority > 0 && rm.damagingMove?
         end
         
         next if priority_moves.empty?
@@ -443,7 +444,8 @@ module AdvancedAI
         if win_con[:pokemon] == user
           if [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :QUIVERDANCE, :CALMMIND,
               :SHELLSMASH, :AGILITY].include?(move.id)
-            score += 35 if user.stages[:ATTACK] < 2 && user.stages[:SPECIAL_ATTACK] < 2
+            user_stg = user.respond_to?(:stages) ? user.stages : {}
+            score += 35 if (user_stg[:ATTACK] || 0) < 2 && (user_stg[:SPECIAL_ATTACK] || 0) < 2
           end
         end
         
@@ -491,12 +493,13 @@ module AdvancedAI
       best_damage = 0
       
       user.moves.each do |move|
-        next unless move && move.damagingMove?
+        resolved = resolve_move(move)
+        next unless resolved && resolved.damagingMove?
         
-        damage = estimate_damage_percent(user, target, move)
+        damage = estimate_damage_percent(user, target, resolved)
         if damage > best_damage
           best_damage = damage
-          best_move = move
+          best_move = resolved
         end
       end
       
@@ -504,6 +507,7 @@ module AdvancedAI
     end
     
     def self.estimate_damage_percent(user, target, move)
+      move = resolve_move(move) unless move.respond_to?(:damagingMove?)
       return 0 unless move && move.damagingMove?
       
       # Get attacking stat - handle both Battler and Pokemon objects
@@ -548,8 +552,9 @@ module AdvancedAI
       return 0 unless attacker.moves
       
       attacker.moves.each do |move|
-        next unless move && move.damagingMove?
-        damage = estimate_damage_percent(attacker, defender, move)
+        resolved = resolve_move(move)
+        next unless resolved && resolved.damagingMove?
+        damage = estimate_damage_percent(attacker, defender, resolved)
         damage_hp = (damage / 100.0) * defender.totalhp
         max_damage = damage_hp if damage_hp > max_damage
       end
@@ -558,8 +563,10 @@ module AdvancedAI
     end
     
     def self.outspeeds?(user, target)
-      user_speed = user.speed * stage_multiplier(user.stages[:SPEED] || 0)
-      target_speed = target.speed * stage_multiplier(target.stages[:SPEED] || 0)
+      user_stage  = (user.respond_to?(:stages)   ? (user.stages[:SPEED]   || 0) : 0)
+      target_stage = (target.respond_to?(:stages) ? (target.stages[:SPEED] || 0) : 0)
+      user_speed   = user.speed * stage_multiplier(user_stage)
+      target_speed = target.speed * stage_multiplier(target_stage)
       
       user_speed > target_speed
     end
@@ -568,8 +575,9 @@ module AdvancedAI
       return false unless user.moves
       
       user.moves.any? do |move|
-        next false unless move && move.priority > 0 && move.damagingMove?
-        estimate_damage_percent(user, target, move) >= (target.hp.to_f / target.totalhp * 100)
+        resolved = resolve_move(move)
+        next false unless resolved && resolved.priority > 0 && resolved.damagingMove?
+        estimate_damage_percent(user, target, resolved) >= (target.hp.to_f / target.totalhp * 100)
       end
     end
     
@@ -580,6 +588,37 @@ module AdvancedAI
       else
         2.0 / (2 - stage)
       end
+    end
+
+    #=========================================================================
+    # Move Data Resolver
+    # Pokemon::Move only stores :id / :pp / :ppup — it does NOT have
+    # damagingMove?, physicalMove?, type, power, or priority.
+    # Battle::Move DOES, but party mons hold Pokemon::Move objects.
+    # This struct bridges the gap for any code that needs those fields.
+    #=========================================================================
+    MoveProxy = Struct.new(:id, :type, :power, :priority, :category, keyword_init: true) do
+      def damagingMove?; category == 0 || category == 1; end
+      def physicalMove?; category == 0; end
+      def specialMove?;  category == 1; end
+      def statusMove?;   category == 2; end
+    end
+
+    # Wraps a Pokemon::Move (or Battle::Move) so callers always get the full
+    # set of query methods.  Returns nil if the move data can't be resolved.
+    def self.resolve_move(move)
+      return move if move.respond_to?(:damagingMove?)  # Already a Battle::Move
+
+      data = GameData::Move.get(move.id) rescue nil
+      return nil unless data
+
+      MoveProxy.new(
+        id:       data.id,
+        type:     data.type,
+        power:    data.power || 0,
+        priority: data.priority || 0,
+        category: data.category  # 0 = Physical, 1 = Special, 2 = Status
+      )
     end
   end
 end

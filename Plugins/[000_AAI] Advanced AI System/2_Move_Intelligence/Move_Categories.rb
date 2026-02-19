@@ -301,6 +301,57 @@ module AdvancedAI
     }
     
     #===========================================================================
+    # Stall Move Detection (Toxic Stall / Defensive Strategy)
+    #===========================================================================
+    # Moves that define the stall archetype: passive damage + protection + recovery
+    STALL_MOVES = {
+      # Passive Damage Sources
+      :TOXIC          => { role: :passive_damage, target: :opponent },
+      :LEECHSEED      => { role: :passive_damage, target: :opponent, self_heal: true },
+      :WILLOWISP      => { role: :passive_damage, target: :opponent },
+      
+      # Protection (Protect variants + Wish stalling)
+      :PROTECT        => { role: :protection },
+      :DETECT         => { role: :protection },
+      :BANEFULBUNKER  => { role: :protection, effect: :poison },
+      :SPIKYSHIELD    => { role: :protection, effect: :damage },
+      :KINGSSHIELD    => { role: :protection, effect: :attack_drop },
+      :OBSTRUCT       => { role: :protection, effect: :defense_drop },
+      :SILKTRAP       => { role: :protection, effect: :speed_drop },
+      :BURNINGBULWARK => { role: :protection, effect: :burn },
+      
+      # Recovery
+      :RECOVER        => { role: :recovery, heal: 0.5 },
+      :SOFTBOILED     => { role: :recovery, heal: 0.5 },
+      :ROOST          => { role: :recovery, heal: 0.5 },
+      :SLACKOFF       => { role: :recovery, heal: 0.5 },
+      :WISH           => { role: :recovery, heal: 0.5, delayed: true },
+      :REST           => { role: :recovery, heal: 1.0, sleep: true },
+      :SYNTHESIS      => { role: :recovery, heal: 0.5, weather: true },
+      :MOONLIGHT      => { role: :recovery, heal: 0.5, weather: true },
+      :MORNINGSUN     => { role: :recovery, heal: 0.5, weather: true },
+      :STRENGTHSAP    => { role: :recovery, heal: :opponent_attack },
+      :SHOREUP        => { role: :recovery, heal: 0.5 },
+      
+      # Utility (Disruption that supports stall gameplan)
+      :KNOCKOFF       => { role: :utility, effect: :item_removal },
+      :SCALD          => { role: :utility, effect: :burn_chance },
+      :HAZE           => { role: :utility, effect: :stat_reset },
+      :WHIRLWIND      => { role: :utility, effect: :phaze },
+      :ROAR           => { role: :utility, effect: :phaze },
+      :DEFOG          => { role: :utility, effect: :hazard_removal },
+      :RAPIDSPIN      => { role: :utility, effect: :hazard_removal },
+      :TAUNT          => { role: :utility, effect: :move_restriction },
+      :ENCORE         => { role: :utility, effect: :move_lock },
+      
+      # Hazards (Part of stall team identity)
+      :STEALTHROCK    => { role: :hazard },
+      :SPIKES         => { role: :hazard },
+      :TOXICSPIKES    => { role: :hazard },
+      :STICKYWEB      => { role: :hazard },
+    }
+    
+    #===========================================================================
     # Pivot Move Detection (U-turn, Volt Switch, etc.)
     #===========================================================================
     PIVOT_MOVES = [
@@ -402,6 +453,52 @@ module AdvancedAI
       return PIVOT_MOVES.include?(move_id)
     end
     
+    def self.stall_move?(move_id)
+      return false if !move_id
+      move_id = move_id.to_sym if move_id.is_a?(String)
+      return STALL_MOVES.key?(move_id)
+    end
+    
+    # Returns the stall role data for a move (or nil)
+    def self.get_stall_data(move_id)
+      return nil if !move_id
+      move_id = move_id.to_sym if move_id.is_a?(String)
+      return STALL_MOVES[move_id]
+    end
+    
+    # Checks if a Pokemon has a stall moveset (2+ stall-role moves)
+    def self.has_stall_moveset?(pokemon)
+      return false unless pokemon
+      
+      moves = if pokemon.respond_to?(:moves)
+                pokemon.moves
+              elsif pokemon.respond_to?(:battler) && pokemon.battler.respond_to?(:moves)
+                pokemon.battler.moves
+              else
+                return false
+              end
+      
+      return false unless moves
+      
+      stall_count = 0
+      has_passive_damage = false
+      has_recovery_or_protect = false
+      
+      moves.each do |m|
+        next unless m
+        move_id = m.respond_to?(:id) ? m.id : m
+        data = STALL_MOVES[move_id]
+        next unless data
+        
+        stall_count += 1
+        has_passive_damage = true if data[:role] == :passive_damage
+        has_recovery_or_protect = true if [:recovery, :protection].include?(data[:role])
+      end
+      
+      # A stall mon has 2+ stall moves AND either passive damage + recovery/protect
+      stall_count >= 2 && (has_passive_damage || has_recovery_or_protect)
+    end
+    
     # Returns Setup Data (which Stat, by how much)
     def self.get_setup_data(move_id)
       return nil if !move_id
@@ -465,8 +562,28 @@ module AdvancedAI
     MoveCategories.protect_move?(move_id)
   end
   
+  def self.screen_move?(move_id)
+    MoveCategories.screen_move?(move_id)
+  end
+  
+  def self.status_move?(move_id)
+    MoveCategories.status_move?(move_id)
+  end
+  
   def self.pivot_move?(move_id)
     MoveCategories.pivot_move?(move_id)
+  end
+  
+  def self.stall_move?(move_id)
+    MoveCategories.stall_move?(move_id)
+  end
+  
+  def self.get_stall_data(move_id)
+    MoveCategories.get_stall_data(move_id)
+  end
+  
+  def self.has_stall_moveset?(pokemon)
+    MoveCategories.has_stall_moveset?(pokemon)
   end
   
   def self.get_setup_data(move_id)

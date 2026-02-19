@@ -31,7 +31,12 @@ module AdvancedAI
         if move.type == :FIRE
           bonus += 30  # Fire moves x1.5
         elsif move.type == :WATER
-          bonus -= 30  # Water moves x0.5
+          # Hydro Steam gets BOOSTED in Sun instead of weakened!
+          if move.id == :HYDROSTEAM
+            bonus += 35  # 1.5x power in Sun (reversed)
+          else
+            bonus -= 30  # Water moves x0.5
+          end
         end
         
         # Weather Ball
@@ -131,6 +136,14 @@ module AdvancedAI
         if move.type == :ELECTRIC && user.affectedByTerrain?
           bonus += 25  # x1.3 power
         end
+        # Psyblade gets 1.5x power in Electric Terrain
+        if move.id == :PSYBLADE && user.affectedByTerrain?
+          bonus += 30  # 1.5x power boost
+        end
+        # Terrain Pulse becomes Electric type and 2x power
+        if move.id == :TERRAINPULSE && user.affectedByTerrain?
+          bonus += 35  # Type change + 2x power
+        end
         bonus -= 40 if move.id == :SLEEPPOWDER || move.id == :SPORE  # Can't sleep
         
       when :Grassy
@@ -143,6 +156,11 @@ module AdvancedAI
         # Grassy Glide gets priority
         bonus += 30 if move.id == :GRASSYGLIDE && user.affectedByTerrain?
         
+        # Terrain Pulse becomes Grass type and 2x power
+        if move.id == :TERRAINPULSE && user.affectedByTerrain?
+          bonus += 35  # Type change + 2x power
+        end
+        
         # End-of-turn 1/16 HP heal for grounded Pokemon
         # Makes stalling/defensive play more valuable
         if user.affectedByTerrain? && move.statusMove?
@@ -152,6 +170,10 @@ module AdvancedAI
       when :Psychic
         if move.type == :PSYCHIC && user.affectedByTerrain?
           bonus += 25  # x1.3 power
+        end
+        # Terrain Pulse becomes Psychic type and 2x power
+        if move.id == :TERRAINPULSE && user.affectedByTerrain?
+          bonus += 35  # Type change + 2x power
         end
         prio = move.respond_to?(:priority) ? move.priority : (move.respond_to?(:move) ? move.move.priority : 0)
         bonus -= 40 if prio > 0  # Priority blocked
@@ -163,6 +185,10 @@ module AdvancedAI
         bonus -= 40 if move.statusMove? && target && target.affectedByTerrain?  # Status blocked
         # Misty Explosion boost
         bonus += 25 if move.id == :MISTYEXPLOSION
+        # Terrain Pulse becomes Fairy type and 2x power
+        if move.id == :TERRAINPULSE && user.affectedByTerrain?
+          bonus += 35  # Type change + 2x power
+        end
       end
       
       # Ability Synergies

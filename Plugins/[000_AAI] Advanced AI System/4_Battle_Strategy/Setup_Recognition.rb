@@ -127,9 +127,9 @@ module AdvancedAI
       
       # 4. Coverage Moves
       known_moves = AdvancedAI.get_memory(battle, attacker)
-      if known_moves && known_moves[:moves_seen]
+      if known_moves && known_moves[:moves]
         coverage_count = 0
-        known_moves[:moves_seen].each do |move_id|
+        known_moves[:moves].each do |move_id|
           move = GameData::Move.try_get(move_id)
           next if !move || move.category == :Status
           coverage_count += 1
@@ -206,8 +206,8 @@ module AdvancedAI
           score = 85
           score += count_setup_stages(target) * 10
           
-          # Type effectiveness
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          # Type effectiveness (handle both Battler and Pokemon)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           score += 20 if Effectiveness.super_effective?(effectiveness)
           score -= 20 if Effectiveness.not_very_effective?(effectiveness)
           
@@ -353,5 +353,56 @@ module AdvancedAI
   
   def self.baton_pass_chain?(battle, side_index)
     SetupRecognition.baton_pass_chain?(battle, side_index)
+  end
+end
+
+#===============================================================================
+# Integration in Battle::AI - Wires setup evaluation into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_setup_evaluation(score, move, user, target)
+    return score unless move
+    skill = @trainer&.skill || 100
+    
+    real_user = user.respond_to?(:battler) ? user.battler : user
+    
+    # If opponent has setup boosts, prioritize counter-measures
+    if target
+      real_target = target.respond_to?(:battler) ? target.battler : target
+      threat = AdvancedAI.assess_setup_threat(@battle, real_target, real_user)
+      
+      if threat >= 5.0
+        # High threat: boost phaze moves (Roar, Whirlwind, Dragon Tail)
+        phaze_moves = [:ROAR, :WHIRLWIND, :DRAGONTAIL, :CIRCLETHROW, :HAZE, :CLEARSMOG]
+        if phaze_moves.include?(move.id)
+          score += (threat * 5).to_i  # Up to +50 for Haze/phaze vs boosted foe
+        end
+        
+        # Priority moves are great against boosted sweepers
+        if move.priority > 0 && move.damagingMove?
+          score += (threat * 3).to_i  # Up to +30
+        end
+      end
+      
+      # Should we counter setup right now?
+      if AdvancedAI.should_counter_setup_now?(@battle, real_user, real_target, skill)
+        counter_move = AdvancedAI.find_best_setup_counter(@battle, real_user, real_target)
+        if counter_move && move.id == counter_move
+          score += 25  # Boost the recommended counter move
+        end
+      end
+    end
+    
+    # Our own setup: boost setup moves if safe
+    if AdvancedAI.setup_move?(move.id) && target
+      real_target = target.respond_to?(:battler) ? target.battler : target
+      # Don't set up if opponent is already boosted and threatening
+      opponent_threat = AdvancedAI.assess_setup_threat(@battle, real_target, real_user)
+      if opponent_threat >= 6.0
+        score -= 20  # Don't set up when opponent is already boosted
+      end
+    end
+    
+    return score
   end
 end
