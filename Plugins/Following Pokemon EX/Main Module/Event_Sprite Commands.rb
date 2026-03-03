@@ -74,26 +74,32 @@ module FollowingPkmn
   # Script Command for checking whether the current follower is waterborne
   #-----------------------------------------------------------------------------
   def self.waterborne_follower?
-    return false if !FollowingPkmn.can_check?
-    pkmn = FollowingPkmn.get_pokemon
-    return false if !pkmn
-    
-    # Always follow if Pokemon is water type
-    return true if pkmn.hasType?(:WATER)
-    
-    # Always follow if the Pokemon has a swimming or levitate sprite available
-    # This takes priority over the exceptions list
-    return true if FollowingPkmn.has_swimming_sprite?
-    
-    # Check exceptions list before checking airborne
-    return false if FollowingPkmn::SURFING_FOLLOWERS_EXCEPTIONS.any? do |s|
-      s == pkmn.species || s.to_s == "#{pkmn.species}_#{pkmn.form}"
+    return false if defined?(@@checking_waterborne) && @@checking_waterborne
+    @@checking_waterborne = true
+    begin
+      return false if !FollowingPkmn.can_check?
+      pkmn = FollowingPkmn.get_pokemon
+      return false if !pkmn
+      
+      # Always follow if Pokemon is water type
+      return true if pkmn.hasType?(:WATER)
+      
+      # Always follow if the Pokemon has a swimming or levitate sprite available
+      # This takes priority over the exceptions list
+      return true if FollowingPkmn.has_swimming_sprite?
+      
+      # Check exceptions list before checking airborne
+      return false if FollowingPkmn::SURFING_FOLLOWERS_EXCEPTIONS.any? do |s|
+        s == pkmn.species || s.to_s == "#{pkmn.species}_#{pkmn.form}"
+      end
+      
+      # Follow if the Pokemon flies or levitates (and not in exceptions)
+      return true if FollowingPkmn.airborne_follower?
+      
+      return false
+    ensure
+      @@checking_waterborne = false
     end
-    
-    # Follow if the Pokemon flies or levitates (and not in exceptions)
-    return true if FollowingPkmn.airborne_follower?
-    
-    return false
   end
   #-----------------------------------------------------------------------------
   # Script Command for checking whether the current follower should use swimming sprites

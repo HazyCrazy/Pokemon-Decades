@@ -40,7 +40,7 @@ module FollowingPkmn
   # Script Command to toggle Following Pokemon
   #-----------------------------------------------------------------------------
   def self.toggle(forced = nil, anim = nil)
-    return if !FollowingPkmn.can_check? || !FollowingPkmn.get
+    return if !FollowingPkmn.can_check?
     return if !FollowingPkmn.get_pokemon
     anim_1 = FollowingPkmn.active?
     if !forced.nil?

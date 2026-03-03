@@ -1,4 +1,4 @@
-module FollowingPkmn
+ module FollowingPkmn
   # Common event that contains "FollowingPkmn.talk" in  a script command
   # Change this if you want a separate common event to play when talking to
   # Following Pokemon. Otherwise, set this to nil.
@@ -17,15 +17,19 @@ module FollowingPkmn
   ANIMATION_EMOTE_POISON    = 17
 
   # The key the player needs to press to toggle followers. Set this to nil if
-  # you want to disable this feature. (:JUMPUP is the A key by default)
-  TOGGLE_FOLLOWER_KEY       = :JUMPUP
+  # you want to disable this feature. (A key)
+  TOGGLE_FOLLOWER_KEY       = Input::JUMPUP
 
- # Show the option to toggle Following Pokemon in the Options screen.
-  SHOW_TOGGLE_IN_OPTIONS    = false
+  # Show the option to toggle Following Pokemon in the Options screen.
+  SHOW_TOGGLE_IN_OPTIONS    = true
 
   # The key the player needs to press to quickly cycle through their party. Set
-  # this to nil if you want to disable this feature (:JUMPDOWN is the S key by default)
-  CYCLE_PARTY_KEY           = :JUMPDOWN
+  # this to nil if you want to disable this feature.
+  # Input::JUMPDOWN is S key - rotates party forward (first Pokemon goes to end)
+  # Input::AUX2 is W key - rotates party backward (last Pokemon goes to first)
+  # Input::JUMPUP is A key - swaps first and second Pokemon
+  CYCLE_PARTY_FORWARD_KEY  = Input::JUMPDOWN
+  CYCLE_PARTY_BACKWARD_KEY = Input::AUX2
 
   # Status tones to be used, if this is true (Red, Green, Blue)
   APPLY_STATUS_TONES        = true
@@ -117,4 +121,53 @@ module FollowingPkmn
     # Gen VIII
     :ROOKIDEE, :CALYREX_1, :CALYREX_2
   ]
+
+  #-----------------------------------------------------------------------------
+  # Fly Animation Settings
+  #-----------------------------------------------------------------------------
+  # Set to true to disable the fly animation
+  DISABLE_FLY_ANIMATION = false
+
+  #-----------------------------------------------------------------------------
+  # Distance Setting
+  #-----------------------------------------------------------------------------
+  # The distance (in pixels) to visually push the follower away from the player
+  # to prevent overlap.
+  FOLLOWER_DISTANCE_OFFSET = 8
+
+  # Specific distance offsets for certain Pokemon (e.g. large sprites).
+  # Use this to override the default offset above.
+  # Format: :SPECIES => offset_in_pixels
+  FOLLOWER_DISTANCE_EXCEPTIONS = {
+    # Gen 1
+    :VENUSAUR   => 16, :CHARIZARD  => 16, :BLASTOISE  => 16,
+    :ONIX       => 24, :GYARADOS   => 24, :LAPRAS     => 16,
+    :SNORLAX    => 16, :ARTICUNO   => 16, :ZAPDOS     => 16,
+    :MOLTRES    => 16, :DRAGONITE  => 16, :MEWTWO     => 16,
+    :RHYDON     => 16,
+    # Gen 2
+    :MEGANIUM   => 16, :FERALIGATR => 16, :STEELIX    => 24,
+    :LUGIA      => 24, :HOOH       => 24, :TYRANITAR  => 16,
+    # Gen 3
+    :SCEPTILE   => 16, :SWAMPERT   => 16, :WAILORD    => 32,
+    :AGGRON     => 16, :METAGROSS  => 16, :REGIROCK   => 16,
+    :REGICE     => 16, :REGISTEEL  => 16, :KYOGRE     => 32,
+    :GROUDON    => 32, :RAYQUAZA   => 32,
+    # Gen 4
+    :TORTERRA   => 24, :GARCHOMP   => 16, :RHYPERIOR  => 24,
+    :DIALGA     => 32, :PALKIA     => 32, :HEATRAN    => 16,
+    :REGIGIGAS  => 24, :GIRATINA   => 32, :ARCEUS     => 24,
+    # Gen 5
+    :SERPERIOR  => 16, :SCOLIPEDE  => 24, :GIGALITH   => 16,
+    :RESHIRAM   => 32, :ZEKROM     => 32, :KYUREM     => 32,
+    # Gen 6
+    :XERNEAS    => 24, :YVELTAL    => 24, :ZYGARDE    => 32,
+    :HOOPA      => 24, :VOLCANION  => 16,
+    # Gen 7
+    :SOLGALEO   => 24, :LUNALA     => 24, :NECROZMA   => 24,
+    :GUZZLORD   => 32, :STAKATAKA  => 32,
+    # Gen 8
+    :ETERNATUS  => 32, :ZAMAZENTA  => 16, :ZACIAN     => 16,
+    :CALYREX    => 16, :REGIDRAGO  => 16, :REGIELEKI  => 16
+  }
 end

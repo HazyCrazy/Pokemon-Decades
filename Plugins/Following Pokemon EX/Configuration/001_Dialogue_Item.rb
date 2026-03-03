@@ -4,8 +4,8 @@
 EventHandlers.add(:following_pkmn_item, :battle_map, proc { |_pkmn, _random_val|
   if $game_map.name.include?(_INTL("Battle"))
     # This array can be edited and extended to your hearts content.
-        items = [:BIGNUGGET]
-	#items = [:POKEBALL, :POKEBALL, :POKEBALL, :GREATBALL, :GREATBALL, :ULTRABALL]
+    items = [:BIGNUGGET]
+    #items = [:POKEBALL, :POKEBALL, :POKEBALL, :GREATBALL, :GREATBALL, :ULTRABALL]
     # Choose a random item from the items array, give the player 2 of the item
     # with the message "{1} is holding a round object..."
     next true if FollowingPkmn.item(items.sample, 2, _INTL("{1} is holding a round object..."))
@@ -17,7 +17,7 @@ EventHandlers.add(:following_pkmn_item, :battle_map, proc { |_pkmn, _random_val|
 EventHandlers.add(:following_pkmn_item, :regular, proc { |_pkmn, _random_val|
   items = [
     :BIGNUGGET,
-	#:POTION,        :SUPERPOTION,  :FULLRESTORE,    :REVIVE,        :PPUP,
+    #:POTION,        :SUPERPOTION,  :FULLRESTORE,    :REVIVE,        :PPUP,
     #:PPMAX,         :RARECANDY,    :REPEL,          :MAXREPEL,      :ESCAPEROPE,
     #:HONEY,         :TINYMUSHROOM, :PEARL,          :NUGGET,        :GREATBALL,
     #:ULTRABALL,     :THUNDERSTONE, :MOONSTONE,      :SUNSTONE,      :DUSKSTONE,

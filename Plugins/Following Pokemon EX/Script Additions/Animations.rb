@@ -64,8 +64,7 @@ class Battle::Scene::Animation::PokeballPlayerSendOut < Battle::Scene::Animation
 
   def createFollowerProcesses
     delay = 0
-    #delay = 5 if @showingTrainer
-	delay = 1 if @showingTrainer
+    delay = 1 if @showingTrainer
     batSprite = @sprites["pokemon_#{@battler.index}"]
     shaSprite = @sprites["shadow_#{@battler.index}"]
     batSprite.y
@@ -74,8 +73,7 @@ class Battle::Scene::Animation::PokeballPlayerSendOut < Battle::Scene::Animation
     battler.setZoomXY(delay, 100, 100)
     battler.setColor(delay, Color.new(0, 0, 0, 0))
     battler.setDelta(0, -240, 0)
-    #battler.moveDelta(delay, 12, 240, 0)
-	battler.moveDelta(delay, 1, 240, 0)
+    battler.moveDelta(delay, 1, 240, 0)
     battler.setCallback(delay + 12, [batSprite,:pbPlayIntroAnimation])
     if @shadowVisible
       shadow = addSprite(shaSprite, PictureOrigin::CENTER)

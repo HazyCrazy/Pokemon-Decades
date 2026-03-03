@@ -17,15 +17,15 @@ end
 module GameData
   class Species
     def self.ow_sprite_filename(species, form = 0, gender = 0, shiny = false, shadow = false, swimming = false)
-      # Check for swimming sprites first if swimming
+      # Prioritize Levitate sprites if swimming (to show flying over water)
       if swimming
-        folder = shiny ? "Swimming Shiny" : "Swimming"
+        # Check for levitate sprites (for airborne Pokemon)
+        folder = shiny ? "Levitates Shiny" : "Levitates"
         ret = self.check_graphic_file("Graphics/Characters/", species, form,
                                       gender, shiny, shadow, folder)
         return ret if !nil_or_empty?(ret)
-        
-        # If no swimming sprite, check for levitate sprites (for airborne Pokemon)
-        folder = shiny ? "Levitates Shiny" : "Levitates"
+
+        folder = shiny ? "Swimming Shiny" : "Swimming"
         ret = self.check_graphic_file("Graphics/Characters/", species, form,
                                       gender, shiny, shadow, folder)
         return ret if !nil_or_empty?(ret)
@@ -105,13 +105,13 @@ MenuHandlers.add(:options_menu, :follower_toggle, {
 #-------------------------------------------------------------------------------
 # Extend PokemonOptionScreen to refresh scene map after options
 #-------------------------------------------------------------------------------
-class PokemonOptionScreen
-  alias __followingpkmn__pbStartScreen pbStartScreen unless method_defined?(:__followingpkmn__pbStartScreen)
-  def pbStartScreen(*args)
-    __followingpkmn__pbStartScreen(*args)
-    pbRefreshSceneMap
-  end
-end
+# class PokemonOptionScreen
+#   alias __followingpkmn__pbStartScreen pbStartScreen unless method_defined?(:__followingpkmn__pbStartScreen)
+#   def pbStartScreen(*args)
+#     __followingpkmn__pbStartScreen(*args)
+#     pbRefreshSceneMap
+#   end
+# end
 
 #-------------------------------------------------------------------------------
 # New trigger method for Named Events that returns the value of the callback

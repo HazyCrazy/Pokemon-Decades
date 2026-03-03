@@ -6,7 +6,7 @@ class Game_Player
   def update_move
     update_move_with_follower
 
-    FollowingPkmn.unhide_follower if !moving?
+    FollowingPkmn.unhide_follower(false) if !moving?
   end
 end
 #-------------------------------------------------------------------------------
@@ -33,14 +33,14 @@ module FollowingPkmn
   end
 
   # Unhides the follower sprite if active
-  def self.unhide_follower
+  def self.unhide_follower(anim = true)
     return unless self.hidden?
 
     @@hidden = false
 
     # Check if follower should be active (without hidden check)
     if @@can_refresh && $PokemonGlobal.follower_toggled
-      self.refresh(true)
+      self.refresh(anim)
     end
   end
 end

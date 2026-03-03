@@ -154,11 +154,45 @@ class Game_FollowingPkmn < Game_Follower
 
       # Get the target tile that self wants to move to
       if maps_connected
-        behind_direction = 10 - leader.direction
-        target = $map_factory.getFacingTile(behind_direction, leader)
+        # MODIFIED: Logic to check multiple directions for a valid spot
+        bg_dir = 10 - leader.direction
+        dirs = []
+        case leader.direction
+        when 2 then dirs = [8, 4, 6] # Down -> Up, Left, Right
+        when 4 then dirs = [6, 2, 8] # Left -> Right, Down, Up
+        when 6 then dirs = [4, 2, 8] # Right -> Left, Down, Up
+        when 8 then dirs = [2, 4, 6] # Up -> Down, Left, Right
+        else        dirs = [bg_dir]
+        end
+        
+        dirs.each do |dir|
+          t = $map_factory.getFacingTile(dir, leader)
+          next if !t
+          
+          # Check passability
+          map = $map_factory.getMap(t[0])
+          next if !map || !map.valid?(t[1], t[2])
+          
+          # Check for blocking events (excluding through events)
+          blocked_by_event = map.events.values.any? do |e|
+            !e.through && e.at_coordinate?(t[1], t[2]) && e != self && e != leader
+          end
+          next if blocked_by_event
+          
+          # Check passability using the follower itself (self)
+          if map.passable?(t[1], t[2], 0, self)
+            target = t
+            break
+          end
+        end
+
+        # If no target found by strict passability, allow falling back to player position (below)
+
+        
         if target && $map_factory.getTerrainTag(target[0], target[1], target[2]).ledge
           # Get the tile above the ledge (where the leader jumped from)
-          target = $map_factory.getFacingTileFromPos(target[0], target[1], target[2], behind_direction)
+          # Use bg_dir as a best guess for "behind" logic
+          target = $map_factory.getFacingTileFromPos(target[0], target[1], target[2], bg_dir)
         end
         target = [leader.map.map_id, leader.x, leader.y] if !target
         if GameData::TerrainTag.exists?(:StairLeft)
@@ -273,6 +307,54 @@ class Game_FollowingPkmn < Game_Follower
     ret = super
     return ret + 1
   end
+
+  #-----------------------------------------------------------------------------
+  # Adjust screen_x to account for visual offset (prevents overlap)
+  #-----------------------------------------------------------------------------
+  def screen_x(*args)
+    ret = super(*args)
+    return ret unless FollowingPkmn.active?
+    
+    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
+    pkmn = FollowingPkmn.get_pokemon
+    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+    end
+    
+    # Move opposite to facing direction to "push away" from what it's facing (usually player)
+    # Check passability to ensure we don't visual clip into walls
+    case self.direction
+    when 4 # Facing Left -> Move Right
+      ret += offset if self.map.passable?(self.x, self.y, 6)
+    when 6 # Facing Right -> Move Left
+      ret -= offset if self.map.passable?(self.x, self.y, 4)
+    end
+    return ret
+  end
+
+  #-----------------------------------------------------------------------------
+  # Adjust screen_y to account for visual offset (prevents overlap)
+  #-----------------------------------------------------------------------------
+  def screen_y(*args)
+    ret = super(*args)
+    return ret unless FollowingPkmn.active?
+
+    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
+    pkmn = FollowingPkmn.get_pokemon
+    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+    end
+    
+    # Move opposite to facing direction to "push away" from what it's facing (usually player)
+    # Check passability to ensure we don't visual clip into walls
+    case self.direction
+    when 2 # Facing Down -> Move Up
+      ret -= offset if self.map.passable?(self.x, self.y, 8)
+    when 8 # Facing Up -> Move Down
+      ret += offset if self.map.passable?(self.x, self.y, 2)
+    end
+    return ret
+  end
   #-----------------------------------------------------------------------------
 end
 
@@ -358,14 +440,18 @@ end
 
 #-------------------------------------------------------------------------------
 # Ensure the follower only moves when the player moves exactly one tile
+# DISABLED: This was causing followers to teleport/stutter on bridges because
+# it updates on EVERY frame during movement animation instead of only when
+# the player completes a tile. The follower system already handles updates
+# properly via follow_leader's leader position tracking.
 #-------------------------------------------------------------------------------
-class Scene_Map
-  alias __followingpkmn__update update unless method_defined?(:__followingpkmn__update)
-  def update(*args)
-    super(*args)
-    if $game_player.moving?
-      $game_temp.followers.move_followers
-      $game_temp.followers.turn_followers
-    end
-  end
-end
+# class Scene_Map
+#   alias __followingevent__update update unless method_defined?(:__followingevent__update)
+#   def update(*args)
+#     __followingevent__update(*args)
+#     if $game_player.moving?
+#       $game_temp.followers.move_followers
+#       $game_temp.followers.turn_followers
+#     end
+#   end
+# end

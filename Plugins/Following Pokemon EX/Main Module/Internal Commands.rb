@@ -13,7 +13,7 @@ module FollowingPkmn
     return false if !$game_temp.respond_to?(:followers) || !$game_temp.followers
     return false if !$PokemonGlobal.respond_to?(:followers) || !$PokemonGlobal.followers
     return false if !$player.respond_to?(:party) || !$player.party
-	return false if !$scene.is_a?(Scene_Map)
+
     return true
   end
   #-----------------------------------------------------------------------------
