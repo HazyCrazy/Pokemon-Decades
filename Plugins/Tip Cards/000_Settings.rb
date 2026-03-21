@@ -928,6 +928,16 @@ module Settings
 				:Text => _INTL("If you are using the Basic Vanilla Gen 9 Patch, the Starter Choices will not update to match Vanilla Gen 9 Typings. This is because Pokémon Decades is designed around it's stock modded Gen 9 Metagame. Read the Patch's disclaimer for more details."),
                 :Background => "bg_book2"
             },
+			:WIKIDEXDESC1 => {
+                :Title => _INTL("Pokédex Config Choice"),
+				:Text => _INTL("Choosing Yes will make the Pokédex be pre-configured with all Data of every Pokémon, Form/Formes included. Choose Yes if you want to do a Nuzlocke or Challenge Run. Decades is designed around a pre-configured Pokédex."),
+                :Background => "bg_book2"
+            },
+			:WIKIDEXDESC2 => {
+                :Title => _INTL("Pokédex Config Choice"),
+				:Text => _INTL("Choosing No means you have to catch/obtain a Pokémon in order to view it's Data. Choose No if you want a traditional Pokémon experience, or are confident in your ability to do a Nuzlocke Challenge."),
+                :Background => "bg_book2"
+            },
 			:DOCUMENTS => {
                 :Title => _INTL("Where's the Documentation?"),
 				:Text => _INTL("Press the Z Key to access your Bag. Go to the Walkthrough section of the bag. The Pokédex is preconfigured with data on all Pokémon, Moves and Abilities."),

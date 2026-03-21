@@ -20,21 +20,21 @@ end
 #===============================================================================
 # Water Shuriken
 #===============================================================================
-class Battle::Move::HitTwoToFiveTimesOrThreeForAshGreninja < Battle::Move::HitTwoToFiveTimes
-  def multiHitMove?
-    return false if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
-    return super
-  end
+#class Battle::Move::HitTwoToFiveTimesOrThreeForAshGreninja < Battle::Move::HitTwoToFiveTimes
+#  def multiHitMove?
+#    return false if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
+#    return super
+#  end
 
-  def pbNumHits(user, targets)
-    return 1 if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
-    return 3 if user.isSpecies?(:GRENINJA) && user.form == 2
-    return super
-  end
+#  def pbNumHits(user, targets)
+#    return 1 if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
+#    return 3 if user.isSpecies?(:GRENINJA) && user.form == 2
+#    return super
+#  end
 
-  def pbBaseDamage(baseDmg, user, target)
-    return 75 if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
-    return 20 if user.isSpecies?(:GRENINJA) && user.form == 2
-    return super
-  end
-end
+#  def pbBaseDamage(baseDmg, user, target)
+#    return 75 if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
+#    return 20 if user.isSpecies?(:GRENINJA) && user.form == 2
+#    return super
+#  end
+#end
