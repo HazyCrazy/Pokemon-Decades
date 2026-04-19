@@ -10,12 +10,16 @@ module AdvancedAI
     # Priority Move Categories
     #===========================================================================
     
+    # Priority +5 (Gen 9)
+    PRIORITY_PLUS_5 = [:HELPINGHAND]
+    
     # Priority +4
-    PRIORITY_PLUS_4 = [:HELPINGHAND]
+    PRIORITY_PLUS_4 = [:MAGICCOAT, :SNATCH, :BANEFULBUNKER, :OBSTRUCT,
+                       :KINGSSHIELD, :SPIKYSHIELD,
+                       :PROTECT, :DETECT, :SILKTRAP, :BURNINGBULWARK]
     
     # Priority +3
-    PRIORITY_PLUS_3 = [:MAGICCOAT, :SNATCH, :BANEFULBUNKER, :OBSTRUCT,
-                       :KINGSSHIELD, :SPIKYSHIELD, :CRAFTYSHIELD]
+    PRIORITY_PLUS_3 = [:FAKEOUT, :QUICKGUARD, :WIDEGUARD, :CRAFTYSHIELD, :UPPERHAND]
     
     # Priority +2
     PRIORITY_PLUS_2 = [:EXTREMESPEED, :FEINT, :FOLLOWME, :RAGEPOWDER,
@@ -25,7 +29,7 @@ module AdvancedAI
     PRIORITY_PLUS_1 = [
       :ACCELEROCK, :AQUAJET, :BULLETPUNCH, :ICESHARD, :MACHPUNCH,
       :QUICKATTACK, :SHADOWSNEAK, :SUCKERPUNCH, :VACUUMWAVE,
-      :WATERSHURIKEN, :JETPUNCH, :ZIPZAP, :GRASSYGLIDE
+      :WATERSHURIKEN, :JETPUNCH, :ZIPZAP, :GRASSYGLIDE, :THUNDERCLAP
     ]
     
     # Priority +0 (Normal moves)
@@ -74,12 +78,33 @@ module AdvancedAI
       
       score = 0
       
+      # === PRIORITY BLOCKERS (Dazzling, Queenly Majesty, Armor Tail) ===
+      # These abilities block priority moves targeting ANY Pokémon on that side
+      if move_priority > 0 && move.damagingMove?
+        blocking_abilities = [:DAZZLING, :QUEENLYMAJESTY, :ARMORTAIL]
+        unless user.respond_to?(:hasMoldBreaker?) && user.hasMoldBreaker?
+          # Check target
+          if blocking_abilities.any? { |a| target.hasActiveAbility?(a) }
+            return -100
+          end
+          # Check target's allies (protects the whole side)
+          if battle.pbSideSize(target.index) > 1
+            battle.allSameSideBattlers(target.index).each do |ally|
+              next if ally == target || ally.fainted?
+              if blocking_abilities.any? { |a| ally.hasActiveAbility?(a) }
+                return -100
+              end
+            end
+          end
+        end
+      end
+      
+      # Pre-compute speeds (used in positive, negative, and ability sections)
+      user_speed = user.pbSpeed
+      target_speed = target.pbSpeed
+
       # === POSITIVE PRIORITY ===
       if move_priority > 0
-        # Check speed comparison
-        user_speed = user.pbSpeed
-        target_speed = target.pbSpeed
-        
         # Priority is most valuable when we're slower
         if target_speed > user_speed
           score += 40 * move_priority  # Higher priority = more valuable
@@ -128,6 +153,19 @@ module AdvancedAI
           user_hp_percent = AdvancedAI::CombatUtilities.hp_percent(user)
           score += 60 if user_hp_percent < 0.33
           
+          # Upper Hand: Counters priority moves — hits before the priority move
+          # Only useful if the target has a priority move and is likely to use it
+          if move.id == :UPPERHAND
+            target_has_priority = target.moves.any? do |m|
+              m && m.priority > 0 && m.power > 0
+            end
+            if target_has_priority
+              score += 60  # Great - neutralize their priority move before it fires
+            else
+              score -= 60  # Upper Hand FAILS if target doesn't use a priority move
+            end
+          end
+          
         when 2
           # Extreme Speed, Feint, Follow Me
           if move.id == :EXTREMESPEED
@@ -146,12 +184,25 @@ module AdvancedAI
           # Standard priority (Aqua Jet, Mach Punch, etc.)
           # Already scored above, but add type-specific bonuses
           
+          # Thunderclap: Only works if opponent is using a damaging move this turn
+          # Similar to Sucker Punch - penalize if target is likely using status
+          if move.id == :THUNDERCLAP
+            if target.lastMoveUsed
+              last_move_data = GameData::Move.try_get(target.lastMoveUsed)
+              if last_move_data && last_move_data.power == 0  # status move
+                score -= 80  # Likely to fail!
+              end
+            end
+            # Also penalize if target is already fainted or protected
+            score += 20 if target.attack > target.spatk  # Physical attacker → less likely to Thunderclap fake
+          end
+          
           # Sucker Punch: Only works if opponent attacks
           if move.id == :SUCKERPUNCH
             # Penalty if opponent is likely to use status move
             if target.lastMoveUsed
               last_move_data = GameData::Move.try_get(target.lastMoveUsed)
-              if last_move_data && last_move_data.statusMove?
+              if last_move_data && last_move_data.power == 0  # status move (GameData::Move has no .statusMove?)
                 score -= 100  # Likely to fail!
               end
             end
@@ -176,14 +227,18 @@ module AdvancedAI
         
         # Trick Room: Intentionally move last to activate field
         if move.id == :TRICKROOM
-          # Trick Room is valuable for slow teams
-          if user_speed < 50
-            score += 100  # Slow Pokemon loves Trick Room
-          end
-          
           # Check if already active (toggle off)
-          if battle.field.effects[PBEffects::TrickRoom] > 0
-            score -= 50  # Don't want to turn it off (usually)
+          tr_active = battle.field.effects[PBEffects::TrickRoom] &&
+                      battle.field.effects[PBEffects::TrickRoom] > 0
+          
+          if user_speed < 50
+            if tr_active
+              score -= 100  # DO NOT cancel our own beneficial Trick Room
+            else
+              score += 100  # Slow Pokemon loves setting Trick Room
+            end
+          elsif tr_active
+            score += 50  # Fast mon might want to cancel opponent's TR
           end
         end
         
@@ -225,11 +280,14 @@ module AdvancedAI
       
       # === GALE WINGS ABILITY ===
       # Gale Wings gives Flying moves priority at full HP
-      if user.hasActiveAbility?(:GALEWINGS) && move.type == :FLYING
-        user_hp_percent = AdvancedAI::CombatUtilities.hp_percent(user)
-        if user_hp_percent >= 1.0
-          # Treat as priority +1
-          score += 40 if target_speed > user_speed
+      if user.hasActiveAbility?(:GALEWINGS)
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+        if resolved_type == :FLYING
+          user_hp_percent = AdvancedAI::CombatUtilities.hp_percent(user)
+          if user_hp_percent >= 1.0
+            # Treat as priority +1
+            score += 40 if target_speed > user_speed
+          end
         end
       end
       

@@ -11,12 +11,15 @@ module AdvancedAI
     #===========================================================================
     
     SPREAD_MOVES = [
-      :EARTHQUAKE, :SURF, :DISCHARGE, :LAVAPLUME, :ROCKSLIDE, :ICICLECRASH,
+      :EARTHQUAKE, :SURF, :DISCHARGE, :LAVAPLUME, :ROCKSLIDE,
       :BLIZZARD, :HEATWAVE, :SLUDGEWAVE, :DAZZLINGGLEAM, :MUDDYWATER,
       :RAZORLEAF, :ICYWIND, :BULLDOZE, :PARABOLICCHARGE, :GMAXCANNONADE,
       :BOOMBURST, :RELICSONG, :PETALBLIZZARD, :EXPLOSION, :SELFDESTRUCT,
       :MAGNITUDE, :GLACIATE, :ORIGINPULSE, :PRECIPICEBLADES, :ERUPTION,
-      :WATERSPOUT, :SNARL, :STRUGGLE
+      :WATERSPOUT, :SNARL, :STRUGGLE, :HYPERVOICE, :DIAMONDSTORM,
+      # Gen 9 spread moves
+      :SPRINGTIDESTORM, :BLEAKWINDSTORM, :WILDBOLTSTORM, :SANDSEARSTORM,
+      :MAKEITRAIN, :MATCHAGOTCHA, :MORTALSPIN
     ]
     
     # Spread moves deal 0.75x damage when hitting multiple targets
@@ -75,7 +78,7 @@ module AdvancedAI
         return true if battler.effects[PBEffects::Spotlight] > 0
         
         # Lightning Rod / Storm Drain (redirects specific types)
-        if REDIRECTION_ABILITIES.include?(battler.ability_id)
+        if battler.respond_to?(:hasActiveAbility?) && REDIRECTION_ABILITIES.any? { |a| battler.hasActiveAbility?(a) }
           return true
         end
       end
@@ -160,7 +163,7 @@ module AdvancedAI
       
       # Check if partner has strong attacking move ready
       partner_has_strong_move = target.moves.any? do |m|
-        m.damagingMove? && m.power && m.power >= 80
+        m.damagingMove? && m.power && AdvancedAI::CombatUtilities.resolve_move_power(m) >= 80
       end
       
       if partner_has_strong_move
@@ -175,7 +178,7 @@ module AdvancedAI
       
       # Penalty if user could KO instead
       user_can_ko = user.moves.any? do |m|
-        m.damagingMove? && m.power && m.power >= 100
+        m.damagingMove? && m.power && AdvancedAI::CombatUtilities.resolve_move_power(m) >= 100
       end
       
       if user_can_ko
@@ -192,7 +195,7 @@ module AdvancedAI
     def self.score_fake_out_doubles(user, target, battle, skill_level = 100)
       return 0 unless skill_level >= 60
       return 0 unless battle.pbSideSize(0) > 1
-      return 0 if battle.turnCount > 0  # Only Turn 1
+      return 0 if user.turnCount > 0  # Only first turn after entering battle
       
       score = 0
       
@@ -203,7 +206,9 @@ module AdvancedAI
       partner = user.allAllies.first
       if partner && !partner.fainted?
         partner_has_setup = partner.moves.any? do |m|
-          [:TAILWIND, :TRICKROOM, :REFLECT, :LIGHTSCREEN].include?(m.id)
+          [:TAILWIND, :TRICKROOM, :REFLECT, :LIGHTSCREEN, :AURORAVEIL,
+           :SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :QUIVERDANCE,
+           :CALMMIND, :BULKUP, :VICTORYDANCE, :GEOMANCY].include?(m.id)
         end
         
         if partner_has_setup
@@ -238,7 +243,8 @@ module AdvancedAI
       partner = user.allAllies.first
       if partner && !partner.fainted?
         # If partner used Protect last turn, don't both Protect this turn
-        if partner.lastMoveUsed && [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER].include?(partner.lastMoveUsed)
+        if partner.lastMoveUsed && [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD,
+                                      :BANEFULBUNKER, :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK].include?(partner.lastMoveUsed)
           penalty += 50  # Don't both protect - wasteful
         end
         
@@ -337,25 +343,9 @@ class Battle::AI
     skill_level = 100
     target = @battle.allOtherSideBattlers(user.index).find { |b| b && !b.fainted? }
     
-    # Fake Out bonus (Turn 1 only)
-    if move.id == :FAKEOUT && target
-      score += AdvancedAI::DoublesStrategy.score_fake_out_doubles(user, target, @battle, skill_level)
-    end
-    
-    # Redirection moves
-    if AdvancedAI::DoublesStrategy::REDIRECTION_MOVES.key?(move.id)
-      score += AdvancedAI::DoublesStrategy.score_redirection_move(user, move, @battle, skill_level)
-    end
-    
-    # Helping Hand
-    if move.id == :HELPINGHAND && target
-      score += AdvancedAI::DoublesStrategy.score_helping_hand(user, target, @battle, skill_level)
-    end
-    
-    # Protect coordination penalty
-    if [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER].include?(move.id)
-      score += AdvancedAI::DoublesStrategy.score_protect_coordination(user, @battle)
-    end
+    # NOTE: Helping Hand, Fake Out, Follow Me, and Protect scoring is handled
+    # by Doubles_Coordination.rb's apply_doubles_coordination to avoid double-counting.
+    # Only score mechanics NOT covered by Doubles_Coordination here.
     
     # Wide Guard / Quick Guard penalties
     if target

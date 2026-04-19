@@ -6,7 +6,8 @@
 class Battle::AI
   # Checks if Terastallize should be used
   def should_terastallize?(user, skill)
-    AdvancedAI.log("should_terastallize? called for #{user.battler.name} (skill #{skill})", "Tera")
+    uname = user.respond_to?(:battler) ? user.battler.name : user.name
+    AdvancedAI.log("should_terastallize? called for #{uname} (skill #{skill})", "Tera")
     
     unless skill >= 100
       AdvancedAI.log("  ❌ Skill too low (#{skill} < 100)", "Tera")
@@ -107,8 +108,8 @@ class Battle::AI
     # Offensive Synergy
     user.moves.each do |move|
       next unless move && move.damagingMove?
-      
-      if move.type == tera_type
+      resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+      if resolved_type == tera_type
         # STAB Bonus after Tera
         score += 15
         
@@ -130,12 +131,13 @@ class Battle::AI
         next unless move && move.damagingMove?
         
         # Resistance after Tera
-        current_mod = Effectiveness.calculate(move.type, *user.pbTypes(true))
-        tera_mod = Effectiveness.calculate(move.type, tera_type)
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, move)
+        current_mod = Effectiveness.calculate(resolved_type, *user.pbTypes(true))
+        tera_mod = Effectiveness.calculate(resolved_type, tera_type)
         
         if Effectiveness.super_effective?(current_mod) && Effectiveness.not_very_effective?(tera_mod)
           score += 25  # Turns Weakness into Resistance
-        elsif Effectiveness.super_effective?(current_mod) && tera_mod == Effectiveness::NORMAL_EFFECTIVE
+        elsif Effectiveness.super_effective?(current_mod) && tera_mod == Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
           score += 15  # Neutralizes Weakness
         end
       end
@@ -162,13 +164,12 @@ class Battle::AI
     score += 10 if hp_percent > 0.5
     
     # Opponent Team Analysis
+    user_tera_type = user.tera_type  # Cache once — avoid shadowing outer tera_type variable
     weak_to_tera = @battle.allOtherSideBattlers(user.index).count do |target|
       next false unless target && !target.fainted?
+      next false unless user_tera_type
       
-      tera_type = user.tera_type
-      next false unless tera_type
-      
-      type_mod = Effectiveness.calculate(tera_type, *target.pbTypes(true))
+      type_mod = Effectiveness.calculate(user_tera_type, *target.pbTypes(true))
       Effectiveness.super_effective?(type_mod)
     end
     score += weak_to_tera * 8
@@ -209,7 +210,8 @@ class Battle::AI
         current_damage = calculate_rough_damage(move, target, user)
         if current_damage >= user.hp
           # Would be KO without Tera
-          tera_mod = Effectiveness.calculate(move.type, tera_type, nil)
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, move)
+          tera_mod = Effectiveness.calculate(resolved_type, tera_type)
           if Effectiveness.not_very_effective?(tera_mod) || Effectiveness.ineffective?(tera_mod)
             score += 45  # Tera saves
             imminent_ko = true
@@ -231,7 +233,7 @@ class Battle::AI
   # 5. Party Comparison
   def evaluate_tera_party(user, skill)
     score = 0
-    party = @battle.pbParty(user.index)
+    party = @battle.pbParty(user.index & 1)
     
     # Better Tera Candidates?
     better_candidates = party.count do |pkmn|

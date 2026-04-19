@@ -56,7 +56,7 @@ module AdvancedAI
       rain: { weather: :Rain, description: "Rain-boosted sweepers" },
       sun:  { weather: :Sun,  description: "Sun-boosted sweepers" },
       sand: { weather: :Sandstorm, description: "Sand + Rock/Ground/Steel bulk" },
-      hail: { weather: :Hail, description: "Hail/Snow + Aurora Veil" },
+      hail: { weather: [:Hail, :Snow], description: "Hail/Snow + Aurora Veil" },
       trick_room: {
         min_slow_pokemon: 3,     # ≤50 speed
         has_tr_setter: true,
@@ -73,15 +73,16 @@ module AdvancedAI
       :DRIZZLE => :Rain, :PRIMORDIALSEA => :Rain,
       :DROUGHT => :Sun,  :DESOLATELAND => :Sun,
       :SANDSTREAM => :Sandstorm, :SANDSPIT => :Sandstorm,
-      :SNOWWARNING => :Hail, :ORICHALCUMPULSE => :Sun,
+      :SNOWWARNING => :Snow, :ORICHALCUMPULSE => :Sun,
     }
 
     RAIN_ABUSERS  = [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION]
-    SUN_ABUSERS   = [:CHLOROPHYLL, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :HARVEST]
+    SUN_ABUSERS   = [:CHLOROPHYLL, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :HARVEST, :PROTOSYNTHESIS]
     SAND_ABUSERS  = [:SANDRUSH, :SANDFORCE, :SANDVEIL]
     HAIL_ABUSERS  = [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE]
 
-    PIVOT_MOVES = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS]
+    PIVOT_MOVES = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS,
+                   :SHEDTAIL, :CHILLYRECEPTION]
     TR_MOVES    = [:TRICKROOM]
 
     def self.identify_opponent_archetype(battle, user_index)
@@ -133,25 +134,27 @@ module AdvancedAI
         RAIN_ABUSERS.each  { |a| weather_abusers[:Rain] = (weather_abusers[:Rain] || 0) + 1 if ability_id == a }
         SUN_ABUSERS.each   { |a| weather_abusers[:Sun]  = (weather_abusers[:Sun]  || 0) + 1 if ability_id == a }
         SAND_ABUSERS.each  { |a| weather_abusers[:Sandstorm] = (weather_abusers[:Sandstorm] || 0) + 1 if ability_id == a }
-        HAIL_ABUSERS.each  { |a| weather_abusers[:Hail] = (weather_abusers[:Hail] || 0) + 1 if ability_id == a }
+        HAIL_ABUSERS.each  { |a| weather_abusers[:Snow] = (weather_abusers[:Snow] || 0) + 1 if ability_id == a }
 
         # Check moves for pivots / TR / recovery
         moves = get_known_moves(battle, mon)
+        has_pivot = false
+        has_recovery = false
         moves.each do |mid|
-          pivots += 1 if PIVOT_MOVES.include?(mid)
+          has_pivot = true if PIVOT_MOVES.include?(mid)
           has_tr_setter = true if TR_MOVES.include?(mid)
-          if AdvancedAI.healing_move?(mid)
-            recovery_users += 1
-          end
+          has_recovery = true if AdvancedAI.healing_move?(mid)
         end if moves
+        pivots += 1 if has_pivot
+        recovery_users += 1 if has_recovery
       end
 
       # Score each archetype
       scores = {}
 
       # Weather teams
-      [:Rain, :Sun, :Sandstorm, :Hail].each do |w|
-        key = { Rain: :rain, Sun: :sun, Sandstorm: :sand, Hail: :hail }[w]
+      [:Rain, :Sun, :Sandstorm, :Snow].each do |w|
+        key = { Rain: :rain, Sun: :sun, Sandstorm: :sand, Snow: :hail }[w]
         if weather_setters[w] && weather_setters[w] >= 1
           scores[key] = 50 + (weather_abusers[w] || 0) * 20
         end
@@ -234,13 +237,17 @@ module AdvancedAI
       when :rain, :sun, :sand, :hail
         # Counter weather: change weather or use your own weather advantage
         weather_setting_moves = {
-          rain: [:SUNNYDAY, :SANDSTORM, :SNOWSCAPE, :HAIL],
-          sun:  [:RAINDANCE, :SANDSTORM, :SNOWSCAPE, :HAIL],
-          sand: [:RAINDANCE, :SUNNYDAY, :SNOWSCAPE, :HAIL],
+          rain: [:SUNNYDAY, :SANDSTORM, :SNOWSCAPE],
+          sun:  [:RAINDANCE, :SANDSTORM, :SNOWSCAPE],
+          sand: [:RAINDANCE, :SUNNYDAY, :SNOWSCAPE],
           hail: [:RAINDANCE, :SUNNYDAY, :SANDSTORM],
         }
         if weather_setting_moves[archetype]&.include?(move.id)
           bonus += 25  # Override their weather
+        end
+        # Also handle Snowscape (Gen 9 Hail replacement)
+        if move.id == :SNOWSCAPE && archetype != :hail
+          bonus += 25
         end
 
       when :trick_room
@@ -324,7 +331,7 @@ module AdvancedAI
       if prev_type == :sweep && curr_type != :sweep
         # Our sweeper died; pivot to attrition/trade
         bonus += 10 if AdvancedAI.hazard_move?(move.id)
-        bonus += 10 if move.damagingMove? && move.power >= 80
+        bonus += 10 if move.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 80
       end
 
       # Attrition not working → go aggressive
@@ -352,9 +359,13 @@ module AdvancedAI
     # Returns types our team can't effectively handle
     def self.identify_coverage_gaps(battle, user_index)
       state = get_state(battle)
-      return state[:coverage_gaps] unless state[:coverage_gaps].empty?
-
+      # Invalidate cache if team composition changed (Pokemon fainted)
       our_party = battle.pbParty(user_index.even? ? 0 : 1) rescue []
+      alive_count = our_party.count { |p| p && !p.fainted? && !p.egg? }
+      if !state[:coverage_gaps].empty? && state[:coverage_gaps_alive_count] == alive_count
+        return state[:coverage_gaps]
+      end
+      state[:coverage_gaps] = []  # Reset for recomputation
       return [] if our_party.empty?
 
       # For each type, check if at least one teammate resists AND can threaten
@@ -391,6 +402,7 @@ module AdvancedAI
       end
 
       state[:coverage_gaps] = gaps
+      state[:coverage_gaps_alive_count] = alive_count
       if gaps.any?
         AdvancedAI.log("[Strategy] Coverage gaps: #{gaps.join(', ')}", "Strategy")
       end
@@ -400,7 +412,13 @@ module AdvancedAI
     # Identifies Pokemon that are the SOLE answer to an opponent threat
     def self.identify_critical_pokemon(battle, user_index)
       state = get_state(battle)
-      return state[:critical_pokemon] unless state[:critical_pokemon].empty?
+      # Invalidate cache if team composition changed (Pokemon fainted)
+      our_party_check = battle.pbParty(user_index.even? ? 0 : 1) rescue []
+      alive_count = our_party_check.count { |p| p && !p.fainted? && !p.egg? }
+      if !state[:critical_pokemon].empty? && state[:critical_pokemon_alive_count] == alive_count
+        return state[:critical_pokemon]
+      end
+      state[:critical_pokemon] = []  # Reset for recomputation
 
       our_party = battle.pbParty(user_index.even? ? 0 : 1) rescue []
       opp_pokemon = []
@@ -418,7 +436,7 @@ module AdvancedAI
           next if !pkmn || pkmn.fainted? || pkmn.egg?
           my_types = get_pokemon_types(pkmn)
           # Can resist their STAB and hit back?
-          resists_stab = opp_types.all? { |t| type_effectiveness_against(t, my_types) <= 1.0 }
+          resists_stab = opp_types.all? { |t| type_effectiveness_against(t, my_types) < 1.0 }
           handlers << pkmn if resists_stab
         end
 
@@ -430,6 +448,7 @@ module AdvancedAI
       end
 
       state[:critical_pokemon] = critical
+      state[:critical_pokemon_alive_count] = alive_count
       critical
     end
 
@@ -506,7 +525,7 @@ module AdvancedAI
         bonus -= 15 if [:EXPLOSION, :SELFDESTRUCT].include?(move.id)
       elsif advantage < -30
         # Losing big: be aggressive, take risks
-        bonus += 10 if move.damagingMove? && move.power >= 80
+        bonus += 10 if move.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 80
         bonus -= 10 if AdvancedAI.healing_move?(move.id) && move.id != :WISH
         bonus += 15 if AdvancedAI.setup_move?(move.id)  # Hail Mary setup
       end
@@ -521,9 +540,16 @@ module AdvancedAI
       state = get_state(battle)
       current_threats = []
 
+      # Get our active battler for threat comparison
+      our_battler = battle.allSameSideBattlers(user_index).first
+
       battle.allOtherSideBattlers(user_index).each do |opp|
         next if !opp || opp.fainted?
-        threat_level = AdvancedAI.assess_threat(battle, opp, nil, 100) rescue 5.0
+        threat_level = if our_battler
+            AdvancedAI.assess_threat(battle, our_battler, opp, 100) rescue 5.0
+          else
+            5.0
+          end
         current_threats << { pokemon: get_name(opp), level: threat_level, alive: true }
       end
 
@@ -588,13 +614,14 @@ module AdvancedAI
 
       if likely_dies
         # Check if a teammate benefits from free switch
-        party = battle.pbParty(user.index)
+        party = battle.pbParty(user.index & 1)
         party.each do |pkmn|
           next if !pkmn || pkmn.fainted? || pkmn.egg?
           next if pkmn == (user.respond_to?(:pokemon) ? user.pokemon : user)
-          pkmn_roles = AdvancedAI.detect_roles(pkmn) rescue [:balanced]
-          # Sweeper/wallbreaker wanting a free switch = sack is good
-          if (pkmn_roles.include?(:sweeper) || pkmn_roles.include?(:wallbreaker)) && pkmn.hp > pkmn.totalhp * 0.7
+          # Approximate role via stat heuristics (party Pokemon have no active Battler data)
+          pkmn_is_sweeper = (pkmn.attack >= 100 || pkmn.spatk >= 100) && pkmn.speed >= 80
+          pkmn_is_wallbreaker = (pkmn.attack >= 120 || pkmn.spatk >= 120)
+          if (pkmn_is_sweeper || pkmn_is_wallbreaker) && pkmn.hp > pkmn.totalhp * 0.7
             return true
           end
         end
@@ -603,12 +630,12 @@ module AdvancedAI
       # Sack a low-value mon to get sweeper in
       if user_roles.include?(:wall) || user_roles.include?(:support)
         if user_hp_pct < 0.25  # Low HP wall = expendable
-          party = battle.pbParty(user.index)
+          party = battle.pbParty(user.index & 1)
           party.each do |pkmn|
             next if !pkmn || pkmn.fainted? || pkmn.egg?
             next if pkmn == (user.respond_to?(:pokemon) ? user.pokemon : user)
-            pkmn_roles = AdvancedAI.detect_roles(pkmn) rescue [:balanced]
-            if pkmn_roles.include?(:sweeper) && pkmn.hp > pkmn.totalhp * 0.8
+            pkmn_is_sweeper = (pkmn.attack >= 100 || pkmn.spatk >= 100) && pkmn.speed >= 80
+            if pkmn_is_sweeper && pkmn.hp > pkmn.totalhp * 0.8
               return true
             end
           end
@@ -624,7 +651,7 @@ module AdvancedAI
       bonus = 0
       if move.damagingMove?
         bonus += 20  # Get value before dying
-        bonus += 20 if move.power >= 100  # Heavy hit
+        bonus += 20 if AdvancedAI::CombatUtilities.resolve_move_power(move) >= 100  # Heavy hit
       end
       # Pivot out instead of dying for free
       if AdvancedAI.pivot_move?(move.id)
@@ -678,7 +705,7 @@ module AdvancedAI
 
       bonus = 0
       # Wallbreaking moves are more valuable against defensive cores
-      if move.damagingMove? && move.power >= 90
+      if move.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 90
         bonus += 10  # High-power moves break cores
       end
       if move.id == :KNOCKOFF
@@ -735,7 +762,6 @@ module AdvancedAI
     #===========================================================================
     # HELPERS
     #===========================================================================
-    private
 
     def self.get_stat(mon, stat)
       case stat
@@ -750,7 +776,10 @@ module AdvancedAI
     end
 
     def self.get_ability(mon)
-      if mon.respond_to?(:ability_id)
+      # For active battlers, respect ability suppression (Gastro Acid, Neutralizing Gas)
+      if mon.respond_to?(:abilityActive?)
+        return mon.abilityActive? ? mon.ability_id : nil
+      elsif mon.respond_to?(:ability_id)
         mon.ability_id
       elsif mon.respond_to?(:ability)
         mon.ability.is_a?(Symbol) ? mon.ability : (mon.ability.id rescue nil)
@@ -814,11 +843,18 @@ module AdvancedAI
         move_data = GameData::Move.try_get(mid)
         next if !move_data || move_data.power == 0
         # Very rough estimation
+        resolved_type = CombatUtilities.resolve_move_type(target, move_data)
+        bp = CombatUtilities.resolve_move_power(move_data)
         types = get_pokemon_types(user)
-        eff = type_effectiveness_against(move_data.type, types)
-        base = move_data.power * eff
-        atk_stat = move_data.physicalMove? ? get_stat(target, :attack) : get_stat(target, :spatk)
-        def_stat = move_data.physicalMove? ? get_stat(user, :defense) : get_stat(user, :spdef)
+        eff = type_effectiveness_against(resolved_type, types)
+        stab = get_pokemon_types(target).include?(resolved_type) ? 1.5 : 1.0
+        # Adaptability: 2.0 STAB instead of 1.5
+        stab = 2.0 if stab == 1.5 && get_ability(target) == :ADAPTABILITY
+        base = bp * eff * stab
+        atk_stat = move_data.category == 0 ? get_stat(target, :attack) : get_stat(target, :spatk)
+        # Huge Power / Pure Power (2x Attack for physical moves)
+        atk_stat *= 2 if move_data.category == 0 && [:HUGEPOWER, :PUREPOWER].include?(get_ability(target))
+        def_stat = move_data.category == 0 ? get_stat(user, :defense) : get_stat(user, :spdef)
         rough = (base * atk_stat.to_f / [def_stat, 1].max * 0.5).to_i
         max_dmg = rough if rough > max_dmg
       end if moves

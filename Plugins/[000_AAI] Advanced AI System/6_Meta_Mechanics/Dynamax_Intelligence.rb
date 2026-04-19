@@ -21,7 +21,38 @@ class Battle::AI
     # Check if Dynamax is available for this battler
     # Note: user is an AIBattler, so we use the battle's method with the index
     unless @battle.pbCanDynamax?(user.index)
-      AdvancedAI.log("  ❌ @battle.pbCanDynamax? returned false", "Dynamax")
+      # Detailed diagnostics: which sub-check is failing?
+      begin
+        battler = @battle.battlers[user.index]
+        AdvancedAI.log("  ❌ @battle.pbCanDynamax? returned false — diagnostics:", "Dynamax")
+        AdvancedAI.log("    battler: #{battler&.name} idx=#{user.index}", "Dynamax")
+        if battler
+          pkmn = battler.pokemon
+          AdvancedAI.log("    pokemon.dynamax_lvl = #{pkmn&.respond_to?(:dynamax_lvl) ? pkmn.dynamax_lvl : 'N/A'}", "Dynamax")
+          AdvancedAI.log("    pokemon.dynamax_able? = #{pkmn&.respond_to?(:dynamax_able?) ? pkmn.dynamax_able? : 'N/A'}", "Dynamax")
+          AdvancedAI.log("    pokemon.can_dynamax? = #{pkmn&.respond_to?(:can_dynamax?) ? pkmn.can_dynamax? : 'N/A'}", "Dynamax")
+          AdvancedAI.log("    battler.hasDynamax? = #{battler.respond_to?(:hasDynamax?) ? battler.hasDynamax? : 'N/A'}", "Dynamax")
+          if battler.respond_to?(:pbDynamaxAvailable?)
+            AdvancedAI.log("    battler.pbDynamaxAvailable? = #{battler.pbDynamaxAvailable?}", "Dynamax")
+          end
+          if battler.respond_to?(:getActiveState)
+            AdvancedAI.log("    battler.getActiveState = #{battler.getActiveState.inspect}", "Dynamax")
+          end
+          AdvancedAI.log("    NO_DYNAMAX switch (#{Settings::NO_DYNAMAX}) = #{$game_switches[Settings::NO_DYNAMAX]}", "Dynamax")
+          AdvancedAI.log("    DYNAMAX_ON_ANY_MAP switch (#{Settings::DYNAMAX_ON_ANY_MAP}) = #{$game_switches[Settings::DYNAMAX_ON_ANY_MAP]}", "Dynamax")
+          if $game_map
+            map_data = GameData::MapMetadata.try_get($game_map.map_id) rescue nil
+            has_power_spot = map_data&.respond_to?(:has_flag?) ? map_data.has_flag?("PowerSpot") : false
+            AdvancedAI.log("    Map #{$game_map.map_id} has PowerSpot? = #{has_power_spot}", "Dynamax")
+          end
+          AdvancedAI.log("    pbHasDynamaxBand? = #{@battle.pbHasDynamaxBand?(user.index)}", "Dynamax")
+          side = battler.idxOwnSide
+          owner = @battle.pbGetOwnerIndexFromBattlerIndex(user.index)
+          AdvancedAI.log("    @dynamax[#{side}][#{owner}] = #{@battle.dynamax[side][owner]}", "Dynamax")
+        end
+      rescue => e
+        AdvancedAI.log("  Diagnostics error: #{e.message}", "Dynamax")
+      end
       return false
     end
     
@@ -114,11 +145,11 @@ class Battle::AI
     score = 0
     
     # Multiple Damage Types
-    move_types = user.moves.select { |m| m && m.damagingMove? }.map { |m| m.type }.uniq
+    move_types = user.moves.select { |m| m && m.damagingMove? }.map { |m| AdvancedAI::CombatUtilities.resolve_move_type(user, m) }.uniq
     score += move_types.count * 5
     
     # Strong Moves (80+ BP)
-    strong_moves = user.moves.count { |m| m && m.damagingMove? && m.power >= 80 }
+    strong_moves = user.moves.count { |m| m && m.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(m) >= 80 }
     score += strong_moves * 3
     
     # Coverage against Enemies
@@ -128,13 +159,14 @@ class Battle::AI
       user.moves.each do |move|
         next unless move && move.damagingMove?
         # Calculate type effectiveness: move type vs target's types
-        type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+        type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
         score += 5 if Effectiveness.super_effective?(type_mod)
       end
     end
     
     # G-Max Moves Bonus
-    score += 10 if user.gmax?
+    score += 10 if user.gmax_factor?
     
     # Choice Item Escape
     if user.item && [:CHOICEBAND, :CHOICESCARF, :CHOICESPECS].include?(user.item_id)
@@ -157,10 +189,13 @@ class Battle::AI
     end
     
     # Max Move Boost Potential
+    # Only count moves whose Max Move versions give offensive/speed boosts
+    boosting_max_types = [:FIRE, :WATER, :FIGHTING, :FLYING, :DARK, :STEEL,
+                          :GROUND, :ROCK, :BUG, :GHOST, :POISON]
     max_moves_with_boosts = user.moves.count do |move|
-      next false unless move
-      # Max Flare, Max Darkness, etc. give Boosts
-      true  # Simplified
+      next false unless move && move.damagingMove?
+      resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+      boosting_max_types.include?(resolved_type)
     end
     score += max_moves_with_boosts * 6
     
@@ -230,7 +265,7 @@ class Battle::AI
   # 5. Party Comparison
   def evaluate_dynamax_party(user, skill)
     score = 0
-    party = @battle.pbParty(user.index)
+    party = @battle.pbParty(user.index & 1)
     
     # Better Dynamax Candidates?
     better_candidates = party.count do |pkmn|
@@ -238,8 +273,9 @@ class Battle::AI
       # Skip if this Pokemon is currently in battle
       next false if pkmn == user.pokemon
       
-      # Higher Attack or Special Attack
-      pkmn.attack > user.attack || pkmn.spatk > user.spatk
+      # Higher Attack or Special Attack (compare base stats, not staged stats)
+      pkmn.attack > (user.respond_to?(:pokemon) ? user.pokemon.attack : user.attack) ||
+      pkmn.spatk > (user.respond_to?(:pokemon) ? user.pokemon.spatk : user.spatk)
     end
     
     if better_candidates > 0
@@ -277,11 +313,11 @@ class Battle::AI
     # G-Max Steelsurge Timing (if not yet set)
     if user.gmax_move?(:STEELSURGE)
       side = @battle.pbOwnedByPlayer?(user.index) ? @battle.sides[1] : @battle.sides[0]
-      score += 10 unless side.effects[PBEffects::Gmaxsteelsurge]
+      score += 10 unless side.effects[PBEffects::Steelsurge]
     end
     
-    # Field Effect Control
-    if @battle.field.terrain != :None
+    # Field Effect Control (terrain is a Symbol like :Electric, :None - not Ruby nil)
+    if @battle.field.terrain && @battle.field.terrain != :None
       score += 5
     end
     
@@ -291,11 +327,15 @@ class Battle::AI
   # === HELPER METHODS ===
   
   def remaining_pokemon_count(user)
-    @battle.pbParty(user.index).count { |p| p && !p.fainted? }
+        @battle.pbParty(user.index & 1).count { |p| p && !p.fainted? && !p.egg? }
   end
   
   def alive_enemies_count(user)
-    @battle.allOtherSideBattlers(user.index).count { |b| b && !b.fainted? }
+    # idxOwnSide is 0 for player side, 1 for opponent side.
+    # We want the party of the OTHER side.
+    own_side = user.respond_to?(:battler) ? user.battler.idxOwnSide : (user.index & 1)
+    opp_index = 1 - own_side
+    @battle.pbParty(opp_index).count { |p| p && !p.fainted? && !p.egg? }
   end
   
   def user_has_momentum?(user)
@@ -319,18 +359,48 @@ class Battle::Battler
   
   def dynamax?
     return false unless defined?(Battle::Scene::USE_DYNAMAX_GRAPHICS)
-    return dynamax_able?
+    return @pokemon&.dynamax? || false
   end
   
   def gmax?
     return false unless defined?(Battle::Scene::USE_DYNAMAX_GRAPHICS)
-    return gmax_factor? && dynamax_able?
+    return @pokemon&.gmax? || false
   end
   
   def gmax_move?(move_type)
-    return false unless gmax?
-    # Simplified G-Max Move Check
-    return true
+    return false unless respond_to?(:gmax_factor?) && gmax_factor?
+    # Check if this species actually has matches for the given G-Max move type
+    gmax_moves = {
+      :STEELSURGE => [:COPPERAJAH],
+      :VOLCALITH  => [:COALOSSAL],
+      :VINELASH   => [:VENUSAUR],
+      :WILDFIRE   => [:CHARIZARD],
+      :CANNONADE  => [:BLASTOISE],
+      :WINDRAGE   => [:CORVIKNIGHT],
+      :STONESURGE => [:DREDNAW],
+      :TARTNESS   => [:FLAPPLE],
+      :SWEETNESS  => [:APPLETUN],
+      :SANDBLAST  => [:SANDACONDA],
+      :STUNSHOCK  => [:TOXTRICITY],
+      :CENTIFERNO => [:CENTISKORCH],
+      :SMITE      => [:HATTERENE],
+      :SNOOZE     => [:GRIMMSNARL],
+      :FINALE     => [:ALCREMIE],
+      :DEPLETION  => [:DURALUDON],
+      :GRAVITAS   => [:ORBEETLE],
+      :REPLENISH  => [:SNORLAX],
+      :MALODOR    => [:GARBODOR],
+      :MELTDOWN   => [:MELMETAL],
+      :FOAMBURST  => [:KINGLER],
+      :RESONANCE  => [:LAPRAS],
+      :CUDDLE     => [:EEVEE],
+      :TERROR     => [:GENGAR],
+      :BEFUDDLE   => [:BUTTERFREE],
+      :GOLDRUSH   => [:MEOWTH]
+    }
+    species_list = gmax_moves[move_type]
+    return false unless species_list
+    return species_list.any? { |s| self.isSpecies?(s) }
   end
 end
 
@@ -343,6 +413,11 @@ class Battle::AI::AIBattler
   
   def gmax?
     return @battler.gmax? if @battler.respond_to?(:gmax?)
+    return false
+  end
+  
+  def gmax_factor?
+    return @battler.gmax_factor? if @battler.respond_to?(:gmax_factor?)
     return false
   end
   

@@ -89,8 +89,8 @@ class Battle::AI
         score += evaluate_eject_pack(user, move, target)
       end
       
-      # ROCKY HELMET / IRON BARBS
-      if target.item_id == :ROCKYHELMET || target.ability_id == :IRONBARBS
+      # ROCKY HELMET / IRON BARBS / ROUGH SKIN
+      if target.item_id == :ROCKYHELMET || target.hasActiveAbility?(:IRONBARBS) || target.hasActiveAbility?(:ROUGHSKIN)
         score += evaluate_contact_damage(user, move, target)
       end
     end
@@ -109,8 +109,13 @@ class Battle::AI
     berry_id = target.item_id
     activation_threshold = AdvancedAI::PINCH_BERRIES[berry_id]
     
+    # Gluttony: pinch berries activate at 50% instead of 25%
+    if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:GLUTTONY) && activation_threshold < 0.50
+      activation_threshold = 0.50
+    end
+    
     hp_percent = target.hp.to_f / target.totalhp
-    rough_damage = CombatUtilities.estimate_damage(user.battler, move, target, as_percent: true)
+    rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
     hp_after = hp_percent - rough_damage
     
     # Check if damage will trigger berry
@@ -164,8 +169,9 @@ class Battle::AI
     resisted_type = AdvancedAI::TYPE_RESIST_BERRIES[berry_id]
     
     # Check if our move matches the berry type
-    if move.type == resisted_type
-      type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+    resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+    if resolved_type == resisted_type
+      type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
       
       if Effectiveness.super_effective?(type_mod)
         # Berry will halve damage
@@ -173,7 +179,7 @@ class Battle::AI
         AdvancedAI.log("  #{berry_id}: -25 (halves SE damage)", "Items")
         
         # Check if we'd still KO
-        rough_damage = CombatUtilities.estimate_damage(user.battler, move, target, as_percent: true)
+        rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
         halved_damage = rough_damage * 0.5
         
         if halved_damage >= target.hp.to_f / target.totalhp
@@ -265,10 +271,11 @@ class Battle::AI
     return 0 unless move.damagingMove?
     
     score = 0
-    type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+    resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+    type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
     
     if Effectiveness.super_effective?(type_mod)
-      rough_damage = CombatUtilities.estimate_damage(user.battler, move, target, as_percent: true)
+      rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
       
       if rough_damage >= target.hp.to_f / target.totalhp
         # KO before trigger
@@ -295,25 +302,21 @@ class Battle::AI
   # ============================================================================
   
   def evaluate_eject_pack(user, move, target)
-    return 0 unless move.statusMove?
+    # Eject Pack triggers on ANY stat drop — including from damaging moves
+    # (Snarl, Icy Wind, Moonblast secondary, Intimidate on switch, etc.)
+    return 0 unless move.function_code.start_with?("LowerTarget")
     
     score = 0
     
-    # Eject Pack: Switches out when stats are lowered
-    # Check if move lowers stats
-    stat_drop_moves = [:LOWER_TARGET_ATK_1, :LOWER_TARGET_DEF_1, :LOWER_TARGET_SPATK_1,
-                      :LOWER_TARGET_SPDEF_1, :LOWER_TARGET_SPEED_1]
+    # They escape stat drops for free — penalize
+    score -= 35
+    AdvancedAI.log("  Eject Pack: -35 (escapes stat drop)", "Items")
     
-    if stat_drop_moves.include?(move.function_code.to_sym)
-      # They escape stat drops for free
-      score -= 35
-      AdvancedAI.log("  Eject Pack: -35 (escapes stat drop)", "Items")
-      
-      # Unless we wanted them gone anyway
-      if target.stages.values.sum >= 2
-        score += 40  # Reset their boosts
-        AdvancedAI.log("  But removes boosts: +40", "Items")
-      end
+    # Unless we want them gone to break their setup — only count positive boosts
+    positive_boost_sum = target.stages.values.select { |v| v > 0 }.sum
+    if positive_boost_sum >= 2
+      score += 40  # Reset their boosts
+      AdvancedAI.log("  But removes boosts: +40", "Items")
     end
     
     return score
@@ -346,7 +349,7 @@ class Battle::AI
     end
     
     # Unless it KOs the target
-    rough_damage = CombatUtilities.estimate_damage(user.battler, move, target, as_percent: true)
+    rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
     if rough_damage >= target.hp.to_f / target.totalhp
       score += 20  # Worth it for the KO
       AdvancedAI.log("  But KOs: +20 (worth it)", "Items")

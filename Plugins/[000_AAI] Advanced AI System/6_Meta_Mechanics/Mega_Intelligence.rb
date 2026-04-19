@@ -46,7 +46,7 @@ class Battle::AI
   
   def evaluate_mega_ability(user)
     score = 0
-    current_ability = user.ability_id
+    current_ability = user.respond_to?(:hasActiveAbility?) ? user.ability_id : nil
     
     # Predict Mega Ability (Simplified: We know specific powerful Megas)
     # Ideally we'd look up the species form data, but for now we apply heuristics
@@ -58,7 +58,8 @@ class Battle::AI
     
     # This requires looking up the form's ability if possible.
     # In Essentials, we can try to find the standard Mega form.
-    mega_form_id = user.pokemon.getMegaForm
+    pokemon = user.respond_to?(:pokemon) ? user.pokemon : nil
+    mega_form_id = pokemon&.getMegaForm || 0
     if mega_form_id > 0
       mega_species = GameData::Species.get_species_form(user.species, mega_form_id)
       mega_abil = mega_species.abilities.first
@@ -68,8 +69,11 @@ class Battle::AI
         if [:DRIZZLE, :DROUGHT, :SNOWWARNING, :SANDSTREAM].include?(mega_abil)
           score += 25
           # Don't override if we already have the weather we want
-          if (@battle.pbWeather == :Sun && mega_abil == :DROUGHT) ||
-             (@battle.pbWeather == :Rain && mega_abil == :DRIZZLE)
+          weather = AdvancedAI::Utilities.current_weather(@battle)
+          if (weather == :Sun && mega_abil == :DROUGHT) ||
+             (weather == :Rain && mega_abil == :DRIZZLE) ||
+             (weather == :Sandstorm && mega_abil == :SANDSTREAM) ||
+             ([:Snow, :Hail].include?(weather) && mega_abil == :SNOWWARNING)
              score -= 20
           end
         end

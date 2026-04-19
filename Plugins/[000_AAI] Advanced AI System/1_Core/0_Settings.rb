@@ -24,10 +24,10 @@ module AdvancedAI
   DEBUG_SWITCH_INTELLIGENCE = false
   
   # Show move explanations in battle text (e.g., "Thunder Wave (Paralyze fast threat)")
-  SHOW_MOVE_EXPLANATIONS = false#true
+  SHOW_MOVE_EXPLANATIONS = false
   
   # Logging options
-  LOG_TO_CONSOLE = false  # Print logs to console window
+  LOG_TO_CONSOLE = false   # Print logs to console window
   LOG_TO_FILE = false     # Write logs to file (Logs/ai_log.txt)
   
   # ============================================================================
@@ -35,7 +35,7 @@ module AdvancedAI
   # ============================================================================
   
   # Enable smart AI for wild Pokemon (uses move scoring instead of random selection)
-  ENABLE_WILD_POKEMON_AI = false#true
+  ENABLE_WILD_POKEMON_AI = false
   
   # Skill level for wild Pokemon when AI is enabled (0-100)
   # 0     = Random moves (vanilla behavior)
@@ -189,6 +189,10 @@ module AdvancedAI
   # preventing their ace (last Pokemon) from being switched in early
   RESPECT_RESERVE_LAST_POKEMON = true
   
+  # If true, the AI enforces Sleep Clause (won't put a second Pokemon to sleep)
+  # Set to false to allow the AI to use sleep moves freely
+  ENFORCE_SLEEP_CLAUSE = true
+  
   # ============================================================================
   # COMPATIBILITY SETTINGS
   # ============================================================================
@@ -230,7 +234,7 @@ module AdvancedAI
         File.open("Logs/ai_log.txt", "a") do |f|
           f.puts "[#{Time.now.strftime("%H:%M:%S")}] #{formatted}"
         end
-      rescue
+      rescue SystemCallError, IOError
         # Silent fail if file writing fails
       end
     end
@@ -314,7 +318,7 @@ module AdvancedAI
     if defined?(PluginManager) && PluginManager.respond_to?(:installed?)
       plugin_id = case plugin
         when :dynamax           then "[DBK] Dynamax"
-        when :terastallization  then "[DBK] Terastalization"
+        when :terastallization  then "[DBK] Terastallization"
         when :z_moves           then "[DBK] Z-Power"
         when :raid_battles      then "[DBK] Raid Battles"
         when :sos_battles       then "[DBK] SOS Battles"

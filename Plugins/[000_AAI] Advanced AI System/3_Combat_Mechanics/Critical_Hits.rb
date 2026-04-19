@@ -40,7 +40,7 @@ module AdvancedAI
       end
       
       # Super Luck ability
-      if attacker.ability_id == :SUPERLUCK
+      if attacker.hasActiveAbility?(:SUPERLUCK)
         stage += 1
       end
       
@@ -84,7 +84,7 @@ module AdvancedAI
     # Sniper boosts crit damage from 1.5x to 2.25x
     def self.evaluate_sniper_build(battle, attacker, move, skill_level = 100)
       return 0 unless skill_level >= 70
-      return 0 unless attacker.ability_id == :SNIPER
+      return 0 unless attacker.hasActiveAbility?(:SNIPER)
       return 0 unless move && move.damagingMove?
       
       score = 0
@@ -111,7 +111,7 @@ module AdvancedAI
     
     def self.evaluate_focus_energy(battle, attacker, move, skill_level = 100)
       return 0 unless skill_level >= 60
-      return 0 unless move.id == :FOCUSENERGY
+      return 0 unless move && move.id == :FOCUSENERGY
       
       score = 0
       
@@ -125,7 +125,7 @@ module AdvancedAI
       score += high_crit_count * 20
       
       # Super Luck makes Focus Energy = 100% crits
-      if attacker.ability_id == :SUPERLUCK
+      if attacker.hasActiveAbility?(:SUPERLUCK)
         score += 50
       end
       
@@ -135,13 +135,14 @@ module AdvancedAI
       end
       
       # Sniper makes crits devastating
-      if attacker.ability_id == :SNIPER
+      if attacker.hasActiveAbility?(:SNIPER)
         score += 40
       end
       
-      # Kingambit special: Kowtow Cleave always crits + high attack
-      if attacker.species == :KINGAMBIT
-        score += 35
+      # Kingambit: Night Slash is a high-crit move, so Focus Energy is valuable
+      # (Kowtow Cleave is never-miss, NOT always-crit)
+      if attacker.species == :KINGAMBIT && attacker.moves.any? { |m| m && HIGH_CRIT_MOVES.include?(m.id) }
+        score += 15
       end
       
       score
@@ -171,7 +172,7 @@ module AdvancedAI
       end
       
       # Crits ignore Reflect/Light Screen
-      our_opp_side = battle.sides[(attacker.index + 1) % 2]
+      our_opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       if move.physicalMove? && our_opp_side.effects[PBEffects::Reflect] && our_opp_side.effects[PBEffects::Reflect] > 0
         score += 15
       end
@@ -190,7 +191,7 @@ module AdvancedAI
       score = 20  # Base bonus for guaranteed crit
       
       # Sniper makes these amazing
-      if attacker.ability_id == :SNIPER
+      if attacker.hasActiveAbility?(:SNIPER)
         score += 35
       end
       
@@ -208,12 +209,8 @@ module AdvancedAI
       
       crit_immune = [:BATTLEARMOR, :SHELLARMOR]
       
-      if crit_immune.include?(target.ability_id)
-        # Reduce value of crit builds
-        # Use battle parameter, not @battle (this is a module method)
-        attacker = battle&.battlers&.find { |b| b && !b.fainted? }
-        crit_data = get_crit_stage(attacker, move)
-        
+      if crit_immune.any? { |a| target.hasActiveAbility?(a) }
+        # Reduce value of crit builds against crit-immune targets
         if HIGH_CRIT_MOVES.include?(move.id) || ALWAYS_CRIT_MOVES.include?(move.id)
           return -20  # Our crit advantage is nullified
         end
@@ -228,8 +225,9 @@ module AdvancedAI
     
     def self.check_lucky_chant(battle, attacker, move, skill_level = 100)
       return 0 unless skill_level >= 60
+      return 0 unless move
       
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       
       # Lucky Chant prevents crits
       if opp_side.effects[PBEffects::LuckyChant] && opp_side.effects[PBEffects::LuckyChant] > 0
@@ -253,7 +251,7 @@ module AdvancedAI
       
       # Check crit build potential
       has_high_crit = battler.moves.any? { |m| m && HIGH_CRIT_MOVES.include?(m.id) }
-      has_sniper = battler.ability_id == :SNIPER
+      has_sniper = battler.hasActiveAbility?(:SNIPER)
       
       (has_high_crit || has_sniper) && battler.hp > battler.totalhp * 0.5
     end

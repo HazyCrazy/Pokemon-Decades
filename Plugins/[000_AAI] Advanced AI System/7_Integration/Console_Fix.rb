@@ -28,8 +28,8 @@ if !defined?(ORIGINAL_ECHOLN_ALIASED)
         
         # Force flush to ensure immediate output
         STDOUT.flush
-      rescue
-        # Fallback: if anything fails, just be silent
+      rescue SystemCallError, IOError, Errno::EINVAL
+        # Fallback: if console output fails, just be silent
         # Better than crashing or beeping
       end
     end

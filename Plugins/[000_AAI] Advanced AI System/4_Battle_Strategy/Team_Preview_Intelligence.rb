@@ -177,7 +177,7 @@ module AdvancedAI
       end
       
       # Weather Lead
-      weather_ability = [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING].include?(pokemon.ability)
+      weather_ability = [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING].include?(pokemon.ability_id)
       weather_move = pokemon.moves.any? { |m| m && [:SUNNYDAY, :RAINDANCE, :SANDSTORM, :HAIL, :SNOWSCAPE].include?(m.id) }
       if weather_ability || weather_move
         # Check if team benefits
@@ -186,7 +186,7 @@ module AdvancedAI
       end
       
       # Terrain Lead
-      terrain_ability = [:ELECTRICSURGE, :GRASSYSURGE, :MISTYSURGE, :PSYCHICSURGE].include?(pokemon.ability)
+      terrain_ability = [:ELECTRICSURGE, :GRASSYSURGE, :MISTYSURGE, :PSYCHICSURGE].include?(pokemon.ability_id)
       terrain_move = pokemon.moves.any? { |m| m && [:ELECTRICTERRAIN, :GRASSYTERRAIN, :MISTYTERRAIN, :PSYCHICTERRAIN].include?(m.id) }
       if terrain_ability || terrain_move
         team_benefits = party.any? { |p| p && AdvancedAI.benefits_from_terrain?(p, get_terrain_type(pokemon)) }
@@ -211,7 +211,12 @@ module AdvancedAI
       
       # Screen Setter
       has_screens = pokemon.moves.any? { |m| m && [:LIGHTSCREEN, :REFLECT, :AURORAVEIL].include?(m.id) }
-      team_has_sweepers = party.any? { |p| p && AdvancedAI.detect_roles(p).include?(:sweeper) }
+      # detect_roles expects an active Battler, not a party Pokemon.
+      # During team preview no Battler exists, so approximate via stat heuristics.
+      team_has_sweepers = party.any? do |p|
+        next false unless p && !p.fainted?
+        (p.attack >= 100 || p.spatk >= 100) && p.speed >= 80
+      end
       if has_screens && team_has_sweepers
         roles << :screen_setter
       end
@@ -266,15 +271,19 @@ module AdvancedAI
     def self.calculate_type_matchup(attacker, defender)
       return 1.0 if !attacker || !defender
       
-      total_multiplier = 1.0
+      total_multiplier = 0.0
       move_count = 0
       
       attacker.moves.each do |move|
-        next if !move || move.category == :Status
+        next if !move
+        # Party Pokemon moves are Pokemon::Move objects — use GameData for move properties
+        move_data = GameData::Move.try_get(move.id)
+        next if !move_data || move_data.category == 2  # Skip nil/status moves
         
-        effectiveness = Effectiveness.calculate(move.type, defender.type1, defender.type2)
-        # Effectiveness.calculate already returns the multiplier directly
-        multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER.to_f
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move_data)
+        effectiveness = Effectiveness.calculate(resolved_type, *defender.types)
+        # Effectiveness.calculate already returns a float multiplier (1.0 = neutral)
+        multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
         
         total_multiplier += multiplier
         move_count += 1
@@ -317,7 +326,7 @@ module AdvancedAI
       end
       
       # Magic Bounce Ability (+45)
-      if pokemon.ability == :MAGICBOUNCE
+      if pokemon.ability_id == :MAGICBOUNCE
         score += 45
       end
       
@@ -333,19 +342,20 @@ module AdvancedAI
       
       # Party Pokemon uses ability_id
       case pokemon.ability_id
-      when :DROUGHT then return :sun
-      when :DRIZZLE then return :rain
-      when :SANDSTREAM then return :sandstorm
-      when :SNOWWARNING then return :hail
+      when :DROUGHT then return :Sun
+      when :DRIZZLE then return :Rain
+      when :SANDSTREAM then return :Sandstorm
+      when :SNOWWARNING then return :Snow
       end
       
       pokemon.moves.each do |move|
         next if !move
         case move.id
-        when :SUNNYDAY then return :sun
-        when :RAINDANCE then return :rain
-        when :SANDSTORM then return :sandstorm
-        when :HAIL, :SNOWSCAPE then return :hail
+        when :SUNNYDAY then return :Sun
+        when :RAINDANCE then return :Rain
+        when :SANDSTORM then return :Sandstorm
+        when :HAIL then return :Hail
+        when :SNOWSCAPE then return :Snow
         end
       end
       
@@ -355,20 +365,20 @@ module AdvancedAI
     def self.get_terrain_type(pokemon)
       return nil if !pokemon
       
-      case pokemon.ability
-      when :ELECTRICSURGE then return :electric
-      when :GRASSYSURGE then return :grassy
-      when :MISTYSURGE then return :misty
-      when :PSYCHICSURGE then return :psychic
+      case pokemon.ability_id
+      when :ELECTRICSURGE then return :Electric
+      when :GRASSYSURGE then return :Grassy
+      when :MISTYSURGE then return :Misty
+      when :PSYCHICSURGE then return :Psychic
       end
       
       pokemon.moves.each do |move|
         next if !move
         case move.id
-        when :ELECTRICTERRAIN then return :electric
-        when :GRASSYTERRAIN then return :grassy
-        when :MISTYTERRAIN then return :misty
-        when :PSYCHICTERRAIN then return :psychic
+        when :ELECTRICTERRAIN then return :Electric
+        when :GRASSYTERRAIN then return :Grassy
+        when :MISTYTERRAIN then return :Misty
+        when :PSYCHICTERRAIN then return :Psychic
         end
       end
       

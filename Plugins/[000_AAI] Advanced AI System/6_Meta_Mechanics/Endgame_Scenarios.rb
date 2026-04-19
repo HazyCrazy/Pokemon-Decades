@@ -22,9 +22,9 @@ module AdvancedAI
     def self.is_endgame?(battle)
       return false if !battle
       
-      # Count remaining Pokemon
-      side0_count = battle.pbAbleNonActiveCount(0) + battle.pbParty(0).count { |p| p && !p.fainted? && p.hp > 0 }
-      side1_count = battle.pbAbleNonActiveCount(1) + battle.pbParty(1).count { |p| p && !p.fainted? && p.hp > 0 }
+      # Count remaining Pokemon (active + bench)
+      side0_count = battle.pbAbleCount(0)
+      side1_count = battle.pbAbleCount(1)
       
       return side0_count <= 2 || side1_count <= 2
     end
@@ -64,10 +64,8 @@ module AdvancedAI
       if can_ko?(user, target, move)
         AdvancedAI.log("  [Endgame] 1v1: Move can KO! +100", :endgame)
         score += 100
-      end
-      
       # 2. 2HKO Priority (+50)
-      if can_2hko?(user, target, move)
+      elsif can_2hko?(user, target, move)
         AdvancedAI.log("  [Endgame] 1v1: Move can 2HKO! +50", :endgame)
         score += 50
       end
@@ -107,11 +105,11 @@ module AdvancedAI
       end
       
       # 5. Status Moves in 1v1
-      if move.category == :Status
+      if move.statusMove?
         # Will-O-Wisp/Thunder Wave very strong
         if [:WILLOWISP, :THUNDERWAVE, :TOXIC].include?(move.id)
           # But only if target doesn't have status yet
-          if !target.status
+          if target.status == :NONE
             score += 40
           end
         end
@@ -127,8 +125,18 @@ module AdvancedAI
       
       # 6. OHKO Moves (desperate)
       if AdvancedAI.ohko_move?(move.id)
+        # Check known immunities before awarding bonus
+        immune = false
+        immune = true if target.hasActiveAbility?(:STURDY)  # Sturdy = unconditional OHKO immunity
+        immune = true if target.level > user.level
+        immune = true if move.id == :FISSURE && (target.pbHasType?(:FLYING) || target.hasActiveAbility?(:LEVITATE))
+        immune = true if move.id == :SHEERCOLD && target.pbHasType?(:ICE)
+        # Focus Sash: target survives OHKO at full HP → attack wastes the turn
+        if target.hp == target.totalhp && target.item_id == :FOCUSSASH
+          immune = true
+        end
         # 30% Chance = better than losing
-        score += 80
+        score += 80 unless immune
       end
       
       return score
@@ -269,7 +277,7 @@ module AdvancedAI
       return 0 if !battle || !user || !move
       
       # Only if close to losing
-      remaining = battle.pbAbleCount(user.index)
+      remaining = battle.pbAbleCount(user.index & 1)
       return 0 if remaining > 1
       
       # Only if user weak
@@ -317,21 +325,64 @@ module AdvancedAI
     # NOTE: Signature matches Move_Scorer: (move, attacker, defender)
     def self.calculate_rough_damage(move, user, target)
       return 0 if !user || !target || !move
-      return 0 if move.category == :Status
+      return 0 if move.statusMove?
+      
+      # Resolve effective type and power via shared helpers
+      effective_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+      power = AdvancedAI::CombatUtilities.resolve_move_power(move)
+      return 0 if power == 0
       
       # Very simplified (enough for AI)
       attack = (move.physicalMove? ? user.attack : user.spatk)
+      # Huge Power / Pure Power (2x Attack for physical moves)
+      if move.physicalMove?
+        has_huge = user.respond_to?(:hasActiveAbility?) ?
+          (user.hasActiveAbility?(:HUGEPOWER) || user.hasActiveAbility?(:PUREPOWER)) :
+          ([:HUGEPOWER, :PUREPOWER].include?(user.ability_id) rescue false)
+        attack *= 2 if has_huge
+      end
       defense = (move.physicalMove? ? target.defense : target.spdef)
       defense = [defense, 1].max  # Prevent division by zero
       
-      # Type effectiveness (use Utilities.type_mod to handle both Battler and Pokemon)
-      effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
-      # Convert effectiveness to multiplier (divide by normal effective value)
-      multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE
+      # Type effectiveness (Scrappy/Mind's Eye: Normal/Fighting hits Ghost)
+      target_types = target.respond_to?(:pbTypes) ? target.pbTypes(true) : target.types
+      effectiveness = AdvancedAI::CombatUtilities.scrappy_effectiveness(effective_type, user, target_types)
+      # Effectiveness.calculate already returns a float multiplier (1.0 = neutral)
+      multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
       
+      # STAB (Adaptability: 2.0 instead of 1.5)
+      has_stab = user.respond_to?(:pbHasType?) ? user.pbHasType?(effective_type) : user.hasType?(effective_type)
+      stab = has_stab ? 1.5 : 1.0
+      if stab == 1.5
+        has_adapt = user.respond_to?(:hasActiveAbility?) ?
+          user.hasActiveAbility?(:ADAPTABILITY) :
+          (user.ability_id == :ADAPTABILITY rescue false)
+        stab = 2.0 if has_adapt
+      end
+
       # Rough formula
-      damage = ((2 * user.level / 5 + 2) * move.power * attack / defense / 50 + 2) * multiplier
+      damage = ((2 * user.level / 5.0 + 2) * power * attack / defense / 50 + 2) * multiplier * stab
       
+      # Field & context modifiers (weather, terrain, items, burn)
+      damage *= AdvancedAI::CombatUtilities.field_modifier(nil, user, effective_type, move, move.physicalMove?, target)
+      
+      # Defender modifiers (Assault Vest, Eviolite, weather defense)
+      damage *= AdvancedAI::CombatUtilities.defender_modifier(nil, target, move.physicalMove?)
+
+      # Screen modifiers (Reflect / Light Screen / Aurora Veil)
+      damage *= AdvancedAI::CombatUtilities.screen_modifier(nil, user, target, move.physicalMove?)
+      
+      # Parental Bond (1.25x — two hits: 100% + 25%)
+      if !move.multiHitMove?
+        has_pb = user.respond_to?(:hasActiveAbility?) ?
+          user.hasActiveAbility?(:PARENTALBOND) :
+          (user.ability_id == :PARENTALBOND rescue false)
+        damage *= 1.25 if has_pb
+      end
+
+      # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(user, target, effective_type, move.physicalMove?, effectiveness)
+
       return damage.to_i
     end
     
@@ -363,11 +414,10 @@ module AdvancedAI
       return nil if !battle || !user
       return nil unless battle.pbSideSize(0) > 1  # Not doubles
       
-      partner_index = (user.index % 2 == 0) ? user.index + 1 : user.index - 1
-      partner = battle.battlers[partner_index]
-      
-      return partner if partner && !partner.fainted?
-      return nil
+      # PE v21.1 interleaved indexing: 0=player1, 1=opp1, 2=player2, 3=opp2
+      # Partner is on same side: index XOR 2 (0↔2, 1↔3)
+      partner = battle.allSameSideBattlers(user.index).find { |b| b && b.index != user.index && !b.fainted? }
+      return partner
     end
     
   end

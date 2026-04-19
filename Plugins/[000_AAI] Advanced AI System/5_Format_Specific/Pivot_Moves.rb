@@ -33,7 +33,7 @@ module AdvancedAI
       
       # Defensive pivot evaluation
       if DEFENSIVE_PIVOTS.include?(move.id)
-        score += evaluate_defensive_pivot(battle, attacker, move, skill_level)
+        score += evaluate_defensive_pivot(battle, attacker, move, target, skill_level)
       end
       
       # Slow pivot bonus
@@ -51,17 +51,31 @@ module AdvancedAI
     def self.evaluate_offensive_pivot(battle, attacker, move, target, skill_level)
       score = 0
       
+      # === SUBSTITUTE AWARENESS ===
+      # Pivot moves still switch the user out even when the target has a Sub,
+      # but the damage is absorbed by the Sub instead of the target's HP.
+      target_has_sub = target && target.effects[PBEffects::Substitute] &&
+                       target.effects[PBEffects::Substitute] > 0
+      
       # Check type effectiveness
       if target
-        type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+        type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
         
         if Effectiveness.ineffective?(type_mod)
           return -50  # Volt Switch blocked by Ground
         elsif Effectiveness.super_effective?(type_mod)
-          score += 20  # Good damage + switch
+          # Reduced damage bonus when hitting into a Sub
+          score += target_has_sub ? 10 : 20
         elsif Effectiveness.not_very_effective?(type_mod)
           score -= 10
         end
+      end
+      
+      # When target has a Sub, pivoting is still valuable for the switch-out
+      # even though damage is reduced — we escape a bad matchup for free
+      if target_has_sub
+        score += 15  # Switch-out value despite Sub absorbing damage
       end
       
       # Do we have a better switch-in available?
@@ -84,13 +98,13 @@ module AdvancedAI
       end
       
       # Hazards on their side = pivot is good
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       if opp_side.effects[PBEffects::StealthRock]
         score += 10  # They take rocks on switch
       end
       
       # Hazards on our side = pivot is risky
-      our_side = battle.sides[attacker.index % 2]
+      our_side = battle.sides[attacker.index & 1]  # own side (& 1 is safe in doubles)
       if our_side.effects[PBEffects::StealthRock]
         score -= 10  # Our switch takes rocks
       end
@@ -101,7 +115,8 @@ module AdvancedAI
           last_move = GameData::Move.try_get(target.lastMoveUsed)
           if last_move
             # They're locked - bring in a counter
-            type_mod = Effectiveness.calculate(last_move.type, *attacker.pbTypes(true))
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, last_move)
+            type_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
             if Effectiveness.not_very_effective?(type_mod)
               score += 20  # Pivot to something that resists better
             end
@@ -116,12 +131,12 @@ module AdvancedAI
     # Defensive Pivots (Parting Shot, Teleport, Baton Pass)
     #===========================================================================
     
-    def self.evaluate_defensive_pivot(battle, attacker, move, skill_level)
+    def self.evaluate_defensive_pivot(battle, attacker, move, target, skill_level)
       score = 0
       
       case move.id
       when :PARTINGSHOT
-        score += evaluate_parting_shot(battle, attacker, skill_level)
+        score += evaluate_parting_shot(battle, attacker, target, skill_level)
       when :TELEPORT
         score += evaluate_teleport(battle, attacker, skill_level)
       when :BATONPASS
@@ -134,28 +149,42 @@ module AdvancedAI
     end
     
     # Parting Shot: Lower Attack + SpAtk, then switch
-    def self.evaluate_parting_shot(battle, attacker, skill_level)
+    def self.evaluate_parting_shot(battle, attacker, target, skill_level)
       score = 0
       
       opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
       
-      # Best against physical/special attackers
-      high_offense = opponents.count { |o| o.attack >= 100 || o.spatk >= 100 }
-      score += high_offense * 15
+      # Evaluate the actual target when provided, otherwise pick best
+      targets_to_eval = target ? [target] : opponents
       
-      # Check if stats can be lowered
-      opponents.each do |opp|
+      best_target_score = targets_to_eval.map do |opp|
+        ts = 0
+        ts += 15 if opp.attack >= 100 || opp.spatk >= 100
         if opp.stages[:ATTACK] > -6 || opp.stages[:SPECIAL_ATTACK] > -6
-          score += 20
+          ts += 20
         else
-          score -= 30  # Already at -6
+          ts -= 30  # Already at -6
         end
-        
         # Clear Body / White Smoke / etc. block
-        if [:CLEARBODY, :WHITESMOKE, :FULLMETALBODY].include?(opp.ability_id)
-          score -= 40
+        if opp.hasActiveAbility?(:CLEARBODY) || opp.hasActiveAbility?(:WHITESMOKE) || opp.hasActiveAbility?(:FULLMETALBODY)
+          ts -= 40
         end
-      end
+        # Competitive / Defiant punish stat drops with +2 boost — NEVER use
+        # Parting Shot against these; the net result buffs the opponent
+        if opp.hasActiveAbility?(:COMPETITIVE) || opp.hasActiveAbility?(:DEFIANT)
+          ts -= 200
+        end
+        # Contrary inverts drops into boosts — even worse
+        if opp.hasActiveAbility?(:CONTRARY)
+          ts -= 200
+        end
+        # Mirror Armor reflects stat drops back
+        if opp.hasActiveAbility?(:MIRRORARMOR)
+          ts -= 40
+        end
+        ts
+      end.max || 0
+      score += best_target_score
       
       # Need switch target
       switch_in = find_best_switch_in(battle, attacker, opponents.first, skill_level)
@@ -175,7 +204,7 @@ module AdvancedAI
       # Teleport is -6 priority - we move last
       # Perfect for bringing in frail sweepers
       
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       frail_sweepers = party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted? && pkmn != attacker.pokemon
         # Frail but strong
@@ -190,8 +219,9 @@ module AdvancedAI
       can_damage = opponents.any? do |opp|
         attacker.moves.any? do |m|
           next false unless m && m.damagingMove?
-          type_mod = Effectiveness.calculate(m.type, *opp.pbTypes(true))
-          Effectiveness.super_effective?(type_mod) || type_mod >= Effectiveness::NORMAL_EFFECTIVE
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, m)
+          type_mod = Effectiveness.calculate(resolved_type, *opp.pbTypes(true))
+          Effectiveness.super_effective?(type_mod) || type_mod >= Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
         end
       end
       
@@ -200,7 +230,9 @@ module AdvancedAI
       end
       
       # Wish + Teleport combo
-      if attacker.effects[PBEffects::Wish] && attacker.effects[PBEffects::Wish] > 0
+      # Wish is stored in position effects, not battler effects
+      wish_val = (battle.positions[attacker.index].effects[PBEffects::Wish] rescue 0)
+      if wish_val.is_a?(Numeric) && wish_val > 0
         # Wish will heal next turn - Teleport passes it
         score += 35
       end
@@ -237,7 +269,7 @@ module AdvancedAI
       end
       
       # Need recipient
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       recipients = party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted? && pkmn != attacker.pokemon
         # Can make use of boosts
@@ -258,12 +290,13 @@ module AdvancedAI
       score = 0
       
       # Sets Snow weather
-      if battle.field.weather == :Snow || battle.field.weather == :Hail
+      effective_weather = AdvancedAI::Utilities.current_weather(battle)
+      if effective_weather == :Snow || effective_weather == :Hail
         score -= 30  # Already snowy
       end
       
       # Check if team benefits from Snow
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       ice_types = party.count { |p| p && !p.fainted? && p.hasType?(:ICE) }
       score += ice_types * 15
       
@@ -309,7 +342,7 @@ module AdvancedAI
     def self.find_best_switch_in(battle, attacker, opponent, skill_level)
       return nil unless skill_level >= 60
       
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       
       candidates = []
       party.each do |pkmn|
@@ -324,13 +357,11 @@ module AdvancedAI
           # Resists opponent's STAB
           opp_stab = opponent.pbTypes(true).compact
           opp_stab.each do |opp_type|
-            pkmn_types.each do |our_type|
-              type_mod = Effectiveness.calculate(opp_type, our_type, nil)
-              if Effectiveness.not_very_effective?(type_mod)
-                candidate_score += 20
-              elsif Effectiveness.ineffective?(type_mod)
-                candidate_score += 40
-              end
+            type_mod = Effectiveness.calculate(opp_type, *pkmn_types)
+            if Effectiveness.not_very_effective?(type_mod)
+              candidate_score += 20
+            elsif Effectiveness.ineffective?(type_mod)
+              candidate_score += 40
             end
           end
           
@@ -339,8 +370,9 @@ module AdvancedAI
             next unless move && move.is_a?(Pokemon::Move)
             move_data = GameData::Move.try_get(move.id)
             next unless move_data
-            if move_data.category < 2  # Physical or Special (damaging)
-              type_mod = Effectiveness.calculate(move.type, *opponent.pbTypes(true))
+            if move_data.power > 0  # Physical or Special
+              resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(pkmn, move_data)
+              type_mod = Effectiveness.calculate(resolved_type, *opponent.pbTypes(true))
               if Effectiveness.super_effective?(type_mod)
                 candidate_score += 25
               end
@@ -374,13 +406,14 @@ module AdvancedAI
       # Calculate attack value
       attack_score = 0
       if attack_move.damagingMove? && target
-        type_mod = Effectiveness.calculate(attack_move.type, *target.pbTypes(true))
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, attack_move)
+        type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
         
         if Effectiveness.super_effective?(type_mod)
           attack_score += 40
         end
         
-        if attack_move.power >= 100
+        if AdvancedAI::CombatUtilities.resolve_move_power(attack_move) >= 100
           attack_score += 20
         end
         
@@ -413,7 +446,7 @@ module AdvancedAI
     
     def self.is_offensive_team?(battle, attacker)
       # Heuristic: Check team composition
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       
       offensive = party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted?
@@ -426,8 +459,11 @@ module AdvancedAI
     def self.estimate_damage_percent(attacker, target, move)
       return 0 unless move && move.damagingMove?
       
-      power = move.power
+      # Resolve power and type via shared helpers
+      power = AdvancedAI::CombatUtilities.resolve_move_power(move)
       return 0 if power == 0
+      
+      effective_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
       
       if move.physicalMove?
         atk = attacker.attack
@@ -437,16 +473,40 @@ module AdvancedAI
         dfn = target.spdef
       end
       
-      damage = ((2 * attacker.level / 5 + 2) * power * atk / dfn / 50 + 2)
+      dfn = [dfn, 1].max  # Prevent division by zero
+      
+      damage = ((2 * attacker.level / 5.0 + 2) * power * atk / dfn / 50 + 2)
       
       # STAB
-      if attacker.pbHasType?(move.type)
-        damage *= 1.5
+      if attacker.pbHasType?(effective_type)
+        damage *= attacker.hasActiveAbility?(:ADAPTABILITY) ? 2.0 : 1.5
       end
       
-      # Type effectiveness
-      type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
-      damage *= type_mod / Effectiveness::NORMAL_EFFECTIVE
+      # Huge Power / Pure Power (2x Attack for physical moves)
+      if move.physicalMove? && (attacker.hasActiveAbility?(:HUGEPOWER) || attacker.hasActiveAbility?(:PUREPOWER))
+        damage *= 2
+      end
+      
+      # Type effectiveness (Scrappy/Mind's Eye: Normal/Fighting hits Ghost)
+      type_mod = AdvancedAI::CombatUtilities.scrappy_effectiveness(effective_type, attacker, target.pbTypes(true))
+      damage *= type_mod / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
+      
+      # Field & context modifiers (weather, terrain, items, burn)
+      damage *= AdvancedAI::CombatUtilities.field_modifier(nil, attacker, effective_type, move, move.physicalMove?, target)
+      
+      # Defender modifiers (Assault Vest, Eviolite, weather defense)
+      damage *= AdvancedAI::CombatUtilities.defender_modifier(nil, target, move.physicalMove?)
+      
+      # Screen modifiers (Reflect / Light Screen / Aurora Veil)
+      damage *= AdvancedAI::CombatUtilities.screen_modifier(nil, attacker, target, move.physicalMove?)
+      
+      # Parental Bond (1.25x — two hits: 100% + 25%)
+      if !move.multiHitMove? && attacker.hasActiveAbility?(:PARENTALBOND)
+        damage *= 1.25
+      end
+      
+      # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, target, effective_type, move.physicalMove?, type_mod)
       
       (damage / target.totalhp.to_f) * 100
     end

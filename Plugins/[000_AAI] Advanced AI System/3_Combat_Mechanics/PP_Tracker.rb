@@ -62,7 +62,7 @@ module AdvancedAI
       # Check for Pressure ability on opponents
       battle.allOtherSideBattlers(battler.index).each do |opp|
         next unless opp && !opp.fainted?
-        if opp.ability_id == :PRESSURE
+        if opp.hasActiveAbility?(:PRESSURE)
           drain += 1  # Pressure doubles PP usage
         end
       end
@@ -152,7 +152,7 @@ module AdvancedAI
       
       battle.allOtherSideBattlers(battler.index).each do |opp|
         next unless opp && !opp.fainted?
-        if opp.ability_id == :PRESSURE
+        if opp.hasActiveAbility?(:PRESSURE)
           drain += 1
         end
       end
@@ -178,14 +178,14 @@ module AdvancedAI
       score = 0
       
       # Check if we have Pressure
-      if attacker.ability_id == :PRESSURE
+      if attacker.hasActiveAbility?(:PRESSURE)
         low_pp = get_low_pp_moves(target, 5)
         score += low_pp.length * 10
         
         # Bonus if they have low PP threats
         low_pp.each do |lp|
           move_data = GameData::Move.try_get(lp[:move_id])
-          if move_data && move_data.power >= 80
+          if move_data && CombatUtilities.resolve_move_power(move_data) >= 80
             score += 15  # Their strong moves are running low
           end
         end
@@ -197,7 +197,7 @@ module AdvancedAI
       end
       
       # Check if opponent has Pressure (we need to conserve PP)
-      if target.ability_id == :PRESSURE
+      if target.hasActiveAbility?(:PRESSURE)
         # Prefer high PP moves
         attacker.moves.each_with_index do |move, i|
           next unless move
@@ -256,7 +256,7 @@ module AdvancedAI
       end
       
       # Adjust by move importance
-      if move.power >= 100
+      if AdvancedAI::CombatUtilities.resolve_move_power(move) >= 100
         penalty /= 2  # Strong moves are worth using
       end
       
@@ -300,11 +300,12 @@ module AdvancedAI
     LOW_PP_MOVES = {
       # 5 PP moves
       FOCUSBLAST: 5, STONEEDGE: 5, FIREBLAST: 5, HYDROPUMP: 5, BLIZZARD: 5,
-      THUNDER: 5, MEGAHORN: 5, DRAGONPULSE: 5, METEORMASH: 5, CLOSECOMBAT: 5,
-      OUTRAGE: 5, PETALBLIZZARD: 5, OVERHEAT: 5, LEAFSTORM: 5, DRACOMETEOR: 5,
+      THUNDER: 5, MEGAHORN: 5, METEORMASH: 5, CLOSECOMBAT: 5,
+      OUTRAGE: 5, OVERHEAT: 5, LEAFSTORM: 5, DRACOMETEOR: 5,
       PSYCHOBOOST: 5, FLEURCANNON: 5, CLANGINGSCALES: 5,
-      # 8 PP moves
-      EARTHQUAKE: 10, ICEBEAM: 10, THUNDERBOLT: 10, FLAMETHROWER: 10
+      # 10 PP moves (reference data — is_low_pp_move? uses dynamic total_pp check)
+      EARTHQUAKE: 10, ICEBEAM: 10, THUNDERBOLT: 10, FLAMETHROWER: 10,
+      DRAGONPULSE: 10, PETALBLIZZARD: 10
     }
     
     def self.is_low_pp_move?(move)
@@ -348,8 +349,9 @@ module AdvancedAI
     private
     
     def self.battler_key(battler)
-      # Unique key combining side and species
-      "#{battler.index}_#{battler.species}"
+      # Unique key using personalID to prevent same-species collision on replacement
+      pid = battler.pokemon.personalID rescue battler.personalID rescue 0
+      "#{battler.index}_#{pid}"
     end
     
     def self.only_viable_move?(attacker, move)

@@ -11,10 +11,11 @@ module AdvancedAI
     
     # Check if using a sleep move would violate sleep clause
     def self.would_violate_sleep_clause?(battle, attacker, target)
+      return false unless AdvancedAI::ENFORCE_SLEEP_CLAUSE
       return false unless target
       
       # Check if opponent already has a sleeping Pokemon
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))  # opponent side (safe in doubles)
       
       already_asleep = opp_party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted?
@@ -28,13 +29,11 @@ module AdvancedAI
     
     # Check if sleep is from Rest (Rest sleep doesn't count for clause)
     def self.is_rest_sleep?(pokemon)
-      # In Essentials, Rest sets a specific sleep counter
-      # If sleepCount is exactly 3, it's likely from Rest
-      # This is a heuristic - actual implementation may vary
       return false unless pokemon.status == :SLEEP
-      
-      # Check if statusCount matches Rest's 2-turn sleep
-      pokemon.statusCount == 2 || pokemon.statusCount == 3
+      # Rest in Gen 9 sets statusCount to 3 on application.
+      # Only count exactly 3 as "likely Rest" to minimize false positives
+      # (normal sleep can also be 1-3, but 3 is most distinctive for Rest)
+      pokemon.statusCount == 3
     end
     
     # Evaluate sleep moves with clause awareness
@@ -43,7 +42,7 @@ module AdvancedAI
       return 0 unless target
       
       sleep_moves = [:SPORE, :SLEEPPOWDER, :HYPNOSIS, :SING, :GRASSWHISTLE,
-                     :LOVELYKISS, :DARKVOID, :YAWN, :RELICSONG]
+                     :LOVELYKISS, :DARKVOID, :RELICSONG]
       
       return 0 unless sleep_moves.include?(move.id)
       
@@ -66,7 +65,7 @@ module AdvancedAI
       
       # Check for Vital Spirit / Insomnia / Sweet Veil / Comatose
       sleep_immune = [:VITALSPIRIT, :INSOMNIA, :SWEETVEIL, :COMATOSE]
-      if sleep_immune.include?(target.ability_id)
+      if sleep_immune.any? { |a| target.hasActiveAbility?(a) }
         return -80
       end
       
@@ -92,7 +91,7 @@ module AdvancedAI
       end
       
       # Overcoat blocks powder
-      if powder_moves.include?(move.id) && target.ability_id == :OVERCOAT
+      if powder_moves.include?(move.id) && target.hasActiveAbility?(:OVERCOAT)
         return -80
       end
       
@@ -160,7 +159,7 @@ module AdvancedAI
       end
       
       # Hazards up means switch is punished
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       if opp_side.effects[PBEffects::StealthRock]
         score += 15
       end
@@ -184,7 +183,7 @@ module AdvancedAI
       
       # Check for sleep immunity
       sleep_immune = [:VITALSPIRIT, :INSOMNIA, :SWEETVEIL, :COMATOSE]
-      if sleep_immune.include?(battler.ability_id)
+      if sleep_immune.any? { |a| battler.hasActiveAbility?(a) }
         score += 40
       end
       
@@ -199,12 +198,12 @@ module AdvancedAI
       end
       
       # Overcoat
-      if battler.ability_id == :OVERCOAT
+      if battler.hasActiveAbility?(:OVERCOAT)
         score += 20
       end
       
       # Magic Bounce reflects sleep
-      if battler.ability_id == :MAGICBOUNCE
+      if battler.hasActiveAbility?(:MAGICBOUNCE)
         score += 35
       end
       
@@ -223,7 +222,7 @@ module AdvancedAI
         
         # Better if we have good moves to call
         good_moves = attacker.moves.count do |m|
-          m && m.id != :SLEEPTALK && m.damagingMove? && m.power >= 80
+          m && m.id != :SLEEPTALK && m.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(m) >= 80
         end
         score += good_moves * 15
       else
@@ -248,10 +247,10 @@ module AdvancedAI
           
           # Value based on HP
           hp_percent = attacker.hp.to_f / attacker.totalhp
-          if hp_percent < 0.5
-            score += 40
-          elsif hp_percent < 0.3
+          if hp_percent < 0.3
             score += 60
+          elsif hp_percent < 0.5
+            score += 40
           end
         end
       end
@@ -280,7 +279,9 @@ module AdvancedAI
       
       # Setup moves while they sleep
       setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :CALMMIND,
-                     :QUIVERDANCE, :BULKUP, :AGILITY, :SHELLSMASH]
+                     :QUIVERDANCE, :BULKUP, :AGILITY, :SHELLSMASH, :ROCKPOLISH, :COIL,
+                     :VICTORYDANCE, :FILLETAWAY, :TIDYUP, :SHIFTGEAR, :NORETREAT,
+                     :CLANGOROUSSOUL, :GEOMANCY]
       
       if setup_moves.include?(move.id)
         if turns_left >= 2

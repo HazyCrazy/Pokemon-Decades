@@ -21,10 +21,15 @@ module AdvancedAI
     
     # Weather Bonus
     def self.weather_bonus(battle, move, user, target)
-      return 0 unless battle.field.weather
+      return 0 unless AdvancedAI::Utilities.weather_active?(battle)
+      
+      # Utility Umbrella: weather effects don't apply to this Pokemon's moves
+      if user.respond_to?(:item_id) && user.item_id == :UTILITYUMBRELLA
+        return 0
+      end
       
       bonus = 0
-      weather = battle.field.weather
+      weather = AdvancedAI::Utilities.current_weather(battle)
       
       case weather
       when :Sun, :HarshSun
@@ -34,6 +39,8 @@ module AdvancedAI
           # Hydro Steam gets BOOSTED in Sun instead of weakened!
           if move.id == :HYDROSTEAM
             bonus += 35  # 1.5x power in Sun (reversed)
+          elsif weather == :HarshSun
+            bonus -= 200  # Water moves do ZERO damage under Harsh Sun
           else
             bonus -= 30  # Water moves x0.5
           end
@@ -47,7 +54,7 @@ module AdvancedAI
         bonus += 25 if [:SOLARBEAM, :SOLARBLADE].include?(move.id)
         
         # Solar Power risk assessment - user loses 1/8 HP each turn
-        if user.ability_id == :SOLARPOWER
+        if user.hasActiveAbility?(:SOLARPOWER)
           bonus -= 10 if user.hp < user.totalhp * 0.4  # Low HP = risky
         end
         
@@ -55,60 +62,87 @@ module AdvancedAI
         if move.type == :WATER
           bonus += 30  # Water moves x1.5
         elsif move.type == :FIRE
-          bonus -= 30  # Fire moves x0.5
+          if weather == :HeavyRain
+            bonus -= 200  # Fire moves do ZERO damage under Heavy Rain
+          else
+            bonus -= 30  # Fire moves x0.5
+          end
         end
         
         bonus += 25 if move.id == :THUNDER || move.id == :HURRICANE  # 100% accuracy
         bonus += 20 if move.id == :WEATHERBALL
+        # Solar Beam/Blade deals half damage in Rain
+        bonus -= 25 if [:SOLARBEAM, :SOLARBLADE].include?(move.id)
         
       when :Sandstorm
         bonus += 20 if move.id == :WEATHERBALL
         bonus += 15 if move.id == :SHOREUP  # Heals more
+        # Solar Beam/Blade deals half damage in Sandstorm
+        bonus -= 25 if [:SOLARBEAM, :SOLARBLADE].include?(move.id)
         
         # Rock types get +50% SpDef boost in Sandstorm
         if move.specialMove? && target && target.pbHasType?(:ROCK)
           bonus -= 20  # Special attacks do less damage to Rock types
         end
         
-        # Non-immune types take residual damage
-        if target && !target.pbHasType?(:ROCK) && !target.pbHasType?(:STEEL) && !target.pbHasType?(:GROUND)
+        # Non-immune types take residual damage (check abilities/items that block it)
+        if target && !target.pbHasType?(:ROCK) && !target.pbHasType?(:STEEL) && !target.pbHasType?(:GROUND) &&
+           !target.hasActiveAbility?(:MAGICGUARD) && !target.hasActiveAbility?(:OVERCOAT) &&
+           !(target.respond_to?(:hasActiveItem?) && target.hasActiveItem?(:SAFETYGOGGLES))
           bonus += 10  # Target takes residual damage
         end
         
         # Sand Veil evasion - accuracy moves less reliable
-        if target && target.ability_id == :SANDVEIL
+        if target && target.hasActiveAbility?(:SANDVEIL)
           bonus -= 10  # 20% evasion boost makes moves less accurate
         end
         
-      when :Hail, :Snow
+      when :Hail
         bonus += 30 if move.id == :BLIZZARD  # 100% accuracy
         bonus += 20 if move.id == :WEATHERBALL
         bonus += 25 if move.id == :AURORAVEIL  # Aurora Veil only in Hail/Snow
+        # Solar Beam/Blade deals half damage in Hail
+        bonus -= 25 if [:SOLARBEAM, :SOLARBLADE].include?(move.id)
         
         # Ice types immune to Hail damage
         bonus += 5 if user.pbHasType?(:ICE)
         
         # Snow Cloak evasion - accuracy moves less reliable
-        if target && target.ability_id == :SNOWCLOAK
+        if target && target.hasActiveAbility?(:SNOWCLOAK)
           bonus -= 10  # 20% evasion boost makes moves less accurate
+        end
+        
+      when :Snow
+        bonus += 30 if move.id == :BLIZZARD  # 100% accuracy
+        bonus += 20 if move.id == :WEATHERBALL
+        bonus += 25 if move.id == :AURORAVEIL  # Aurora Veil only in Snow
+        # Solar Beam/Blade deals half damage in Snow
+        bonus -= 25 if [:SOLARBEAM, :SOLARBLADE].include?(move.id)
+        
+        # Gen 9: Ice types get x1.5 Defense boost in Snow (no chip damage)
+        if target && target.pbHasType?(:ICE) && move.physicalMove?
+          bonus -= 15  # Physical attacks less effective vs Ice types in Snow
+        end
+        
+        # Snow Cloak evasion
+        if target && target.hasActiveAbility?(:SNOWCLOAK)
+          bonus -= 10
         end
       end
       
       # Ability Synergies
-      ability = user.ability_id
-      case ability
-      when :SWIFTSWIM
+      if user.hasActiveAbility?(:SWIFTSWIM)
         bonus += 20 if weather == :Rain || weather == :HeavyRain
-      when :CHLOROPHYLL
+      elsif user.hasActiveAbility?(:CHLOROPHYLL)
         bonus += 20 if weather == :Sun || weather == :HarshSun
-      when :SANDRUSH
+      elsif user.hasActiveAbility?(:SANDRUSH)
         bonus += 20 if weather == :Sandstorm
-      when :SLUSHRUSH
+      elsif user.hasActiveAbility?(:SLUSHRUSH)
         bonus += 20 if weather == :Hail || weather == :Snow
       # Paradox Pokemon abilities
-      when :PROTOSYNTHESIS
-        if weather == :Sun || weather == :HarshSun || user.item_id == :BOOSTERENERGY
-          bonus += 25  # Stat boost active
+      elsif user.hasActiveAbility?(:PROTOSYNTHESIS)
+        if weather == :Sun || weather == :HarshSun
+          bonus += 25  # Stat boost active from Sun
           # Extra bonus if Speed is their highest stat (speed control)
           if user.speed >= [user.attack, user.defense, user.spatk, user.spdef].max
             bonus += 15  # Speed Protosynthesis is very strong
@@ -116,9 +150,11 @@ module AdvancedAI
         end
       end
       
-      # Check target for Quark Drive (Electric Terrain activates it but handled in terrain_bonus)
-      if target && target.ability_id == :QUARKDRIVE && target.item_id == :BOOSTERENERGY
-        bonus -= 15  # Target has Quark Drive boost from Booster Energy
+      # Penalize if target's Protosynthesis is active from Sun
+      if target && target.hasActiveAbility?(:PROTOSYNTHESIS)
+        if weather == :Sun || weather == :HarshSun
+          bonus -= 15  # Target has active Protosynthesis boost
+        end
       end
       
       bonus
@@ -126,32 +162,44 @@ module AdvancedAI
     
     # Terrain Bonus
     def self.terrain_bonus(battle, move, user, target)
-      return 0 unless battle.field.terrain
+      return 0 if !battle.field.terrain || battle.field.terrain == :None
       
       bonus = 0
       terrain = battle.field.terrain
       
+      resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+      
       case terrain
       when :Electric
-        if move.type == :ELECTRIC && user.affectedByTerrain?
+        if resolved_type == :ELECTRIC && user.affectedByTerrain?
           bonus += 25  # x1.3 power
         end
         # Psyblade gets 1.5x power in Electric Terrain
         if move.id == :PSYBLADE && user.affectedByTerrain?
           bonus += 30  # 1.5x power boost
         end
+        # Rising Voltage doubles power when TARGET is grounded in Electric Terrain
+        if move.id == :RISINGVOLTAGE && target && target.affectedByTerrain?
+          bonus += 35  # 2x power in Electric Terrain
+        end
         # Terrain Pulse becomes Electric type and 2x power
         if move.id == :TERRAINPULSE && user.affectedByTerrain?
           bonus += 35  # Type change + 2x power
         end
-        bonus -= 40 if move.id == :SLEEPPOWDER || move.id == :SPORE  # Can't sleep
+        # Sleep is blocked on grounded targets
+        sleep_moves = [:SLEEPPOWDER, :SPORE, :HYPNOSIS, :SING, :DARKVOID,
+                       :GRASSWHISTLE, :LOVELYKISS, :YAWN, :RELICSONG]
+        if sleep_moves.include?(move.id) && target && target.affectedByTerrain?
+          bonus -= 40  # Can't sleep grounded targets
+        end
         
       when :Grassy
         if move.type == :GRASS && user.affectedByTerrain?
           bonus += 25  # x1.3 power
         end
-        bonus -= 20 if move.id == :EARTHQUAKE || move.id == :MAGNITUDE  # x0.5 power
-        bonus += 15 if move.id == :GIGADRAIN || move.id == :DRAINPUNCH  # Better healing
+        if [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id) && target && target.affectedByTerrain?
+          bonus -= 20  # x0.5 power on grounded targets
+        end
         
         # Grassy Glide gets priority
         bonus += 30 if move.id == :GRASSYGLIDE && user.affectedByTerrain?
@@ -171,18 +219,28 @@ module AdvancedAI
         if move.type == :PSYCHIC && user.affectedByTerrain?
           bonus += 25  # x1.3 power
         end
+        # Expanding Force gets power boost + becomes spread in Psychic Terrain
+        if move.id == :EXPANDINGFORCE && user.affectedByTerrain?
+          bonus += 35  # Power boost + spread move in Psychic Terrain
+        end
         # Terrain Pulse becomes Psychic type and 2x power
         if move.id == :TERRAINPULSE && user.affectedByTerrain?
           bonus += 35  # Type change + 2x power
         end
         prio = move.respond_to?(:priority) ? move.priority : (move.respond_to?(:move) ? move.move.priority : 0)
-        bonus -= 40 if prio > 0  # Priority blocked
+        bonus -= 40 if prio > 0 && target && target.affectedByTerrain?  # Priority blocked on grounded targets
         
       when :Misty
-        if move.type == :DRAGON
-          bonus -= 30  # x0.5 power
+        if move.type == :DRAGON && target && target.affectedByTerrain?
+          bonus -= 30  # x0.5 power on grounded targets
         end
-        bonus -= 40 if move.statusMove? && target && target.affectedByTerrain?  # Status blocked
+        # Status conditions blocked on grounded targets
+        status_inflicting = [:TOXIC, :WILLOWISP, :THUNDERWAVE, :POISONPOWDER, :SLEEPPOWDER,
+                             :STUNSPORE, :SPORE, :HYPNOSIS, :SING, :GLARE, :NUZZLE, :YAWN,
+                             :POISONGAS, :DARKVOID, :GRASSWHISTLE, :LOVELYKISS]
+        if status_inflicting.include?(move.id) && target && target.affectedByTerrain?
+          bonus -= 40  # Status blocked on grounded targets
+        end
         # Misty Explosion boost
         bonus += 25 if move.id == :MISTYEXPLOSION
         # Terrain Pulse becomes Fairy type and 2x power
@@ -192,13 +250,12 @@ module AdvancedAI
       end
       
       # Ability Synergies
-      ability = user.ability_id
-      bonus += 20 if ability == :SURGESURFER && terrain == :Electric
+      bonus += 20 if user.hasActiveAbility?(:SURGESURFER) && terrain == :Electric
       
-      # Quark Drive (Paradox Pokemon) - activates in Electric Terrain or with Booster Energy
-      if ability == :QUARKDRIVE
-        if terrain == :Electric || user.item_id == :BOOSTERENERGY
-          bonus += 25  # Stat boost active
+      # Quark Drive (Paradox Pokemon) - activates in Electric Terrain
+      if user.hasActiveAbility?(:QUARKDRIVE)
+        if terrain == :Electric
+          bonus += 25  # Stat boost active from Electric Terrain
           # Extra bonus if Speed is their highest stat
           if user.speed >= [user.attack, user.defense, user.spatk, user.spdef].max
             bonus += 15  # Speed Quark Drive is very strong
@@ -206,9 +263,11 @@ module AdvancedAI
         end
       end
       
-      # Check target for Protosynthesis with Booster Energy (Sun handled in weather_bonus)
-      if target && target.ability_id == :PROTOSYNTHESIS && target.item_id == :BOOSTERENERGY
-        bonus -= 15  # Target has Protosynthesis boost from Booster Energy
+      # Penalize if target's Quark Drive is active from Electric Terrain
+      if target && target.hasActiveAbility?(:QUARKDRIVE)
+        if terrain == :Electric
+          bonus -= 15  # Target has active Quark Drive boost
+        end
       end
       
       bonus
@@ -240,14 +299,16 @@ module AdvancedAI
       
       bonus = 0
       
-      # OHKO moves 100% accuracy
+      # Gravity x5/3 accuracy boost — OHKO moves go from 30% to ~50%
       if [:GUILLOTINE, :FISSURE, :SHEERCOLD, :HORNDRILL].include?(move.id)
-        bonus += 40
+        bonus += 25
+      elsif [:FOCUSBLAST, :THUNDER, :BLIZZARD, :ZAPCANNON, :INFERNO, :DYNAMICPUNCH].include?(move.id)
+        bonus += 15  # Low-accuracy moves also benefit from Gravity
       end
       
       # Ground moves hit Flying/Levitate
       if move.type == :GROUND && target
-        bonus += 30 if target.pbHasType?(:FLYING) || target.ability_id == :LEVITATE
+        bonus += 30 if target.pbHasType?(:FLYING) || target.hasActiveAbility?(:LEVITATE)
       end
       
       bonus
@@ -265,10 +326,14 @@ module AdvancedAI
       
       # Wonder Room (Def/SpDef swapped)
       if battle.field.effects[PBEffects::WonderRoom] > 0
-        if move.physicalMove? && target && target.spdef > target.defense
-          bonus += 15  # Physical hits SpDef now (better)
-        elsif move.specialMove? && target && target.defense > target.spdef
-          bonus += 15  # Special hits Def now (better)
+        # Under Wonder Room, Def and SpDef are swapped:
+        #   Physical attacks now use the target's ORIGINAL SpDef as its defense.
+        #   Special attacks now use the target's ORIGINAL Def as its defense.
+        # So physical is better if original SpDef < original Def (i.e. spdef < defense).
+        if move.physicalMove? && target && target.spdef < target.defense
+          bonus += 15  # Physical hits the (now swapped) lower stat
+        elsif move.specialMove? && target && target.defense < target.spdef
+          bonus += 15  # Special hits the (now swapped) lower stat
         end
       end
       
@@ -282,23 +347,23 @@ module AdvancedAI
       bonus = 0
       
       # Check if Team benefits from Weather
-      party = battle.pbParty(user.index)
+      party = battle.pbParty(user.index & 1)
       
       case move.id
       when :SUNNYDAY
-        sun_users = party.count { |p| p && [:CHLOROPHYLL, :DROUGHT, :SOLARPOWER].include?(p.ability) }
+        sun_users = party.count { |p| p && [:CHLOROPHYLL, :DROUGHT, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :HARVEST, :PROTOSYNTHESIS].include?(p.ability_id) }
         bonus += sun_users * 20
         
       when :RAINDANCE
-        rain_users = party.count { |p| p && [:SWIFTSWIM, :DRIZZLE, :RAINDISH].include?(p.ability) }
+        rain_users = party.count { |p| p && [:SWIFTSWIM, :DRIZZLE, :RAINDISH, :DRYSKIN, :HYDRATION].include?(p.ability_id) }
         bonus += rain_users * 20
         
       when :SANDSTORM
-        sand_users = party.count { |p| p && [:SANDRUSH, :SANDSTREAM, :SANDFORCE].include?(p.ability) }
+        sand_users = party.count { |p| p && [:SANDRUSH, :SANDSTREAM, :SANDFORCE, :SANDVEIL].include?(p.ability_id) }
         bonus += sand_users * 20
         
       when :HAIL, :SNOWSCAPE
-        hail_users = party.count { |p| p && [:SLUSHRUSH, :SNOWWARNING, :ICEBODY].include?(p.ability) }
+        hail_users = party.count { |p| p && [:SLUSHRUSH, :SNOWWARNING, :ICEBODY, :SNOWCLOAK, :ICEFACE].include?(p.ability_id) }
         bonus += hail_users * 20
       end
       
@@ -314,7 +379,7 @@ module AdvancedAI
       return 0 unless skill_level >= 75
       
       bonus = 0
-      current_weather = battle.field.weather
+      current_weather = AdvancedAI::Utilities.current_weather(battle)
       
       # Weather-setting moves
       weather_moves = {
@@ -322,7 +387,8 @@ module AdvancedAI
         :RAINDANCE  => [:Rain, :HeavyRain],
         :SANDSTORM  => [:Sandstorm],
         :HAIL       => [:Hail],
-        :SNOWSCAPE  => [:Snow]
+        :SNOWSCAPE  => [:Snow],
+        :CHILLYRECEPTION => [:Snow]  # Gen 9: sets Snow + switches
       }
       
       return 0 unless weather_moves.key?(move.id)
@@ -338,22 +404,22 @@ module AdvancedAI
         
         case current_weather
         when :Sun, :HarshSun
-          if [:CHLOROPHYLL, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :PROTOSYNTHESIS].include?(opp.ability_id)
+          if opp.hasActiveAbility?(:CHLOROPHYLL) || opp.hasActiveAbility?(:SOLARPOWER) || opp.hasActiveAbility?(:LEAFGUARD) || opp.hasActiveAbility?(:FLOWERGIFT) || opp.hasActiveAbility?(:HARVEST) || opp.hasActiveAbility?(:PROTOSYNTHESIS)
             opponent_benefits = true
           end
           if opp.moves.any? { |m| m && m.type == :FIRE }
             opponent_benefits = true
           end
         when :Rain, :HeavyRain
-          if [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION].include?(opp.ability_id)
+          if opp.hasActiveAbility?(:SWIFTSWIM) || opp.hasActiveAbility?(:RAINDISH) || opp.hasActiveAbility?(:DRYSKIN) || opp.hasActiveAbility?(:HYDRATION)
             opponent_benefits = true
           end
         when :Sandstorm
-          if [:SANDRUSH, :SANDFORCE, :SANDVEIL].include?(opp.ability_id)
+          if opp.hasActiveAbility?(:SANDRUSH) || opp.hasActiveAbility?(:SANDFORCE) || opp.hasActiveAbility?(:SANDVEIL)
             opponent_benefits = true
           end
         when :Hail, :Snow
-          if [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK].include?(opp.ability_id)
+          if opp.hasActiveAbility?(:SLUSHRUSH) || opp.hasActiveAbility?(:ICEBODY) || opp.hasActiveAbility?(:SNOWCLOAK) || opp.hasActiveAbility?(:ICEFACE)
             opponent_benefits = true
           end
         end
@@ -370,7 +436,7 @@ module AdvancedAI
       end
       
       # Check if WE benefit from the new weather
-      party = battle.pbParty(user.index)
+      party = battle.pbParty(user.index & 1)
       our_synergy = count_weather_synergy(party, target_weathers.first)
       bonus += our_synergy * 15
       
@@ -404,14 +470,14 @@ module AdvancedAI
         
         case current_terrain
         when :Electric
-          if [:SURGESURFER, :QUARKDRIVE].include?(opp.ability_id)
+          if opp.hasActiveAbility?(:SURGESURFER) || opp.hasActiveAbility?(:QUARKDRIVE) || opp.hasActiveAbility?(:HADRONENGINE)
             opponent_benefits = true
           end
           if opp.pbHasType?(:ELECTRIC) && (opp.respond_to?(:affectedByTerrain?) ? opp.affectedByTerrain? : true)
             opponent_benefits = true
           end
         when :Grassy
-          if opp.pbHasType?(:GRASS) && (opp.respond_to?(:affectedByTerrain?) ? opp.affectedByTerrain? : true)
+          if opp.hasActiveAbility?(:GRASSPELT) || (opp.pbHasType?(:GRASS) && (opp.respond_to?(:affectedByTerrain?) ? opp.affectedByTerrain? : true))
             opponent_benefits = true
           end
         when :Psychic
@@ -431,15 +497,15 @@ module AdvancedAI
     
     def self.count_weather_synergy(party, weather)
       synergy = {
-        :Sun  => [:CHLOROPHYLL, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :HARVEST],
+        :Sun  => [:CHLOROPHYLL, :SOLARPOWER, :LEAFGUARD, :FLOWERGIFT, :HARVEST, :PROTOSYNTHESIS],
         :Rain => [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION],
         :Sandstorm => [:SANDRUSH, :SANDFORCE, :SANDVEIL],
-        :Hail => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK],
-        :Snow => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK]
+        :Hail => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
+        :Snow => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE]
       }
       
       abilities = synergy[weather] || []
-      party.count { |p| p && abilities.include?(p.ability) }
+      party.count { |p| p && abilities.include?(p.ability_id) }
     end
     
     #===========================================================================
@@ -461,11 +527,14 @@ module AdvancedAI
       bonus = 0
       
       # Check if target has Mimicry
-      if target && target.ability_id == :MIMICRY
+      if target && target.hasActiveAbility?(:MIMICRY)
         actual_type = mimicry_type_from_terrain(battle.field.terrain)
         
         if actual_type
-          eff = Effectiveness.calculate(move.type, actual_type, target.types[1])
+          # Mimicry replaces ALL types with the terrain type
+          mimicry_types = [actual_type]
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+          eff = Effectiveness.calculate(resolved_type, *mimicry_types)
           
           if Effectiveness.super_effective?(eff)
             bonus += 25  # Our move is SE against their Mimicry type!
@@ -478,10 +547,11 @@ module AdvancedAI
       end
       
       # Check if OUR Pokemon has Mimicry
-      if user.ability_id == :MIMICRY
+      if user.hasActiveAbility?(:MIMICRY)
         new_type = mimicry_type_from_terrain(battle.field.terrain)
         
-        if new_type && move.type == new_type
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+        if new_type && resolved_type == new_type
           bonus += 20  # We get STAB from Mimicry!
         end
       end

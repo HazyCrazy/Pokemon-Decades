@@ -38,9 +38,7 @@ module AdvancedAI
       memory[:move_counts][move_id] += 1
       memory[:last_move] = move_id
       
-      # Categorize Move
-      # Categorize Move
-      # move is a Battle::Move object
+      # Categorize Move (move is a Battle::Move object)
       memory[:priority_moves] << move_id if move.priority > 0 && !memory[:priority_moves].include?(move_id)
       memory[:healing_moves] << move_id if move.healingMove? && !memory[:healing_moves].include?(move_id)
       
@@ -49,7 +47,7 @@ module AdvancedAI
       memory[:setup_moves] << move_id if is_setup && !memory[:setup_moves].include?(move_id)
       
       memory[:status_moves] << move_id if move.statusMove? && !memory[:status_moves].include?(move_id)
-      memory[:max_power] = [memory[:max_power], move.power].max
+      memory[:max_power] = [memory[:max_power], AdvancedAI::CombatUtilities.resolve_move_power(move)].max
       
       # Enhanced logging with move details
       move_type = if move.damagingMove?
@@ -115,7 +113,8 @@ module AdvancedAI
       return nil if memory[:moves].nil? || memory[:moves].empty?
       
       memory[:moves].max_by do |move_id|
-        GameData::Move.get(move_id).power
+        data = GameData::Move.try_get(move_id)
+        data ? data.power : 0
       end
     end
     
@@ -128,19 +127,42 @@ module AdvancedAI
       max_damage = 0
       
       memory[:moves].each do |move_id|
-        move_data = GameData::Move.get(move_id)
-        next unless move_data.damaging?
+        move_data = GameData::Move.try_get(move_id)
+        next unless move_data && move_data.power > 0
         
         # Simplified Damage Calculation
-        bp = move_data.power
-        type_mod = Effectiveness.calculate(move_data.type, defender.types[0], defender.types[1])
-        stab = attacker.pbHasType?(move_data.type) ? 1.5 : 1.0
+        bp = AdvancedAI::CombatUtilities.resolve_move_power(move_data)
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move_data)
+        type_mod = AdvancedAI::CombatUtilities.scrappy_effectiveness(resolved_type, attacker, defender.pbTypes(true))
+        stab = attacker.pbHasType?(resolved_type) ? 1.5 : 1.0
+        # Adaptability: 2.0 STAB instead of 1.5
+        stab = 2.0 if stab == 1.5 && attacker.hasActiveAbility?(:ADAPTABILITY)
         
-        atk = move_data.physical? ? attacker.attack : attacker.spatk
-        defense = move_data.physical? ? defender.defense : defender.spdef
+        atk = move_data.category == 0 ? attacker.attack : attacker.spatk
+        # Huge Power / Pure Power (2x Attack for physical moves)
+        atk *= 2 if move_data.category == 0 && (attacker.hasActiveAbility?(:HUGEPOWER) || attacker.hasActiveAbility?(:PUREPOWER))
+        defense = move_data.category == 0 ? defender.defense : defender.spdef
         
-        damage = ((2 * attacker.level / 5.0 + 2) * bp * atk / defense / 50 + 2)
+        damage = ((2 * attacker.level / 5.0 + 2) * bp * atk / [defense, 1].max / 50 + 2)
         damage *= type_mod * stab
+        
+        # Field & context modifiers (weather, terrain, items, burn)
+        is_physical = move_data.category == 0
+        damage *= AdvancedAI::CombatUtilities.field_modifier(battle, attacker, resolved_type, move_data, is_physical, defender)
+        
+        # Defender modifiers (Assault Vest, Eviolite, weather defense)
+        damage *= AdvancedAI::CombatUtilities.defender_modifier(battle, defender, is_physical)
+        
+        # Screen modifiers (Reflect / Light Screen / Aurora Veil)
+        damage *= AdvancedAI::CombatUtilities.screen_modifier(battle, attacker, defender, is_physical)
+        
+        # Parental Bond (1.25x — two hits: 100% + 25%)
+        if attacker.hasActiveAbility?(:PARENTALBOND)
+          damage *= 1.25
+        end
+        
+        # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
+        damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, defender, resolved_type, is_physical, type_mod)
         
         max_damage = [max_damage, damage.to_i].max
       end
@@ -178,13 +200,27 @@ end
 
 # Integration in Move Usage
 class Battle::Battler
+  # Hook pbUseMoveSimple for called/copied moves (Metronome, Mirror Move, etc.)
   alias aai_memory_pbUseMoveSimple pbUseMoveSimple
-  def pbUseMoveSimple(move_id, target = -1, idx = -1, specialUsage = false)
+  def pbUseMoveSimple(move_id, target = -1, idx = -1, specialUsage = true)
     # Remember Move for ALL battlers (player AND AI)
     # This is needed for move repetition penalties and advanced AI strategies
-    AdvancedAI::MoveMemory.remember_move(@battle, self, @moves[idx]) if @moves[idx]
+    actual_move = (idx >= 0 && @moves[idx]) ? @moves[idx] : @moves.find { |m| m&.id == move_id }
+    # For called moves not in moveset, create a temporary move object
+    if !actual_move
+      actual_move = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_id)) rescue nil
+    end
+    AdvancedAI::MoveMemory.remember_move(@battle, self, actual_move) if actual_move
     
     aai_memory_pbUseMoveSimple(move_id, target, idx, specialUsage)
+  end
+  
+  # Hook pbUseMove for normal battle moves (the main move execution path)
+  alias aai_memory_pbUseMove pbUseMove
+  def pbUseMove(choice, specialUsage = false)
+    move = choice[2]
+    AdvancedAI::MoveMemory.remember_move(@battle, self, move) if move
+    aai_memory_pbUseMove(choice, specialUsage)
   end
 end
 
@@ -251,7 +287,7 @@ class Battle::AI
     
     # If opponent has healing, boost status/setup over weak attacks
     if AdvancedAI.has_healing_move?(@battle, target)
-      if move.damagingMove? && move.power < 60
+      if move.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(move) < 60
         score -= 10  # Weak attacks get outhealed
       end
       if AdvancedAI.setup_move?(move.id)

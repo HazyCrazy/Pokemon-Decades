@@ -358,16 +358,16 @@ class Battle
         type = (battler.hasEmax?) ? "Eternamax" : (battler.hasGmax?) ? "Gigantamax" : "Dynamax"
         idxBattler = battler.index
         if battler.wild?
-          pbDisplay(_INTL("{1} surrounded itself in {2} energy!", battler.pbThis, type))
+          #pbDisplay(_INTL("{1} surrounded itself in {2} energy!", battler.pbThis, type))
           @scene.pbRevertBattlerStart(idxBattler)
           battler.makeDynamax
           @scene.pbRevertBattlerEnd
         else
           trainerName = pbGetOwnerName(idxBattler)
-          pbDisplay(_INTL("{1} recalled {2}!", trainerName, battler.pbThis(true)))
+          #pbDisplay(_INTL("{1} recalled {2}!", trainerName, battler.pbThis(true)))
           xpos, ypos = @scene.sprites["pokemon_#{idxBattler}"].x, @scene.sprites["pokemon_#{idxBattler}"].y
           @scene.pbRecall(idxBattler)
-          pbDisplay(_INTL("{1}'s ball surges with {2} energy!", battler.pbThis, type))
+          #pbDisplay(_INTL("{1}'s ball surges with {2} energy!", battler.pbThis, type))
           @scene.pbDynamaxSendOut(idxBattler, xpos, ypos)
         end
       end

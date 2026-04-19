@@ -40,9 +40,14 @@ module AdvancedAI
       # +1 Priority
       :ACCELEROCK, :AQUAJET, :BABYDOLLEYES, :BULLETPUNCH, :ICESHARD,
       :JETPUNCH, :MACHPUNCH, :QUICKATTACK, :SHADOWSNEAK, :SUCKERPUNCH,
-      :VACUUMWAVE, :WATERSHURIKEN,
+      :VACUUMWAVE, :WATERSHURIKEN, :THUNDERCLAP,
       
-      # Prankster-affected (status moves with Prankster)
+      # +3 Priority (Gen 9)
+      :UPPERHAND,
+    ]
+    
+    # Prankster-only priority (status moves that get +1 priority from Prankster ability)
+    PRANKSTER_PRIORITY_MOVES = [
       :THUNDERWAVE, :WILLOWISP, :TOXIC, :SPORE, :SLEEPPOWDER,
       :STUNSPORE, :TAUNT, :ENCORE, :DISABLE, :LIGHTSCREEN,
       :REFLECT, :AURORAVEIL, :TAILWIND, :TRICKROOM,
@@ -67,25 +72,30 @@ module AdvancedAI
       :NASTYPLOT      => { stat: :spatk, stages: 2 },
       :TAILGLOW       => { stat: :spatk, stages: 3 },
       :GEOMANCY       => { stat: :spatk_spdef_speed, stages: 2, charge: true },
-      :GROWTH         => { stat: :attack_spatk, stages: 1 },
+      :GROWTH         => { stat: :attack_spatk, stages: 1, sun_stages: 2 },
+      :WORKUP         => { stat: :attack_spatk, stages: 1 },
       :CHARGEBEAM     => { stat: :spatk, stages: 1, damage: true },
       :FIERYDANCE     => { stat: :spatk, stages: 1, damage: true },
       :METEORBEAM     => { stat: :spatk, stages: 1, charge: true },
+      :TORCHSONG      => { stat: :spatk, stages: 1, damage: true },
       
       # +2 Defense
       :IRONDEFENSE    => { stat: :defense, stages: 2 },
       :ACIDARMOR      => { stat: :defense, stages: 2 },
       :BARRIER        => { stat: :defense, stages: 2 },
       :COTTONGUARD    => { stat: :defense, stages: 3 },
-      :DEFENDORDER    => { stat: :defense, stages: 1 },
+      :SHELTER        => { stat: :defense, stages: 2 },
+      :DEFENDORDER    => { stat: :defense_spdef, stages: 1 },
+      :COSMICPOWER    => { stat: :defense_spdef, stages: 1 },
       :HARDEN         => { stat: :defense, stages: 1 },
       :STOCKPILE      => { stat: :defense_spdef, stages: 1 },
       :WITHDRAW       => { stat: :defense, stages: 1 },
-      
+
       # +2 Special Defense
       :AMNESIA        => { stat: :spdef, stages: 2 },
       :CALMMIND       => { stat: :spatk_spdef, stages: 1 },
-      
+      :TAKEHEART      => { stat: :spatk_spdef, stages: 1, cure_status: true },
+
       # +2 Speed
       :AGILITY        => { stat: :speed, stages: 2 },
       :AUTOTOMIZE     => { stat: :speed, stages: 2 },
@@ -98,22 +108,25 @@ module AdvancedAI
       # Multi-Stat
       :SHELLSMASH     => { stat: :attack_spatk_speed, stages: 2, defense_spdef: -1 },
       :VICTORYDANCE   => { stat: :attack_defense_speed, stages: 1 },
-      :COIL           => { stat: :attack_defense_accuracy, stages: 1 },
       :ACUPRESSURE    => { stat: :random, stages: 2 },
       :ANCIENTPOWER   => { stat: :all, stages: 1, damage: true, chance: 10 },
       :OMINOUSWIND    => { stat: :all, stages: 1, damage: true, chance: 10 },
-      :SILVERPOWDER   => { stat: :all, stages: 1, damage: true, chance: 10 },
+      :SILVERWIND     => { stat: :all, stages: 1, damage: true, chance: 10 },
       
       # Evasion
       :DOUBLETEAM     => { stat: :evasion, stages: 1 },
       :MINIMIZE       => { stat: :evasion, stages: 2 },
       
-      # Accuracy
-      :HONECLAWS      => { stat: :attack_accuracy, stages: 1 },
+      # (Note: :HONECLAWS also covered above under Attack boosts)
       
       # Ability-Based Setup
       :BELLYDRUM      => { stat: :attack, stages: 6, hp_cost: 0.5 },
+      :FILLETAWAY     => { stat: :attack_spatk_speed, stages: 2, hp_cost: 0.5 },
+      :CLANGOROUSSOUL => { stat: :all, stages: 1, hp_cost: 0.33 },
       :NORETREAT      => { stat: :all, stages: 1, trap: true },
+      
+      # Hazard Removal + Setup Hybrid
+      :TIDYUP         => { stat: :attack_speed, stages: 1, hazard_clear: true },
     }
     
     #===========================================================================
@@ -165,6 +178,10 @@ module AdvancedAI
       :DRAINPUNCH     => { heal: 0.5, damage: true },
       :DRAININGKISS   => { heal: 0.75, damage: true },
       :LEECHLIFE      => { heal: 0.5, damage: true },
+      :HORNLEECH      => { heal: 0.5, damage: true },
+      :BITTERBLADE    => { heal: 0.5, damage: true },
+      :MATCHAGOTCHA   => { heal: 0.5, damage: true, spread: true },
+      :DREAMEATER     => { heal: 0.5, damage: true, conditional: :sleep },
       :PARABOLICCHARGE => { heal: 0.5, damage: true, spread: true },
       :OBLIVIONWING   => { heal: 0.75, damage: true },
       :STRENGTHSAP    => { heal: :opponent_attack, stat_drop: true },
@@ -173,6 +190,14 @@ module AdvancedAI
       :AQUARING       => { heal: 0.0625, per_turn: true },
       :INGRAIN        => { heal: 0.0625, per_turn: true, trap: true },
       :LEECHSEED      => { heal: 0.125, per_turn: true, opponent_damage: true },
+      
+      # Status-Curing Heal
+      :PURIFY         => { heal: 0.5, cure_target_status: true },
+      
+      # Team / Position Healing
+      :LIFEDEW        => { heal: 0.25, team: true },
+      :JUNGLEHEALING  => { heal: 0.25, team: true, cure_status: true },
+      :LUNARBLESSING  => { heal: 0.25, team: true, cure_status: true },
     }
     
     #===========================================================================
@@ -189,15 +214,19 @@ module AdvancedAI
     # Spread Move Detection (hits multiple targets in Doubles/Triples)
     #===========================================================================
     SPREAD_MOVES = [
-      # Damaging Spread
+      # Damaging Spread (hits all adjacent foes or all adjacent Pokemon)
       :EARTHQUAKE, :SURF, :DISCHARGE, :LAVAPLUME, :BLIZZARD,
-      :ROCKSLIDE, :RAZORLEAF, :ICICLESPEAR, :BULLDOZE, :SNARL,
+      :ROCKSLIDE, :BULLDOZE, :SNARL, :BOOMBURST, :HYPERVOICE,
       :DAZZLINGGLEAM, :HEATWAVE, :PARABOLICCHARGE, :RELICSONG,
       :GLACIATE, :MUDDYWATER, :ORIGINPULSE, :PRECIPICEBLADES,
+      :EXPLOSION, :SELFDESTRUCT, :SLUDGEWAVE, :ICYWIND, :ERUPTION,
+      :WATERSPOUT, :PETALBLIZZARD, :DIAMONDSTORM, :MAGNITUDE,
+      # Gen 9 spread moves
+      :SPRINGTIDESTORM, :BLEAKWINDSTORM, :WILDBOLTSTORM, :SANDSEARSTORM,
+      :MAKEITRAIN, :MATCHAGOTCHA, :MORTALSPIN,
       
-      # Status Spread
-      :SWEETSCENT, :GROWL, :SCREECH, :STRINGSHOT, :SANDATTACK,
-      :SMOKESCREEN, :CONFUSERAY, :SUPERSONIC, :LOVELYKISS,
+      # Status Spread (hits all adjacent foes)
+      :SWEETSCENT, :GROWL, :STRINGSHOT,
       
       # Self + Ally
       :HEALPULSE, :POLLENPUFF, :FLORALHEALING,
@@ -273,7 +302,7 @@ module AdvancedAI
     SCREEN_MOVES = {
       :LIGHTSCREEN    => { type: :special, duration: 5 },
       :REFLECT        => { type: :physical, duration: 5 },
-      :AURORAVEIL     => { type: :both, duration: 5, weather: :hail },
+      :AURORAVEIL     => { type: :both, duration: 5, weather: [:hail, :snow] },  # Gen 9: works in Snow too
       :SAFEGUARD      => { type: :status, duration: 5 },
       :MIST           => { type: :stat_drop, duration: 5 },
       :LUCKYCHANT     => { type: :crit, duration: 5 },
@@ -288,6 +317,7 @@ module AdvancedAI
       :SANDSTORM      => { weather: :sandstorm, duration: 5 },
       :HAIL           => { weather: :hail, duration: 5 },
       :SNOWSCAPE      => { weather: :snow, duration: 5 },  # Gen 9
+      :CHILLYRECEPTION => { weather: :snow, duration: 5, pivot: true },  # Gen 9: sets Snow + switches
     }
     
     #===========================================================================
@@ -414,7 +444,7 @@ module AdvancedAI
       
       # Check move data
       move = GameData::Move.try_get(move_id)
-      return move && move.target == :AllNearFoes
+      return move && [:AllNearFoes, :AllNearOthers].include?(move.target)
     end
     
     def self.protect_move?(move_id)

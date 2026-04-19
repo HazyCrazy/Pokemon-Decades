@@ -21,7 +21,7 @@ class Battle::AI
       score += evaluate_healing_wish(user, move)
     when :FINALGAMBIT
       score += evaluate_final_gambit(user, move)
-    when :MEMENTO, :MISTYEXPLOSION, :HEALINGWISH
+    when :MEMENTO, :MISTYEXPLOSION
       score += evaluate_sacrifice_moves(user, move)
     when :RAPIDSPIN, :DEFOG
       score += evaluate_hazard_removal(user, move)
@@ -39,50 +39,53 @@ class Battle::AI
   def evaluate_pain_split(user, move)
     score = 0
     
-    targets = @battle.allOtherSideBattlers(user.index)
-    targets.each do |target|
-      next unless target && !target.fainted?
+    targets = @battle.allOtherSideBattlers(user.index).select { |t| t && !t.fainted? }
+    return 0 if targets.empty?
+    
+    best = targets.map { |target|
+      tscore = 0
       
+      # Pain Split averages RAW HP values (not percentages!)
+      # e.g., 50/100 user vs 200/400 target → average = 125, user gains 75 HP
+      average_hp = (user.hp + target.hp) / 2.0
+      user_gain = average_hp - user.hp
+      user_gain_pct = user_gain / user.totalhp.to_f
       user_hp_percent = user.hp.to_f / user.totalhp
-      target_hp_percent = target.hp.to_f / target.totalhp
       
-      # Pain Split averages HP% between both Pokemon
-      average_hp = (user_hp_percent + target_hp_percent) / 2.0
-      user_gain = average_hp - user_hp_percent
-      target_loss = target_hp_percent - average_hp
-      
-      # HIGH VALUE: We're low, they're high
-      if user_hp_percent < 0.35 && target_hp_percent > 0.6
-        score += 80
-        AdvancedAI.log("  Pain Split (#{(user_hp_percent * 100).to_i}% vs #{(target_hp_percent * 100).to_i}%): +80 (huge heal)", "Special")
+      # HIGH VALUE: We gain a significant chunk of HP
+      if user_gain_pct > 0.30 && user_hp_percent < 0.35
+        tscore += 80
+        AdvancedAI.log("  Pain Split (#{user.hp}/#{user.totalhp} vs #{target.hp}/#{target.totalhp}): +80 (huge heal)", "Special")
         
         # CRITICAL: Could save us from KO
         if user_hp_percent < 0.2
-          score += 40
+          tscore += 40
           AdvancedAI.log("  Emergency heal: +40", "Special")
         end
-      elsif user_hp_percent < 0.5 && target_hp_percent > 0.5
+      elsif user_gain_pct > 0.15
         # MEDIUM VALUE
-        score += 50
-        AdvancedAI.log("  Pain Split: +50 (good heal)", "Special")
-      elsif user_hp_percent > target_hp_percent
-        # BAD: We lose HP
-        score -= 40
+        tscore += 50
+        AdvancedAI.log("  Pain Split: +50 (good heal, +#{(user_gain_pct * 100).to_i}% HP)", "Special")
+      elsif user_gain_pct <= 0
+        # BAD: We lose HP or gain nothing
+        tscore -= 40
         AdvancedAI.log("  Pain Split: -40 (we lose HP)", "Special")
       else
         # Minimal benefit
-        score += 10
+        tscore += 10
         AdvancedAI.log("  Pain Split: +10 (slight benefit)", "Special")
       end
       
-      # BONUS: High max HP target (more HP to average)
+      # BONUS: High max HP target (more raw HP to average from)
       if target.totalhp > user.totalhp * 1.3
-        score += 20
+        tscore += 20
         AdvancedAI.log("  High HP target: +20", "Special")
       end
-    end
+      
+      tscore
+    }.max || 0
     
-    return score
+    return best
   end
   
   # ============================================================================
@@ -106,7 +109,7 @@ class Battle::AI
     end
     
     # Check party for valuable teammates
-    party = @battle.pbParty(user.index)
+    party = @battle.pbParty(user.index & 1)  # side index (0/1), not battler slot
     valuable_teammates = 0
     injured_sweepers = 0
     
@@ -121,9 +124,9 @@ class Battle::AI
         injured_sweepers += 1
       end
       
-      # Valuable if status'd
+      # Valuable if status'd — both Healing Wish (Gen 5+) and Lunar Dance cure status
       if pkmn.status != :NONE
-        valuable_teammates += 1 if move.id == :LUNARDANCE  # Lunar Dance cures status
+        valuable_teammates += 1
       end
     end
     
@@ -143,10 +146,16 @@ class Battle::AI
       AdvancedAI.log("  #{move.name}: -50 (no valuable teammates)", "Special")
     end
     
-    # Lunar Dance bonus for status'd team
-    if move.id == :LUNARDANCE && valuable_teammates > 0
+    # Both Healing Wish and Lunar Dance cure status (Gen 5+)
+    if valuable_teammates > 0
       score += 30
-      AdvancedAI.log("  Cures status: +30", "Special")
+      AdvancedAI.log("  #{move.name} cures status: +30", "Special")
+    end
+    
+    # Lunar Dance extra: also fully restores PP
+    if move.id == :LUNARDANCE
+      score += 10
+      AdvancedAI.log("  Lunar Dance restores PP: +10", "Special")
     end
     
     return score
@@ -159,9 +168,11 @@ class Battle::AI
   def evaluate_final_gambit(user, move)
     score = 0
     
-    targets = @battle.allOtherSideBattlers(user.index)
-    targets.each do |target|
-      next unless target && !target.fainted?
+    targets = @battle.allOtherSideBattlers(user.index).select { |t| t && !t.fainted? }
+    return 0 if targets.empty?
+    
+    best = targets.map { |target|
+      tscore = 0
       
       # Final Gambit: Deals damage equal to user's current HP, user faints
       damage = user.hp
@@ -169,19 +180,19 @@ class Battle::AI
       
       # BEST CASE: KO high-value target
       if damage >= target_hp
-        score += 100
+        tscore += 100
         AdvancedAI.log("  Final Gambit: +100 (KOs target)", "Special")
         
         # BONUS: Target is a sweeper
         if target.stages.values.sum >= 2
-          score += 50
+          tscore += 50
           AdvancedAI.log("  KOs boosted sweeper: +50", "Special")
         end
         
         # BONUS: Target is last Pokemon
         enemy_count = @battle.allOtherSideBattlers(user.index).count { |b| b && !b.fainted? }
         if enemy_count == 1
-          score += 80
+          tscore += 80
           AdvancedAI.log("  KOs last Pokemon: +80 (wins game!)", "Special")
         end
       else
@@ -189,13 +200,13 @@ class Battle::AI
         damage_percent = damage.to_f / target.totalhp
         
         if damage_percent > 0.6
-          score += 40
+          tscore += 40
           AdvancedAI.log("  Final Gambit: +40 (big damage)", "Special")
         elsif damage_percent > 0.4
-          score += 20
+          tscore += 20
           AdvancedAI.log("  Final Gambit: +20 (decent damage)", "Special")
         else
-          score -= 60
+          tscore -= 60
           AdvancedAI.log("  Final Gambit: -60 (waste)", "Special")
         end
       end
@@ -203,12 +214,14 @@ class Battle::AI
       # PENALTY: We're valuable
       user_hp_percent = user.hp.to_f / user.totalhp
       if user_hp_percent > 0.5
-        score -= 50
+        tscore -= 50
         AdvancedAI.log("  Too healthy: -50", "Special")
       end
-    end
+      
+      tscore
+    }.max || 0
     
-    return score
+    return best
   end
   
   # ============================================================================
@@ -223,22 +236,27 @@ class Battle::AI
     # Misty Explosion: 2x power on Misty Terrain, user faints
     
     if move.id == :MEMENTO
-      targets = @battle.allOtherSideBattlers(user.index)
-      targets.each do |target|
-        next unless target && !target.fainted?
+      targets = @battle.allOtherSideBattlers(user.index).select { |t| t && !t.fainted? }
+      
+      best = targets.map { |target|
+        tscore = 0
         
         # HIGH VALUE: Cripple setup sweeper
         if target.stages[:ATTACK] >= 1 || target.stages[:SPECIAL_ATTACK] >= 1
-          score += 70
+          tscore += 70
           AdvancedAI.log("  Memento vs boosted: +70 (cripple)", "Special")
         elsif target.attack > 120 || target.spatk > 120
-          score += 50
+          tscore += 50
           AdvancedAI.log("  Memento vs strong: +50", "Special")
         else
-          score += 20
+          tscore += 20
           AdvancedAI.log("  Memento: +20", "Special")
         end
-      end
+        
+        tscore
+      }.max || 0
+      
+      score += best
       
       # Only if we're dying anyway
       if user_hp_percent > 0.3
@@ -266,7 +284,7 @@ class Battle::AI
     score = 0
     
     # Check our side for hazards
-    our_side = @battle.pbOwnedByPlayer?(user.index) ? @battle.sides[0] : @battle.sides[1]
+    our_side = @battle.sides[user.index & 1]  # Fixed: pbOwnedByPlayer? doesn't exist on Battle
     
     hazard_count = 0
     hazard_count += 1 if our_side.effects[PBEffects::StealthRock]
@@ -290,7 +308,7 @@ class Battle::AI
     end
     
     # BONUS: We have Pokemon weak to hazards
-    party = @battle.pbParty(user.index)
+    party = @battle.pbParty(user.index & 1)  # side index (0/1), not battler slot
     weak_to_rocks = party.count do |pkmn|
       next false if !pkmn || pkmn.fainted?
       type_mod = Effectiveness.calculate(:ROCK, *pkmn.types)
@@ -304,7 +322,7 @@ class Battle::AI
     
     # Defog ALSO removes opponent's hazards and screens
     if move.id == :DEFOG
-      opp_side = @battle.pbOwnedByPlayer?(user.index) ? @battle.sides[1] : @battle.sides[0]
+      opp_side = @battle.sides[1 - (user.index & 1)]  # Fixed: pbOwnedByPlayer? doesn't exist on Battle
       
       # Remove opponent screens (bad for us usually)
       if opp_side.effects[PBEffects::Reflect] > 0 || opp_side.effects[PBEffects::LightScreen] > 0
@@ -316,6 +334,8 @@ class Battle::AI
       opp_hazards = 0
       opp_hazards += 1 if opp_side.effects[PBEffects::StealthRock]
       opp_hazards += opp_side.effects[PBEffects::Spikes]
+      opp_hazards += opp_side.effects[PBEffects::ToxicSpikes] || 0
+      opp_hazards += 1 if opp_side.effects[PBEffects::StickyWeb]
       if opp_hazards > 0
         score -= opp_hazards * 15
         AdvancedAI.log("  Also removes our hazards: -#{opp_hazards * 15}", "Special")
@@ -332,44 +352,46 @@ class Battle::AI
   def evaluate_endeavor(user, move)
     score = 0
     
-    targets = @battle.allOtherSideBattlers(user.index)
-    targets.each do |target|
-      next unless target && !target.fainted?
-      
-      # Endeavor: Set target HP to user's current HP
+    targets = @battle.allOtherSideBattlers(user.index).select { |t| t && !t.fainted? }
+    return 0 if targets.empty?
+    
+    # Endeavor: Set target HP to user's current HP
+    # Only good if we're low HP
+    user_hp_percent = user.hp.to_f / user.totalhp
+    
+    if user_hp_percent > 0.5
+      AdvancedAI.log("  Endeavor: -60 (too healthy)", "Special")
+      return -60
+    end
+    
+    best = targets.map { |target|
+      tscore = 0
       user_hp = user.hp
       target_hp = target.hp
-      
-      # Only good if we're low HP
-      user_hp_percent = user_hp.to_f / user.totalhp
-      
-      if user_hp_percent > 0.5
-        score -= 60
-        AdvancedAI.log("  Endeavor: -60 (too healthy)", "Special")
-        return score
-      end
       
       # HIGH VALUE: Target at high HP, we're low
       if target_hp > user_hp * 2
         damage = target_hp - user_hp
         damage_percent = damage.to_f / target.totalhp
         
-        score += 60
+        tscore += 60
         AdvancedAI.log("  Endeavor: +60 (#{(damage_percent * 100).to_i}% damage)", "Special")
         
         # COMBO: Follow up with priority move
         priority_moves = user.moves.select { |m| m && m.priority > 0 }
         if priority_moves.any?
-          score += 40
+          tscore += 40
           AdvancedAI.log("  Have priority follow-up: +40", "Special")
         end
       else
-        score -= 40
+        tscore -= 40
         AdvancedAI.log("  Endeavor: -40 (target too low)", "Special")
       end
-    end
+      
+      tscore
+    }.max || 0
     
-    return score
+    return best
   end
 end
 

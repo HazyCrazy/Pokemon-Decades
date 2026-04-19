@@ -30,7 +30,7 @@ module AdvancedAI
       
       # Spikes (1, 2, or 3 layers)
       spikes = side_effects[PBEffects::Spikes] || 0
-      if spikes > 0 && is_grounded?(battler)
+      if spikes > 0 && is_grounded?(battler, battle)
         spikes_damage = case spikes
                         when 1 then battler.totalhp / 8
                         when 2 then battler.totalhp / 6
@@ -56,19 +56,37 @@ module AdvancedAI
       # Base: 1/8 max HP, modified by effectiveness
       base = battler.totalhp / 8
       
-      multiplier = type_mod / Effectiveness::NORMAL_EFFECTIVE.to_f
+      multiplier = type_mod / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
       (base * multiplier).to_i
     end
     
     # Check if grounded (for Spikes/Toxic Spikes/Sticky Web)
-    def self.is_grounded?(battler)
+    def self.is_grounded?(battler, battle = nil)
       return false unless battler
+      
+      # Gravity forces grounded — this is a FIELD effect, not a battler effect
+      if battle && battle.field.effects[PBEffects::Gravity] > 0
+        return true
+      end
+      
+      # Ingrain forces grounded
+      if battler.effects[PBEffects::Ingrain]
+        return true
+      end
+      
+      # Iron Ball forces grounded
+      return true if battler.item_id == :IRONBALL
+      
+      # SmackDown / Thousand Arrows grounds the target
+      if battler.respond_to?(:effects) && battler.effects[PBEffects::SmackDown]
+        return true
+      end
       
       # Flying type
       return false if battler.pbHasType?(:FLYING)
       
       # Levitate
-      return false if battler.ability_id == :LEVITATE
+      return false if battler.hasActiveAbility?(:LEVITATE)
       
       # Air Balloon
       return false if battler.item_id == :AIRBALLOON
@@ -95,7 +113,7 @@ module AdvancedAI
       return 0 unless HAZARD_SETTERS.include?(move.id)
       
       score = 0
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       
       case move.id
       when :STEALTHROCK
@@ -133,19 +151,19 @@ module AdvancedAI
       score = 30  # Base value
       
       # Check opponent's team for SR weakness
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))
       
       opp_party.each do |pkmn|
         next unless pkmn && !pkmn.fainted?
         
-        # Party Pokemon use type1/type2, not types array
-        type_mod = Effectiveness.calculate(:ROCK, pkmn.type1, pkmn.type2)
+        # Party Pokemon — use .types splat for correct single-typed handling
+        type_mod = Effectiveness.calculate(:ROCK, *pkmn.types)
         
-        if type_mod >= Effectiveness::SUPER_EFFECTIVE_ONE * 2  # 4x weak
+        if type_mod >= Effectiveness::SUPER_EFFECTIVE_MULTIPLIER * 2  # 4x weak
           score += 25
-        elsif type_mod >= Effectiveness::SUPER_EFFECTIVE_ONE  # 2x weak
+        elsif type_mod >= Effectiveness::SUPER_EFFECTIVE_MULTIPLIER  # 2x weak
           score += 15
-        elsif type_mod <= Effectiveness::NOT_VERY_EFFECTIVE_ONE  # Resist
+        elsif type_mod <= Effectiveness::NOT_VERY_EFFECTIVE_MULTIPLIER  # Resist
           score -= 5
         end
         
@@ -169,7 +187,7 @@ module AdvancedAI
       score = 20 - (layers * 5)  # Diminishing returns
       
       # Check grounded opponents
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))
       grounded = opp_party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted?
         # Party Pokemon use hasType? not pbHasType?, and ability_id not ability
@@ -195,7 +213,7 @@ module AdvancedAI
       
       score = 25 - (layers * 10)
       
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))
       
       # Poison/Steel types absorb or are immune
       absorbers = opp_party.count do |pkmn|
@@ -227,7 +245,7 @@ module AdvancedAI
       
       score = 25
       
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))
       
       # Fast grounded opponents benefit us
       fast_grounded = opp_party.count do |pkmn|
@@ -256,8 +274,8 @@ module AdvancedAI
       return 0 unless HAZARD_REMOVERS.include?(move.id)
       
       score = 0
-      our_side = battle.sides[attacker.index % 2]
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      our_side = battle.sides[attacker.index & 1]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       
       case move.id
       when :DEFOG
@@ -283,12 +301,12 @@ module AdvancedAI
         score += 25
         
         # Extra value if we have SR-weak Pokemon in back
-        party = battle.pbParty(attacker.index)
+        party = battle.pbParty(attacker.index & 1)
         sr_weak = party.count do |p|
           next false unless p && !p.fainted? && p != attacker.pokemon
-          # Party Pokemon use type1/type2, not types[]
-          type_mod = Effectiveness.calculate(:ROCK, p.type1, p.type2)
-          type_mod >= Effectiveness::SUPER_EFFECTIVE_ONE
+          # Party Pokemon — use .types splat for correct single-typed handling
+          type_mod = Effectiveness.calculate(:ROCK, *p.types)
+          type_mod >= Effectiveness::SUPER_EFFECTIVE_MULTIPLIER
         end
         score += sr_weak * 10
       end
@@ -311,12 +329,22 @@ module AdvancedAI
       opp_spikes = opp_side.effects[PBEffects::Spikes] || 0
       score -= opp_spikes * 8
       
-      # Also removes screens (bad if we have screens)
-      if our_side.effects[PBEffects::Reflect] && our_side.effects[PBEffects::Reflect] > 0
-        score -= 20
+      opp_tspikes = opp_side.effects[PBEffects::ToxicSpikes] || 0
+      score -= opp_tspikes * 8
+      
+      if opp_side.effects[PBEffects::StickyWeb]
+        score -= 15
       end
-      if our_side.effects[PBEffects::LightScreen] && our_side.effects[PBEffects::LightScreen] > 0
-        score -= 20
+      
+      # Defog removes screens from TARGET's side (bonus for removing opponent screens)
+      if opp_side.effects[PBEffects::Reflect] && opp_side.effects[PBEffects::Reflect] > 0
+        score += 15
+      end
+      if opp_side.effects[PBEffects::LightScreen] && opp_side.effects[PBEffects::LightScreen] > 0
+        score += 15
+      end
+      if opp_side.effects[PBEffects::AuroraVeil] && opp_side.effects[PBEffects::AuroraVeil] > 0
+        score += 20
       end
       
       score
@@ -404,8 +432,8 @@ module AdvancedAI
     def self.evaluate_tidy_up_hazards(battle, attacker, skill_level)
       score = 0
       
-      our_side = battle.sides[attacker.index % 2]
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      our_side = battle.sides[attacker.index & 1]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       
       # Removes ALL hazards (both sides)
       our_hazards = count_hazards(our_side)
@@ -438,7 +466,7 @@ module AdvancedAI
       return 0 unless skill_level >= 60
       return 0 unless battler
       
-      our_side = battle.sides[battler.index % 2]
+      our_side = battle.sides[battler.index & 1]
       
       score = 0
       
@@ -450,7 +478,7 @@ module AdvancedAI
         end
         
         spikes = our_side.effects[PBEffects::Spikes] || 0
-        if spikes > 0 && is_grounded?(battler)
+        if spikes > 0 && is_grounded?(battler, battle)
           score += spikes * 5
         end
       end
@@ -463,20 +491,22 @@ module AdvancedAI
     #===========================================================================
     private
     
-    def self.count_hazards(side_effects)
+    def self.count_hazards(side)
+      eff = side.respond_to?(:effects) ? side.effects : side
       count = 0
-      count += 1 if side_effects[PBEffects::StealthRock]
-      count += side_effects[PBEffects::Spikes] || 0
-      count += side_effects[PBEffects::ToxicSpikes] || 0
-      count += 1 if side_effects[PBEffects::StickyWeb]
+      count += 1 if eff[PBEffects::StealthRock]
+      count += eff[PBEffects::Spikes] || 0
+      count += eff[PBEffects::ToxicSpikes] || 0
+      count += 1 if eff[PBEffects::StickyWeb]
       count
     end
     
-    def self.count_screens(side_effects)
+    def self.count_screens(side)
+      eff = side.respond_to?(:effects) ? side.effects : side
       count = 0
-      count += 1 if side_effects[PBEffects::Reflect] && side_effects[PBEffects::Reflect] > 0
-      count += 1 if side_effects[PBEffects::LightScreen] && side_effects[PBEffects::LightScreen] > 0
-      count += 1 if side_effects[PBEffects::AuroraVeil] && side_effects[PBEffects::AuroraVeil] > 0
+      count += 1 if eff[PBEffects::Reflect] && eff[PBEffects::Reflect] > 0
+      count += 1 if eff[PBEffects::LightScreen] && eff[PBEffects::LightScreen] > 0
+      count += 1 if eff[PBEffects::AuroraVeil] && eff[PBEffects::AuroraVeil] > 0
       count
     end
     
@@ -506,8 +536,8 @@ module AdvancedAI
     HazardControl.evaluate_hazard_removal(battle, attacker, move, skill_level)
   end
   
-  def self.is_grounded?(battler)
-    HazardControl.is_grounded?(battler)
+  def self.is_grounded?(battler, battle = nil)
+    HazardControl.is_grounded?(battler, battle)
   end
   
   def self.has_heavy_duty_boots?(battler)

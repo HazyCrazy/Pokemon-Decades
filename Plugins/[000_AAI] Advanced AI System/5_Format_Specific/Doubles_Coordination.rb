@@ -37,18 +37,25 @@ module AdvancedAI
       partner = find_partner(battle, attacker)
       return 0 unless partner
       
+      partner_move = partner_planned_move_id(battle, partner)
+      return 0 unless partner_move  # Partner hasn't chosen yet or is attacking
+      
+      screen_moves  = [:REFLECT, :LIGHTSCREEN, :AURORAVEIL]
+      hazard_moves  = [:STEALTHROCK, :SPIKES, :TOXICSPIKES, :STICKYWEB]
+      weather_moves = [:SUNNYDAY, :RAINDANCE, :SANDSTORM, :HAIL, :SNOWSCAPE, :CHILLYRECEPTION]
+      
       # Both want to set Screens
-      if [:REFLECT, :LIGHTSCREEN, :AURORAVEIL].include?(move.id)
-        return -60  # One is enough
+      if screen_moves.include?(move.id) && screen_moves.include?(partner_move)
+        return -60  # Partner already setting a screen
       end
       
       # Both want to set Hazards
-      if [:STEALTHROCK, :SPIKES, :TOXICSPIKES, :STICKYWEB].include?(move.id)
+      if hazard_moves.include?(move.id) && hazard_moves.include?(partner_move)
         return -50
       end
       
       # Both want to set Weather
-      if [:SUNNYDAY, :RAINDANCE, :SANDSTORM, :HAIL, :SNOWSCAPE].include?(move.id)
+      if weather_moves.include?(move.id) && weather_moves.include?(partner_move)
         return -40
       end
       
@@ -72,7 +79,8 @@ module AdvancedAI
       # Penalty if Partner is hit
       if partner && hits_partner?(move, attacker, partner)
         # Check Immunity/Resistance
-        type_mod = Effectiveness.calculate(move.type, *partner.pbTypes(true))
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+        type_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
         
         if Effectiveness.ineffective?(type_mod)
           score += 30  # Partner immune → very good!
@@ -102,28 +110,24 @@ module AdvancedAI
       # Weather Coordination
       if move.function_code.include?("Weather")
         # Check Partner Ability
-        partner_ability = partner.ability_id
-        
-        if move.id == :RAINDANCE && [:SWIFTSWIM, :DRIZZLE].include?(partner_ability)
+        if move.id == :RAINDANCE && (partner.hasActiveAbility?(:SWIFTSWIM) || partner.hasActiveAbility?(:DRIZZLE))
           score += 40  # Partner benefits
-        elsif move.id == :SUNNYDAY && [:CHLOROPHYLL, :DROUGHT].include?(partner_ability)
+        elsif move.id == :SUNNYDAY && (partner.hasActiveAbility?(:CHLOROPHYLL) || partner.hasActiveAbility?(:DROUGHT))
           score += 40
-        elsif move.id == :SANDSTORM && [:SANDRUSH, :SANDSTREAM].include?(partner_ability)
+        elsif move.id == :SANDSTORM && (partner.hasActiveAbility?(:SANDRUSH) || partner.hasActiveAbility?(:SANDSTREAM))
           score += 40
-        elsif move.id == :HAIL && [:SLUSHRUSH, :SNOWWARNING].include?(partner_ability)
+        elsif [:HAIL, :SNOWSCAPE].include?(move.id) && (partner.hasActiveAbility?(:SLUSHRUSH) || partner.hasActiveAbility?(:SNOWWARNING))
           score += 40
         end
       end
       
       # Terrain Coordination
       if move.function_code.include?("Terrain")
-        partner_ability = partner.ability_id
-        
-        if move.id == :ELECTRICTERRAIN && [:SURGESURFER].include?(partner_ability)
+        if move.id == :ELECTRICTERRAIN && (partner.hasActiveAbility?(:SURGESURFER) || partner.hasActiveAbility?(:QUARKDRIVE) || partner.hasActiveAbility?(:HADRONENGINE))
           score += 35
-        elsif move.id == :GRASSYTERRAIN && partner.pbHasType?(:GRASS)
+        elsif move.id == :GRASSYTERRAIN && (partner.pbHasType?(:GRASS) || partner.hasActiveAbility?(:GRASSPELT))
           score += 25
-        elsif move.id == :PSYCHICTERRAIN && [:PSYCHICSURGE].include?(partner_ability)
+        elsif move.id == :PSYCHICTERRAIN && partner.hasActiveAbility?(:PSYCHICSURGE)
           score += 35
         end
       end
@@ -141,7 +145,7 @@ module AdvancedAI
       
       # If Partner is setting up, use Protect
       if move.id == :PROTECT || move.id == :DETECT
-        partner_setup = partner.moves.any? { |m| m && m.stat_up.any? }
+        partner_setup = partner.moves.any? { |m| m && (AdvancedAI.setup_move?(m.id) || m.function_code.to_s.start_with?("RaiseUser")) }
         return 50 if partner_setup && partner.hp > partner.totalhp * 0.7
       end
       
@@ -155,10 +159,14 @@ module AdvancedAI
       # List of common spread moves that hit multiple targets
       SPREAD_MOVES = [
         :EARTHQUAKE, :SURF, :ROCKSLIDE, :DISCHARGE, :LAVAPLUME,
-        :BLIZZARD, :HEATWAVE, :MUDDYWATER, :RAZORLEAF, :ICICLESPEAR,
+        :BLIZZARD, :HEATWAVE, :MUDDYWATER, :RAZORLEAF,
         :BULLDOZE, :SNARL, :GLACIATE, :ORIGINPULSE, :PRECIPICEBLADES,
         :DIAMONDSTORM, :PARABOLICCHARGE, :DAZZLINGGLEAM, :EXPLOSION,
-        :SELFDESTRUCT, :MAGNITUDE, :BOOMBURST, :HYPERVOICE, :SLUDGEWAVE
+        :SELFDESTRUCT, :MAGNITUDE, :BOOMBURST, :HYPERVOICE, :SLUDGEWAVE,
+        :ICYWIND, :ERUPTION, :WATERSPOUT, :PETALBLIZZARD,
+        # Gen 9 spread moves
+        :SPRINGTIDESTORM, :BLEAKWINDSTORM, :WILDBOLTSTORM, :SANDSEARSTORM,
+        :MAKEITRAIN, :MATCHAGOTCHA, :MORTALSPIN
       ]
       
       # List of priority moves that Quick Guard blocks
@@ -166,7 +174,7 @@ module AdvancedAI
         :FAKEOUT, :AQUAJET, :MACHPUNCH, :BULLETPUNCH, :ICESHARD,
         :SHADOWSNEAK, :VACUUMWAVE, :QUICKATTACK, :EXTREMESPEED,
         :ACCELEROCK, :FIRSTIMPRESSION, :WATERSHURIKEN, :SUCKERPUNCH,
-        :JETPUNCH, :GRASSYGLIDE, :THUNDERCLAP
+        :JETPUNCH, :GRASSYGLIDE, :THUNDERCLAP, :UPPERHAND
       ]
       
       # Predicts if opponent is likely to use a spread move
@@ -236,8 +244,17 @@ module AdvancedAI
             move_data = GameData::Move.try_get(move_id)
             next unless move_data
             
-            type_mod = Effectiveness.calculate(move_data.type, partner.types[0], partner.types[1])
-            
+            # Resolve type through the opponent who knows this move
+            resolved_type = move_data.type
+            battle.allOtherSideBattlers(attacker.index).each do |opp|
+              next unless opp && !opp.fainted?
+              if opp.moves.any? { |m| m.id == move_id }
+                resolved_type = CombatUtilities.resolve_move_type(opp, move_data)
+                break
+              end
+            end
+            type_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
+
             if Effectiveness.super_effective?(type_mod)
               score += 30  # Partner is weak to this spread move!
             elsif Effectiveness.not_very_effective?(type_mod)
@@ -307,7 +324,9 @@ module AdvancedAI
         # Check if partner has setup moves
         setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :CALMMIND,
                        :BULKUP, :AGILITY, :ROCKPOLISH, :QUIVERDANCE,
-                       :SHELLSMASH, :GEOMANCY, :GROWTH, :WORKUP]
+                       :SHELLSMASH, :GEOMANCY, :GROWTH, :WORKUP,
+                       :VICTORYDANCE, :FILLETAWAY, :TIDYUP, :NORETREAT,
+                       :CLANGOROUSSOUL, :SHIFTGEAR, :COIL]
         
         partner.moves.any? { |m| m && setup_moves.include?(m.id) }
       end
@@ -405,7 +424,7 @@ module AdvancedAI
         # Check for Grass-type opponents or Overcoat ability (immune to powder)
         immune_opponents = battle.allOtherSideBattlers(attacker.index).any? do |opp|
           next false unless opp && !opp.fainted?
-          opp.pbHasType?(:GRASS) || opp.ability_id == :OVERCOAT
+          opp.pbHasType?(:GRASS) || opp.hasActiveAbility?(:OVERCOAT)
         end
         
         score -= 40 if immune_opponents
@@ -458,14 +477,18 @@ module AdvancedAI
         target.moves.each do |target_move|
           next unless target_move
           
-          type_mod = Effectiveness.calculate(target_move.type, partner.types[0], partner.types[1])
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, target_move)
+          type_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
           if Effectiveness.super_effective?(type_mod)
             score += 30  # Target threatens partner!
           end
         end
         
         # Prioritize disrupting setup sweepers
-        setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH]
+        setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH,
+                       :QUIVERDANCE, :CALMMIND, :BULKUP, :AGILITY, :ROCKPOLISH, :COIL,
+                       :VICTORYDANCE, :FILLETAWAY, :TIDYUP, :SHIFTGEAR, :NORETREAT,
+                       :CLANGOROUSSOUL, :GEOMANCY]
         if target.moves.any? { |m| m && setup_moves.include?(m.id) }
           score += 40
         end
@@ -483,7 +506,8 @@ module AdvancedAI
     def self.evaluate_protect_doubles(battle, attacker, move, skill_level = 100)
       return 0 unless skill_level >= 65
       return 0 unless battle.pbSideSize(0) > 1
-      return 0 unless [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER].include?(move.id)
+      return 0 unless [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER,
+                        :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK].include?(move.id)
       
       score = 0
       partner = find_partner(battle, attacker)
@@ -496,7 +520,8 @@ module AdvancedAI
           # Check if partner's move hits allies
           if hits_partner?(partner_move, partner, attacker)
             # Check if we're weak to it
-            type_mod = Effectiveness.calculate(partner_move.type, attacker.types[0], attacker.types[1])
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(partner, partner_move)
+            type_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
             
             if !Effectiveness.ineffective?(type_mod)
               score += 55  # Protect from partner's spread move!
@@ -535,7 +560,7 @@ module AdvancedAI
       TAILWIND_THRESHOLD = 80  # Base speed threshold
       
       # Speed-lowering moves
-      SPEED_CONTROL_MOVES = [:ICYWIND, :ELECTROWEBS, :STRINGSHOT, :BULLDOZE, :ROCKSLIDE]
+      SPEED_CONTROL_MOVES = [:ICYWIND, :ELECTROWEB, :STRINGSHOT, :BULLDOZE, :ROCKTOMB, :GLACIATE]
       
       # Evaluates Tailwind usage
       def self.evaluate_tailwind(battle, attacker, move, skill_level = 100)
@@ -562,7 +587,7 @@ module AdvancedAI
         slower_count = 0
         allies.each do |ally|
           opponents.each do |opp|
-            slower_count += 1 if ally.speed < opp.speed
+            slower_count += 1 if AdvancedAI::SpeedTiers.calculate_effective_speed(battle, ally) < AdvancedAI::SpeedTiers.calculate_effective_speed(battle, opp)
           end
         end
         
@@ -657,7 +682,7 @@ module AdvancedAI
         outsped = 0
         allies.each do |ally|
           opponents.each do |opp|
-            outsped += 1 if ally.speed < opp.speed
+            outsped += 1 if AdvancedAI::SpeedTiers.calculate_effective_speed(battle, ally) < AdvancedAI::SpeedTiers.calculate_effective_speed(battle, opp)
           end
         end
         
@@ -693,10 +718,9 @@ module AdvancedAI
     module WeatherCoordinationDoubles
       # Weather abilities
       WEATHER_ABILITIES = {
-        :Sun  => [:DROUGHT, :ORICHALCUMPULSE],
+        :Sun  => [:DROUGHT, :ORICHALCUMPULSE, :DESOLATELAND],
         :Rain => [:DRIZZLE, :PRIMORDIALSEA],
-        :Sand => [:SANDSTREAM],
-        :Hail => [:SNOWWARNING],
+        :Sandstorm => [:SANDSTREAM, :SANDSPIT],
         :Snow => [:SNOWWARNING]
       }
       
@@ -704,18 +728,17 @@ module AdvancedAI
       WEATHER_SYNERGY = {
         :Sun  => [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT, :LEAFGUARD, :HARVEST, :PROTOSYNTHESIS],
         :Rain => [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION],
-        :Sand => [:SANDRUSH, :SANDFORCE, :SANDVEIL],
-        :Hail => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK],
-        :Snow => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK]
+        :Sandstorm => [:SANDRUSH, :SANDFORCE, :SANDVEIL],
+        :Hail => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
+        :Snow => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE]
       }
       
-      # Move types boosted by weather
+      # Move types boosted by weather (only Sun and Rain actually boost move power)
       WEATHER_MOVE_BOOST = {
         :Sun  => :FIRE,
-        :Rain => :WATER,
-        :Sand => :ROCK,  # Sand boosts SpDef of Rock-types
-        :Hail => :ICE,
-        :Snow => :ICE
+        :Rain => :WATER
+        # Sandstorm boosts Rock-type SpDef, NOT Rock move power — no entry
+        # Hail/Snow does NOT boost Ice move power — no entry
       }
       
       # Evaluates weather move in doubles context
@@ -726,7 +749,7 @@ module AdvancedAI
         weather_moves = {
           :SUNNYDAY => :Sun,
           :RAINDANCE => :Rain,
-          :SANDSTORM => :Sand,
+          :SANDSTORM => :Sandstorm,
           :HAIL => :Hail,
           :SNOWSCAPE => :Snow,
           :CHILLYRECEPTION => :Snow
@@ -738,7 +761,7 @@ module AdvancedAI
         score = 0
         
         # Check current weather
-        current_weather = battle.field.weather
+        current_weather = AdvancedAI::Utilities.current_weather(battle)
         if current_weather == target_weather
           return -60  # Already have this weather
         end
@@ -749,7 +772,7 @@ module AdvancedAI
         
         allies.each do |ally|
           # Ability synergy
-          if synergy_abilities.include?(ally.ability_id)
+          if synergy_abilities.any? { |a| ally.hasActiveAbility?(a) }
             score += 40
           end
           
@@ -764,7 +787,7 @@ module AdvancedAI
         # Penalty if opponents also benefit
         opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
         opponents.each do |opp|
-          if synergy_abilities.include?(opp.ability_id)
+          if synergy_abilities.any? { |a| opp.hasActiveAbility?(a) }
             score -= 35
           end
         end
@@ -778,7 +801,7 @@ module AdvancedAI
         partner = DoublesCoordination.find_partner(battle, attacker)
         if partner
           WEATHER_ABILITIES.each do |weather_type, abilities|
-            if abilities.include?(partner.ability_id)
+            if abilities.any? { |a| partner.hasActiveAbility?(a) }
               if weather_type == target_weather
                 score -= 30  # Partner already sets this weather
               else
@@ -797,7 +820,7 @@ module AdvancedAI
         return 0 unless battle.pbSideSize(0) > 1
         
         score = 0
-        current_weather = battle.field.weather
+        current_weather = AdvancedAI::Utilities.current_weather(battle)
         
         # Sun boosts Fire, weakens Water
         if current_weather == :Sun
@@ -816,16 +839,13 @@ module AdvancedAI
         end
         
         # Hail/Snow enables Blizzard accuracy
-        if [:Hail, :Snow].include?(current_weather)
+        if current_weather == :Hail || current_weather == :Snow
           score += 20 if move.id == :BLIZZARD
           # Aurora Veil can be used
           score += 30 if move.id == :AURORAVEIL
         end
         
-        # Sand boosts Rock-type SpDef, Sandstorm damage to non-immune
-        if current_weather == :Sand
-          score += 15 if move.type == :GROUND  # Often paired with Sand teams
-        end
+        # Sandstorm does NOT boost Ground-type move power (removed false bonus)
         
         # Weather Ball changes type
         if move.id == :WEATHERBALL && current_weather != :None
@@ -877,7 +897,7 @@ module AdvancedAI
         
         # Partner is faster than opponents (will attack this turn)
         opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
-        faster_than_all = opponents.all? { |opp| partner.speed > opp.speed }
+        faster_than_all = opponents.all? { |opp| AdvancedAI::SpeedTiers.calculate_effective_speed(battle, partner) > AdvancedAI::SpeedTiers.calculate_effective_speed(battle, opp) }
         score += 25 if faster_than_all
         
         # Partner has spread move (Helping Hand affects all hits)
@@ -912,9 +932,9 @@ module AdvancedAI
           end
         end
         
-        # Partner is healthy (can make use of boost)
-        if partner.hp > partner.totalhp * 0.6
-          score += 20
+        # Penalize if partner is so low HP they likely won't survive to attack
+        if partner.hp < partner.totalhp * 0.3
+          score -= 30  # Partner likely fainted before they can use the boost
         end
         
         score
@@ -972,8 +992,9 @@ module AdvancedAI
             next unless opp_move && opp_move.damagingMove?
             
             # Check if partner is weak
-            partner_mod = Effectiveness.calculate(opp_move.type, partner.types[0], partner.types[1])
-            attacker_mod = Effectiveness.calculate(opp_move.type, attacker.types[0], attacker.types[1])
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(opp, opp_move)
+            partner_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
+            attacker_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
             
             if Effectiveness.super_effective?(partner_mod)
               partner_threatened = true
@@ -1006,7 +1027,7 @@ module AdvancedAI
       # Classic doubles combos
       CLASSIC_COMBOS = {
         # [Move, Partner Ability/Move that synergizes]
-        :EARTHQUAKE => [:LEVITATE, :FLYINGTYPE, :AIRBALLOON, :TELEKINESIS],
+        :EARTHQUAKE => [:LEVITATE, :FLYINGTYPE, :AIRBALLOON, :TELEKINESIS, :EARTHEATER],
         :SURF => [:WATERABSORB, :DRYSKIN, :STORMDRAIN],
         :DISCHARGE => [:LIGHTNINGROD, :VOLTABSORB, :MOTORDRIVE],
         :HEATWAVE => [:FLASHFIRE, :WELLBAKEDBODY],
@@ -1034,7 +1055,7 @@ module AdvancedAI
             score += 40 if partner.item_id == :AIRBALLOON
           else
             # Check ability
-            score += 45 if partner.ability_id == synergy
+            score += 45 if partner.hasActiveAbility?(synergy)
           end
         end
         
@@ -1059,7 +1080,7 @@ module AdvancedAI
         end
         
         # Check for Beat Up + Justified combo
-        if move.id == :BEATUP && partner.ability_id == :JUSTIFIED
+        if move.id == :BEATUP && partner.hasActiveAbility?(:JUSTIFIED)
           score += 80  # Classic combo!
         end
         
@@ -1090,7 +1111,7 @@ module AdvancedAI
         opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
         
         # Partner is slower than opponents
-        partner_outsped = opponents.any? { |opp| partner.speed < opp.speed }
+        partner_outsped = opponents.any? { |opp| AdvancedAI::SpeedTiers.calculate_effective_speed(battle, partner) < AdvancedAI::SpeedTiers.calculate_effective_speed(battle, opp) }
         
         if partner_outsped
           score += 35
@@ -1128,13 +1149,14 @@ module AdvancedAI
         
         # Target is faster than our team
         allies = battle.allSameSideBattlers(attacker.index).select { |b| b && !b.fainted? }
-        target_faster_than_allies = allies.any? { |ally| target.speed > ally.speed }
+        target_faster_than_allies = allies.any? { |ally| AdvancedAI::SpeedTiers.calculate_effective_speed(battle, target) > AdvancedAI::SpeedTiers.calculate_effective_speed(battle, ally) }
         
         if target_faster_than_allies
           score += 40
           
           # Target is a setup sweeper (delay their setup)
-          setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :QUIVERDANCE]
+          setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :QUIVERDANCE,
+                         :CALMMIND, :VICTORYDANCE, :FILLETAWAY, :GEOMANCY]
           if target.moves.any? { |m| m && setup_moves.include?(m.id) }
             score += 35
           end
@@ -1166,16 +1188,20 @@ module AdvancedAI
           last_move = GameData::Move.try_get(partner.lastMoveUsed)
           if last_move
             # High power move = good target for Instruct
-            if last_move.power >= 100
+            eff_power = AdvancedAI::CombatUtilities.resolve_move_power(last_move)
+            if eff_power >= 100
               score += 50
-            elsif last_move.power >= 70
+            elsif eff_power >= 70
               score += 30
             elsif last_move.power == 0
               score -= 30  # Status move, less value
             end
             
             # Spread move = extra value (hits multiple)
-            if last_move.target && last_move.target.num_targets > 1
+            # last_move.target is a Symbol (e.g. :AllNearFoes) from GameData::Move,
+            # so we must resolve it to a GameData::Target object first
+            target_data = GameData::Target.try_get(last_move.target)
+            if target_data && target_data.num_targets > 1
               score += 25
             end
           end
@@ -1235,7 +1261,7 @@ module AdvancedAI
         # Check if opponents have status moves
         opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
         status_moves = 0
-        dangerous_status = [:SPORE, :DARKVOIDE, :THUNDERWAVE, :WILLOWISP, :TOXIC, 
+        dangerous_status = [:SPORE, :DARKVOID, :THUNDERWAVE, :WILLOWISP, :TOXIC, 
                             :TAUNT, :ENCORE, :DISABLE, :SWAGGER]
         
         opponents.each do |opp|
@@ -1288,20 +1314,26 @@ module AdvancedAI
         # Spotlight redirects attacks TO the target
         # Useful when target has ability that punishes contact or is bulky
         
-        # Target has Rough Skin, Iron Barbs, etc.
+        # Target has Rough Skin, Iron Barbs, etc. — our team takes chip damage
         punishing_abilities = [:ROUGHSKIN, :IRONBARBS, :FLAMEBODY, :STATIC, :POISONPOINT]
-        if punishing_abilities.include?(target.ability_id)
-          score += 40
+        if punishing_abilities.any? { |a| target.hasActiveAbility?(a) }
+          score -= 40
         end
         
-        # Target is bulky (can take hits)
+        # Target is bulky — harder to KO, wasted focus
         if target.defense > 100 || target.spdef > 100
-          score += 25
+          score -= 25
         end
         
-        # Target has Rocky Helmet
+        # Target has Rocky Helmet — our team takes chip
         if target.item_id == :ROCKYHELMET
-          score += 30
+          score -= 30
+        end
+        
+        # Bonus if target is frail (easy to focus-KO)
+        hp_pct = target.hp.to_f / target.totalhp
+        if hp_pct < 0.5
+          score += 35
         end
         
         score
@@ -1321,7 +1353,7 @@ module AdvancedAI
         score = 0
         
         # Check for fainted party members
-        party = battle.pbParty(attacker.index)
+        party = battle.pbParty(attacker.index & 1)
         fainted_count = party.count { |pkmn| pkmn && pkmn.fainted? }
         
         if fainted_count == 0
@@ -1358,7 +1390,7 @@ module AdvancedAI
         end
         
         # Check for good switch-in candidates
-        party = battle.pbParty(attacker.index)
+        party = battle.pbParty(attacker.index & 1)
         available = party.count { |pkmn| pkmn && !pkmn.fainted? && pkmn != attacker.pokemon }
         
         if available == 0
@@ -1373,7 +1405,8 @@ module AdvancedAI
           # Check for setup move in moveset
           pkmn.moves.each do |m|
             next unless m
-            if [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :QUIVERDANCE, :CALMMIND].include?(m.id)
+            if [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :QUIVERDANCE, :CALMMIND,
+                :VICTORYDANCE, :FILLETAWAY, :GEOMANCY].include?(m.id)
               score += 35
               break
             end
@@ -1399,16 +1432,15 @@ module AdvancedAI
                           :LIBERO, :ADAPTABILITY, :CONTRARY, :MOODY, :UNAWARE,
                           :MAGICGUARD, :MULTISCALE, :STURDY, :LEVITATE]
         
-        if good_abilities.include?(target.ability_id)
+        if good_abilities.any? { |a| target.hasActiveAbility?(a) }
           score += 50
           
           # Synergy check - does partner benefit?
-          case target.ability_id
-          when :HUGEPOWER, :PUREPOWER
+          if target.hasActiveAbility?(:HUGEPOWER) || target.hasActiveAbility?(:PUREPOWER)
             score += 30 if partner.attack > partner.spatk
-          when :SPEEDBOOST
+          elsif target.hasActiveAbility?(:SPEEDBOOST)
             score += 25 if partner.speed < 100
-          when :INTIMIDATE
+          elsif target.hasActiveAbility?(:INTIMIDATE)
             score += 20  # Always useful
           end
         end
@@ -1424,9 +1456,9 @@ module AdvancedAI
         return 0 unless partner
         
         # Check for Commander ability and Dondozo
-        if attacker.ability_id == :COMMANDER && partner.species == :DONDOZO
+        if attacker.hasActiveAbility?(:COMMANDER) && partner.species == :DONDOZO
           return 100  # Massive bonus for this combo
-        elsif partner.ability_id == :COMMANDER && attacker.species == :DONDOZO
+        elsif partner.hasActiveAbility?(:COMMANDER) && attacker.species == :DONDOZO
           return 80  # Bonus for being the Dondozo
         end
         
@@ -1517,8 +1549,10 @@ module AdvancedAI
         score = 0
         
         # Wind Rider: Boosted by wind moves from partner
-        wind_moves = [:TAILWIND, :BLEAKWINDSTORM, :SPRINGTIDESTORM, :WILDSTORMWIND]
-        if partner.ability_id == :WINDRIDER && wind_moves.include?(move.id)
+        wind_moves = [:TAILWIND, :BLEAKWINDSTORM, :SPRINGTIDESTORM, :WILDBOLTSTORM,
+                     :SANDSEARSTORM, :ICYWIND, :BLIZZARD, :PETALBLIZZARD,
+                     :HURRICANE, :GUST, :TWISTER, :FAIRYWIND]
+        if partner.hasActiveAbility?(:WINDRIDER) && wind_moves.include?(move.id)
           score += 45  # Partner gets Attack boost
         end
         
@@ -1526,7 +1560,7 @@ module AdvancedAI
         # (Less relevant for AI using move, but check for partner)
         
         # Steam Engine: Speed boost from Fire/Water
-        if partner.ability_id == :STEAMENGINE
+        if partner.hasActiveAbility?(:STEAMENGINE)
           if move.type == :FIRE || move.type == :WATER
             # Only if move hits partner
             if DoublesCoordination.hits_partner?(move, attacker, partner)
@@ -1537,7 +1571,7 @@ module AdvancedAI
         
         # Anger Point: Critical hit triggers max Attack
         # (Hard to control, but Frost Breath/Storm Throw always crit)
-        if partner.ability_id == :ANGERPOINT
+        if partner.hasActiveAbility?(:ANGERPOINT)
           if [:FROSTBREATH, :STORMTHROW].include?(move.id)
             if DoublesCoordination.hits_partner?(move, attacker, partner)
               score += 60  # Guaranteed max Attack!
@@ -1551,7 +1585,7 @@ module AdvancedAI
       # Evaluates Hospitality ability (heals partner on switch-in)
       def self.check_hospitality_synergy(battle, attacker)
         return 0 unless battle.pbSideSize(0) > 1
-        return 0 unless attacker.ability_id == :HOSPITALITY
+        return 0 unless attacker.hasActiveAbility?(:HOSPITALITY)
         
         partner = DoublesCoordination.find_partner(battle, attacker)
         return 0 unless partner
@@ -1641,7 +1675,7 @@ module AdvancedAI
           
           # Extra value if outsped by opponents
           opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
-          outsped = allies.count { |a| opponents.any? { |o| o.speed > a.speed } }
+          outsped = allies.count { |a| opponents.any? { |o| AdvancedAI::SpeedTiers.calculate_effective_speed(battle, o) > AdvancedAI::SpeedTiers.calculate_effective_speed(battle, a) } }
           score += outsped * 15
           
         when :ATTACK
@@ -1681,8 +1715,26 @@ module AdvancedAI
         weather_type = MAX_WEATHER_MOVES[move.id]
         return 0 unless weather_type
         
-        # Use existing weather coordination logic
-        score = WeatherCoordinationDoubles.evaluate_weather_move(battle, attacker, move, skill_level)
+        # Map Max Move weather to a base weather move ID so the synergy
+        # evaluation can look it up in its own weather_moves hash.
+        base_weather_id = { :Sun => :SUNNYDAY, :Rain => :RAINDANCE,
+                            :Sandstorm => :SANDSTORM, :Hail => :HAIL }[weather_type]
+        if base_weather_id
+          # Build a lightweight proxy with the base move ID for the lookup
+          proxy_data = GameData::Move.try_get(base_weather_id)
+          if proxy_data
+            proxy_move = Battle::Move.from_pokemon_move(battle, Pokemon::Move.new(base_weather_id)) rescue nil
+            if proxy_move
+              score = WeatherCoordinationDoubles.evaluate_weather_move(battle, attacker, proxy_move, skill_level)
+            else
+              score = 0
+            end
+          else
+            score = 0
+          end
+        else
+          score = 0
+        end
         
         # Bonus for Max Move (more damage than regular weather move)
         score += 15
@@ -1698,8 +1750,20 @@ module AdvancedAI
         terrain_type = MAX_TERRAIN_MOVES[move.id]
         return 0 unless terrain_type
         
-        # Use existing terrain coordination logic
-        score = TerrainSynergyDoubles.evaluate_terrain_doubles(battle, attacker, move, skill_level)
+        # Map Max Move terrain to a base terrain move ID so the synergy
+        # evaluation can look it up in its own TERRAIN_MOVES hash.
+        base_terrain_id = { :Electric => :ELECTRICTERRAIN, :Grassy => :GRASSYTERRAIN,
+                            :Psychic => :PSYCHICTERRAIN, :Misty => :MISTYTERRAIN }[terrain_type]
+        if base_terrain_id
+          proxy_move = Battle::Move.from_pokemon_move(battle, Pokemon::Move.new(base_terrain_id)) rescue nil
+          if proxy_move
+            score = TerrainSynergyDoubles.evaluate_terrain_doubles(battle, attacker, proxy_move, skill_level)
+          else
+            score = 0
+          end
+        else
+          score = 0
+        end
         
         # Bonus for Max Move
         score += 15
@@ -1799,8 +1863,11 @@ module AdvancedAI
         # Tera to STAB boost (offensive Tera)
         tera_type = attacker.tera_type rescue nil
         if tera_type
-          # Check if we have moves of that type
-          tera_moves = attacker.moves.count { |m| m && m.type == tera_type && m.damagingMove? }
+          # Check if we have moves of that type (resolve for -ate abilities)
+          tera_moves = attacker.moves.count do |m|
+            next false unless m && m.damagingMove?
+            AdvancedAI::CombatUtilities.resolve_move_type(attacker, m) == tera_type
+          end
           score += tera_moves * 20
         end
         
@@ -1823,7 +1890,8 @@ module AdvancedAI
         score = 0
         
         # These moves get 33% boost if super effective
-        type_mod = Effectiveness.calculate(move.type, target.types[0], target.types[1])
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+        type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
         if Effectiveness.super_effective?(type_mod)
           score += 35  # Bonus for using on weak target
         end
@@ -1848,7 +1916,7 @@ module AdvancedAI
           case battle.field.terrain
           when :Electric
             # Remove if opponents have Electric moves or Surge Surfer
-            electric_benefit = opponents.any? { |o| o.ability_id == :SURGESURFER }
+            electric_benefit = opponents.any? { |o| o.hasActiveAbility?(:SURGESURFER) }
             score += 25 if electric_benefit
           when :Psychic
             # Priority blocking might help opponents more
@@ -1956,11 +2024,10 @@ module AdvancedAI
         # Spread Steel move is good
         score += opponents.count * 20
         
-        # But drops SpAtk - penalty if staying in
-        if attacker.hp > attacker.totalhp * 0.5
-          score -= 15  # Staying in, SpAtk drop hurts
-        else
-          score += 10  # Might switch out anyway
+        # The SpAtk drop only matters if staying in for multiple turns;
+        # still penalize if low HP since the spread hit is less impactful
+        if attacker.hp < attacker.totalhp * 0.3
+          score -= 10  # Too close to fainting to benefit from spread
         end
         
         score
@@ -1981,7 +2048,7 @@ module AdvancedAI
         end
         
         # Flinch chance
-        if attacker.speed > target.speed
+        if AdvancedAI::SpeedTiers.calculate_effective_speed(battle, attacker) > AdvancedAI::SpeedTiers.calculate_effective_speed(battle, target)
           score += 15
         end
         
@@ -2096,10 +2163,10 @@ module AdvancedAI
       }
       
       TERRAIN_ABILITIES = {
-        :Electric => [:SURGESURFER, :ELECTRICSEED],
-        :Grassy => [:GRASSYSEED],
-        :Psychic => [:PSYCHICSEED],
-        :Misty => [:MISTYSEED]
+        :Electric => [:SURGESURFER, :QUARKDRIVE, :HADRONENGINE],
+        :Grassy => [:GRASSPELT],
+        :Psychic => [],
+        :Misty => []
       }
       
       def self.evaluate_terrain_doubles(battle, attacker, move, skill_level = 100)
@@ -2121,7 +2188,7 @@ module AdvancedAI
         # Check ability synergy
         synergy_abilities = TERRAIN_ABILITIES[terrain_type] || []
         allies.each do |ally|
-          if synergy_abilities.include?(ally.ability_id)
+          if synergy_abilities.any? { |a| ally.hasActiveAbility?(a) }
             score += 35
           end
           
@@ -2141,7 +2208,9 @@ module AdvancedAI
         case terrain_type
         when :Electric
           # Boosts Electric moves, prevents Sleep
-          electric_users = allies.count { |a| a.moves.any? { |m| m && m.type == :ELECTRIC && m.damagingMove? } }
+          electric_users = allies.count do |a|
+            a.moves.any? { |m| m && m.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_type(a, m) == :ELECTRIC }
+          end
           score += electric_users * 20
           # Rising Voltage doubles in Electric Terrain
           rising_voltage_users = allies.count { |a| a.moves.any? { |m| m && m.id == :RISINGVOLTAGE } }
@@ -2207,12 +2276,23 @@ module AdvancedAI
         end
         
         # Weather/hazard damage breaks sash
-        if battle.field.weather != :None
-          weather_damages = [:Sandstorm, :Hail]
-          if weather_damages.include?(battle.field.weather)
-            # Check if target takes weather damage
-            unless target.pbHasType?(:ROCK) || target.pbHasType?(:GROUND) || 
-                   target.pbHasType?(:STEEL) || target.pbHasType?(:ICE)
+        effective_weather = AdvancedAI::Utilities.current_weather(battle)
+        if effective_weather != :None
+          weather_damages = [:Sandstorm]
+          # Only include Hail if classic chip-damage mode (HAIL_WEATHER_TYPE == 0)
+          if !defined?(Settings::HAIL_WEATHER_TYPE) || Settings::HAIL_WEATHER_TYPE == 0
+            weather_damages << :Hail
+          end
+          if weather_damages.include?(effective_weather)
+            # Check if target takes weather damage (type immunities differ per weather)
+            weather_hurts = case effective_weather
+                            when :Sandstorm
+                              !target.pbHasType?(:ROCK) && !target.pbHasType?(:GROUND) && !target.pbHasType?(:STEEL)
+                            when :Hail
+                              !target.pbHasType?(:ICE)
+                            else false
+                            end
+            if weather_hurts
               score += 20  # Weather will break sash
             end
           end
@@ -2222,7 +2302,7 @@ module AdvancedAI
       end
       
       # Weakness Policy abuse - hit partner with weak super effective move
-      def self.evaluate_weakness_policy_abuse(battle, attacker, move, skill_level = 100)
+      def self.evaluate_weakness_policy_abuse(battle, attacker, move, target = nil, skill_level = 100)
         return 0 unless skill_level >= 80
         return 0 unless battle.pbSideSize(0) > 1
         
@@ -2234,13 +2314,15 @@ module AdvancedAI
         
         # Check if move hits partner and is super effective
         if DoublesCoordination.hits_partner?(move, attacker, partner)
-          type_mod = Effectiveness.calculate(move.type, partner.types[0], partner.types[1])
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          type_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
           
           if Effectiveness.super_effective?(type_mod)
             # Low power move preferred (don't KO partner!)
-            if move.power <= 40
+            eff_power = AdvancedAI::CombatUtilities.resolve_move_power(move)
+            if eff_power <= 40
               score += 80  # Weak move triggers WP without killing
-            elsif move.power <= 60
+            elsif eff_power <= 60
               score += 50
             else
               score -= 20  # Too strong, might KO
@@ -2248,9 +2330,11 @@ module AdvancedAI
           end
         end
         
-        # Beat Up on WP Justified mon is god-tier
-        if move.id == :BEATUP && partner.ability_id == :JUSTIFIED && partner.item_id == :WEAKNESSPOLICY
-          score += 100  # +4 Attack and +2 Attack/SpAtk!
+        # Beat Up on WP Justified mon is god-tier — only when targeting partner
+        if move.id == :BEATUP && partner.hasActiveAbility?(:JUSTIFIED) && partner.item_id == :WEAKNESSPOLICY
+          if target && target.index == partner.index
+            score += 100  # +4 Attack and +2 Attack/SpAtk!
+          end
         end
         
         score
@@ -2301,7 +2385,8 @@ module AdvancedAI
           # If locked into something we resist
           last_move = GameData::Move.try_get(target.lastMoveUsed)
           if last_move
-            type_mod = Effectiveness.calculate(last_move.type, attacker.types[0], attacker.types[1])
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, last_move)
+            type_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
             if Effectiveness.not_very_effective?(type_mod) || Effectiveness.ineffective?(type_mod)
               score += 35  # They're locked into bad move vs us
             end
@@ -2364,7 +2449,7 @@ module AdvancedAI
         if partner.item_id == :ADRENALINEORB
           # Bonus if facing Intimidate users
           opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
-          if opponents.any? { |o| o.ability_id == :INTIMIDATE }
+          if opponents.any? { |o| o.hasActiveAbility?(:INTIMIDATE) }
             score += 25
           end
         end
@@ -2389,6 +2474,73 @@ module AdvancedAI
           return -10  # They'll heal, might not KO
         end
       end
+      
+      # Covert Cloak awareness (blocks secondary effects — flinch, status from attacks)
+      def self.check_covert_cloak(battle, target, move, skill_level = 100)
+        return 0 unless skill_level >= 65
+        return 0 unless target
+        return 0 unless target.item_id == :COVERTCLOAK
+        # Any damaging move with a secondary effect loses that secondary
+        if move.power > 0 && move.addlEffect.to_i > 0
+          return -25
+        end
+        0
+      end
+      
+      # Clear Amulet awareness (prevents stat drops from opponent's moves)
+      def self.check_clear_amulet(battle, target, move, skill_level = 100)
+        return 0 unless skill_level >= 65
+        return 0 unless target
+        return 0 unless target.item_id == :CLEARAMULET
+        # Pure stat-drop status moves are entirely blocked
+        stat_drop_status = [:CHARM, :FEATHERDANCE, :GROWL, :SCREECH, :TAILWHIP,
+                            :FAKETEARS, :METALSOUND, :CAPTIVATE, :TEARFULLOOK]
+        return -60 if move.power == 0 && stat_drop_status.include?(move.id)
+        0
+      end
+      
+      # Mirror Herb awareness (copies stat boosts when opponent boosts)
+      def self.check_mirror_herb(battle, attacker, target, move, skill_level = 100)
+        return 0 unless skill_level >= 75
+        return 0 unless target
+        return 0 unless target.item_id == :MIRRORHERB
+        # Setup moves give the Mirror Herb holder a free copy of our boosts
+        return -50 if AdvancedAI.setup_move?(move.id)
+        0
+      end
+      
+      # Loaded Dice awareness (multi-hit moves always hit max times)
+      def self.check_loaded_dice(battle, attacker, move, skill_level = 100)
+        return 0 unless skill_level >= 60
+        return 0 unless attacker.item_id == :LOADEDDICE
+        return 0 unless move.multiHitMove?
+        score = 30
+        score += 20 if attacker.hasActiveAbility?(:SKILLLINK)
+        score
+      end
+      
+      # Booster Energy awareness (activates Protosynthesis or Quark Drive)
+      def self.check_booster_energy(battle, attacker, skill_level = 100)
+        return 0 unless skill_level >= 70
+        return 0 unless attacker.item_id == :BOOSTERENERGY
+        return 0 unless attacker.hasActiveAbility?(:PROTOSYNTHESIS) || attacker.hasActiveAbility?(:QUARKDRIVE)
+        weather = AdvancedAI::Utilities.current_weather(battle) rescue :None
+        terrain = battle.field.terrain rescue nil
+        return 20 if attacker.hasActiveAbility?(:PROTOSYNTHESIS) && ![:Sun, :HarshSun].include?(weather)
+        return 20 if attacker.hasActiveAbility?(:QUARKDRIVE) && terrain != :Electric
+        0
+      end
+      
+      # Ability Shield awareness (blocks ability-changing moves entirely)
+      def self.check_ability_shield(battle, target, move, skill_level = 100)
+        return 0 unless skill_level >= 65
+        return 0 unless target
+        return 0 unless target.item_id == :ABILITYSHIELD
+        ability_change_moves = [:SKILLSWAP, :ENTRAINMENT, :ROLEPLAY, :GASTROACID,
+                                :WORRYSEED, :SIMPLEBEAM]
+        return -80 if ability_change_moves.include?(move.id)
+        0
+      end
     end
     
     #===========================================================================
@@ -2404,7 +2556,7 @@ module AdvancedAI
         partner = DoublesCoordination.find_partner(battle, attacker)
         
         # Check if we have Intimidate
-        if attacker.ability_id == :INTIMIDATE
+        if attacker.hasActiveAbility?(:INTIMIDATE)
           # Value of Intimidate higher against physical attackers
           opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
           phys_attackers = opponents.count { |o| o.attack > o.spatk }
@@ -2412,17 +2564,17 @@ module AdvancedAI
           
           # Check for Defiant/Competitive (they punish Intimidate)
           punishing_abilities = [:DEFIANT, :COMPETITIVE, :CONTRARY, :MIRRORARMOR]
-          if opponents.any? { |o| punishing_abilities.include?(o.ability_id) }
+          if opponents.any? { |o| punishing_abilities.any? { |a| o.hasActiveAbility?(a) } }
             score -= 40
           end
         end
         
         # Check if partner has Defiant/Competitive (Intimidate helps them!)
         if partner
-          if partner.ability_id == :DEFIANT || partner.ability_id == :COMPETITIVE
+          if partner.hasActiveAbility?(:DEFIANT) || partner.hasActiveAbility?(:COMPETITIVE)
             # Facing Intimidate is actually good for us
             opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
-            if opponents.any? { |o| o.ability_id == :INTIMIDATE }
+            if opponents.any? { |o| o.hasActiveAbility?(:INTIMIDATE) }
               score += 35
             end
           end
@@ -2434,7 +2586,7 @@ module AdvancedAI
       # Prankster awareness
       def self.check_prankster(battle, attacker, move, target, skill_level = 100)
         return 0 unless skill_level >= 70
-        return 0 unless attacker.ability_id == :PRANKSTER
+        return 0 unless attacker.hasActiveAbility?(:PRANKSTER)
         return 0 unless move.category == 2  # Status move
         
         score = 0
@@ -2455,10 +2607,10 @@ module AdvancedAI
         return 0 unless skill_level >= 65
         return 0 unless target
         
-        flinch_immune = [:INNERFOCUS, :OWNTEMPO, :SHIELDDUST, :SCRAPPY]
+        flinch_immune = [:INNERFOCUS, :SHIELDDUST]
         
-        if flinch_immune.include?(target.ability_id)
-          if move.id == :FAKEOUT || move.addlEffect == "Flinch"
+        if flinch_immune.any? { |a| target.hasActiveAbility?(a) }
+          if move.id == :FAKEOUT || move.function_code.to_s.include?("Flinch")
             return -50  # Flinch won't work
           end
         end
@@ -2476,7 +2628,7 @@ module AdvancedAI
         return 0 unless partner
         
         # If target's partner has Friend Guard, target takes less damage
-        if partner.ability_id == :FRIENDGUARD
+        if partner.hasActiveAbility?(:FRIENDGUARD)
           return -15  # 25% damage reduction
         end
         
@@ -2492,7 +2644,7 @@ module AdvancedAI
         return 0 unless partner
         
         # If partner has Telepathy, we can use spread moves freely
-        if partner.ability_id == :TELEPATHY
+        if partner.hasActiveAbility?(:TELEPATHY)
           if DoublesCoordination.hits_partner?(move, attacker, partner)
             return 40  # Partner won't be hit
           end
@@ -2507,7 +2659,7 @@ module AdvancedAI
         
         # Check if anyone has Neutralizing Gas active
         all_battlers = battle.allBattlers
-        if all_battlers.any? { |b| b && !b.fainted? && b.ability_id == :NEUTRALIZINGGAS }
+        if all_battlers.any? { |b| b && !b.fainted? && b.hasActiveAbility?(:NEUTRALIZINGGAS) }
           # All abilities are nullified - ignore ability-based strategies
           return 20  # Simplifies calculations
         end
@@ -2528,20 +2680,20 @@ module AdvancedAI
           # Good abilities to steal
           good_abilities = [:HUGEPOWER, :PUREPOWER, :SPEEDBOOST, :INTIMIDATE,
                            :MULTISCALE, :MAGICGUARD, :LEVITATE, :PRANKSTER]
-          if good_abilities.include?(target.ability_id)
+          if good_abilities.any? { |a| target.hasActiveAbility?(a) }
             score += 50
           end
           
           # Bad abilities to give away
           bad_abilities = [:SLOWSTART, :TRUANT, :DEFEATIST, :STALL]
-          if bad_abilities.include?(attacker.ability_id)
+          if bad_abilities.any? { |a| attacker.hasActiveAbility?(a) }
             score += 60  # Give them our bad ability
           end
           
         when :ENTRAINMENT
           # Give target our ability - good if we have something bad
           bad_for_them = [:TRUANT, :SLOWSTART, :DEFEATIST]
-          if bad_for_them.include?(attacker.ability_id)
+          if bad_for_them.any? { |a| attacker.hasActiveAbility?(a) }
             score += 70
           end
           
@@ -2549,7 +2701,7 @@ module AdvancedAI
           # Suppress target's ability
           strong_abilities = [:HUGEPOWER, :INTIMIDATE, :LEVITATE, :MULTISCALE,
                              :MAGICGUARD, :WONDERGUARD]
-          if strong_abilities.include?(target.ability_id)
+          if strong_abilities.any? { |a| target.hasActiveAbility?(a) }
             score += 55
           end
         end
@@ -2561,12 +2713,12 @@ module AdvancedAI
       def self.check_slow_start(battle, attacker, target, skill_level = 100)
         return 0 unless skill_level >= 65
         
-        if target && target.ability_id == :SLOWSTART
+        if target && target.hasActiveAbility?(:SLOWSTART)
           # Target is weakened for 5 turns
           return 25  # Take advantage
         end
         
-        if attacker.ability_id == :SLOWSTART
+        if attacker.hasActiveAbility?(:SLOWSTART)
           # We're weakened - play defensively
           return -20
         end
@@ -2587,7 +2739,7 @@ module AdvancedAI
         partner = DoublesCoordination.find_partner(battle, attacker)
         return 0 unless partner && !partner.fainted?
         
-        if partner.ability_id == :POWERSPOT
+        if partner.hasActiveAbility?(:POWERSPOT)
           # Our moves deal 30% more damage!
           return 25
         end
@@ -2604,7 +2756,7 @@ module AdvancedAI
         partner = DoublesCoordination.find_partner(battle, attacker)
         return 0 unless partner && !partner.fainted?
         
-        if partner.ability_id == :BATTERY
+        if partner.hasActiveAbility?(:BATTERY)
           # Our special moves deal 30% more damage!
           return 25
         end
@@ -2621,13 +2773,13 @@ module AdvancedAI
         partner = DoublesCoordination.find_partner(battle, attacker)
         return 0 unless partner && !partner.fainted?
         
-        if partner.ability_id == :STEELYSPIRIT
+        if partner.hasActiveAbility?(:STEELYSPIRIT)
           # Our Steel moves deal 50% more damage!
           return 40
         end
         
         # Also check if WE have Steely Spirit (partner's Steel moves are boosted)
-        if attacker.ability_id == :STEELYSPIRIT
+        if attacker.hasActiveAbility?(:STEELYSPIRIT)
           # Partner benefits - consider this when protecting the ally
           return 10
         end
@@ -2641,7 +2793,7 @@ module AdvancedAI
         return 0 unless battle.pbSideSize(0) > 1
         
         # Only active in Sun
-        weather = battle.pbWeather
+        weather = AdvancedAI::Utilities.current_weather(battle)
         return 0 unless [:Sun, :HarshSun].include?(weather)
         
         partner = DoublesCoordination.find_partner(battle, attacker)
@@ -2650,7 +2802,7 @@ module AdvancedAI
         score = 0
         
         # If partner has Flower Gift, we get boosted
-        if partner.ability_id == :FLOWERGIFT
+        if partner.hasActiveAbility?(:FLOWERGIFT)
           if move && move.physicalMove?
             score += 35  # 50% Attack boost
           end
@@ -2659,7 +2811,7 @@ module AdvancedAI
         end
         
         # If WE have Flower Gift, partner benefits
-        if attacker.ability_id == :FLOWERGIFT
+        if attacker.hasActiveAbility?(:FLOWERGIFT)
           # Consider protecting partner / setting sun
           score += 10
         end
@@ -2695,16 +2847,16 @@ module AdvancedAI
         
         # Check if we have trapping moves/abilities
         partner = DoublesCoordination.find_partner(battle, attacker)
-        trapping_moves = [:MEANLOOK, :BLOCK, :SPIDERWEB, :SPIRITSHACKLE]
+        trapping_moves = [:MEANLOOK, :BLOCK, :SPIDERWEB, :SPIRITSHACKLE, :ANCHORSHOT, :JAWLOCK, :THOUSANDWAVES, :OCTOLOCK]
         trapping_abilities = [:SHADOWTAG, :ARENATRAP, :MAGNETPULL]
         
         has_trapping = false
         if partner
           has_trapping = partner.moves.any? { |m| m && trapping_moves.include?(m.id) }
-          has_trapping ||= trapping_abilities.include?(partner.ability_id)
+          has_trapping ||= trapping_abilities.any? { |a| partner.hasActiveAbility?(a) }
         end
         has_trapping ||= attacker.moves.any? { |m| m && trapping_moves.include?(m.id) }
-        has_trapping ||= trapping_abilities.include?(attacker.ability_id)
+        has_trapping ||= trapping_abilities.any? { |a| attacker.hasActiveAbility?(a) }
         
         if has_trapping
           score += 60
@@ -2713,10 +2865,10 @@ module AdvancedAI
         end
         
         # Check if we have more Pokemon in back
-        own_party = battle.pbParty(attacker.index)
+        own_party = battle.pbParty(attacker.index & 1)
         fainted_own = own_party.count { |p| p && p.fainted? }
         
-        opp_party = battle.pbParty(battle.allOtherSideBattlers(attacker.index).first&.index || 1)
+        opp_party = battle.pbParty(1 - (attacker.index & 1))
         fainted_opp = opp_party.count { |p| p && p.fainted? }
         
         if fainted_own < fainted_opp
@@ -2761,7 +2913,7 @@ module AdvancedAI
         end
         
         # Prankster Taunt is especially good
-        if attacker.ability_id == :PRANKSTER
+        if attacker.hasActiveAbility?(:PRANKSTER)
           score += 25
         end
         
@@ -2787,8 +2939,9 @@ module AdvancedAI
             end
             
             # Encore them into something we resist
-            if last_move.damagingMove?
-              type_mod = Effectiveness.calculate(last_move.type, attacker.types[0], attacker.types[1])
+            if last_move.power > 0
+              resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, last_move)
+              type_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
               if Effectiveness.not_very_effective?(type_mod)
                 score += 40
               elsif Effectiveness.ineffective?(type_mod)
@@ -2840,7 +2993,8 @@ module AdvancedAI
         # Partner has Grass/Electric moves
         if partner
           grass_elec = partner.moves.any? do |m|
-            m && m.damagingMove? && [:GRASS, :ELECTRIC].include?(m.type)
+            next false unless m && m.damagingMove?
+            [:GRASS, :ELECTRIC].include?(AdvancedAI::CombatUtilities.resolve_move_type(partner, m))
           end
           if grass_elec
             score += 50  # Make target weak to partner's moves
@@ -2879,8 +3033,9 @@ module AdvancedAI
             next unless opp_move && opp_move.damagingMove?
             
             # Check if partner is weak
-            partner_mod = Effectiveness.calculate(opp_move.type, partner.types[0], partner.types[1])
-            our_mod = Effectiveness.calculate(opp_move.type, attacker.types[0], attacker.types[1])
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(opp, opp_move)
+            partner_mod = Effectiveness.calculate(resolved_type, *partner.pbTypes(true))
+            our_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
             
             if Effectiveness.super_effective?(partner_mod)
               partner_in_danger = true
@@ -2921,7 +3076,7 @@ module AdvancedAI
         
         # Check if opponents are Flying/Levitate
         flying_opponents = opponents.count do |o|
-          o.pbHasType?(:FLYING) || o.ability_id == :LEVITATE || o.item_id == :AIRBALLOON
+          o.pbHasType?(:FLYING) || o.hasActiveAbility?(:LEVITATE) || o.item_id == :AIRBALLOON
         end
         
         score += ground_users * 25
@@ -2929,7 +3084,7 @@ module AdvancedAI
         
         # Gravity boosts accuracy - good with low accuracy moves
         low_accuracy_moves = allies.count do |a|
-          a.moves.any? { |m| m && m.damagingMove? && m.accuracy < 80 }
+          a.moves.any? { |m| m && m.damagingMove? && m.accuracy > 0 && m.accuracy < 80 }
         end
         score += low_accuracy_moves * 15
         
@@ -2981,7 +3136,7 @@ module AdvancedAI
         # For now, check if current opponents have Intimidate
         opponents = battle.allOtherSideBattlers(attacker.index).select { |b| b && !b.fainted? }
         
-        if opponents.any? { |o| o.ability_id == :INTIMIDATE }
+        if opponents.any? { |o| o.hasActiveAbility?(:INTIMIDATE) }
           # Intimidate already active
           if attacker.stages[:ATTACK] < 0
             return -15  # We're already debuffed
@@ -2999,20 +3154,21 @@ module AdvancedAI
         # Track if opponent has weather setters in back
         # For now, be aware of current weather abilities
         
-        current_weather = battle.field.weather
+        current_weather = AdvancedAI::Utilities.current_weather(battle)
         
         allies = battle.allSameSideBattlers(attacker.index).select { |b| b && !b.fainted? }
         
         # Check if our team benefits from current weather
         weather_synergy = {
-          :Sun => [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT],
-          :Rain => [:SWIFTSWIM, :RAINDISH, :DRYSKIN],
-          :Sandstorm => [:SANDRUSH, :SANDFORCE],
-          :Hail => [:SLUSHRUSH, :ICEBODY]
+          :Sun => [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT, :LEAFGUARD, :HARVEST, :PROTOSYNTHESIS],
+          :Rain => [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION],
+          :Sandstorm => [:SANDRUSH, :SANDFORCE, :SANDVEIL],
+          :Hail => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
+          :Snow => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE]
         }
         
         synergy_abilities = weather_synergy[current_weather] || []
-        if allies.any? { |a| synergy_abilities.include?(a.ability_id) }
+        if allies.any? { |a| synergy_abilities.any? { |ab| a.hasActiveAbility?(ab) } }
           return 25  # We benefit from current weather
         end
         
@@ -3024,7 +3180,7 @@ module AdvancedAI
         return 0 unless skill_level >= 70
         
         terrain_setters = {
-          :Electric => [:ELECTRICSURGE],
+          :Electric => [:ELECTRICSURGE, :HADRONENGINE],
           :Grassy => [:GRASSYSURGE],
           :Psychic => [:PSYCHICSURGE],
           :Misty => [:MISTYSURGE]
@@ -3038,7 +3194,7 @@ module AdvancedAI
         our_setter = false
         terrain_setters.each do |terrain, abilities|
           if current_terrain == terrain
-            if allies.any? { |a| abilities.include?(a.ability_id) }
+            if allies.any? { |a| abilities.any? { |ab| a.hasActiveAbility?(ab) } }
               our_setter = true
               break
             end
@@ -3049,7 +3205,8 @@ module AdvancedAI
       end
     end
     
-    private
+    # NOTE: `private` has no effect on self.-prefixed module methods in Ruby.
+    # These helpers are intentionally public so nested modules can call them.
     
     def self.find_partner(battle, attacker)
       battle.allSameSideBattlers(attacker.index).find { |b| b && b != attacker && !b.fainted? }
@@ -3347,8 +3504,8 @@ module AdvancedAI
     DoublesCoordination::ItemAwarenessDoubles.check_focus_sash(battle, attacker, target, move, skill_level)
   end
   
-  def self.evaluate_weakness_policy_abuse(battle, attacker, move, skill_level = 100)
-    DoublesCoordination::ItemAwarenessDoubles.evaluate_weakness_policy_abuse(battle, attacker, move, skill_level)
+  def self.evaluate_weakness_policy_abuse(battle, attacker, move, target = nil, skill_level = 100)
+    DoublesCoordination::ItemAwarenessDoubles.evaluate_weakness_policy_abuse(battle, attacker, move, target, skill_level)
   end
   
   def self.check_safety_goggles(battle, attacker, target, move, skill_level = 100)
@@ -3497,7 +3654,9 @@ class Battle::AI
     score += AdvancedAI.evaluate_quick_guard(@battle, user, move, skill)
     
     # Redirection (Follow Me, Rage Powder)
-    score += AdvancedAI.evaluate_follow_me(@battle, user, move, skill)
+    # evaluate_rage_powder delegates to evaluate_follow_me internally,
+    # so skip the direct call for RAGEPOWDER to avoid double-counting.
+    score += AdvancedAI.evaluate_follow_me(@battle, user, move, skill) unless move.id == :RAGEPOWDER
     score += AdvancedAI.evaluate_rage_powder(@battle, user, move, skill)
     
     # Fake Out & Protect
@@ -3573,8 +3732,16 @@ class Battle::AI
       score += AdvancedAI.check_ejection_items(@battle, target, skill)
       score += AdvancedAI.check_air_balloon(@battle, target, move, skill)
       score += AdvancedAI.check_healing_berries(@battle, target, skill)
+      # Gen 9 items
+      score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_covert_cloak(@battle, target, move, skill)
+      score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_clear_amulet(@battle, target, move, skill)
+      score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_mirror_herb(@battle, user, target, move, skill)
+      score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_ability_shield(@battle, target, move, skill)
     end
-    score += AdvancedAI.evaluate_weakness_policy_abuse(@battle, user, move, skill)
+    # Loaded Dice + Booster Energy check the attacker's item
+    score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_loaded_dice(@battle, user, move, skill)
+    score += AdvancedAI::DoublesCoordination::ItemAwarenessDoubles.check_booster_energy(@battle, user, skill)
+    score += AdvancedAI.evaluate_weakness_policy_abuse(@battle, user, move, target, skill)
     partner = @battle.allSameSideBattlers(user.index).find { |b| b && b != user && !b.fainted? }
     score += AdvancedAI.check_stat_trigger_items(@battle, user, partner, skill) if partner
     
@@ -3610,7 +3777,7 @@ class Battle::AI
     if target
       real_user = user.respond_to?(:battler) ? user.battler : user
       real_target = target.respond_to?(:battler) ? target.battler : target
-      score += DoublesCoordination.joint_target_bonus(@battle, real_user, move, real_target, skill) rescue 0
+      score += AdvancedAI::DoublesCoordination.joint_target_bonus(@battle, real_user, move, real_target, skill) rescue 0
     end
     
     return score
@@ -3637,7 +3804,7 @@ module AdvancedAI
       return 0 if enemies.length < 2  # Only one target anyway
 
       # Estimate our damage to this target
-      our_damage = CombatUtilities.estimate_damage(attacker, move, target, as_percent: true) rescue 0
+      our_damage = AdvancedAI::CombatUtilities.estimate_damage(attacker, move, target, as_percent: true) rescue 0
 
       # Check if partner is likely targeting the same foe
       partner_on_same = partner_targets?(battle, partner, target)
@@ -3662,10 +3829,10 @@ module AdvancedAI
 
       # If we have type advantage on this target but partner doesn't, focus here
       if move.damagingMove?
-        target_types = target.respond_to?(:pbTypes) ? target.pbTypes : [:NORMAL]
-        eff = 1.0
-        target_types.each { |t| eff *= Effectiveness.calculate_one(move.type, t) rescue 1.0 }
-        if eff > 1.0
+        target_types = target.respond_to?(:pbTypes) ? target.pbTypes(true) : [:NORMAL]
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+        eff = Effectiveness.calculate(resolved_type, *target_types)
+        if Effectiveness.super_effective?(eff)
           bonus += 10  # We have SE on this target
         end
       end

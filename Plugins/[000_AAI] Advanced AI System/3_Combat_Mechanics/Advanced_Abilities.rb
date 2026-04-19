@@ -13,6 +13,8 @@ module AdvancedAI
     :GRIMNEIGH     => 1.7,  # +1 SpAtk on KO (Dark)
     :ASONEGLASTRIER => 1.9, # Unnerve + Chilling Neigh (+1 Atk on KO)
     :ASONESPECTRIER => 1.9, # Unnerve + Grim Neigh (+1 SpAtk on KO)
+    :POWEROFALCHEMY => 1.5,  # Copies fainted ally's ability (could gain Moxie/Speed Boost)
+    :RECEIVER       => 1.5,  # Same as Power of Alchemy (doubles variant)
   }
   
   SPEED_SHIFT_ABILITIES = {
@@ -50,25 +52,28 @@ class Battle::AI
       next unless target && !target.fainted?
       
       # SNOWBALL ABILITIES: Don't feed kills to Moxie/Beast Boost users
-      if AdvancedAI::SNOWBALL_ABILITIES.key?(target.ability_id)
+      snowball_key = AdvancedAI::SNOWBALL_ABILITIES.keys.find { |a| target.hasActiveAbility?(a) }
+      if snowball_key
         score += evaluate_snowball_threat(user, move, target)
       end
       
       # REVERSE ABILITIES: Stat drops = stat boosts!
-      if AdvancedAI::REVERSE_ABILITIES.key?(target.ability_id)
+      reverse_key = AdvancedAI::REVERSE_ABILITIES.keys.find { |a| target.hasActiveAbility?(a) }
+      if reverse_key
         score += evaluate_reverse_ability(user, move, target)
       end
       
       # SPEED SHIFT: Unburden activation warning
-      if target.ability_id == :UNBURDEN && target.item
+      if target.hasActiveAbility?(:UNBURDEN) && target.item
         score += evaluate_unburden_threat(user, move, target)
       end
     end
     
-    # REGENERATOR: Bonus for forcing switch
-    if move.function_code == "SwitchOutUserStatusMove" # Whirlwind, Roar, Dragon Tail
-      @battle.allOtherSideBattlers(user.index).each do |target|
-        next unless target && target.ability_id == :REGENERATOR
+    # REGENERATOR: Penalty for forcing switch (they get free 33% heal)
+    if ["SwitchOutTargetStatusMove", "SwitchOutTargetDamagingMove"].include?(move.function_code)
+      # In doubles, only penalize once for the actual target (not all opponents)
+      target_battler = @battle.allOtherSideBattlers(user.index).first
+      if target_battler && target_battler.hasActiveAbility?(:REGENERATOR)
         score -= 15  # Penalty - they get free 33% heal
         AdvancedAI.log("  #{move.name} vs Regenerator: -15 (free heal on force-out)", "Abilities")
       end
@@ -82,7 +87,13 @@ class Battle::AI
     return 0 unless move.damagingMove?
     
     score = 0
-    ability_name = GameData::Ability.get(target.ability_id).name
+    ability_name = ""
+    AdvancedAI::SNOWBALL_ABILITIES.each do |ab, _|
+      if target.hasActiveAbility?(ab)
+        ability_name = GameData::Ability.get(ab).name
+        break
+      end
+    end
     
     # Check if this move would KO the target
     rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
@@ -113,20 +124,21 @@ class Battle::AI
   # Evaluate Contrary/Defiant/Competitive
   def evaluate_reverse_ability(user, move, target)
     score = 0
-    ability_id = target.ability_id
+    ability_id = AdvancedAI::REVERSE_ABILITIES.keys.find { |a| target.hasActiveAbility?(a) }
     
     case ability_id
     when :CONTRARY
       # DON'T use stat-lowering moves on Contrary users (they become buffs!)
-      if move.statusMove?
-        # Check if move lowers target's stats
-        stat_drops = [:LOWER_TARGET_ATK_1, :LOWER_TARGET_DEF_1, :LOWER_TARGET_SPATK_1, 
-                      :LOWER_TARGET_SPDEF_1, :LOWER_TARGET_SPEED_1, :LOWER_TARGET_ATK_2].include?(move.function_code.to_sym)
-        
-        if stat_drops
-          score -= 50  # NEVER do this
-          AdvancedAI.log("  #{move.name} vs Contrary: -50 (inverts to buff!)", "Abilities")
-        end
+      # This includes both status moves AND damaging moves with stat-drop effects
+      # (e.g., Snarl, Icy Wind, Moonblast, Psychic)
+      # Check if move lowers target's stats (function_code is a CamelCase string)
+      # Exclude LowerTargetHP (Endeavor) — it equalizes HP, doesn't lower stats
+      stat_drops = move.function_code.include?("LowerTarget") &&
+                   !move.function_code.include?("LowerTargetHP")
+      
+      if stat_drops
+        score -= 50  # NEVER do this
+        AdvancedAI.log("  #{move.name} vs Contrary: -50 (inverts to buff!)", "Abilities")
       end
       
       # Contrary users love Leaf Storm, Draco Meteor, Overheat (self-drops = boosts)
@@ -138,19 +150,17 @@ class Battle::AI
       
     when :DEFIANT, :COMPETITIVE
       # DON'T use Intimidate switch-ins or stat-lowering moves
-      if move.statusMove?
-        stat_drops = [:LOWER_TARGET_ATK_1, :LOWER_TARGET_SPEED_1].include?(move.function_code.to_sym)
-        if stat_drops
-          score -= 40  # They get +2 Atk/SpAtk!
-          AdvancedAI.log("  #{move.name} vs #{ability_id}: -40 (triggers +2)", "Abilities")
-        end
+      # Includes damaging moves with stat-drop effects (Snarl, Icy Wind, etc.)
+      # Exclude LowerTargetHP (Endeavor) — it equalizes HP, doesn't lower stats
+      stat_drops = move.function_code.include?("LowerTarget") &&
+                   !move.function_code.include?("LowerTargetHP")
+      if stat_drops
+        score -= 40  # They get +2 Atk/SpAtk!
+        AdvancedAI.log("  #{move.name} vs #{ability_id}: -40 (triggers +2)", "Abilities")
       end
       
-      # Intimidate on-switch warning (handled elsewhere but noted here)
-      if user.ability_id == :INTIMIDATE && move.function_code == "SwitchOutUserPassOnEffects"
-        score -= 30
-        AdvancedAI.log("  Intimidate vs #{ability_id}: -30 (triggers +2)", "Abilities")
-      end
+      # NOTE: Intimidate+Baton Pass interaction removed — Intimidate triggers on
+      # SWITCH-IN, not switch-out. The user's own Intimidate is irrelevant here.
     end
     
     return score
@@ -162,13 +172,13 @@ class Battle::AI
     
     score = 0
     
-    # If move removes item (Knock Off, Thief)
-    if [:KNOCK_OFF, :THIEF, :COVET].include?(move.function_code.to_sym)
+    # If move removes item (Knock Off, Thief, Covet)
+    if ["RemoveTargetItem", "UserTakesTargetItem"].include?(move.function_code)
       score -= 35  # DON'T trigger Unburden unless KO
       AdvancedAI.log("  #{move.name} vs Unburden: -35 (doubles speed!)", "Abilities")
       
       # Unless it KOs
-      rough_damage = CombatUtilities.estimate_damage(user.battler, move, target, as_percent: true)
+      rough_damage = AdvancedAI::CombatUtilities.estimate_damage(user, move, target, as_percent: true)
       if rough_damage >= target.hp.to_f / target.totalhp
         score += 50  # KO is fine
         AdvancedAI.log("  But KOs: +50 (worth it)", "Abilities")
@@ -191,7 +201,7 @@ class Battle::AI
   # ============================================================================
   
   def predict_regenerator_switch(target)
-    return false unless target.ability_id == :REGENERATOR
+    return false unless target.hasActiveAbility?(:REGENERATOR)
     
     hp_percent = target.hp.to_f / target.totalhp
     
@@ -209,13 +219,14 @@ class Battle::AI
   # ============================================================================
   
   def calculate_ability_threat_modifier(battler)
-    return 1.0 unless battler.ability_id
+    return 1.0 unless battler
     
     multiplier = 1.0
     
     # Snowball abilities
-    if AdvancedAI::SNOWBALL_ABILITIES.key?(battler.ability_id)
-      base = AdvancedAI::SNOWBALL_ABILITIES[battler.ability_id]
+    snowball_key = AdvancedAI::SNOWBALL_ABILITIES.keys.find { |a| battler.hasActiveAbility?(a) }
+    if snowball_key
+      base = AdvancedAI::SNOWBALL_ABILITIES[snowball_key]
       # Higher if already boosted
       if battler.stages[:ATTACK] >= 1 || battler.stages[:SPECIAL_ATTACK] >= 1
         multiplier = base * 1.3
@@ -225,25 +236,28 @@ class Battle::AI
     end
     
     # Speed shift abilities
-    if AdvancedAI::SPEED_SHIFT_ABILITIES.key?(battler.ability_id)
-      multiplier = AdvancedAI::SPEED_SHIFT_ABILITIES[battler.ability_id]
+    speed_key = AdvancedAI::SPEED_SHIFT_ABILITIES.keys.find { |a| battler.hasActiveAbility?(a) }
+    if speed_key
+      multiplier = AdvancedAI::SPEED_SHIFT_ABILITIES[speed_key]
       
       # Unburden: Only threat if item consumed
-      if battler.ability_id == :UNBURDEN && battler.item
+      if speed_key == :UNBURDEN && battler.item
         multiplier = 1.0  # Not active yet
-      elsif battler.ability_id == :UNBURDEN && !battler.item
+      elsif speed_key == :UNBURDEN && !battler.item
         multiplier = 2.5  # ACTIVE - extreme threat
       end
     end
     
     # Reverse abilities
-    if AdvancedAI::REVERSE_ABILITIES.key?(battler.ability_id)
-      multiplier = AdvancedAI::REVERSE_ABILITIES[battler.ability_id]
+    reverse_key = AdvancedAI::REVERSE_ABILITIES.keys.find { |a| battler.hasActiveAbility?(a) }
+    if reverse_key
+      multiplier = AdvancedAI::REVERSE_ABILITIES[reverse_key]
     end
     
     # Switch abilities
-    if AdvancedAI::SWITCH_ABILITIES.key?(battler.ability_id)
-      multiplier = AdvancedAI::SWITCH_ABILITIES[battler.ability_id]
+    switch_key = AdvancedAI::SWITCH_ABILITIES.keys.find { |a| battler.hasActiveAbility?(a) }
+    if switch_key
+      multiplier = AdvancedAI::SWITCH_ABILITIES[switch_key]
     end
     
     return multiplier

@@ -51,7 +51,7 @@ module AdvancedAI
       status_threats = opponents.count do |opp|
         opp.moves.any? { |m| m && [:THUNDERWAVE, :WILLOWISP, :TOXIC, :SPORE, :SLEEPPOWDER, :GLARE].include?(m.id) }
       end
-      if status_threats > 0 && !attacker.status
+      if status_threats > 0 && attacker.status == :NONE
         score += 25
       end
       
@@ -105,7 +105,7 @@ module AdvancedAI
       end
       
       # Infiltrator bypasses Sub
-      infiltrators = opponents.count { |opp| opp.ability_id == :INFILTRATOR }
+      infiltrators = opponents.count { |opp| opp.hasActiveAbility?(:INFILTRATOR) }
       if infiltrators > 0
         score -= 30
       end
@@ -131,7 +131,7 @@ module AdvancedAI
         score += 50
         
         # Skill Link guarantees 5 hits = maximum Sub breaking value
-        if attacker.ability_id == :SKILLLINK
+        if attacker.hasActiveAbility?(:SKILLLINK)
           score += 15  # 5 guaranteed hits
         end
         
@@ -141,7 +141,7 @@ module AdvancedAI
         end
         
         # Parent Bond hits twice (breaks Sub + damages)
-        if attacker.ability_id == :PARENTALBOND
+        if attacker.hasActiveAbility?(:PARENTALBOND)
           score += 20
         end
         
@@ -152,13 +152,18 @@ module AdvancedAI
       # Sound moves BYPASS Sub completely (no breaking needed!)
       sound_moves = [:HYPERVOICE, :BOOMBURST, :BUGBUZZ, :DISARMINGVOICE, :ROUND,
                      :SNARL, :UPROAR, :CHATTER, :OVERDRIVE, :RELICSONG, :SPARKLINGARIA,
-                     :ECHOEDVOICE, :GRASSYGLIDE, :CLANGINGSCALES, :CLANGOROUSSOUL,
-                     :PERISHSONG, :SING, :SUPERSONIC]
+                     :ECHOEDVOICE, :CLANGINGSCALES, :TORCHSONG, :SNORE,
+                     :PERISHSONG, :SING, :SUPERSONIC, :EERIESPELL,
+                     :ALLURINGVOICE, :PSYCHICNOISE, :SCREAM, :SHADOWPANIC,
+                     # Status/utility sound moves that also bypass Sub
+                     :GROWL, :CONFIDE, :NOBLEROAR, :PARTINGSHOT, :SCREECH,
+                     :METALSOUND, :GRASSWHISTLE, :HEALBELL, :HOWL, :ROAR,
+                     :CLANGOROUSSOUL]
       if sound_moves.include?(move.id)
         score += 60  # Bypasses Sub entirely!
         
         # Soundproof blocks this (opponent immune)
-        if target.ability_id == :SOUNDPROOF
+        if target.hasActiveAbility?(:SOUNDPROOF)
           score -= 100  # Move fails
         end
         
@@ -167,7 +172,7 @@ module AdvancedAI
       
       # === INFILTRATOR ABILITY ===
       # Infiltrator bypasses Sub, screens, etc.
-      if attacker.ability_id == :INFILTRATOR
+      if attacker.hasActiveAbility?(:INFILTRATOR)
         score += 55  # Bypasses Sub
         return score
       end
@@ -203,10 +208,8 @@ module AdvancedAI
       end
       
       # === FEINT ===
-      # Feint hits through Protect/Sub (but doesn't break it)
-      if move.id == :FEINT
-        score += 10  # Can chip Sub
-      end
+      # Feint bypasses Protect/Detect but NOT Substitute
+      # No special bonus vs Sub — treated as normal damaging move
       
       # === PRIORITIZE BREAKING SUB ===
       # If Sub is low HP, breaking it is high priority
@@ -237,7 +240,7 @@ module AdvancedAI
         
         # Only use if opponent will likely use status/switch
         will_attack = opponents.any? do |opp|
-          opp.moves.any? { |m| m && m.damagingMove? && m.priority >= 0 }
+          opp.moves.any? { |m| m && m.damagingMove? && m.priority > 0 }
         end
         
         if will_attack
@@ -314,13 +317,14 @@ module AdvancedAI
       return 0 unless last_move
       
       # Disable their only SE move against us
-      type_mod = Effectiveness.calculate(last_move.type, attacker.types[0], attacker.types[1])
+      resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, last_move)
+      type_mod = Effectiveness.calculate(resolved_type, *attacker.pbTypes(true))
       if Effectiveness.super_effective?(type_mod)
         score += 40  # Disable their best move vs us
       end
       
       # Disable high power move
-      if last_move.power >= 100
+      if AdvancedAI::CombatUtilities.resolve_move_power(last_move) >= 100
         score += 30
       end
       
@@ -352,7 +356,7 @@ module AdvancedAI
       end
       
       # Check if we have recipients who want the Sub
-      party = battle.pbParty(attacker.index)
+      party = battle.pbParty(attacker.index & 1)
       sweeper_waiting = party.any? do |pkmn|
         next false unless pkmn && !pkmn.fainted? && pkmn != attacker.pokemon
         # Frail sweepers love receiving Subs
@@ -378,7 +382,8 @@ module AdvancedAI
     
     def self.subs_remaining(battler)
       return 0 unless battler
-      (battler.hp / (battler.totalhp / 4)).floor
+      quarter = [battler.totalhp / 4, 1].max
+      (battler.hp / quarter).floor
     end
     
     # Calculate if we can make Sub + survive
@@ -409,36 +414,56 @@ module AdvancedAI
     private
     
     def self.get_stab_types(battler)
-      types = []
-      types << battler.types[0] if battler.types[0]
-      types << battler.types[1] if battler.types[1]
+      types = battler.respond_to?(:pbTypes) ? battler.pbTypes(true) : [battler.types[0], battler.types[1]]
       types.compact.uniq
     end
     
     def self.estimate_move_damage(attacker, target, move)
       return 0 unless move && move.damagingMove?
       
-      power = move.power
+      # Resolve power and type via shared helpers
+      power = AdvancedAI::CombatUtilities.resolve_move_power(move)
       return 0 if power == 0
+      
+      effective_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
       
       if move.physicalMove?
         atk = attacker.attack
+        # Huge Power / Pure Power (2x Attack for physical moves)
+        atk *= 2 if attacker.hasActiveAbility?(:HUGEPOWER) || attacker.hasActiveAbility?(:PUREPOWER)
         dfn = target.defense
       else
         atk = attacker.spatk
         dfn = target.spdef
       end
       
-      damage = ((2 * attacker.level / 5 + 2) * power * atk / dfn / 50 + 2)
+      damage = ((2 * attacker.level / 5.0 + 2) * power * atk / [dfn, 1].max / 50 + 2)
       
-      # STAB
-      if attacker.pbHasType?(move.type)
-        damage *= 1.5
+      # STAB (Adaptability: 2.0 instead of 1.5)
+      if attacker.pbHasType?(effective_type)
+        damage *= attacker.hasActiveAbility?(:ADAPTABILITY) ? 2.0 : 1.5
       end
       
-      # Type effectiveness
-      type_mod = Effectiveness.calculate(move.type, target.types[0], target.types[1])
-      damage *= type_mod / Effectiveness::NORMAL_EFFECTIVE
+      # Type effectiveness (Scrappy/Mind's Eye: Normal/Fighting hits Ghost)
+      type_mod = AdvancedAI::CombatUtilities.scrappy_effectiveness(effective_type, attacker, target.pbTypes(true))
+      damage *= type_mod / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
+      
+      # Field & context modifiers (weather, terrain, items, burn)
+      damage *= AdvancedAI::CombatUtilities.field_modifier(nil, attacker, effective_type, move, move.physicalMove?, target)
+      
+      # Defender modifiers (Assault Vest, Eviolite, weather defense)
+      damage *= AdvancedAI::CombatUtilities.defender_modifier(nil, target, move.physicalMove?)
+      
+      # Screen modifiers (Reflect / Light Screen / Aurora Veil)
+      damage *= AdvancedAI::CombatUtilities.screen_modifier(nil, attacker, target, move.physicalMove?)
+      
+      # Parental Bond (1.25x — two hits: 100% + 25%)
+      if !move.multiHitMove? && attacker.hasActiveAbility?(:PARENTALBOND)
+        damage *= 1.25
+      end
+      
+      # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, target, effective_type, move.physicalMove?, type_mod)
       
       damage.to_i
     end

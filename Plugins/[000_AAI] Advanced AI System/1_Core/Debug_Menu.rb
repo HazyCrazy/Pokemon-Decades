@@ -21,6 +21,7 @@ module AdvancedAI
           _INTL("Reset Learning System"),
           _INTL("Show AI Stats"),
           _INTL("Force AI Personality"),
+
           _INTL("Close Menu")
         ]
         
@@ -50,8 +51,9 @@ module AdvancedAI
     def self.get_current_skill(battle)
       # Get skill of first opponent
       battle.battlers.each do |b|
-        next unless b && !b.opposes?
-        return battle.pbGetOwnerFromBattlerIndex(b.index).skill_level rescue 50
+        next unless b && b.opposes?
+        owner = battle.pbGetOwnerFromBattlerIndex(b.index) rescue nil
+        return owner&.skill_level || 50
       end
       return 50
     end
@@ -62,11 +64,17 @@ module AdvancedAI
       params.setDefaultValue(get_current_skill(battle))
       new_skill = pbMessageChooseNumber(_INTL("Set AI skill level (0-100):"), params)
       
-      # Apply to all opponent battlers
+      # Apply to all opponent battlers via instance variable override
+      # (skill_level is read-only on Trainer, so store override)
       battle.battlers.each do |b|
-        next unless b && !b.opposes?
+        next unless b && b.opposes?
         owner = battle.pbGetOwnerFromBattlerIndex(b.index) rescue nil
-        owner.skill_level = new_skill if owner
+        next unless owner
+        if owner.respond_to?(:skill_level=)
+          owner.skill_level = new_skill
+        else
+          owner.instance_variable_set(:@aai_skill_override, new_skill)
+        end
       end
       
       pbMessage(_INTL("AI skill set to {1}!", new_skill))
@@ -75,18 +83,21 @@ module AdvancedAI
     
     def self.toggle_wild_ai
       current = AdvancedAI::ENABLE_WILD_POKEMON_AI
+      AdvancedAI.send(:remove_const, :ENABLE_WILD_POKEMON_AI)
       AdvancedAI.const_set(:ENABLE_WILD_POKEMON_AI, !current)
       pbMessage(_INTL("Wild Pokemon AI: {1}", !current ? "ON" : "OFF"))
     end
     
     def self.toggle_move_explanations
       current = AdvancedAI::SHOW_MOVE_EXPLANATIONS
+      AdvancedAI.send(:remove_const, :SHOW_MOVE_EXPLANATIONS)
       AdvancedAI.const_set(:SHOW_MOVE_EXPLANATIONS, !current)
       pbMessage(_INTL("Move Explanations: {1}", !current ? "ON" : "OFF"))
     end
     
     def self.toggle_logging
       current = AdvancedAI::DEBUG_MODE
+      AdvancedAI.send(:remove_const, :DEBUG_MODE)
       AdvancedAI.const_set(:DEBUG_MODE, !current)
       pbMessage(_INTL("Debug Logging: {1}", !current ? "ON" : "OFF"))
     end
@@ -138,7 +149,7 @@ module AdvancedAI
       personality = personalities[choice].downcase.to_sym
       
       battle.battlers.each do |b|
-        next unless b && !b.opposes?
+        next unless b && b.opposes?
         b.battle_personality = personality if b.respond_to?(:battle_personality=)
       end
       
@@ -183,7 +194,8 @@ module AdvancedAI
       
       # Type effectiveness
       if move.damagingMove?
-        type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+        type_mod = Effectiveness.calculate(resolved_type, *target.pbTypes(true))
         if Effectiveness.super_effective?(type_mod)
           reasons << "Super effective"
         elsif Effectiveness.not_very_effective?(type_mod)

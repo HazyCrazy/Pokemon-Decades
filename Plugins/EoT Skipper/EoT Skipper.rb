@@ -39,7 +39,7 @@ class Battle
   end
   
   def pbDisplay(msg, &block)
-    if pbSpeedyEndOfRound? || (@endOfRound && END_OF_TURN != 0)
+    if pbSpeedyEndOfRound?
       return if !EOR_NOTIFICATIONS
       @pendingEORMessages ||= Hash.new { |h, k| h[k] = [] }
       key = @currentEORBattler || :global

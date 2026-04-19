@@ -16,15 +16,19 @@ module AdvancedAI
       :BRAVEBIRD => { type: :dealt, percent: 0.33 },
       :DOUBLEEDGE => { type: :dealt, percent: 0.33 },
       :HEADSMASH => { type: :dealt, percent: 0.50 },
+      :LIGHTOFRUIN => { type: :dealt, percent: 0.50 },
       :VOLTTACKLE => { type: :dealt, percent: 0.33 },
       :WOODHAMMER => { type: :dealt, percent: 0.33 },
       :FLAREBLITZ => { type: :dealt, percent: 0.33 },
+      :WAVECRASH => { type: :dealt, percent: 0.33 },
       :WILDCHARGE => { type: :dealt, percent: 0.25 },
+      :HEADCHARGE => { type: :dealt, percent: 0.25 },
       :SUBMISSION => { type: :dealt, percent: 0.25 },
       :TAKEDOWN => { type: :dealt, percent: 0.25 },
-      
+
       # Drain HP moves (% of max HP)
       :BELLYDRUM => { type: :max_hp, percent: 0.50 },
+      :FILLETAWAY => { type: :max_hp, percent: 0.50 },
       :MINDBLOWN => { type: :max_hp, percent: 0.50 },
       :STEELBEAM => { type: :max_hp, percent: 0.50 },
       :CHLOROBLAST => { type: :max_hp, percent: 0.50 },
@@ -33,9 +37,9 @@ module AdvancedAI
     # Life Orb: 10% max HP per attack
     LIFE_ORB_RECOIL = 0.10
     
-    # Confusion self-hit: 40 BP typeless physical move, 50% chance
+    # Confusion self-hit: 40 BP typeless physical move, 33% chance (Gen 7+)
     CONFUSION_DAMAGE_BP = 40
-    CONFUSION_CHANCE = 0.50
+    CONFUSION_CHANCE = 0.33
     
     # Substitute: 25% max HP
     SUBSTITUTE_COST = 0.25
@@ -57,13 +61,16 @@ module AdvancedAI
         recoil_data = RECOIL_MOVES[move.id]
         
         if recoil_data[:type] == :dealt
-          # Recoil based on damage dealt (need damage_dealt parameter)
-          if damage_dealt && damage_dealt > 0
-            total_recoil += (damage_dealt * recoil_data[:percent]).to_i
-          else
-            # Estimate: assume 50% HP damage dealt as conservative guess
-            estimated_damage = user.totalhp * 0.5
-            total_recoil += (estimated_damage * recoil_data[:percent]).to_i
+          # Rock Head negates move-based recoil (Brave Bird, Head Smash, etc.)
+          unless user.hasActiveAbility?(:ROCKHEAD)
+            # Recoil based on damage dealt (need damage_dealt parameter)
+            if damage_dealt && damage_dealt > 0
+              total_recoil += (damage_dealt * recoil_data[:percent]).to_i
+            else
+              # Estimate: assume 50% HP damage dealt as conservative guess
+              estimated_damage = user.totalhp * 0.5
+              total_recoil += (estimated_damage * recoil_data[:percent]).to_i
+            end
           end
           
         elsif recoil_data[:type] == :max_hp
@@ -73,16 +80,23 @@ module AdvancedAI
       end
       
       # Life Orb recoil (only on damaging moves)
+      # Note: Rock Head does NOT negate Life Orb recoil; only Magic Guard does
+      # Sheer Force negates Life Orb recoil on moves where it activates (secondary effects)
       if move.damagingMove? && user.hasActiveItem?(:LIFEORB)
-        # Rock Head negates Life Orb recoil
-        unless user.hasActiveAbility?(:ROCKHEAD)
+        sheer_force_active = user.hasActiveAbility?(:SHEERFORCE) && move.addlEffect.to_i > 0
+        unless sheer_force_active
           total_recoil += (user.totalhp * LIFE_ORB_RECOIL).to_i
         end
       end
       
-      # Magic Guard negates all recoil/self-damage
+      # Magic Guard negates recoil/self-damage EXCEPT Belly Drum (direct HP cost)
       if user.hasActiveAbility?(:MAGICGUARD)
-        total_recoil = 0
+        if move.id == :BELLYDRUM
+          # Belly Drum HP cost is NOT prevented by Magic Guard
+          total_recoil = (user.totalhp * 0.50).to_i
+        else
+          total_recoil = 0
+        end
       end
       
       return total_recoil
@@ -131,7 +145,7 @@ module AdvancedAI
           if recoil_damage >= user.hp
             # Use team advantage calculator - get battle from battler
             battle = user.respond_to?(:battle) ? user.battle : user.instance_variable_get(:@battle)
-            opposing_idx = user.pbOpposingIndices[0] rescue 1
+            opposing_idx = battle ? (battle.pbOpposingIndices(user.index)[0] rescue ((user.index.even?) ? 1 : 0)) : ((user.index.even?) ? 1 : 0)
             advantage = AdvancedAI::CombatUtilities.team_advantage(
               battle, user.index, opposing_idx
             )
@@ -168,7 +182,7 @@ module AdvancedAI
       atk = user.attack
       defense = user.defense
       
-      base_damage = ((2.0 * level / 5 + 2) * CONFUSION_DAMAGE_BP * atk / defense / 50 + 2)
+      base_damage = ((2.0 * level / 5 + 2) * CONFUSION_DAMAGE_BP * atk / [defense, 1].max / 50 + 2)
       expected_damage = (base_damage * CONFUSION_CHANCE).to_i
       
       return expected_damage

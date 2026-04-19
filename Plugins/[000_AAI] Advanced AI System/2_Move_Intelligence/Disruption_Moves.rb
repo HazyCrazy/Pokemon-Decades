@@ -15,28 +15,27 @@ class Battle::AI
     return score unless user && move
     
     targets = @battle.allOtherSideBattlers(user.index)
-    targets.each do |target|
-      next unless target && !target.fainted?
-      
-      # TAUNT: Block setup/support moves
-      if move.id == :TAUNT
-        score += evaluate_taunt_value(user, target)
-      end
-      
-      # ENCORE: Lock into last move
-      if move.id == :ENCORE
-        score += evaluate_encore_value(user, target)
-      end
-      
-      # KNOCK OFF: Remove item + damage
-      if move.id == :KNOCKOFF
-        score += evaluate_knockoff_value(user, target)
-      end
-      
-      # TRICK/SWITCHEROO: Swap items
-      if [:TRICK, :SWITCHEROO].include?(move.id)
-        score += evaluate_trick_value(user, target)
-      end
+    viable_targets = targets.select { |t| t && !t.fainted? }
+    
+    # Single-target disruption: use best (max) target score, not sum
+    if move.id == :TAUNT
+      best = viable_targets.map { |t| evaluate_taunt_value(user, t) }.max || 0
+      score += best
+    end
+    
+    if move.id == :ENCORE
+      best = viable_targets.map { |t| evaluate_encore_value(user, t) }.max || 0
+      score += best
+    end
+    
+    if move.id == :KNOCKOFF
+      best = viable_targets.map { |t| evaluate_knockoff_value(user, t) }.max || 0
+      score += best
+    end
+    
+    if [:TRICK, :SWITCHEROO].include?(move.id)
+      best = viable_targets.map { |t| evaluate_trick_value(user, t) }.max || 0
+      score += best
     end
     
     return score
@@ -66,7 +65,9 @@ class Battle::AI
     
     # HIGH VALUE: Setup sweepers
     setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :QUIVERDANCE, :CALMMIND,
-                   :SHELLSMASH, :COIL, :BULKUP, :AGILITY, :ROCKPOLISH]
+                   :SHELLSMASH, :COIL, :BULKUP, :AGILITY, :ROCKPOLISH,
+                   :VICTORYDANCE, :FILLETAWAY, :TIDYUP, :SHIFTGEAR, :NORETREAT,
+                   :CLANGOROUSSOUL, :GEOMANCY]
     has_setup = target.moves.any? { |m| m && setup_moves.include?(m.id) }
     
     if has_setup
@@ -82,7 +83,8 @@ class Battle::AI
     
     # HIGH VALUE: Walls (recovery/support)
     recovery_moves = [:RECOVER, :ROOST, :SOFTBOILED, :WISH, :REST, :SLACKOFF, 
-                     :MOONLIGHT, :SYNTHESIS, :MORNINGSUN]
+                     :MOONLIGHT, :SYNTHESIS, :MORNINGSUN, :SHOREUP, :STRENGTHSAP,
+                     :LIFEDEW, :MILKDRINK, :HEALORDER, :JUNGLEHEALING, :LUNARBLESSING]
     has_recovery = target.moves.any? { |m| m && recovery_moves.include?(m.id) }
     
     if has_recovery
@@ -114,8 +116,10 @@ class Battle::AI
       AdvancedAI.log("  Taunt vs status: +20", "Disruption")
     end
     
-    # BONUS: If target is slow (can't switch out easily)
-    if user.battler.pbSpeed > target.pbSpeed * 1.3
+    # BONUS: If we move before target (can prevent their next move)
+    tr_active = (@battle.field.effects[PBEffects::TrickRoom] > 0 rescue false)
+    user_moves_first = tr_active ? (user.pbSpeed < target.pbSpeed * 1.3) : (user.pbSpeed > target.pbSpeed * 1.3)
+    if user_moves_first
       score += 15
       AdvancedAI.log("  Outspeeds: +15 (locks them in)", "Disruption")
     end
@@ -144,28 +148,53 @@ class Battle::AI
     last_move_data = GameData::Move.try_get(last_move)
     return -80 unless last_move_data
     
-    # HIGH VALUE: Lock into setup moves
-    setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :CALMMIND]
+    # HIGH VALUE: Lock into setup moves — but only if opponent is near max boosts
+    # Encoring an opponent at low boost stages lets them reach +6 and sweep!
+    setup_moves = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :SHELLSMASH, :CALMMIND,
+                   :QUIVERDANCE, :BULKUP, :AGILITY, :ROCKPOLISH, :COIL,
+                   :VICTORYDANCE, :FILLETAWAY, :TIDYUP, :SHIFTGEAR, :NORETREAT,
+                   :CLANGOROUSSOUL, :GEOMANCY]
     if setup_moves.include?(last_move)
-      score += 80
-      AdvancedAI.log("  Encore setup move: +80 (waste turns)", "Disruption")
+      # Check opponent's current boost stages to decide if Encore is actually good
+      opp_atk_stage  = (target.stages[:ATTACK] || 0)
+      opp_spatk_stage = (target.stages[:SPECIAL_ATTACK] || 0)
+      opp_max_off_stage = [opp_atk_stage, opp_spatk_stage].max
       
-      # Even better if we can set up while they're locked
-      if user.moves.any? { |m| m && setup_moves.include?(m.id) }
-        score += 30
-        AdvancedAI.log("  Can counter-setup: +30", "Disruption")
+      if opp_max_off_stage >= 5
+        # Near max boosts — Encore truly wastes turns
+        score += 80
+        AdvancedAI.log("  Encore setup move at max boosts: +80 (waste turns)", "Disruption")
+      elsif opp_max_off_stage >= 3
+        # Already dangerous — Encore is risky, small bonus only if we can phaze
+        if user.moves.any? { |m| m && [:ROAR, :WHIRLWIND, :DRAGONTAIL, :CIRCLETHROW, :HAZE].include?(m.id) }
+          score += 50
+          AdvancedAI.log("  Encore setup at +#{opp_max_off_stage} with phaze: +50", "Disruption")
+        else
+          score -= 20
+          AdvancedAI.log("  Encore setup at +#{opp_max_off_stage} no phaze: -20 (lets them max out!)", "Disruption")
+        end
+      else
+        # Low boosts (+0 to +2) — Encore lets them boost to dangerous levels!
+        score -= 40
+        AdvancedAI.log("  Encore setup at +#{opp_max_off_stage}: -40 (lets them sweep!)", "Disruption")
       end
-    end
-    
-    # HIGH VALUE: Lock into non-damaging moves
-    if last_move_data.statusMove?
+      
+      # Counter-setup bonus only if opponent is near max (won't benefit from more boosts)
+      if opp_max_off_stage >= 5 && user.moves.any? { |m| m && setup_moves.include?(m.id) }
+        score += 30
+        AdvancedAI.log("  Can counter-setup while they're capped: +30", "Disruption")
+      end
+    # HIGH VALUE: Lock into non-damaging moves (only if not already counted as setup)
+    elsif last_move_data.power == 0  # status move (GameData::Move has no .statusMove?)
       score += 50
       AdvancedAI.log("  Encore status move: +50 (free turns)", "Disruption")
     end
     
     # MEDIUM VALUE: Lock into resisted moves
-    if last_move_data.damagingMove?
-      type_mod = Effectiveness.calculate(last_move_data.type, *user.battler.pbTypes(true))
+    # Resolve type for -ate abilities (target is the one who used the move)
+    encore_resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, last_move_data)
+    if last_move_data.power > 0  # damaging move (GameData::Move has no .damagingMove?)
+      type_mod = Effectiveness.calculate(encore_resolved_type, *user.pbTypes(true))
       if Effectiveness.not_very_effective?(type_mod)
         score += 40
         AdvancedAI.log("  Encore resisted move: +40", "Disruption")
@@ -183,8 +212,8 @@ class Battle::AI
     end
     
     # PENALTY: Don't Encore strong super-effective moves
-    if last_move_data.damagingMove?
-      type_mod = Effectiveness.calculate(last_move_data.type, *user.battler.pbTypes(true))
+    if last_move_data.power > 0  # damaging move — use .power > 0 (GameData::Move has no .damagingMove?)
+      type_mod = Effectiveness.calculate(encore_resolved_type, *user.pbTypes(true))
       if Effectiveness.super_effective?(type_mod)
         score -= 40
         AdvancedAI.log("  Encore SE move: -40 (bad idea)", "Disruption")
@@ -212,9 +241,15 @@ class Battle::AI
     # Check if item is unlosable (Mega Stones, Z-Crystals, etc.)
     # Knock Off CANNOT remove unlosable items!
     item_data = GameData::Item.get(item_id)
-    if item_data.unlosable?
-      AdvancedAI.log("  Knock Off: Item is unlosable (no bonus)", "Disruption")
-      return 0  # Base damage only, can't remove item
+    if item_data.unlosable?(target.species, target.ability)
+      AdvancedAI.log("  Knock Off: Item is unlosable (damage boost only)", "Disruption")
+      return 20  # 1.5x damage boost still applies
+    end
+    
+    # Sticky Hold prevents item removal (but 1.5x damage still applies)
+    if target.hasActiveAbility?(:STICKYHOLD)
+      AdvancedAI.log("  Knock Off: Sticky Hold (damage boost only)", "Disruption")
+      return 20  # 1.5x damage boost still applies
     end
     
     # CRITICAL VALUE: Remove mega stones (prevents Mega Evolution)
@@ -246,8 +281,8 @@ class Battle::AI
       
       # Heavy-Duty Boots if hazards are up
       if item_id == :HEAVYDUTYBOOTS
-        our_side = @battle.pbOwnedByPlayer?(user.index) ? @battle.sides[0] : @battle.sides[1]
-        if our_side.effects[PBEffects::StealthRock] || our_side.effects[PBEffects::Spikes] > 0
+        target_side = target.pbOwnSide
+        if target_side.effects[PBEffects::StealthRock] || target_side.effects[PBEffects::Spikes] > 0
           score += 40
           AdvancedAI.log("  Boots removal (hazards up): +40", "Disruption")
         end
@@ -292,11 +327,18 @@ class Battle::AI
   
   def evaluate_trick_value(user, target)
     score = 0
-    user_item = user.battler.item_id
+    user_item = user.item_id
     target_item = target.item_id
     
-    # Can't Trick if either has no item
-    return -80 unless user_item || target_item
+    # Can't Trick if the USER has no item to give
+    # (Target having no item is fine — we give ours away without receiving one)
+    return -80 unless user_item
+    
+    # Sticky Hold blocks Trick/Switcheroo entirely
+    if target.hasActiveAbility?(:STICKYHOLD)
+      AdvancedAI.log("  Trick blocked: Sticky Hold", "Disruption")
+      return -90
+    end
     
     # BEST CASE: Give Choice item to status-move user
     choice_items = [:CHOICEBAND, :CHOICESCARF, :CHOICESPECS]
@@ -313,7 +355,9 @@ class Battle::AI
       end
       
       # BONUS: Lock walls into defensive moves
-      recovery_moves = [:RECOVER, :ROOST, :WISH, :REST, :PROTECT]
+      recovery_moves = [:RECOVER, :ROOST, :SOFTBOILED, :WISH, :REST, :SLACKOFF,
+                       :MOONLIGHT, :SYNTHESIS, :MORNINGSUN, :SHOREUP, :STRENGTHSAP,
+                       :LIFEDEW, :MILKDRINK, :HEALORDER, :JUNGLEHEALING, :LUNARBLESSING]
       if target.moves.any? { |m| m && recovery_moves.include?(m.id) }
         score += 40
         AdvancedAI.log("  Trick vs wall: +40 (limits options)", "Disruption")

@@ -34,6 +34,11 @@ module AdvancedAI
     def self.calculate_effective_speed(battle, battler)
       return 0 unless battler && !battler.fainted?
       
+      # Party Pokemon objects lack stages/effects/hasActiveAbility? — return raw speed
+      unless battler.respond_to?(:stages)
+        return battler.speed
+      end
+      
       # Base speed with stages
       speed = battler.speed
       
@@ -47,39 +52,44 @@ module AdvancedAI
       
       # Paralysis halves speed (Gen 7+: 50%)
       if battler.status == :PARALYSIS
-        speed /= 2 unless battler.ability_id == :QUICKFEET
+        speed /= 2 unless battler.hasActiveAbility?(:QUICKFEET)
       end
       
       # Abilities
-      case battler.ability_id
-      when :SWIFTSWIM
-        if battle.field.weather == :Rain
-          speed *= 2
+      effective_weather = AdvancedAI::Utilities.current_weather(battle)
+      if battler.hasActiveAbility?(:SWIFTSWIM) && effective_weather == :Rain
+        speed *= 2
+      elsif battler.hasActiveAbility?(:CHLOROPHYLL) && effective_weather == :Sun
+        speed *= 2
+      elsif battler.hasActiveAbility?(:SANDRUSH) && effective_weather == :Sandstorm
+        speed *= 2
+      elsif battler.hasActiveAbility?(:SLUSHRUSH) && [:Hail, :Snow].include?(effective_weather)
+        speed *= 2
+      elsif battler.hasActiveAbility?(:SURGESURFER)
+        terrain = battle.field.terrain rescue nil
+        speed *= 2 if terrain == :Electric
+      elsif battler.hasActiveAbility?(:PROTOSYNTHESIS) && effective_weather == :Sun
+        # Protosynthesis boosts highest stat by 1.3x (1.5x for Speed)
+        # In Sun, check if Speed is the highest base stat
+        base = (GameData::Species.get(battler.species).base_stats rescue nil)
+        if base && base[:SPEED] >= [base[:ATTACK], base[:DEFENSE], base[:SPECIAL_ATTACK], base[:SPECIAL_DEFENSE]].max
+          speed = (speed * 1.5).to_i
         end
-      when :CHLOROPHYLL
-        if battle.field.weather == :Sun
-          speed *= 2
+      elsif battler.hasActiveAbility?(:QUARKDRIVE)
+        terrain = battle.field.terrain rescue nil
+        if terrain == :Electric
+          # Same logic as Protosynthesis — 1.5x if Speed is highest stat
+          base = (GameData::Species.get(battler.species).base_stats rescue nil)
+          if base && base[:SPEED] >= [base[:ATTACK], base[:DEFENSE], base[:SPECIAL_ATTACK], base[:SPECIAL_DEFENSE]].max
+            speed = (speed * 1.5).to_i
+          end
         end
-      when :SANDRUSH
-        if battle.field.weather == :Sandstorm
-          speed *= 2
-        end
-      when :SLUSHRUSH
-        if [:Hail, :Snow].include?(battle.field.weather)
-          speed *= 2
-        end
-      when :UNBURDEN
-        if battler.effects[PBEffects::Unburden] # Item consumed
-          speed *= 2
-        end
-      when :QUICKFEET
-        if battler.status != :NONE
-          speed = speed * 1.5
-        end
-      when :SLOWSTART
-        if battler.effects[PBEffects::SlowStart] && battler.effects[PBEffects::SlowStart] > 0
-          speed /= 2
-        end
+      elsif battler.hasActiveAbility?(:UNBURDEN) && battler.effects[PBEffects::Unburden]
+        speed *= 2
+      elsif battler.hasActiveAbility?(:QUICKFEET) && battler.status != :NONE
+        speed = speed * 1.5
+      elsif battler.hasActiveAbility?(:SLOWSTART) && battler.effects[PBEffects::SlowStart] && battler.effects[PBEffects::SlowStart] > 0
+        speed /= 2
       end
       
       # Items
@@ -98,7 +108,7 @@ module AdvancedAI
       end
       
       # Tailwind
-      own_side = battle.sides[battler.index % 2]
+      own_side = battle.sides[battler.index & 1]
       if own_side.effects[PBEffects::Tailwind] && own_side.effects[PBEffects::Tailwind] > 0
         speed *= 2
       end
@@ -155,8 +165,10 @@ module AdvancedAI
     end
     
     def self.in_same_speed_tier?(battler1, battler2)
-      tier1 = get_speed_tier(battler1.speed)
-      tier2 = get_speed_tier(battler2.speed)
+      base1 = (battler1.respond_to?(:pokemon) ? battler1.pokemon.baseStats[:SPEED] : battler1.baseStats[:SPEED]) rescue battler1.speed
+      base2 = (battler2.respond_to?(:pokemon) ? battler2.pokemon.baseStats[:SPEED] : battler2.baseStats[:SPEED]) rescue battler2.speed
+      tier1 = get_speed_tier(base1)
+      tier2 = get_speed_tier(base2)
       tier1 == tier2
     end
     
@@ -169,22 +181,21 @@ module AdvancedAI
       return false unless skill_level >= 70
       return false unless battler
       
-      # Already revealed item
-      return battler.item_id == :CHOICESCARF if battler.item_id
-      
-      # Common Scarf users
-      if COMMON_SCARF_USERS.include?(battler.species)
-        return true
+      # If item is already revealed, check directly
+      if battler.item_id
+        return battler.item_id == :CHOICESCARF
       end
       
-      # Moved first when they shouldn't have?
-      # This would require tracking turn order history
-      # For now, use species heuristics
+      # Item unknown — use heuristics
       
-      # Check if they're Choice-locked (same move twice)
+      # Common Scarf users by species
+      return true if COMMON_SCARF_USERS.include?(battler.species)
+      
+      # Check if they're Choice-locked (ChoiceBand effect stores the locked move ID)
+      # A Choice-locked mon in the medium-fast speed range is likely Scarf
       if battler.effects[PBEffects::ChoiceBand]
-        # They're Choice locked - could be Scarf
-        return true if battler.speed >= 80 && battler.speed <= 100
+        base_speed = battler.pokemon.baseStats[:SPEED] rescue battler.speed
+        return true if base_speed >= 80 && base_speed <= 100
       end
       
       false
@@ -231,7 +242,7 @@ module AdvancedAI
         score += evaluate_tailwind_value(battle, attacker, skill_level)
       when :TRICKROOM
         score += evaluate_trick_room_value(battle, attacker, skill_level)
-      when :ICYWIND, :ELECTROWEB, :BULLDOZE, :ROCKTOMB, :LOWSWEEP
+      when :ICYWIND, :ELECTROWEB, :BULLDOZE, :ROCKTOMB, :LOWSWEEP, :GLACIATE, :MUDSHOT, :DRUMBEATING
         score += evaluate_speed_drop_attack(battle, attacker, move, skill_level)
       when :STICKYWEB
         score += evaluate_sticky_web(battle, attacker, skill_level)
@@ -247,7 +258,7 @@ module AdvancedAI
       return 0 if skill_level < 65
       
       score = 0
-      own_side = battle.sides[attacker.index % 2]
+      own_side = battle.sides[attacker.index & 1]
       
       # Already have Tailwind?
       if own_side.effects[PBEffects::Tailwind] && own_side.effects[PBEffects::Tailwind] > 0
@@ -362,7 +373,7 @@ module AdvancedAI
       return 0 if skill_level < 65
       
       score = 0
-      opp_side = battle.sides[(attacker.index + 1) % 2]
+      opp_side = battle.sides[1 - (attacker.index & 1)]  # opponent side (safe in doubles)
       
       # Already up?
       if opp_side.effects[PBEffects::StickyWeb]
@@ -370,7 +381,7 @@ module AdvancedAI
       end
       
       # Check opponent's back line speeds
-      opp_party = battle.pbParty((attacker.index + 1) % 2)
+      opp_party = battle.pbParty(1 - (attacker.index & 1))
       grounded_fast = opp_party.count do |pkmn|
         next false unless pkmn && !pkmn.fainted?
         # Fast and grounded (pkmn is party Pokemon, use hasType? and ability_id)
@@ -412,7 +423,8 @@ module AdvancedAI
         next unless move && move.damagingMove?
         
         # Estimate if this could OHKO
-        type_mod = Effectiveness.calculate(move.type, user.types[0], user.types[1])
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(target, move)
+        type_mod = Effectiveness.calculate(resolved_type, *user.pbTypes(true))
         if Effectiveness.super_effective?(type_mod)
           # They have a SE move - speed tie is risky
           score -= 15
@@ -442,7 +454,8 @@ module AdvancedAI
   end
   
   def self.get_speed_tier(battler)
-    SpeedTiers.get_speed_tier(battler.speed)
+    base_speed = (battler.respond_to?(:pokemon) ? battler.pokemon.baseStats[:SPEED] : battler.baseStats[:SPEED]) rescue battler.speed
+    SpeedTiers.get_speed_tier(base_speed)
   end
   
   def self.suspect_choice_scarf?(battle, battler, skill_level = 100)

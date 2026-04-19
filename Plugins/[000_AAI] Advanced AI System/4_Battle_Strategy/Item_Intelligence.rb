@@ -86,8 +86,8 @@ module AdvancedAI
     ]
     
     MEMORY_ITEMS = [
-      :BURNINGMEMORY, :WATERMEMORY, :GRASSYMEMORY, :ELECTRICMEMORY,
-      :ICYMEMORY, :FIGHTINGMEMORY, :POISONMEMORY, :GROUNDMEMORY,
+      :FIREMEMORY, :WATERMEMORY, :GRASSMEMORY, :ELECTRICMEMORY,
+      :ICEMEMORY, :FIGHTINGMEMORY, :POISONMEMORY, :GROUNDMEMORY,
       :FLYINGMEMORY, :PSYCHICMEMORY, :BUGMEMORY, :ROCKMEMORY,
       :GHOSTMEMORY, :DRAGONMEMORY, :DARKMEMORY, :STEELMEMORY,
       :FAIRYMEMORY,
@@ -154,7 +154,7 @@ module AdvancedAI
       :HEATROCK     => { weather: :sun, turns: 3 },
       :DAMPROCK     => { weather: :rain, turns: 3 },
       :SMOOTHROCK   => { weather: :sandstorm, turns: 3 },
-      :ICYROCK      => { weather: :hail, turns: 3 },
+      :ICYROCK      => { weather: :snow, turns: 3 },
       :TERRAINEXTENDER => { terrain: :any, turns: 3 },
     }
     
@@ -204,10 +204,10 @@ module AdvancedAI
       if CHOICE_ITEMS.key?(item)
         data = CHOICE_ITEMS[item]
         if (data[:stat] == :attack && move.physicalMove?) ||
-           (data[:stat] == :spatk && move.specialMove?) ||
-           (data[:stat] == :speed)
+           (data[:stat] == :spatk && move.specialMove?)
           multiplier *= data[:multiplier]
         end
+        # Choice Scarf boosts Speed, not damage — no multiplier here
       end
       
       # Life Orb
@@ -222,7 +222,8 @@ module AdvancedAI
       
       # Type-Boost Items
       if TYPE_BOOST_ITEMS.key?(item)
-        multiplier *= 1.2 if move.type == TYPE_BOOST_ITEMS[item]
+        resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(battler, move)
+        multiplier *= 1.2 if resolved_type == TYPE_BOOST_ITEMS[item]
       end
       
       # Muscle Band / Wise Glasses
@@ -247,7 +248,7 @@ module AdvancedAI
       # Thick Club (Cubone/Marowak-exclusive: 2x Atk)
       if item == :THICKCLUB && move.physicalMove?
         species = battler.respond_to?(:species) ? battler.species : nil
-        if [:CUBONE, :MAROWAK, :MAROWAKALOHA].include?(species)
+        if [:CUBONE, :MAROWAK, :MAROWAKALOLA].include?(species)
           multiplier *= 2.0  # Doubles Attack stat
         end
       end
@@ -260,6 +261,7 @@ module AdvancedAI
       return false if !battler
       return false if !battler.item_id
       return false if !choice_item?(battler.item_id)
+      return false unless battler.respond_to?(:effects)
       
       # Check if already used a move
       return battler.effects[PBEffects::ChoiceBand] if defined?(PBEffects::ChoiceBand)
@@ -269,6 +271,9 @@ module AdvancedAI
     # Checks if Assault Vest blocks Status Moves
     def self.blocks_status_moves?(battler)
       return false if !battler
+      if battler.respond_to?(:hasActiveItem?)
+        return battler.hasActiveItem?(:ASSAULTVEST)
+      end
       return battler.item_id == :ASSAULTVEST
     end
     
@@ -430,7 +435,8 @@ module AdvancedAI
     # Calculate gem bonus for move scoring
     def self.gem_damage_bonus(battler, move)
       return 0 unless battler && move && move.damagingMove?
-      return 0 unless has_type_gem?(battler, move.type)
+      resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(battler, move)
+      return 0 unless has_type_gem?(battler, resolved_type)
       # Gem gives 1.3x, translated to ~ +15 score points
       15
     end
@@ -550,9 +556,11 @@ class Battle::AI
       end
       
       # If target blocks status, penalize status moves
+      # NOTE: Assault Vest blocks the HOLDER from using status moves, not incoming status
+      # So we check the USER (AI's own Pokemon), not the target
       real_target = target.respond_to?(:battler) ? target.battler : target
-      if move.category == :Status && AdvancedAI.blocks_status_moves?(real_target)
-        score -= 30
+      if move.statusMove? && AdvancedAI.blocks_status_moves?(real_user)
+        score -= 200  # Assault Vest completely prevents status moves — they WILL fail
       end
     end
 
@@ -581,11 +589,12 @@ class Battle::AI
     if move.respond_to?(:id)
       weather_moves = {
         :RAINDANCE  => "rain",  :SUNNYDAY    => "sun",
-        :SANDSTORM  => "sand",  :HAIL        => "hail",
-        :SNOWSCAPE  => "hail",
+        :SANDSTORM  => "sandstorm",  :HAIL    => "snow",
+        :SNOWSCAPE  => "snow",
+        :CHILLYRECEPTION => "snow",  # Gen 9: sets Snow + switches
       }
       wtype = weather_moves[move.id]
-      if wtype && ItemIntelligence.extends_weather?(real_user, wtype)
+      if wtype && AdvancedAI::ItemIntelligence.extends_weather?(real_user, wtype)
         score += 10  # 8 turns instead of 5 is significant
       end
     end
@@ -615,7 +624,8 @@ class Battle::AI
         end
         # Also penalize Mummy/Lingering Aroma contact (won't change ability)
         if move.respond_to?(:contactMove?) && move.contactMove?
-          if [:MUMMY, :LINGERINGAROMA, :WANDERINGSPIRIT].include?(real_target.ability_id)
+          if real_target.respond_to?(:hasActiveAbility?) &&
+             [:MUMMY, :LINGERINGAROMA, :WANDERINGSPIRIT].any? { |a| real_target.hasActiveAbility?(a) }
             # Actually Ability Shield protects the HOLDER, so if target has it,
             # they keep their ability. No penalty needed for us attacking.
           end
@@ -625,7 +635,7 @@ class Battle::AI
       if user_item == :ABILITYSHIELD
         critical_abilities = [:HUGEPOWER, :PUREPOWER, :SPEEDBOOST, :MAGICGUARD,
                               :WONDERGUARD, :PROTEAN, :LIBERO, :UNBURDEN, :POISONHEAL]
-        if critical_abilities.include?(real_user.ability_id)
+        if real_user.respond_to?(:hasActiveAbility?) && critical_abilities.any? { |a| real_user.hasActiveAbility?(a) }
           # We benefit from protected ability — slightly prefer staying in
           score += 5 if move.damagingMove?
         end
@@ -634,15 +644,19 @@ class Battle::AI
 
     #--- White Herb: negate self-stat-drops ---
     stat_drop_moves = [:SHELLSMASH, :CLOSECOMBAT, :SUPERPOWER, :OVERHEAT,
-                       :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST, :VCREATE]
+                       :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST,
+                       :VCREATE, :HEADLONGRUSH, :ARMORCANNON, :DRAGONASCENT,
+                       :HAMMERARM, :ICEHAMMER, :CLANGINGSCALES, :HYPERSPACEFURY,
+                       :MAKEITRAIN, :SPINOUT]
     if user_item == :WHITEHERB && stat_drop_moves.include?(move.id)
       bonus = move.id == :SHELLSMASH ? 35 : 15
       score += bonus
     end
 
     #--- Booster Energy: Paradox ability activation ---
-    user_ability = real_user.respond_to?(:ability_id) ? real_user.ability_id : nil
-    if user_item == :BOOSTERENERGY && [:PROTOSYNTHESIS, :QUARKDRIVE].include?(user_ability)
+    if user_item == :BOOSTERENERGY &&
+       real_user.respond_to?(:hasActiveAbility?) &&
+       [:PROTOSYNTHESIS, :QUARKDRIVE].any? { |a| real_user.hasActiveAbility?(a) }
       # Stat already boosted — favor moves that match the boosted offensive stat
       if move.damagingMove?
         atk = real_user.respond_to?(:attack) ? real_user.attack : 0

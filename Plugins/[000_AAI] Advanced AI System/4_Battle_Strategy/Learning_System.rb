@@ -23,6 +23,7 @@ module AdvancedAI
     def self.record_action(battler, action_type, action_data = nil)
       return unless battler
       return unless AdvancedAI.tier_feature(100, :learn_patterns)  # Only if enabled
+      return unless @current_battle  # Guard: reset_learning_data must be called first
       
       opponent_id = get_opponent_id(battler)
       @opponent_patterns[opponent_id] ||= {
@@ -69,6 +70,7 @@ module AdvancedAI
     def self.predict_protect_usage(battler, skill_level = 100)
       return 0.0 unless skill_level >= 85
       return 0.0 unless AdvancedAI.tier_feature(skill_level, :learn_patterns)
+      return 0.0 unless @current_battle
       
       opponent_id = get_opponent_id(battler)
       pattern = @opponent_patterns[opponent_id]
@@ -100,7 +102,7 @@ module AdvancedAI
       end
       
       # General frequency analysis
-      total_turns = current_turn
+      total_turns = [current_turn, 1].max
       protect_frequency = protect_history.length.to_f / total_turns
       
       # If they Protect more than 30% of turns
@@ -189,7 +191,7 @@ module AdvancedAI
         if move.damagingMove?
           bonus -= 30  # Don't waste attack on Protect
         elsif [:TOXIC, :WILLOWISP, :THUNDERWAVE].include?(move.id)
-          bonus += 25  # Status moves work through Protect prediction
+          bonus -= 20  # Status moves are also blocked by Protect
         end
       end
       
@@ -200,7 +202,7 @@ module AdvancedAI
           bonus += 35  # Free hazard setup
         elsif is_setup_move?(move.id)
           bonus += 30  # Free setup turn
-        elsif move.damagingMove? && move.power >= 90
+        elsif move.damagingMove? && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 90
           bonus -= 10  # Don't waste strong move on switch
         end
       end
@@ -232,7 +234,9 @@ module AdvancedAI
     def self.is_setup_move?(move_id)
       setup_moves = [
         :SWORDSDANCE, :DRAGONDANCE, :NASTYPLOT, :CALMMIND, :QUIVERDANCE,
-        :BULKUP, :CURSE, :AGILITY, :ROCKPOLISH, :SHELLSMASH, :GEOMANCY
+        :BULKUP, :CURSE, :AGILITY, :ROCKPOLISH, :SHELLSMASH, :GEOMANCY,
+        :COIL, :GROWTH, :WORKUP, :VICTORYDANCE, :FILLETAWAY, :TIDYUP,
+        :SHIFTGEAR, :NORETREAT, :CLANGOROUSSOUL
       ]
       setup_moves.include?(move_id)
     end

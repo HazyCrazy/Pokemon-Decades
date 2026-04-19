@@ -17,20 +17,46 @@ module AdvancedAI
       :lead        => "Hazard setter, Fast Taunt user"
     }
     
-    # Detects primary and secondary role
+    # Safely read a stat from either a Battle::Battler/AIBattler or a party Pokemon.
+    # Battle::Battler has .attack, .spatk etc. as calculated stats.
+    # Party Pokemon objects expose stats via .baseStats[:ATTACK] etc.
+    def self.safe_stat(pkmn, stat)
+      return 0 unless pkmn
+      if pkmn.respond_to?(:stages)  # It's a battler in battle
+        case stat
+        when :hp    then pkmn.totalhp
+        when :attack  then pkmn.attack
+        when :defense  then pkmn.defense
+        when :spatk   then pkmn.spatk
+        when :spdef   then pkmn.spdef
+        when :speed   then pkmn.speed
+        end
+      else  # It's a party Pokemon object
+        case stat
+        when :hp    then pkmn.totalhp || (pkmn.baseStats[:HP] rescue 45)
+        when :attack  then pkmn.baseStats[:ATTACK] rescue 0
+        when :defense  then pkmn.baseStats[:DEFENSE] rescue 0
+        when :spatk   then pkmn.baseStats[:SPECIAL_ATTACK] rescue 0
+        when :spdef   then pkmn.baseStats[:SPECIAL_DEFENSE] rescue 0
+        when :speed   then pkmn.baseStats[:SPEED] rescue 0
+        end
+      end || 0
+    end
+    
+    # Detect Roles for a battler (returns [primary_role, secondary_role])
     def self.detect_roles(battler)
       return [:balanced, nil] unless battler
       
       roles = []
       
-      # Analyze stats
+      # Analyze stats — works on both Battle::Battler and party Pokemon
       stats = {
-        hp: battler.totalhp,
-        attack: battler.attack,
-        defense: battler.defense,
-        spatk: battler.spatk,
-        spdef: battler.spdef,
-        speed: battler.speed
+        hp:      safe_stat(battler, :hp),
+        attack:  safe_stat(battler, :attack),
+        defense: safe_stat(battler, :defense),
+        spatk:   safe_stat(battler, :spatk),
+        spdef:   safe_stat(battler, :spdef),
+        speed:   safe_stat(battler, :speed)
       }
       
       # === SWEEPER ===
@@ -100,7 +126,8 @@ module AdvancedAI
       
       candidates = party.select do |pkmn|
         next false if !pkmn || pkmn.fainted? || pkmn.egg?
-        next false if battle.pbFindBattler(pkmn.index, side_index)
+        party_index = party.index(pkmn)
+        next false if party_index && battle.pbFindBattler(party_index, side_index)
         has_role?(pkmn, role)
       end
       
@@ -161,7 +188,8 @@ module AdvancedAI
     def self.has_pivot_moves?(battler)
       return false unless battler.moves
       
-      pivot_moves = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS]
+      pivot_moves = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS,
+                     :SHEDTAIL, :CHILLYRECEPTION]
       battler.moves.any? { |m| m && pivot_moves.include?(m.id) }
     end
     
@@ -175,7 +203,7 @@ module AdvancedAI
       ]
       
       has_lead_move = battler.moves.any? { |m| m && lead_moves.include?(m.id) }
-      fast_taunt = battler.speed >= 90 && battler.moves.any? { |m| m && m.id == :TAUNT }
+      fast_taunt = safe_stat(battler, :speed) >= 90 && battler.moves.any? { |m| m && m.id == :TAUNT }
       
       has_lead_move || fast_taunt
     end
@@ -186,30 +214,29 @@ module AdvancedAI
       
       case role
       when :sweeper
-        score += pkmn.speed / 2
-        score += [pkmn.attack, pkmn.spatk].max / 2
+        score += safe_stat(pkmn, :speed) / 2
+        score += [safe_stat(pkmn, :attack), safe_stat(pkmn, :spatk)].max / 2
       when :wall, :stall
-        score += pkmn.totalhp / 3
-        score += pkmn.defense / 3
-        score += pkmn.spdef / 3
+        score += safe_stat(pkmn, :hp) / 3
+        score += safe_stat(pkmn, :defense) / 3
+        score += safe_stat(pkmn, :spdef) / 3
       when :wallbreaker
-        score += [pkmn.attack, pkmn.spatk].max
+        score += [safe_stat(pkmn, :attack), safe_stat(pkmn, :spatk)].max
       when :tank
-        score += pkmn.totalhp / 2
-        score += [pkmn.attack, pkmn.spatk].max / 2
+        score += safe_stat(pkmn, :hp) / 2
+        score += [safe_stat(pkmn, :attack), safe_stat(pkmn, :spatk)].max / 2
       when :support
         score += 100 if has_support_moves?(pkmn)
-        score += pkmn.totalhp / 4  # Bulk helps supports survive to do their job
+        score += safe_stat(pkmn, :hp) / 4  # Bulk helps supports survive
       when :pivot
         score += 100 if has_pivot_moves?(pkmn)
-        score += pkmn.speed / 3    # Speed matters for momentum
+        score += safe_stat(pkmn, :speed) / 3
       when :lead
         score += 100 if has_lead_moves?(pkmn)
-        score += pkmn.speed / 3    # Fast leads set up first
+        score += safe_stat(pkmn, :speed) / 3
       when :balanced
-        # Balanced mons are generalists — rate by overall stat total
-        score += (pkmn.totalhp + pkmn.attack + pkmn.defense +
-                  pkmn.spatk + pkmn.spdef + pkmn.speed) / 10
+        score += (safe_stat(pkmn, :hp) + safe_stat(pkmn, :attack) + safe_stat(pkmn, :defense) +
+                  safe_stat(pkmn, :spatk) + safe_stat(pkmn, :spdef) + safe_stat(pkmn, :speed)) / 10
       end
       
       score

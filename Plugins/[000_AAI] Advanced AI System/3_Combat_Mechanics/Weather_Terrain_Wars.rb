@@ -38,6 +38,7 @@ class Battle::AI
       :SANDSTORM   => :Sandstorm,
       :HAIL        => :Hail,
       :SNOWSCAPE   => :Snow,
+      :CHILLYRECEPTION => :Snow,  # Gen 9: sets Snow + switches
     }
     return weather_moves.key?(move.id)
   end
@@ -51,10 +52,17 @@ class Battle::AI
       :SANDSTORM => :Sandstorm,
       :HAIL      => :Hail,
       :SNOWSCAPE => :Snow,
+      :CHILLYRECEPTION => :Snow,  # Gen 9: sets Snow + switches
     }
     
     new_weather = weather_map[move.id]
-    current_weather = @battle.field.weather
+    current_weather = AdvancedAI::Utilities.current_weather(@battle)
+    
+    # Weather-setting moves fail under extreme weather (Primal/Delta)
+    if [:HarshSun, :HeavyRain, :StrongWinds].include?(current_weather)
+      AdvancedAI.log("  #{move.name}: -100 (fails under extreme weather)", "Weather")
+      return -100
+    end
     
     # Don't set weather that's already active
     if current_weather == new_weather
@@ -63,7 +71,7 @@ class Battle::AI
     end
     
     # COUNTER-WEATHER: Remove opponent's beneficial weather
-    if weather_benefits_opponent?(current_weather)
+    if weather_benefits_opponent?(current_weather, user)
       score += 50
       AdvancedAI.log("  #{move.name}: +50 (counter opponent weather)", "Weather")
     end
@@ -78,11 +86,15 @@ class Battle::AI
       AdvancedAI.log("  #{move.name}: #{our_benefit} (hurts us!)", "Weather")
     end
     
-    # DEFENSIVE WEATHER: Hurt opponent
-    opponent_penalty = calculate_opponent_weather_penalty(new_weather)
-    if opponent_penalty > 0
+    # DEFENSIVE WEATHER: Hurt opponent (negative = benefits them)
+    opponent_penalty = calculate_opponent_weather_penalty(new_weather, user)
+    if opponent_penalty != 0
       score += opponent_penalty
-      AdvancedAI.log("  #{move.name}: +#{opponent_penalty} (hurts opponent)", "Weather")
+      if opponent_penalty > 0
+        AdvancedAI.log("  #{move.name}: +#{opponent_penalty} (hurts opponent)", "Weather")
+      else
+        AdvancedAI.log("  #{move.name}: #{opponent_penalty} (benefits opponent!)", "Weather")
+      end
     end
     
     # ABILITY SYNERGY
@@ -94,22 +106,24 @@ class Battle::AI
     return score
   end
   
-  def weather_benefits_opponent?(weather)
+  def weather_benefits_opponent?(weather, user = nil)
     return false if weather == :None
     
-    @battle.allOtherSideBattlers(0).each do |battler|
+    opp_side = user ? @battle.allOtherSideBattlers(user.index) :
+                      @battle.allSameSideBattlers(0)
+    opp_side.each do |battler|
       next unless battler && !battler.fainted?
       
       # Check if opponent has weather-boosting ability
       weather_abilities = {
-        :Sun       => [:SOLARPOWER, :CHLOROPHYLL, :FLOWERGIFT],
-        :Rain      => [:SWIFTSWIM, :RAINDISH, :DRYSKIN],
+        :Sun       => [:SOLARPOWER, :CHLOROPHYLL, :FLOWERGIFT, :LEAFGUARD, :HARVEST, :PROTOSYNTHESIS],
+        :Rain      => [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION],
         :Sandstorm => [:SANDFORCE, :SANDRUSH, :SANDVEIL],
-        :Hail      => [:ICEBODY, :SNOWCLOAK, :SLUSHRUSH],
-        :Snow      => [:SLUSHRUSH, :ICEBODY],
+        :Hail      => [:ICEBODY, :SNOWCLOAK, :SLUSHRUSH, :ICEFACE],
+        :Snow      => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
       }
       
-      if weather_abilities[weather]&.include?(battler.ability_id)
+      if weather_abilities[weather]&.any? { |a| battler.hasActiveAbility?(a) }
         return true
       end
       
@@ -123,7 +137,7 @@ class Battle::AI
         when :Rain
           return true if [:WATER].include?(m.type)
         when :Sandstorm
-          return true if [:ROCK, :GROUND, :STEEL].include?(battler.pbTypes(true).first)
+          return true if battler.pbTypes(true).any? { |t| [:ROCK, :GROUND, :STEEL].include?(t) }
         end
       end
     end
@@ -143,8 +157,9 @@ class Battle::AI
       benefit += fire_moves * 20
       benefit -= water_moves * 15
       
-      # Chlorophyll, Solar Power
-      if [:CHLOROPHYLL, :SOLARPOWER].include?(user.battler.ability_id)
+      # Chlorophyll, Solar Power, Flower Gift, Leaf Guard, Harvest, Protosynthesis
+      if user.hasActiveAbility?(:CHLOROPHYLL) || user.hasActiveAbility?(:SOLARPOWER) || user.hasActiveAbility?(:FLOWERGIFT) ||
+         user.hasActiveAbility?(:LEAFGUARD) || user.hasActiveAbility?(:HARVEST) || user.hasActiveAbility?(:PROTOSYNTHESIS)
         benefit += 30
       end
       
@@ -156,51 +171,88 @@ class Battle::AI
       benefit += water_moves * 20
       benefit -= fire_moves * 15
       
-      # Swift Swim, Rain Dish
-      if [:SWIFTSWIM, :RAINDISH].include?(user.battler.ability_id)
+      # Swift Swim, Rain Dish, Dry Skin, Hydration
+      if user.hasActiveAbility?(:SWIFTSWIM) || user.hasActiveAbility?(:RAINDISH) || user.hasActiveAbility?(:DRYSKIN) ||
+         user.hasActiveAbility?(:HYDRATION)
         benefit += 30
       end
       
     when :Sandstorm
       # Rock types get SpDef boost
-      if user.battler.pbTypes(true).include?(:ROCK)
+      if user.pbTypes(true).include?(:ROCK)
         benefit += 25
       end
       
-      # Sand Rush, Sand Force
-      if [:SANDRUSH, :SANDFORCE].include?(user.battler.ability_id)
+      # Sand Rush, Sand Force, Sand Veil
+      if user.hasActiveAbility?(:SANDRUSH) || user.hasActiveAbility?(:SANDFORCE) || user.hasActiveAbility?(:SANDVEIL)
         benefit += 30
       end
       
-      # Damage to non-immunetypes (not us)
-      unless [:ROCK, :GROUND, :STEEL].include?(user.battler.pbTypes(true).first)
+      # Damage to non-immune types (not us)
+      unless user.pbTypes(true).any? { |t| [:ROCK, :GROUND, :STEEL].include?(t) }
         benefit -= 10  # Hurts us
       end
       
-    when :Snow, :Hail
-      # Ice types get Def boost (Snow only)
-      if weather == :Snow && user.battler.pbTypes(true).include?(:ICE)
+    when :Hail
+      # Ice types get Def boost (Snow mechanics, HAIL_WEATHER_TYPE > 0)
+      if defined?(Settings::HAIL_WEATHER_TYPE) && Settings::HAIL_WEATHER_TYPE > 0 &&
+         user.pbTypes(true).include?(:ICE)
         benefit += 25
       end
       
-      # Slush Rush
-      if user.battler.ability_id == :SLUSHRUSH
+      # Slush Rush, Ice Body, Snow Cloak
+      if user.hasActiveAbility?(:SLUSHRUSH)
         benefit += 30
       end
+      if user.hasActiveAbility?(:ICEBODY)
+        benefit += 15
+      end
+      if user.hasActiveAbility?(:SNOWCLOAK)
+        benefit += 20
+      end
+      if user.hasActiveAbility?(:ICEFACE)
+        benefit += 20  # Ice Face regenerates in Hail
+      end
       
-      # Hail damage (not Snow)
-      if weather == :Hail && !user.battler.pbTypes(true).include?(:ICE)
+      # Classic Hail damage (only when HAIL_WEATHER_TYPE == 0)
+      if (!defined?(Settings::HAIL_WEATHER_TYPE) || Settings::HAIL_WEATHER_TYPE == 0) &&
+         !user.pbTypes(true).include?(:ICE)
         benefit -= 10
+      end
+      
+    when :Snow
+      # Gen 9 Snow: Ice types get x1.5 Defense boost (no chip damage)
+      if user.pbTypes(true).include?(:ICE)
+        benefit += 30  # Defense boost
+      end
+      
+      # Slush Rush doubles Snow-user's speed
+      if user.hasActiveAbility?(:SLUSHRUSH)
+        benefit += 35
+      end
+      
+      # Ice Body recovers HP in Snow
+      if user.hasActiveAbility?(:ICEBODY)
+        benefit += 15
+      end
+      # Snow Cloak evasion boost
+      if user.hasActiveAbility?(:SNOWCLOAK)
+        benefit += 20
+      end
+      if user.hasActiveAbility?(:ICEFACE)
+        benefit += 20  # Ice Face regenerates in Snow
       end
     end
     
     return benefit
   end
   
-  def calculate_opponent_weather_penalty(weather)
+  def calculate_opponent_weather_penalty(weather, user = nil)
     penalty = 0
     
-    @battle.allOtherSideBattlers(0).each do |battler|
+    opp_side = user ? @battle.allOtherSideBattlers(user.index) :
+                      @battle.allSameSideBattlers(0)
+    opp_side.each do |battler|
       next unless battler && !battler.fainted?
       
       case weather
@@ -216,14 +268,23 @@ class Battle::AI
         
       when :Sandstorm
         # Chip damage to non-immune
-        unless [:ROCK, :GROUND, :STEEL].include?(battler.pbTypes(true).first)
+        unless battler.pbTypes(true).any? { |t| [:ROCK, :GROUND, :STEEL].include?(t) }
           penalty += 15
         end
         
       when :Hail
-        # Chip damage to non-Ice
-        unless battler.pbTypes(true).include?(:ICE)
-          penalty += 15
+        # Chip damage to non-Ice (only when classic Hail, not Snow)
+        if !defined?(Settings::HAIL_WEATHER_TYPE) || Settings::HAIL_WEATHER_TYPE == 0
+          unless battler.pbTypes(true).include?(:ICE)
+            penalty += 15
+          end
+        end
+        
+      when :Snow
+        # Gen 9 Snow: no chip damage, but Ice-type Defense boost helps our opponents if they're Ice
+        # Penalty for opposing Ice-type teams
+        if battler.pbTypes(true).include?(:ICE)
+          penalty -= 10  # Negative penalty (benefit to them), reduce our score
         end
       end
     end
@@ -232,17 +293,15 @@ class Battle::AI
   end
   
   def weather_activates_ability?(user, weather)
-    ability_id = user.battler.ability_id
-    
     activations = {
-      :Sun       => [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT],
-      :Rain      => [:SWIFTSWIM, :RAINDISH, :DRYSKIN],
+      :Sun       => [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT, :LEAFGUARD, :HARVEST, :PROTOSYNTHESIS],
+      :Rain      => [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION],
       :Sandstorm => [:SANDRUSH, :SANDFORCE, :SANDVEIL],
-      :Hail      => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK],
-      :Snow      => [:SLUSHRUSH, :ICEBODY],
+      :Hail      => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
+      :Snow      => [:SLUSHRUSH, :ICEBODY, :SNOWCLOAK, :ICEFACE],
     }
     
-    return activations[weather]&.include?(ability_id) || false
+    return activations[weather]&.any? { |a| user.hasActiveAbility?(a) } || false
   end
   
   # ============================================================================
@@ -279,7 +338,7 @@ class Battle::AI
     end
     
     # COUNTER-TERRAIN: Remove opponent's beneficial terrain
-    if terrain_benefits_opponent?(current_terrain)
+    if terrain_benefits_opponent?(current_terrain, user)
       score += 45
       AdvancedAI.log("  #{move.name}: +45 (counter opponent terrain)", "Terrain")
     end
@@ -332,22 +391,27 @@ class Battle::AI
     return score
   end
   
-  def terrain_benefits_opponent?(terrain)
+  def terrain_benefits_opponent?(terrain, user = nil)
     return false if terrain == :None
     
-    @battle.allOtherSideBattlers(0).each do |battler|
+    opp_side = user ? @battle.allOtherSideBattlers(user.index) :
+                      @battle.allSameSideBattlers(0)
+    opp_side.each do |battler|
       next unless battler && !battler.fainted?
       
       case terrain
       when :Electric
+        return true if battler.hasActiveAbility?(:SURGESURFER) || battler.hasActiveAbility?(:QUARKDRIVE) || battler.hasActiveAbility?(:HADRONENGINE)
         return true if battler.moves.any? { |m| m && m.type == :ELECTRIC }
       when :Grassy
+        return true if battler.hasActiveAbility?(:GRASSPELT)
         return true if battler.moves.any? { |m| m && m.type == :GRASS }
       when :Psychic
         return true if battler.moves.any? { |m| m && m.type == :PSYCHIC }
       when :Misty
-        # Hurts Dragon users
-        return true if battler.moves.any? { |m| m && m.type == :DRAGON }
+        # Misty Terrain halves Dragon damage and prevents status — it hurts
+        # Dragon users rather than helping them, so it does NOT benefit the
+        # opponent if they have Dragon moves. No positive benefit check here.
       end
     end
     
@@ -355,16 +419,14 @@ class Battle::AI
   end
   
   def terrain_activates_ability?(user, terrain)
-    ability_id = user.battler.ability_id
-    
     activations = {
-      :Electric => [:SURGESURFER],
+      :Electric => [:SURGESURFER, :QUARKDRIVE, :HADRONENGINE],
       :Grassy   => [:GRASSPELT],
       :Psychic  => [],  # No specific ability activations
       :Misty    => [],
     }
     
-    return activations[terrain]&.include?(ability_id) || false
+    return activations[terrain]&.any? { |a| user.hasActiveAbility?(a) } || false
   end
 end
 

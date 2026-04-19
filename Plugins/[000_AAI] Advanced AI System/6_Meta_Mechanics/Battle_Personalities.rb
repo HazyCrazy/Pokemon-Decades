@@ -27,7 +27,7 @@ module AdvancedAI
           healing_penalty: -30,      # -30 for Healing (defensive = bad)
           priority_bonus: 15,        # +15 for Priority Moves
           ohko_bonus: 40,            # +40 for OHKO Moves (risky but strong)
-          coverage_bonus: 10,        # +10 for super-effective coverage moves
+          coverage_bonus: 10,        # +10 for super-effective coverage moves (applied in move scoring)
           switch_threshold: 55,      # Higher threshold = fewer Switches
         }
       },
@@ -83,10 +83,11 @@ module AdvancedAI
     def self.detect_personality(battle, trainer_index)
       return :balanced if !battle
       
-      party = battle.pbParty(trainer_index)
+      party = battle.pbParty(trainer_index & 1)  # trainer_index may be battler slot, & 1 gives side
       return :balanced if !party || party.empty?
       
-      # Count Pokemon Roles
+      # Count Pokemon Roles via stat heuristics
+      # detect_roles requires an active Battler; during personality detection party Pokemon are used
       sweeper_count = 0
       wall_count = 0
       stall_count = 0
@@ -99,18 +100,30 @@ module AdvancedAI
       party.each do |pokemon|
         next if !pokemon || pokemon.egg?
         
-        roles = AdvancedAI.detect_roles(pokemon)
-        next if !roles
+        # Heuristic role detection from base stats (no active battler needed)
+        base = GameData::Species.get(pokemon.species).base_stats
+        spd = base[:SPEED]
+        atk = [base[:ATTACK], base[:SPECIAL_ATTACK]].max
+        def_ = [base[:DEFENSE], base[:SPECIAL_DEFENSE]].min
+        hp = base[:HP]
+        has_recovery  = pokemon.moves.any? { |m| m && [:RECOVER,:ROOST,:MOONLIGHT,:SYNTHESIS,:MORNINGSUN,:SLACKOFF,:SOFTBOILED,:MILKDRINK,:WISH,:HEALORDER,:SHOREUP,:STRENGTHSAP,:REST,:LIFEDEW,:JUNGLEHEALING,:LUNARBLESSING].include?(m.id) }
+        has_setup     = pokemon.moves.any? { |m| m && AdvancedAI.setup_move?(m.id) }
+        has_u_turn    = pokemon.moves.any? { |m| m && [:UTURN,:VOLTSWITCH,:FLIPTURN,:PARTINGSHOT,:TELEPORT,:BATONPASS,:SHEDTAIL,:CHILLYRECEPTION].include?(m.id) }
+        has_hazards   = pokemon.moves.any? { |m| m && [:STEALTHROCK,:SPIKES,:TOXICSPIKES,:STICKYWEB].include?(m.id) }
+        is_fast       = spd >= 100
+        is_bulky      = hp >= 80 && def_ >= 80
+        is_offensive  = atk >= 110
+        is_very_off   = atk >= 130
         
-        sweeper_count += 1 if roles.include?(:sweeper)
-        wall_count += 1 if roles.include?(:wall) || roles.include?(:stall)
-        stall_count += 1 if roles.include?(:stall)
-        tank_count += 1 if roles.include?(:tank)
-        support_count += 1 if roles.include?(:support)
-        pivot_count += 1 if roles.include?(:pivot)
-        wallbreaker_count += 1 if roles.include?(:wallbreaker)
-        lead_count += 1 if roles.include?(:lead)
-      end
+        sweeper_count      += 1 if is_fast && is_offensive && !is_bulky
+        wallbreaker_count  += 1 if is_very_off
+        wall_count         += 1 if is_bulky && has_recovery
+        stall_count        += 1 if is_bulky && has_recovery && !is_offensive
+        tank_count         += 1 if is_bulky && !has_recovery
+        support_count      += 1 if has_hazards || pokemon.moves.any? { |m| m && [:SPORE,:WILLOWISP,:THUNDERWAVE,:TOXIC].include?(m.id) }
+        pivot_count        += 1 if has_u_turn
+        lead_count         += 1 if has_hazards && is_fast
+      end  # party.each
       
       total = party.count { |p| p && !p.egg? }
       
@@ -118,8 +131,9 @@ module AdvancedAI
       if sweeper_count >= total * 0.6
         setup_count = 0
         party.each do |pokemon|
-          next if !pokemon
+          next if !pokemon || pokemon.egg?
           pokemon.moves.each do |move|
+            next if !move
             setup_count += 1 if AdvancedAI.setup_move?(move.id)
           end
         end
@@ -153,10 +167,6 @@ module AdvancedAI
     # Apply Personality Modifiers
     #===========================================================================
     
-    #===========================================================================
-    # Apply Personality Modifiers
-    #===========================================================================
-    
     # Applies Personality to Move Score
     def self.apply_personality(score, move, personality)
       return score if !move || !personality
@@ -166,7 +176,7 @@ module AdvancedAI
       return score if !modifiers
       
       # Damage Moves
-      if move.category == :Physical || move.category == :Special
+      if move.damagingMove?
         score += modifiers[:damage_bonus] if modifiers[:damage_bonus]
       end
       
@@ -183,7 +193,7 @@ module AdvancedAI
       end
       
       # Status Moves
-      if move.category == :Status && !AdvancedAI.setup_move?(move.id) && !AdvancedAI.healing_move?(move.id)
+      if move.statusMove? && !AdvancedAI.setup_move?(move.id) && !AdvancedAI.healing_move?(move.id)
         score += modifiers[:status_bonus] if modifiers[:status_bonus]
       end
       

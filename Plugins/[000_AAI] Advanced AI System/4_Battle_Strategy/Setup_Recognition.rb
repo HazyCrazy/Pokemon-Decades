@@ -76,7 +76,7 @@ module AdvancedAI
     # Checks if Pokemon recently used setup move
     def self.recently_setup?(battle, battler)
       return false if !battle || !battler
-      return false if !AdvancedAI.feature_enabled?(:setup, battle.pbSideSize(0))
+      return false if !AdvancedAI.feature_enabled?(:setup, 100)
       
       # Check Move Memory
       memory = AdvancedAI.get_memory(battle, battler)
@@ -131,7 +131,7 @@ module AdvancedAI
         coverage_count = 0
         known_moves[:moves].each do |move_id|
           move = GameData::Move.try_get(move_id)
-          next if !move || move.category == :Status
+          next if !move || move.power == 0  # skip status moves (GameData::Move has no .statusMove?)
           coverage_count += 1
         end
         
@@ -144,8 +144,8 @@ module AdvancedAI
         threat += 1.5  # Defender weak = higher danger
       end
       
-      # Team has no counters left?
-      remaining_pokemon = battle.pbAbleNonActiveCount(defender.index)
+      # Team has no counters left? Use side index (defender.index & 1 gives 0 or 1)
+      remaining_pokemon = battle.pbAbleNonActiveCount(defender.index & 1)
       if remaining_pokemon <= 1
         threat += 2.0  # Last Pokemon = critical
       end
@@ -207,7 +207,8 @@ module AdvancedAI
           score += count_setup_stages(target) * 10
           
           # Type effectiveness (handle both Battler and Pokemon)
-          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
+          effectiveness = AdvancedAI::Utilities.type_mod(resolved_type, target)
           score += 20 if Effectiveness.super_effective?(effectiveness)
           score -= 20 if Effectiveness.not_very_effective?(effectiveness)
           
@@ -286,7 +287,7 @@ module AdvancedAI
       setup_move_count = 0
       
       battle.pbParty(side_index).each do |pokemon|
-        next if !pokemon || pokemon.egg?
+        next if !pokemon || pokemon.egg? || pokemon.fainted?
         
         pokemon.moves.each do |move|
           baton_pass_count += 1 if move.id == :BATONPASS
@@ -304,7 +305,7 @@ module AdvancedAI
       return 0 if !battle || !user
       
       # Check if Opponent Team uses Baton Pass
-      opponent_side = (user.index % 2 == 0) ? 1 : 0
+      opponent_side = 1 - (user.index & 1)  # true opponent side (safe in doubles)
       return 0 if !baton_pass_chain?(battle, opponent_side)
       
       # Higher Priority for Phaze Moves

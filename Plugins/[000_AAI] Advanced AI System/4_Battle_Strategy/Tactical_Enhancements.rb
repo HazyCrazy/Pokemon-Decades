@@ -30,10 +30,9 @@ module AdvancedAI
 
     def self.magic_bounce_penalty(target, move)
       return 0 unless target && move
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless MAGIC_BOUNCE_ABILITIES.include?(target_ability)
+      return 0 unless target.respond_to?(:hasActiveAbility?) && MAGIC_BOUNCE_ABILITIES.any? { |a| target.hasActiveAbility?(a) }
       return 0 unless move.statusMove? || MAGIC_BOUNCE_BLOCKED.include?(move.id)
-      # Only penalize status/entry moves that bounce back
+      # Magic Bounce reflects listed status moves and hazards
       if MAGIC_BOUNCE_BLOCKED.include?(move.id)
         AdvancedAI.log("#{move.name} blocked by Magic Bounce on #{target.name}", "Ability")
         return -500  # Effectively blocked — bounces back to us!
@@ -45,22 +44,23 @@ module AdvancedAI
     # #2 MOLD BREAKER FAMILY — bypass target abilities in damage calc
     # Mold Breaker/Teravolt/Turboblaze ignore Levitate, Sturdy, Multiscale etc.
     #===========================================================================
-    MOLD_BREAKER_ABILITIES = [:MOLDBREAKER, :TERAVOLT, :TURBOBLAZE, :MYCELIUMMIGHT]
+    MOLD_BREAKER_ABILITIES = [:MOLDBREAKER, :TERAVOLT, :TURBOBLAZE]
 
     # Bonus when user has Mold Breaker and target has a defensive ability
     BYPASSED_ABILITIES = [:LEVITATE, :STURDY, :MULTISCALE, :SHADOWSHIELD,
                           :DISGUISE, :ICEFACE, :WONDERGUARD, :MAGICBOUNCE,
                           :FLASHFIRE, :WATERABSORB, :VOLTABSORB, :LIGHTNINGROD,
                           :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN,
+                          :WELLBAKEDBODY, :EARTHEATER,
                           :BATTLEARMOR, :SHELLARMOR, :UNAWARE, :FURCOAT,
                           :ICESCALES, :TERASHELL, :SEEDSOWER]
 
     def self.mold_breaker_bonus(user, target, move)
       return 0 unless user && target && move && move.damagingMove?
-      user_ability = user.respond_to?(:ability_id) ? user.ability_id : nil
-      return 0 unless MOLD_BREAKER_ABILITIES.include?(user_ability)
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless target_ability && BYPASSED_ABILITIES.include?(target_ability)
+      return 0 unless user.respond_to?(:hasActiveAbility?) && MOLD_BREAKER_ABILITIES.any? { |a| user.hasActiveAbility?(a) }
+      target_ability = nil
+      BYPASSED_ABILITIES.each { |a| target_ability = a if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(a) }
+      return 0 unless target_ability
 
       bonus = 0
       case target_ability
@@ -79,7 +79,8 @@ module AdvancedAI
       when :MAGICBOUNCE
         bonus += 10  # Not huge for damaging moves but still relevant
       when :FLASHFIRE, :WATERABSORB, :VOLTABSORB, :LIGHTNINGROD,
-           :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN
+           :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN,
+           :WELLBAKEDBODY, :EARTHEATER
         # Type-absorbing abilities bypassed — our move hits normally
         bonus += 35
         AdvancedAI.log("Mold Breaker bypasses #{target_ability}: +#{bonus} for #{move.name}", "Ability") if bonus > 0
@@ -106,15 +107,16 @@ module AdvancedAI
     MULTI_HIT_MOVES = [
       :BULLETSEED, :ICICLESPEAR, :ROCKBLAST, :SCALESHOT, :WATERSHURIKEN,
       :TAILSLAP, :TRIPLEAXEL, :SURGINGSTRIKES, :BONERUSH, :PINMISSILE,
-      :DOUBLEHIT, :DOUBLEKICK, :TWINEEDLE, :TRIPLEAXEL, :POPULATIONBOMB,
+      :DOUBLEHIT, :DOUBLEKICK, :TWINEEDLE, :POPULATIONBOMB,
       :ARMTHRUST, :BARRAGE, :COMETPUNCH, :FURYATTACK, :FURYSWIPES,
-      :SPIKECANNON, :DUALWINGBEAT, :TRIPLEKICK
+      :SPIKECANNON, :DUALWINGBEAT, :TRIPLEKICK, :DUALCHOP, :DOUBLESLAP,
+      :GEARGRIND, :BONEMERANG, :DRAGONDARTS, :DOUBLEIRONBASH,
+      :TRIPLEDIVE, :TWINBEAM, :TACHYONCUTTER
     ]
 
     def self.sturdy_awareness(user, target, move)
       return 0 unless target && move && move.damagingMove?
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless target_ability == :STURDY
+      return 0 unless target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:STURDY)
 
       # Only relevant at full HP
       hp_pct = target.hp.to_f / target.totalhp
@@ -124,7 +126,7 @@ module AdvancedAI
       if MULTI_HIT_MOVES.include?(move.id)
         bonus += 40  # Multi-hit bypasses Sturdy!
         AdvancedAI.log("#{move.name} bypasses Sturdy (multi-hit): +40", "Ability")
-      elsif move.power && move.power <= 60
+      elsif move.power && AdvancedAI::CombatUtilities.resolve_move_power(move) <= 60
         bonus += 10  # Weak move to break Sturdy, then follow up
       else
         bonus -= 15  # Strong move wasted — they'll survive at 1 HP
@@ -137,24 +139,26 @@ module AdvancedAI
     # Prefer chip/hazards first; don't waste strongest move at full HP
     #===========================================================================
     def self.multiscale_awareness(user, target, move)
-      return 0 unless target && move && move.damagingMove?
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless target_ability == :MULTISCALE || target_ability == :SHADOWSHIELD
+      return 0 unless target && move
+      return 0 unless target.respond_to?(:hasActiveAbility?) && (target.hasActiveAbility?(:MULTISCALE) || target.hasActiveAbility?(:SHADOWSHIELD))
 
       hp_pct = target.hp.to_f / target.totalhp
       return 0 unless hp_pct >= 0.99  # Only active at full HP
 
       bonus = 0
-      # Prefer weak chip moves to break Multiscale
-      if move.power && move.power <= 60
-        bonus += 15  # Good — break Multiscale with chip
-        AdvancedAI.log("#{move.name} chips #{target_ability} (weak move): +15", "Ability")
-      elsif move.power && move.power >= 100
-        bonus -= 20  # Bad — wasting strong move at half damage
-        AdvancedAI.log("#{move.name} halved by #{target_ability}: -20", "Ability")
+      if move.damagingMove?
+        # Prefer weak chip moves to break Multiscale
+        eff_power = AdvancedAI::CombatUtilities.resolve_move_power(move)
+        if move.power && eff_power <= 60
+          bonus += 15  # Good — break Multiscale with chip
+          AdvancedAI.log("#{move.name} chips Multiscale/ShadowShield (weak move): +15", "Ability")
+        elsif move.power && eff_power >= 100
+          bonus -= 20  # Bad — wasting strong move at half damage
+          AdvancedAI.log("#{move.name} halved by Multiscale/ShadowShield: -20", "Ability")
+        end
       end
 
-      # Status moves that deal chip are great (Stealth Rock, Toxic, Will-O-Wisp)
+      # Status moves that break Multiscale for next turn
       if move.statusMove?
         if [:TOXIC, :WILLOWISP, :THUNDERWAVE].include?(move.id)
           bonus += 10  # Status breaks Multiscale for next turn
@@ -201,7 +205,7 @@ module AdvancedAI
       end
 
       # Strong single-hit moves are wasted on Sash — they survive at 1 HP anyway
-      if move.power && move.power >= 100
+      if move.power && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 100
         return -15  # Use a weaker move first to pop Sash
       end
       0
@@ -215,27 +219,25 @@ module AdvancedAI
 
     def self.guts_status_penalty(target, move)
       return 0 unless target && move
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-
       # Don't inflict status on Guts/Marvel Scale/Quick Feet targets
-      if target_ability == :GUTS
-        if [:WILLOWISP, :TOXIC, :THUNDERWAVE, :SCALD].include?(move.id)
+      if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:GUTS)
+        if [:WILLOWISP, :TOXIC, :THUNDERWAVE].include?(move.id)
           AdvancedAI.log("#{move.name} powers up Guts on #{target.name}: -60", "Ability")
           return -60  # You're powering them up!
         end
-        # Scald's 30% burn chance makes it riskier
+        # Scald's 30% burn chance makes it riskier but not guaranteed
         if move.id == :SCALD
           return -30
         end
       end
 
-      if target_ability == :MARVELSCALE
+      if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:MARVELSCALE)
         if [:WILLOWISP, :TOXIC, :THUNDERWAVE].include?(move.id)
           return -40  # +50% Defense when statused
         end
       end
 
-      if target_ability == :QUICKFEET
+      if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:QUICKFEET)
         if [:THUNDERWAVE, :WILLOWISP, :TOXIC].include?(move.id)
           return -30  # 1.5x Speed when statused
         end
@@ -246,12 +248,11 @@ module AdvancedAI
     def self.facade_guts_bonus(user, move)
       return 0 unless user && move
       return 0 unless move.id == :FACADE
-      user_ability = user.respond_to?(:ability_id) ? user.ability_id : nil
       user_status = user.respond_to?(:status) ? user.status : :NONE
 
       if user_status != :NONE
         bonus = 30  # Facade doubles to 140 BP when statused
-        if user_ability == :GUTS
+        if user.respond_to?(:hasActiveAbility?) && user.hasActiveAbility?(:GUTS)
           bonus += 25  # 1.5x on top of 140 BP = 210 effective BP!
           AdvancedAI.log("Facade + Guts: +55 (210 effective BP!)", "Ability")
         end
@@ -263,8 +264,7 @@ module AdvancedAI
     # Don't inflict status on Poison Heal mons either
     def self.poison_heal_penalty(target, move)
       return 0 unless target && move
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless target_ability == :POISONHEAL
+      return 0 unless target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:POISONHEAL)
 
       if [:TOXIC, :POISONPOWDER, :POISONGAS, :TOXICSPIKES].include?(move.id)
         AdvancedAI.log("#{move.name} heals Poison Heal on #{target.name}: -80", "Ability")
@@ -282,22 +282,31 @@ module AdvancedAI
 
     def self.trapping_ability_bonus(user, target, move)
       return 0 unless user && target && move
-      user_ability = user.respond_to?(:ability_id) ? user.ability_id : nil
-      return 0 unless TRAPPING_ABILITIES.include?(user_ability)
+      user_ability = nil
+      TRAPPING_ABILITIES.each { |a| user_ability = a if user.respond_to?(:hasActiveAbility?) && user.hasActiveAbility?(a) }
+      return 0 unless user_ability
 
       # Check if target is actually trapped
       can_escape = false
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
+
+      # Shed Shell always allows escape from trapping
+      if target.respond_to?(:item_id) && target.item_id == :SHEDSHELL
+        return 0
+      end
+
+      # Ghost types escape all trapping effects (Gen 6+)
+      if target.respond_to?(:pbHasType?) && target.pbHasType?(:GHOST)
+        return 0
+      end
 
       case user_ability
       when :ARENATRAP
         # Flying types and Levitate are immune
         can_escape = true if target.respond_to?(:pbHasType?) && target.pbHasType?(:FLYING)
-        can_escape = true if target_ability == :LEVITATE
+        can_escape = true if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:LEVITATE)
         can_escape = true if target.respond_to?(:item_id) && target.item_id == :AIRBALLOON
       when :SHADOWTAG
-        can_escape = true if target_ability == :SHADOWTAG  # Mirror match
-        can_escape = true if target.respond_to?(:pbHasType?) && target.pbHasType?(:GHOST)
+        can_escape = true if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:SHADOWTAG)  # Mirror match
       when :MAGNETPULL
         # Only traps Steel types
         can_escape = true unless target.respond_to?(:pbHasType?) && target.pbHasType?(:STEEL)
@@ -331,20 +340,20 @@ module AdvancedAI
     def self.intimidate_cycle_bonus(battle, user, skill)
       return 0 unless battle && user && skill >= 70
       return 0 unless battle.pbSideSize(0) > 1  # Doubles only
-      user_ability = user.respond_to?(:ability_id) ? user.ability_id : nil
-      return 0 unless user_ability == :INTIMIDATE
+      return 0 unless user.respond_to?(:hasActiveAbility?) && user.hasActiveAbility?(:INTIMIDATE)
 
       # Check if opponents are physical
       physical_threat_count = 0
       battle.allOtherSideBattlers(user.index).each do |opp|
         next unless opp && !opp.fainted?
         # Count physical attackers
-        phys_moves = opp.moves.count { |m| m && m.physicalMove? && m.power && m.power >= 60 }
+        phys_moves = opp.moves.count { |m| m && m.physicalMove? && m.power && AdvancedAI::CombatUtilities.resolve_move_power(m) >= 60 }
         physical_threat_count += 1 if phys_moves >= 2
         # Defiant/Competitive counter-check
-        opp_ability = opp.respond_to?(:ability_id) ? opp.ability_id : nil
-        return 0 if opp_ability == :DEFIANT || opp_ability == :COMPETITIVE
-        return 0 if opp_ability == :CLEARBODY || opp_ability == :WHITESMOKE || opp_ability == :FULLMETALBODY
+        if opp.respond_to?(:hasActiveAbility?)
+          return 0 if opp.hasActiveAbility?(:DEFIANT) || opp.hasActiveAbility?(:COMPETITIVE)
+          next if opp.hasActiveAbility?(:CLEARBODY) || opp.hasActiveAbility?(:WHITESMOKE) || opp.hasActiveAbility?(:FULLMETALBODY)
+        end
       end
 
       return 0 if physical_threat_count == 0
@@ -389,15 +398,16 @@ module AdvancedAI
         end
         # Check if we outspeed after +2
         if target
-          our_speed = user.speed * 2  # +2 Speed
-          their_speed = target.respond_to?(:speed) ? target.speed : 100
+          our_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, user) * 2  # +2 Speed
+          their_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, target)
           bonus += 20 if our_speed > their_speed  # We'll outspeed = sweep
         end
       end
 
       # Toxic → Protect stall
       if move.id == :TOXIC
-        has_protect = user_moves.include?(:PROTECT) || user_moves.include?(:BANEFULBUNKER) || user_moves.include?(:SPIKYSHIELD)
+        has_protect = user_moves.any? { |mid| [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD,
+                    :BANEFULBUNKER, :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK].include?(mid) }
         has_recovery = user_moves.any? { |mid| AdvancedAI.healing_move?(mid) rescue false }
         if has_protect && has_recovery
           bonus += 20  # Toxic stall plan
@@ -422,8 +432,8 @@ module AdvancedAI
       # Dragon Dance / Quiver Dance → sweep check
       if [:DRAGONDANCE, :QUIVERDANCE, :SHIFTGEAR].include?(move.id)
         if target
-          our_speed_boosted = user.speed * 1.5  # +1 Speed
-          their_speed = target.respond_to?(:speed) ? target.speed : 100
+          our_speed_boosted = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, user) * 1.5  # +1 Speed
+          their_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, target)
           if our_speed_boosted > their_speed
             bonus += 15  # One DD and we outspeed = sweep
             AdvancedAI.log("Multi-turn: #{move.name} outspeeds at +1: +15", "Plan")
@@ -472,7 +482,9 @@ module AdvancedAI
     #===========================================================================
     SELF_DROP_MOVES = [:SHELLSMASH, :CLOSECOMBAT, :SUPERPOWER, :OVERHEAT,
                        :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST,
-                       :VCREATE]
+                       :VCREATE, :HEADLONGRUSH, :ARMORCANNON, :DRAGONASCENT,
+                       :HAMMERARM, :ICEHAMMER, :CLANGINGSCALES, :HYPERSPACEFURY,
+                       :MAKEITRAIN, :SPINOUT]
 
     def self.white_herb_bonus(user, move)
       return 0 unless user && move
@@ -485,13 +497,19 @@ module AdvancedAI
       when :SHELLSMASH
         bonus += 35  # +2/+2/+2 with NO defense drops = insane
         AdvancedAI.log("White Herb + Shell Smash: +35 (no def drops!)", "Item")
-      when :CLOSECOMBAT, :SUPERPOWER
-        bonus += 15  # No Atk/Def drops
-      when :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST
+      when :CLOSECOMBAT, :SUPERPOWER, :HEADLONGRUSH, :ARMORCANNON, :DRAGONASCENT
+        bonus += 15  # No Def/SpDef drops
+      when :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST, :MAKEITRAIN
         bonus += 20  # No SpAtk drop = can spam
         AdvancedAI.log("White Herb + #{move.name}: +20 (no SpAtk drop)", "Item")
       when :VCREATE
         bonus += 15
+      when :HAMMERARM, :ICEHAMMER
+        bonus += 10  # No Speed drop
+      when :CLANGINGSCALES, :HYPERSPACEFURY
+        bonus += 10  # No Def drop
+      when :SPINOUT
+        bonus += 15  # No -2 Speed drop
       end
       bonus
     end
@@ -501,32 +519,33 @@ module AdvancedAI
     #===========================================================================
     def self.disguise_iceface_awareness(user, target, move)
       return 0 unless target && move && move.damagingMove?
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
 
-      if target_ability == :DISGUISE
+      if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:DISGUISE)
         # Check if Disguise is still active (form 0 = Disguised)
         form = target.respond_to?(:form) ? target.form : 0
         if form == 0  # Disguised form
-          if move.power && move.power <= 60
+          eff_power = AdvancedAI::CombatUtilities.resolve_move_power(move)
+          if move.power && eff_power <= 60
             return 20  # Good — use weak move to pop Disguise
-          elsif move.power && move.power >= 100
+          elsif move.power && eff_power >= 100
             return -25  # Bad — wasting strong move on Disguise
           end
         end
       end
 
-      if target_ability == :ICEFACE
+      if target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:ICEFACE)
         form = target.respond_to?(:form) ? target.form : 0
         if form == 0 && move.physicalMove?  # Ice Face blocks first physical hit
-          if move.power && move.power <= 60
+          eff_power = AdvancedAI::CombatUtilities.resolve_move_power(move)
+          if move.power && eff_power <= 60
             return 15  # Good — pop Ice Face cheaply
-          elsif move.power && move.power >= 100
+          elsif move.power && eff_power >= 100
             return -20  # Bad — wasting strong physical move
           end
           # Special moves bypass Ice Face entirely!
         end
-        if move.specialMove?
-          return 10  # Special moves go through Ice Face
+        if form == 0 && move.specialMove?
+          return 10  # Special moves go through Ice Face (when active)
         end
       end
       0
@@ -543,8 +562,7 @@ module AdvancedAI
     #===========================================================================
     def self.good_as_gold_penalty(target, move)
       return 0 unless target && move
-      target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
-      return 0 unless target_ability == :GOODASGOLD
+      return 0 unless target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:GOODASGOLD)
       return 0 unless move.statusMove?
 
       AdvancedAI.log("#{move.name} blocked by Good as Gold on #{target.name}: -200", "Ability")
@@ -566,7 +584,7 @@ module AdvancedAI
       end
 
       # Bonus if we have good switch-ins that pressure the target
-      party = battle.pbParty(user.index) rescue []
+      party = battle.pbParty(user.index & 1) rescue []
       good_partners = 0
       party.each do |pkmn|
         next if !pkmn || pkmn.fainted? || pkmn.egg?
@@ -584,7 +602,8 @@ module AdvancedAI
 
       # Pivot moves make this even better (switch out safely)
       user_moves = user.moves.map { |m| m.id if m }.compact
-      pivot_moves = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS]
+      pivot_moves = [:UTURN, :VOLTSWITCH, :FLIPTURN, :PARTINGSHOT, :TELEPORT, :BATONPASS,
+                     :SHEDTAIL, :CHILLYRECEPTION]
       if user_moves.any? { |mid| pivot_moves.include?(mid) }
         bonus += 10  # Can pivot out after Future Sight
       end
@@ -607,7 +626,7 @@ module AdvancedAI
       # At high HP: less immediate need, but good for cycling
       if hp_pct > 0.85
         # Check if any teammate is low
-        party = battle.pbParty(user.index) rescue []
+        party = battle.pbParty(user.index & 1) rescue []
         low_teammates = party.count do |pkmn|
           next false if !pkmn || pkmn.fainted? || pkmn.egg?
           next false if pkmn == (user.respond_to?(:pokemon) ? user.pokemon : user)
@@ -624,7 +643,8 @@ module AdvancedAI
 
       # Wish + Protect combo detection
       user_moves = user.moves.map { |m| m.id if m }.compact
-      if user_moves.include?(:PROTECT) || user_moves.include?(:BANEFULBUNKER)
+      if user_moves.any? { |mid| [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD,
+                  :BANEFULBUNKER, :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK].include?(mid) }
         bonus += 10  # Can guarantee Wish landing with Protect next turn
       end
       bonus
@@ -648,7 +668,8 @@ module AdvancedAI
 
       # Priority move = can sweep even at half HP
       priority_moves = [:AQUAJET, :MACHPUNCH, :BULLETPUNCH, :ICESHARD,
-                        :EXTREMESPEED, :SUCKERPUNCH, :SHADOWSNEAK, :JETPUNCH]
+                        :EXTREMESPEED, :SUCKERPUNCH, :SHADOWSNEAK, :JETPUNCH,
+                        :QUICKATTACK, :ACCELEROCK]
       has_priority = user_moves.any? { |mid| priority_moves.include?(mid) }
 
       if has_priority
@@ -672,8 +693,9 @@ module AdvancedAI
 
       # Penalty if opponent has priority/scarf revenge killer
       if target
-        target_speed = target.respond_to?(:speed) ? target.speed : 100
-        if target_speed > user.speed && !has_priority
+        target_eff_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, target)
+        user_eff_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, user)
+        if target_eff_speed > user_eff_speed && !has_priority
           bonus -= 30  # They outspeed us = revenge killed post-Drum
         end
       end
@@ -726,7 +748,7 @@ module AdvancedAI
       end
 
       # Super-effective wallbreaking moves
-      if move.damagingMove? && move.power && move.power >= 100
+      if move.damagingMove? && move.power && AdvancedAI::CombatUtilities.resolve_move_power(move) >= 100
         bonus += 10  # Raw power vs stall
       end
       bonus
@@ -741,7 +763,7 @@ module AdvancedAI
       return 0 unless [:STEALTHROCK, :SPIKES, :TOXICSPIKES, :STICKYWEB].include?(move.id)
 
       bonus = 0
-      opp_party = battle.pbParty((user.index + 1) % 2) rescue []
+      opp_party = battle.pbParty(1 - (user.index & 1)) rescue []
 
       case move.id
       when :TOXICSPIKES
@@ -836,15 +858,16 @@ module AdvancedAI
       bonus = 0
       # If TR is active and we SET it (we're slow = TR setter)
       if battle.field.effects[PBEffects::TrickRoom] > 0
-        our_speed = user.speed
+        our_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, user)
         # Check if partner is the TR sweeper (slow, powerful)
         partner = battle.allSameSideBattlers(user.index).find { |b| b && b != user && !b.fainted? }
         if partner
-          partner_speed = partner.respond_to?(:speed) ? partner.speed : 100
+          partner_speed = AdvancedAI::SpeedTiers.calculate_effective_speed(battle, partner)
           # If we're faster than partner in TR (lower Speed = faster), we're the setter
           if our_speed > partner_speed
             # Setter should Protect to let sweeper act, or use support moves
-            if move.id == :PROTECT || move.id == :BANEFULBUNKER || move.id == :SPIKYSHIELD
+            if [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER,
+                :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK].include?(move.id)
               bonus += 15  # Protect while sweeper attacks
             end
             # Helping Hand partner's sweep
@@ -869,9 +892,8 @@ module AdvancedAI
 
     def self.booster_energy_bonus(user, move)
       return 0 unless user && move
-      user_ability = user.respond_to?(:ability_id) ? user.ability_id : nil
       user_item = user.respond_to?(:item_id) ? user.item_id : nil
-      return 0 unless PARADOX_ABILITIES.include?(user_ability)
+      return 0 unless user.respond_to?(:hasActiveAbility?) && PARADOX_ABILITIES.any? { |a| user.hasActiveAbility?(a) }
       return 0 unless user_item == :BOOSTERENERGY
 
       # Booster Energy auto-activates the Paradox ability
@@ -935,6 +957,21 @@ module AdvancedAI
         total += wish_proactive_bonus(battle, user, move) if move.id == :WISH
         total += stallbreaker_bonus(battle, user, move, target, skill) if target
         total += hazard_order_bonus(battle, user, move, target) if target
+        
+        # Harvest awareness: Knock Off is extra valuable vs Harvest targets
+        if target && move.id == :KNOCKOFF && target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:HARVEST) && target.item
+          total += 25  # Permanently removes berry that Harvest would regenerate
+          AdvancedAI.log("Knock Off vs Harvest: +25 (shuts down berry recycling)", "Tactical")
+        end
+        
+        # Harvest + Lum Berry: status moves are much less effective
+        if target && target.respond_to?(:hasActiveAbility?) && target.hasActiveAbility?(:HARVEST) && target.respond_to?(:item_id) && target.item_id == :LUMBERRY
+          if move.statusMove? && ["ParalyzeTarget", "BurnTarget", "PoisonTarget", 
+              "BadPoisonTarget", "SleepTarget"].include?(move.function_code)
+            total -= 40  # Lum Berry will cure AND regrow via Harvest
+            AdvancedAI.log("Status vs Harvest+Lum: -40 (cured and regrown)", "Tactical")
+          end
+        end
 
         # Doubles-specific (#8, #20)
         if battle.pbSideSize(0) > 1

@@ -87,6 +87,9 @@ module AdvancedAI
       
       # Mind's Eye - ignore evasion + hit Ghost with Normal/Fighting
       :MINDSEYE           => 1.5,  # Scrappy + accuracy bypass
+      
+      # Gorilla Tactics (Darmanitan-G) - 1.5x Atk but locked into one move
+      :GORILLATACTICS     => 2.0,
     }
     
     #===========================================================================
@@ -118,7 +121,7 @@ module AdvancedAI
       # Recovery (Threat -1.5)
       :REGENERATOR        => -2.0, # 33% HP on switch
       :POISONHEAL         => -2.0, # Heal from poison
-      :ICEBODY            => -1.0, # Heal in Hail
+      :ICEBODY            => -1.0, # Heal in Hail/Snow
       :RAINDISH           => -1.0, # Heal in Rain
       
       # Stat-Boost (Threat -1.0)
@@ -166,6 +169,9 @@ module AdvancedAI
       
       # Seed Sower (Arboliva) - sets Grassy Terrain when hit
       :SEEDSOWER          => -1.0, # Sets Grassy Terrain on contact (healing + Grass boost)
+      
+      # Good as Gold (Gholdengo) - immune to status moves
+      :GOODASGOLD         => -2.5,
     }
     
     #===========================================================================
@@ -180,17 +186,17 @@ module AdvancedAI
       :CHLOROPHYLL        => 2.0,  # 2x Speed in Sun
       :SWIFTSWIM          => 2.0,  # 2x Speed in Rain
       :SANDRUSH           => 2.0,  # 2x Speed in Sandstorm
-      :SLUSHRUSH          => 2.0,  # 2x Speed in Hail
+      :SLUSHRUSH          => 2.0,  # 2x Speed in Hail/Snow (Gen 9: also Snow)
+      :PROTOSYNTHESIS     => 1.5,  # Highest stat x1.3 in Sun/Booster Energy (speed threat if Speed is highest)
+      :QUARKDRIVE         => 1.5,  # Highest stat x1.3 in Elec Terrain/Booster Energy (speed threat)
       :SURGESURFER        => 2.0,  # 2x Speed in Electric Terrain
       
       # Priority (Threat +1.5)
       :PRANKSTER          => 2.5,  # +1 priority on status moves
       :GALEWINGS          => 2.0,  # +1 priority on Flying moves (full HP)
       :TANGLINGHAIR       => 1.0,  # Lower Speed on contact
-      :GORILLATACTICS     => 2.0,  # 1.5x Atk but locked (like Choice)
       
       # Gen 9 Speed
-      :GOODASGOLD         => -2.5, # Status move immunity (defensive)
     }
     
     #===========================================================================
@@ -202,7 +208,7 @@ module AdvancedAI
       :DROUGHT            => 1.5,  # Sets Sun
       :DRIZZLE            => 1.5,  # Sets Rain
       :SANDSTREAM         => 1.5,  # Sets Sandstorm
-      :SNOWWARNING        => 1.5,  # Sets Hail
+      :SNOWWARNING        => 1.5,  # Sets Snow (Gen 9; previously Hail)
       :ELECTRICSURGE      => 1.5,  # Sets Electric Terrain
       :GRASSYSURGE        => 1.5,  # Sets Grassy Terrain
       :MISTYSURGE         => 1.5,  # Sets Misty Terrain
@@ -240,19 +246,14 @@ module AdvancedAI
       
       ability_id = ability_id.to_sym if ability_id.is_a?(String)
       
-      # Offensive Check
-      return OFFENSIVE_ABILITIES[ability_id] if OFFENSIVE_ABILITIES.key?(ability_id)
+      # Combine threat from all categories (abilities can fill multiple roles)
+      threat = 0.0
+      threat += OFFENSIVE_ABILITIES[ability_id] if OFFENSIVE_ABILITIES.key?(ability_id)
+      threat += DEFENSIVE_ABILITIES[ability_id] if DEFENSIVE_ABILITIES.key?(ability_id)
+      threat += SPEED_ABILITIES[ability_id] if SPEED_ABILITIES.key?(ability_id)
+      threat += SUPPORT_ABILITIES[ability_id] if SUPPORT_ABILITIES.key?(ability_id)
       
-      # Defensive Check
-      return DEFENSIVE_ABILITIES[ability_id] if DEFENSIVE_ABILITIES.key?(ability_id)
-      
-      # Speed Check
-      return SPEED_ABILITIES[ability_id] if SPEED_ABILITIES.key?(ability_id)
-      
-      # Support Check
-      return SUPPORT_ABILITIES[ability_id] if SUPPORT_ABILITIES.key?(ability_id)
-      
-      return 0.0  # Unknown ability
+      return threat
     end
     
     # Checks if Ability is defensive
@@ -303,19 +304,18 @@ module AdvancedAI
     # Checks if Ability benefits from current Weather
     def self.benefits_from_weather?(battler, weather)
       return false if !battler || !weather
-      ability = battler.ability_id
-      return false if !ability
+      return false unless battler.respond_to?(:hasActiveAbility?)
       
       case weather
       when :Sun, :HarshSun
         return [:CHLOROPHYLL, :SOLARPOWER, :FLOWERGIFT, :LEAFGUARD, 
-                :PROTOSYNTHESIS, :ORICHALCUMPULSE].include?(ability)
+                :HARVEST, :PROTOSYNTHESIS, :ORICHALCUMPULSE].any? { |a| battler.hasActiveAbility?(a) }
       when :Rain, :HeavyRain
-        return [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION].include?(ability)
+        return [:SWIFTSWIM, :RAINDISH, :DRYSKIN, :HYDRATION].any? { |a| battler.hasActiveAbility?(a) }
       when :Sandstorm
-        return [:SANDRUSH, :SANDVEIL, :SANDFORCE, :OVERCOAT].include?(ability)
-      when :Hail
-        return [:SLUSHRUSH, :SNOWCLOAK, :ICEBODY, :OVERCOAT].include?(ability)
+        return [:SANDRUSH, :SANDVEIL, :SANDFORCE].any? { |a| battler.hasActiveAbility?(a) }
+      when :Hail, :Snow
+        return [:SLUSHRUSH, :SNOWCLOAK, :ICEBODY, :ICEFACE].any? { |a| battler.hasActiveAbility?(a) }
       end
       
       return false
@@ -324,14 +324,13 @@ module AdvancedAI
     # Checks if Ability benefits from active Terrain
     def self.benefits_from_terrain?(battler, terrain)
       return false if !battler || !terrain
-      ability = battler.ability_id
-      return false if !ability
+      return false unless battler.respond_to?(:hasActiveAbility?)
       
       case terrain
       when :Electric
-        return [:SURGESURFER, :QUARKDRIVE, :HADRONENGINE].include?(ability)
+        return [:SURGESURFER, :QUARKDRIVE, :HADRONENGINE].any? { |a| battler.hasActiveAbility?(a) }
       when :Grassy
-        return [:GRASSPELT].include?(ability)
+        return battler.hasActiveAbility?(:GRASSPELT)
       when :Psychic
         return false  # No direct Ability synergies
       when :Misty
@@ -348,18 +347,17 @@ module AdvancedAI
     # Checks if Attacker ignores Abilities
     def self.ignores_abilities?(attacker)
       return false if !attacker
-      ability = attacker.ability_id
-      return false if !ability
+      return false unless attacker.respond_to?(:hasActiveAbility?)
       
       return [:MOLDBREAKER, :TERAVOLT, :TURBOBLAZE, 
-              :NEUTRALIZINGGAS].include?(ability)
+              :NEUTRALIZINGGAS].any? { |a| attacker.hasActiveAbility?(a) }
     end
     
     # Checks if Target Ability is suppressed by Attacker
     def self.ability_suppressed?(attacker, target)
       return false if !attacker || !target
       return true if ignores_abilities?(attacker)
-      return true if target.effects[PBEffects::GastroAcid]  # Gastro Acid
+      return true if target.respond_to?(:effects) && target.effects[PBEffects::GastroAcid]  # Gastro Acid
       return false
     end
     
@@ -372,29 +370,41 @@ module AdvancedAI
       modifier = 1.0
       return modifier if !attacker || !target || !move
       
-      attacker_ability = attacker.ability_id
-      target_ability = target.ability_id
-      
-      # Attacker Abilities
-      if attacker_ability && !ability_suppressed?(target, attacker)
+      # Use hasActiveAbility? for active battlers (handles all suppression: Gastro Acid,
+      # Neutralizing Gas, etc.). Fall back to ability_id for party Pokemon.
+      if attacker.respond_to?(:hasActiveAbility?)
+        attacker_ability = attacker.ability_id
+        attacker_suppressed = !attacker.hasActiveAbility?(attacker_ability)
+      else
+        attacker_ability = attacker.respond_to?(:ability_id) ? attacker.ability_id : nil
+        attacker_suppressed = false
+      end
+      if target.respond_to?(:hasActiveAbility?)
+        target_ability = target.ability_id
+      else
+        target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
+      end
+      if attacker_ability && !attacker_suppressed
         case attacker_ability
         when :HUGEPOWER, :PUREPOWER
           modifier *= 2.0 if move.physicalMove?
         when :ADAPTABILITY
-          atk_types = attacker.respond_to?(:pbTypes) ? attacker.pbTypes(true) : [attacker.type1, attacker.type2].compact
-          modifier *= 2.0 if atk_types.include?(move.type)
+          atk_types = attacker.respond_to?(:pbTypes) ? attacker.pbTypes(true) : (attacker.respond_to?(:types) ? attacker.types : [attacker.type1, attacker.type2].compact)
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          modifier *= (4.0 / 3.0) if atk_types.include?(resolved_type)  # STAB upgrade: 2.0/1.5
         when :TOUGHCLAWS
           modifier *= 1.3 if move.contactMove?
         when :SHEERFORCE
-          modifier *= 1.3 if move.additional_effect_chance > 0
+          modifier *= 1.3 if move.addlEffect.to_i > 0
         when :TECHNICIAN
           modifier *= 1.5 if move.power <= 60
         when :IRONFIST
-          modifier *= 1.2 if move.punching_move?
+          modifier *= 1.2 if move.punchingMove?
         when :STRONGJAW
-          modifier *= 1.5 if move.biting_move?
+          modifier *= 1.5 if move.bitingMove?
         when :TINTEDLENS
-          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          effectiveness = AdvancedAI::Utilities.type_mod(resolved_type, target)
           modifier *= 2.0 if Effectiveness.not_very_effective?(effectiveness)
         when :MINDSEYE
           # Ignore target evasion stages and hit Ghost with Normal/Fighting
@@ -410,15 +420,18 @@ module AdvancedAI
         when :MULTISCALE, :SHADOWSHIELD
           modifier *= 0.5 if target.hp == target.totalhp
         when :FILTER, :SOLIDROCK, :PRISMARMOR
-          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
+          resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          effectiveness = AdvancedAI::Utilities.type_mod(resolved_type, target)
           modifier *= 0.75 if Effectiveness.super_effective?(effectiveness)
         when :FURCOAT
           modifier *= 0.5 if move.physicalMove?
         when :FLUFFY
           modifier *= 0.5 if move.contactMove?
-          modifier *= 2.0 if move.type == :FIRE
+          fluffy_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          modifier *= 2.0 if fluffy_type == :FIRE
         when :THICKFAT
-          modifier *= 0.5 if [:FIRE, :ICE].include?(move.type)
+          thick_fat_type = AdvancedAI::CombatUtilities.resolve_move_type(attacker, move)
+          modifier *= 0.5 if [:FIRE, :ICE].include?(thick_fat_type)
         when :ICESCALES
           modifier *= 0.5 if move.specialMove?  # Halves special damage
         when :TERASHELL
@@ -429,41 +442,31 @@ module AdvancedAI
       
       # Ruin Abilities (affect ALL other Pokemon on field)
       # These are field-wide auras, not target-specific
-      if attacker.respond_to?(:ability_id)
-        # Sword of Ruin (Chien-Pao): -25% Def to all others
-        # If opponent has it, our physical Defense is lowered
-        if target_ability == :SWORDOFRUIN && move.physicalMove?
-          modifier *= 1.0  # Already factored into target's damage calc
-        end
-        # Beads of Ruin (Chi-Yu): -25% SpDef to all others  
-        # If opponent has it, our special Defense is lowered
-        if target_ability == :BEADSOFRUIN && move.specialMove?
-          modifier *= 1.0  # Already factored into target's damage calc
-        end
-      end
-      
       # Attacker has Ruin ability: boosts our effective damage
-      if attacker_ability == :SWORDOFRUIN && move.physicalMove?
-        modifier *= 1.25  # Target's Def is lowered by 25%
-      end
-      if attacker_ability == :BEADSOFRUIN && move.specialMove?
-        modifier *= 1.25  # Target's SpDef is lowered by 25%
+      if attacker_ability && !attacker_suppressed
+        if attacker_ability == :SWORDOFRUIN && move.physicalMove?
+          modifier *= 4.0 / 3.0  # Target's Def is lowered by 25% → 1/0.75
+        end
+        if attacker_ability == :BEADSOFRUIN && move.specialMove?
+          modifier *= 4.0 / 3.0  # Target's SpDef is lowered by 25% → 1/0.75
+        end
+        # Toxic Boost / Flare Boost
+        if attacker_ability == :TOXICBOOST && attacker.respond_to?(:poisoned?) && attacker.poisoned? && move.physicalMove?
+          modifier *= 1.5
+        end
+        if attacker_ability == :FLAREBOOST && attacker.respond_to?(:burned?) && attacker.burned? && move.specialMove?
+          modifier *= 1.5
+        end
       end
       # Opponent has Tablets of Ruin: our Atk is lowered
-      if target_ability == :TABLETSOFRUIN && move.physicalMove?
-        modifier *= 0.75  # Our Atk is lowered by 25%
-      end
-      # Opponent has Vessel of Ruin: our SpAtk is lowered
-      if target_ability == :VESSELOFRUIN && move.specialMove?
-        modifier *= 0.75  # Our SpAtk is lowered by 25%
-      end
-      
-      # Toxic Boost / Flare Boost
-      if attacker_ability == :TOXICBOOST && attacker.respond_to?(:poisoned?) && attacker.poisoned? && move.physicalMove?
-        modifier *= 1.5
-      end
-      if attacker_ability == :FLAREBOOST && attacker.respond_to?(:burned?) && attacker.burned? && move.specialMove?
-        modifier *= 1.5
+      if target_ability && !ability_suppressed?(attacker, target)
+        if target_ability == :TABLETSOFRUIN && move.physicalMove?
+          modifier *= 0.75  # Our Atk is lowered by 25%
+        end
+        # Opponent has Vessel of Ruin: our SpAtk is lowered
+        if target_ability == :VESSELOFRUIN && move.specialMove?
+          modifier *= 0.75  # Our SpAtk is lowered by 25%
+        end
       end
       
       return modifier

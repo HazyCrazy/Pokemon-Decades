@@ -34,7 +34,9 @@ class Battle::AI
 end
 
 # Debug: Confirm method was defined
-puts "[Advanced AI] Battle::AI.launcherBattle? defined: #{Battle::AI.method_defined?(:launcherBattle?)}"
+if $DEBUG
+  puts "[Advanced AI] Battle::AI.launcherBattle? defined: #{Battle::AI.method_defined?(:launcherBattle?)}"
+end
 
 #===============================================================================
 # DBK Improved Item AI Hotfix
@@ -201,24 +203,26 @@ if defined?(GameData::Type)
       MAX_TYPE_RECURSION = 10
       
       class << self
-        alias original_type_calculate calculate if method_defined?(:calculate)
-        
-        def calculate(attack_type, *target_types)
-          @type_recursion_depth ||= 0
-          @type_recursion_depth += 1
+        if method_defined?(:calculate)
+          alias original_type_calculate calculate
           
-          if @type_recursion_depth > MAX_TYPE_RECURSION
+          def calculate(attack_type, *target_types)
+            @type_recursion_depth ||= 0
+            @type_recursion_depth += 1
+            
+            if @type_recursion_depth > MAX_TYPE_RECURSION
+              @type_recursion_depth = 0
+              return Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
+            end
+            
+            result = original_type_calculate(attack_type, *target_types)
+            @type_recursion_depth -= 1
+            return result
+          rescue StandardError => e
             @type_recursion_depth = 0
-            return Effectiveness::NORMAL_EFFECTIVE_ONE
+            echoln "[Advanced AI] Type calculation error: #{e.message}" if defined?(echoln)
+            return Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
           end
-          
-          result = original_type_calculate(attack_type, *target_types)
-          @type_recursion_depth -= 1
-          return result
-        rescue StandardError => e
-          @type_recursion_depth = 0
-          echoln "[Advanced AI] Type calculation error: #{e.message}" if defined?(echoln)
-          return Effectiveness::NORMAL_EFFECTIVE_ONE
         end
       end
     end
@@ -247,16 +251,24 @@ module Effectiveness
 end
 
 # --- GameData::Move#physicalMove? / #specialMove? -----------------------------
-# GameData::Move stores category as :physical / :special / :status.
-# Only Battle::Move has physicalMove?. The AAI's estimate_max_incoming calls
-# physicalMove? on GameData::Move objects obtained via GameData::Move.try_get.
+# GameData::Move already has physical?, special?, damaging?, status? that
+# compare the integer category (0/1/2) correctly. The AAI code calls the
+# Battle::Move-style names (with "Move" suffix), so we delegate.
 class GameData::Move
   def physicalMove?
-    self.category == :physical
+    self.physical?
   end
 
   def specialMove?
-    self.category == :special
+    self.special?
+  end
+
+  def statusMove?
+    self.status?
+  end
+
+  def damagingMove?
+    self.damaging?
   end
 end
 
@@ -297,31 +309,22 @@ class NilClass
 end
 
 #===============================================================================
-# ReserveLastPokemon: Opt-In Only
+# ReserveLastPokemon: Smart Reserve (no longer strips the flag)
 #===============================================================================
-# Problem: Essentials v21.1 auto-adds "ReserveLastPokemon" to every trainer
-#          with skill >= 100. This causes the AI to hard-block the last party
-#          slot from being switched in — even when it's the perfect counter
-#          (e.g. refusing to send Mega Houndoom against Psychic/Ice).
-# Fix:     Strip the auto-added flag. Only keep it if the trainer's PBS data
-#          explicitly includes "ReserveLastPokemon" in their Flags field.
+# PE v21.1 auto-adds "ReserveLastPokemon" to every trainer with skill >= 100.
+# The AAI's find_best_switch_advanced now handles this intelligently:
+# - Ace is reserved by default (PE intended behavior)
+# - Ace is allowed when it has a dramatically better matchup than all
+#   alternatives (prevents refusing to send the perfect counter)
+# - Ace is always allowed for forced switches when it's the only option
 #===============================================================================
-class Battle::AI::AITrainer
-  alias aai_set_up_skill_flags set_up_skill_flags
-  def set_up_skill_flags
-    aai_set_up_skill_flags
-    # Remove auto-added ReserveLastPokemon UNLESS explicitly set in PBS trainer flags
-    explicitly_set = @trainer && @trainer.flags.include?("ReserveLastPokemon")
-    if !explicitly_set && @skill_flags.include?("ReserveLastPokemon")
-      @skill_flags.delete("ReserveLastPokemon")
-    end
-  end
-end
 
-# Test echoln output
-echoln "═══════════════════════════════════════════════════"
-echoln "[AAI] Advanced AI System v3.0.0 - DEBUG MODE ACTIVE"
-echoln "[AAI] Console output is working!"
-echoln "[AAI] Switch Intelligence Handler will be registered by [002] Core.rb"
-echoln "═══════════════════════════════════════════════════"
+# Boot banner (debug only)
+if AdvancedAI::DEBUG_MODE
+  echoln "═══════════════════════════════════════════════════"
+  echoln "[AAI] Advanced AI System v3.0.0 - DEBUG MODE ACTIVE"
+  echoln "[AAI] Console output is working!"
+  echoln "[AAI] Switch Intelligence Handler will be registered by [002] Core.rb"
+  echoln "═══════════════════════════════════════════════════"
+end
 

@@ -33,6 +33,10 @@ class Battle::AI::AIMove
   def flinchingMove?; return @move.respond_to?(:flinchingMove?) ? @move.flinchingMove? : false; end
   def multiHitMove?; return @move.respond_to?(:multiHitMove?) ? @move.multiHitMove? : false;  end
   def recoilMove?;   return @move.respond_to?(:recoilMove?) ? @move.recoilMove? : false;      end
+  def bitingMove?;   return @move.respond_to?(:bitingMove?) ? @move.bitingMove? : false;      end
+  def punchingMove?; return @move.respond_to?(:punchingMove?) ? @move.punchingMove? : false;  end
+  def slicingMove?;  return @move.respond_to?(:slicingMove?) ? @move.slicingMove? : false;    end
+  def pulseMove?;    return @move.respond_to?(:pulseMove?) ? @move.pulseMove? : false;        end
   def pbNumHits(*args); return @move.respond_to?(:pbNumHits) ? @move.pbNumHits(*args) : 1;    end
 end
 
@@ -94,8 +98,16 @@ class Battle::AI
     return aai_pbGetMoveScore(*args) unless @move
     
     # Use Advanced AI Scoring if qualified
-    # This replaces the vanilla base score with our intelligent scoring
-    score = score_move_advanced(@move, @user, target, skill)
+    # Route through pbRegisterMove so the full alias chain fires:
+    # Disruption (Taunt/Encore/Knock Off/Trick), Special Moves (Pain Split/
+    # Healing Wish/Final Gambit/Memento), Recoil Tracking (recoil penalty/
+    # confusion risk/substitute cost), and Doubles Strategy (Fake Out/
+    # Redirection/Helping Hand/Protect coordination).
+    @_resolved_target = target
+    @_resolved_skill  = skill
+    score = pbRegisterMove(@user, @move)
+    @_resolved_target = nil
+    @_resolved_skill  = nil
     
     # Apply Advanced AI enhancements (Layers on top of base advanced score)
     score = apply_advanced_modifiers(score, @move, @user, target, skill)
@@ -250,61 +262,82 @@ end
 
 Battle::AI::Handlers::ShouldSwitch.add(:advanced_ai_switch_intelligence,
   proc { |battler, reserves, ai, battle|
-    skill = ai.trainer&.skill || 100
+    skill = if ai.trainer
+              ai.trainer.skill
+            elsif battle.wildBattle?
+              AdvancedAI::WILD_POKEMON_SKILL_LEVEL
+            else
+              100
+            end
+    dbg = AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
     
-    echoln "========================================"
-    echoln "=== ADVANCED AI SWITCH ANALYSIS ==="
-    echoln "  Pokemon: #{battler.name}"
-    echoln "  Trainer Skill: #{skill}"
-    echoln "  Reserves Available: #{reserves.length}"
-    
-    # DEBUG: Show which Pokemon are in reserves and which are filtered
-    party = battle.pbParty(battler.index)
-    echoln "  --- PARTY COMPOSITION DEBUG ---"
-    party.each_with_index do |pkmn, i|
-      next if !pkmn
-      is_active = battle.pbFindBattler(i, battler.index)
-      in_reserves = reserves.any? { |reserve_pkmn| reserve_pkmn == pkmn }
-      can_switch = battle.pbCanSwitchIn?(battler.index, i)
-      
-      status = []
-      status << "ACTIVE" if is_active
-      status << "IN_RESERVES" if in_reserves
-      status << "CANNOT_SWITCH (pbCanSwitchIn? = false)" if !can_switch
-      status << "FAINTED" if pkmn.fainted?
-      status << "EGG" if pkmn.egg?
-      
-      echoln "    [#{i}] #{pkmn.name}: #{status.join(', ')}"
+    # Wild Pokemon: respect ENABLE_WILD_POKEMON_AI setting
+    if battle.wildBattle? && !AdvancedAI::ENABLE_WILD_POKEMON_AI
+      next false
     end
     
-    # Check if Challenge Modes is filtering
-    if defined?(ChallengeModes) && ChallengeModes.respond_to?(:on?)
-      echoln "  --- CHALLENGE MODES STATUS ---"
-      echoln "    Monotype Mode: #{ChallengeModes.on?(:MONOTYPE_MODE)}"
-      echoln "    Randomizer Mode: #{ChallengeModes.on?(:RANDOMIZER_MODE)}"
+    if dbg
+      echoln "========================================"
+      echoln "=== ADVANCED AI SWITCH ANALYSIS ==="
+      echoln "  Pokemon: #{battler.name}"
+      echoln "  Trainer Skill: #{skill}"
+      echoln "  Reserves Available: #{reserves.length}"
+      
+      # DEBUG: Show which Pokemon are in reserves and which are filtered
+      party = battle.pbParty(battler.index & 1)
+      echoln "  --- PARTY COMPOSITION DEBUG ---"
+      party.each_with_index do |pkmn, i|
+        next if !pkmn
+        is_active = battle.pbFindBattler(i, battler.index)
+        in_reserves = reserves.any? { |reserve_pkmn| reserve_pkmn == pkmn }
+        can_switch = battle.pbCanSwitchIn?(battler.index, i)
+        
+        status = []
+        status << "ACTIVE" if is_active
+        status << "IN_RESERVES" if in_reserves
+        status << "CANNOT_SWITCH (pbCanSwitchIn? = false)" if !can_switch
+        status << "FAINTED" if pkmn.fainted?
+        status << "EGG" if pkmn.egg?
+        
+        echoln "    [#{i}] #{pkmn.name}: #{status.join(', ')}"
+      end
+      
+      # Check if Challenge Modes is filtering
+      if defined?(ChallengeModes) && ChallengeModes.respond_to?(:on?)
+        echoln "  --- CHALLENGE MODES STATUS ---"
+        echoln "    Monotype Mode: #{ChallengeModes.on?(:MONOTYPE_MODE)}"
+        echoln "    Randomizer Mode: #{ChallengeModes.on?(:RANDOMIZER_MODE)}"
+      end
+      echoln "  --- END DEBUG ---"
     end
-    echoln "  --- END DEBUG ---"
     
     qualifies = AdvancedAI.qualifies_for_advanced_ai?(skill)
-    echoln "  Qualifies for Advanced AI? #{qualifies}"
+    if dbg
+      echoln "  Qualifies for Advanced AI? #{qualifies}"
+    end
     
     if !qualifies
-      echoln "  >>> NOT qualified (need skill 50+)"
-      echoln "=============================="
+      if dbg
+        echoln "  >>> NOT qualified (need skill 50+)"
+        echoln "=============================="
+      end
       next false
     end
     
     feature_enabled = AdvancedAI.feature_enabled?(:switch_intelligence, skill)
-    echoln "  Switch Intelligence enabled? #{feature_enabled}"
+    if dbg
+      echoln "  Switch Intelligence enabled? #{feature_enabled}"
+    end
     
     if !feature_enabled
-      echoln "  >>> Feature not enabled for this skill level"
-      echoln "=============================="
+      if dbg
+        echoln "  >>> Feature not enabled for this skill level"
+        echoln "=============================="
+      end
       next false
     end
     
-    echoln "  >>> Checking switch logic..."
-    echoln ""
+    echoln "  >>> Checking switch logic..." if dbg
     
     result = false
     begin
@@ -315,23 +348,26 @@ Battle::AI::Handlers::ShouldSwitch.add(:advanced_ai_switch_intelligence,
         real_battler = battler.respond_to?(:battler) ? battler.battler : battler
         result = ai.should_switch_advanced?(real_battler, skill)
         
-        if result
-          echoln ""
-          echoln "  ✅ RESULT: SHOULD SWITCH!"
-          echoln "=============================="
-        else
-          echoln ""
-          echoln "  ❌ RESULT: Stay in battle"
-          echoln "=============================="
+        if dbg
+          if result
+            echoln ""
+            echoln "  ✅ RESULT: SHOULD SWITCH!"
+            echoln "=============================="
+          else
+            echoln ""
+            echoln "  ❌ RESULT: Stay in battle"
+            echoln "=============================="
+          end
         end
       else
-        echoln "  ⚠️ ERROR: should_switch_advanced? not found"
-        echoln "=============================="
+        if dbg
+          echoln "  ⚠️ ERROR: should_switch_advanced? not found"
+          echoln "=============================="
+        end
       end
     rescue => e
-      echoln "[AAI Core ERROR] #{e.class}: #{e.message}"
-      echoln e.backtrace.first(3).join("\n")
-      echoln "=============================="
+      AdvancedAI.log("[AAI Core ERROR] #{e.class}: #{e.message}", "Switch")
+      AdvancedAI.log(e.backtrace.first(3).join("\n"), "Switch")
       result = false
     end
     
@@ -346,22 +382,38 @@ class Battle::AI
   alias aai_choose_best_replacement_pokemon choose_best_replacement_pokemon
   def choose_best_replacement_pokemon(idxBattler, terrible_moves = false)
     begin
-      skill = @trainer&.skill || 100
+      # Wild Pokemon: respect ENABLE_WILD_POKEMON_AI setting
+      if @battle.wildBattle? && !AdvancedAI::ENABLE_WILD_POKEMON_AI
+        return aai_choose_best_replacement_pokemon(idxBattler, terrible_moves)
+      end
       
-      echoln "========================================"
-      echoln "=== CHOOSING REPLACEMENT POKEMON ==="
-      echoln "  Current: #{@user.name}"
-      echoln "  Trainer Skill: #{skill}"
-      echoln "  Forced Switch: #{terrible_moves}"
+      skill = if @trainer
+                @trainer.skill
+              elsif @battle.wildBattle?
+                AdvancedAI::WILD_POKEMON_SKILL_LEVEL
+              else
+                100
+              end
+      dbg = AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
+      
+      if dbg
+        echoln "========================================"
+        echoln "=== CHOOSING REPLACEMENT POKEMON ==="
+        echoln "  Current: #{@user.name}"
+        echoln "  Trainer Skill: #{skill}"
+        echoln "  Forced Switch: #{terrible_moves}"
+      end
       
       # Anti-ping-pong: If this Pokemon just switched in, don't switch out
       # due to "terrible moves". Stall teams have low-scoring moves that are
       # still strategically correct (Toxic, Protect, Recover, etc.).
       # This prevents Blissey <-> Toxapex infinite switching loops.
       if terrible_moves && @user.turnCount < 2 && !@user.fainted?
-        echoln "  >>> Anti-ping-pong: #{@user.name} just switched in (turn #{@user.turnCount})"
-        echoln "  >>> Staying to use available moves instead of switching"
-        echoln "========================================"
+        if dbg
+          echoln "  >>> Anti-ping-pong: #{@user.name} just switched in (turn #{@user.turnCount})"
+          echoln "  >>> Staying to use available moves instead of switching"
+          echoln "========================================"
+        end
         return -1
       end
       
@@ -382,9 +434,11 @@ class Battle::AI
         end
         
         if stall_working
-          echoln "  >>> Stall Archetype: #{@user.name} has active stall gameplan"
-          echoln "  >>> Staying to continue stalling (passive damage ticking)"
-          echoln "========================================"
+          if dbg
+            echoln "  >>> Stall Archetype: #{@user.name} has active stall gameplan"
+            echoln "  >>> Staying to continue stalling (passive damage ticking)"
+            echoln "========================================"
+          end
           return -1
         end
         
@@ -397,26 +451,26 @@ class Battle::AI
           [:TOXIC, :WILLOWISP, :THUNDERWAVE, :LEECHSEED, :SCALD].include?(m.id)
         end
         if has_recovery && has_useful_status
-          echoln "  >>> Stall Archetype: #{@user.name} has recovery + status moves"
-          echoln "  >>> Staying to execute stall strategy"
-          echoln "========================================"
+          if dbg
+            echoln "  >>> Stall Archetype: #{@user.name} has recovery + status moves"
+            echoln "  >>> Staying to execute stall strategy"
+            echoln "========================================"
+          end
           return -1
         end
       end
       
-      # Debug: Check all conditions
       qualifies = AdvancedAI.qualifies_for_advanced_ai?(skill)
       feature_enabled = AdvancedAI.feature_enabled?(:switch_intelligence, skill)
       
-      echoln "  Qualifies for Advanced AI? #{qualifies}"
-      echoln "  Switch Intelligence enabled? #{feature_enabled}"
-      echoln "  >>> Using send() to bypass visibility"
+      if dbg
+        echoln "  Qualifies for Advanced AI? #{qualifies}"
+        echoln "  Switch Intelligence enabled? #{feature_enabled}"
+      end
       
       # Use Advanced AI switch logic if qualified
       if qualifies && feature_enabled
-        
-        echoln "  >>> Using Advanced AI selection..."
-        echoln ""
+        echoln "  >>> Using Advanced AI selection..." if dbg
         
         # Call our advanced switch finder from [012] Switch_Intelligence.rb
         # Use send to bypass visibility restrictions
@@ -425,32 +479,18 @@ class Battle::AI
         if best_idx && @battle.pbCanSwitchIn?(idxBattler, best_idx)
           party = @battle.pbParty(idxBattler)
           best_pkmn = party[best_idx]
-          echoln ""
-          echoln "  ✅ SELECTED: #{best_pkmn.name} (Party Index: #{best_idx})"
-          echoln "=============================="
+          if dbg
+            echoln ""
+            echoln "  ✅ SELECTED: #{best_pkmn.name} (Party Index: #{best_idx})"
+            echoln "=============================="
+          end
           return best_idx
         end
-        echoln "  >>> No suitable switch found"
-        echoln "  >>> Falling back to vanilla..."
-      else
-        echoln "  >>> Using vanilla selection..."
-        if !qualifies
-          echoln "      Reason: Skill too low (need 50+)"
-        elsif !feature_enabled
-          echoln "      Reason: Feature not enabled"
-        end
+        AdvancedAI.log("No suitable advanced switch found, falling back to vanilla", "Switch")
       end
-      echoln "=============================="
     rescue => e
-      begin
-        msg = "[AAI ERROR] #{e.class}: #{e.message}".gsub('%', '%%')
-        bt  = e.backtrace.first(3).join("\n").gsub('%', '%%')
-        echoln msg
-        echoln bt
-      rescue
-        echoln "[AAI ERROR] (could not format error message)"
-      end
-      echoln "=============================="
+      AdvancedAI.log("[AAI ERROR] #{e.class}: #{e.message}", "Switch")
+      AdvancedAI.log(e.backtrace.first(3).join("\n"), "Switch")
     end
     
     # Fall back to vanilla logic
@@ -467,7 +507,10 @@ EventHandlers.add(:on_game_map_setup, :aai_core_loaded,
   }
 )
 
-echoln "[AAI Core] ✅ Switch Intelligence Handler registered!"
-echoln "[AAI Core] ✅ Replacement selector override active!"
-echoln "[AAI Core] Ready for battles with skill-based switch logic"
+if $DEBUG
+  echoln "[AAI Core] ✅ Switch Intelligence Handler registered!"
+  echoln "[AAI Core] ✅ Replacement selector override active!"
+  echoln "[AAI Core] Ready for battles with skill-based switch logic"
+end
+
 

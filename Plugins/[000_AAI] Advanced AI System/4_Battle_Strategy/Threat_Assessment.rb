@@ -41,8 +41,6 @@ module AdvancedAI
       return [[threat, 0].max, 10].min  # Clamp 0-10
     end
     
-    private
-    
     # Stat-based Threat
     def self.assess_stat_threat(attacker, opponent)
       threat = 0.0
@@ -72,16 +70,14 @@ module AdvancedAI
       attacker_types = attacker.pbTypes(true)
       
       opponent_types.each do |opp_type|
-        attacker_types.each do |att_type|
-          effectiveness = Effectiveness.calculate(opp_type, att_type, nil)
-          
-          if Effectiveness.super_effective?(effectiveness)
-            threat += 1.0
-          elsif Effectiveness.not_very_effective?(effectiveness)
-            threat -= 0.5
-          elsif Effectiveness.ineffective?(effectiveness)
-            threat -= 1.0
-          end
+        effectiveness = Effectiveness.calculate(opp_type, *attacker_types)
+        
+        if Effectiveness.super_effective?(effectiveness)
+          threat += 1.0
+        elsif Effectiveness.not_very_effective?(effectiveness)
+          threat -= 0.5
+        elsif Effectiveness.ineffective?(effectiveness)
+          threat -= 1.0
         end
       end
       
@@ -96,18 +92,18 @@ module AdvancedAI
       # Analyze Known Moves
       if memory[:moves]
         memory[:moves].each do |move_id|
-          move_data = GameData::Move.get(move_id)
+          move_data = GameData::Move.try_get(move_id)
+          next unless move_data
           
           # Priority Moves
           threat += 0.5 if move_data.priority > 0
           
           # Super Effective Coverage
-          if move_data.damaging?
+          if move_data.power > 0
             attacker_types = attacker.pbTypes(true)
-            attacker_types.each do |type|
-              effectiveness = Effectiveness.calculate(move_data.type, type, nil)
-              threat += 0.8 if Effectiveness.super_effective?(effectiveness)
-            end
+            resolved_type = AdvancedAI::CombatUtilities.resolve_move_type(opponent, move_data)
+            effectiveness = Effectiveness.calculate(resolved_type, *attacker_types)
+            threat += 0.8 if Effectiveness.super_effective?(effectiveness)
           end
           
           # OHKO Moves
@@ -132,14 +128,25 @@ module AdvancedAI
     # Ability-based Threat
     def self.assess_ability_threat(attacker, opponent)
       threat = 0.0
-      ability = opponent.ability_id
+      # Respect ability suppression (Gastro Acid, Neutralizing Gas)
+      if opponent.respond_to?(:abilityActive?)
+        ability = opponent.abilityActive? ? opponent.ability_id : nil
+      else
+        ability = opponent.respond_to?(:ability_id) ? opponent.ability_id : nil
+      end
       
       return 0.0 unless ability
       
       # === Mold Breaker Family (ignores defensive abilities) ===
       if [:MOLDBREAKER, :TURBOBLAZE, :TERAVOLT].include?(ability)
         # Extra dangerous against Wonder Guard, Multiscale, etc.
-        if [:WONDERGUARD, :MULTISCALE, :STURDY, :MAGICGUARD, :LEVITATE].include?(attacker.ability_id)
+        # Respect ability suppression for attacker too
+        if attacker.respond_to?(:abilityActive?)
+          attacker_ability = attacker.abilityActive? ? attacker.ability_id : nil
+        else
+          attacker_ability = attacker.respond_to?(:ability_id) ? attacker.ability_id : nil
+        end
+        if [:WONDERGUARD, :MULTISCALE, :STURDY, :MAGICGUARD, :LEVITATE].include?(attacker_ability)
           threat += 1.5  # Bypasses our protection
         else
           threat += 0.4
@@ -437,8 +444,6 @@ module AdvancedAI
         return 0.4
       end
     end
-    
-    public
     
     # Finds most threatening opponent
     def self.most_threatening_opponent(battle, attacker, skill_level = 100)

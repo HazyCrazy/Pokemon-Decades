@@ -76,7 +76,7 @@ if defined?(Battle) && Battle.method_defined?(:pbCanDynamax?)
           AdvancedAI.log("  Dynamax slot check: @dynamax[#{side}][#{owner}] == -1 ? #{result}", "Compatibility")
           return result
         end
-        return true
+        return false
       end
       
       # Otherwise use original logic
