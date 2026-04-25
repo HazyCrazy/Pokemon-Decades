@@ -221,6 +221,8 @@ FCloysterLineMoves=[]
 
 FGengarLineMoves=[]
 
+FOnixLineMoves=[]
+
 FSteelixLineMoves=[:DOUBLEIRONBASH] # Only Steelix can have this move, do not give this to Onix
 
 FHypnoLineMoves =[]
@@ -235,13 +237,13 @@ FMarowakLineMoves=[:SPECTRALTHIEF] # Kantoian Marawak is now Ghost/Ground, with 
 
 FTyrogueLineMoves=[]
 
-FLickilickyLineMoves=[]
-
 FKoffingLineMoves=[]
 
 FRhyperiorLineMoves=[]
 
 FHappinyLineMoves=[]
+
+FBlisseyLineMoves=[:COTTONGUARD] # Only Blissey can have this
 
 FTangrowthLineMoves=[]
 
@@ -320,41 +322,159 @@ FXatuLineMoves=[]
 
 FAmpharosLineMoves=[:TAILGLOW] # This and Thunderclap being a universal Electric Type move is dramatic in Trick Room teams. Base Ampharos is Electric Type, meaning it no longer gets Draco Meteor in 3.0.0. Draco Clap was insane to use and go up against.
 
+FAzumarillLineMoves=[]
 
+FSudowoodoLineMoves=[]
 
 FJumpluffLineMoves=[:FLOWERTRICK] # This with Wind Rider or Infiltrator is nice to have
 
+FAmbipomLineMoves=[]
+
+FSunfloraLineMoves=[]
+
+FYanmegaLineMoves=[]
+
+FClodsireLineMoves=[]
+
+FHonchkrowLineMoves=[:OBLIVIONWING] 
+
+FMisdreavusLineMoves=[]
+
+FUnownLineMoves=[]
+
+FWobbuffetLineMoves=[]
+
 FGirafarigLineMoves=[:AURASPHERE,:HEADLONGRUSH,:PSYCHOBOOST] # Girafarig gets the abilities Contrary/Parental Bond 
+
+FForretressLineMoves=[]
+
+FDudunsparceLineMoves=[]
+
+FGliscorLineMoves=[]
 
 FGranbullLineMoves=[:FISHIOUSREND,:HYPERFANG,:JAWLOCK,:PSYCHICFANGS] # This line gets the Strong Jaw Ability now. Hyper Fang is now 80 Base Power, 100% Accuracy move, so it can be the go to biting move for Strong Jaw Pokemon
 
-FOctilleryLineMoves=[:OCTOLOCK] # Only for Octillery.
+FOverqwilLineMoves=[]
+
+FShuckleLineMoves=[]
+
+FHeracrossLineMoves=[]
 
 FWeavileSneaslerLineMOves=[:CROSSPOISON] # There are 531 Pokemon Family Lines, as of Gen 9. The whole point of removing Level Up Moves and using Connected Egg Move lines for Movepool distribution is so additions to moves do not require PBS edits. This makes the additions portable, and allows the vanilla PBS files to go back to stock if required. So piss off if you don't like every evolution line's movepools being connected. I am not manually editing 1025+ Pokemon's movepool distributions for every nitpick of logic and any other nonsense when someone complains about Aron learning Punching moves. This method cuts the work in half, and makes it portable.
 
+FUrsalunaLineMoves=[]
+
+FMagcargoLineMoves=[]
+
+FMamoswineLineMoves=[]
+
 FCorsolaLineMoves=[:SALTCURE]
+
+FOctilleryLineMoves=[:OCTOLOCK] # Only for Octillery.
+
+FDelibirdLineMoves=[]
+
+FMantineLineMoves=[]
 
 FSkarmoryLineMoves=[:SCRATCH] # Used to learn Behemoth Blade in SY 2.0.0. Thanks to Scratch no longer being a clone of Tackle, it's a more suitable move for Skarmory, who gets the Sharpness ability now
 
-FBlisseyLineMoves=[:COTTONGUARD] # Only Blissey can have this
+FHoundoomLineMoves=[]
+
+FPhanpyLineMoves=[]
+
+FWyrdeerLineMoves=[]
+
+FSmeargleLineMoves=[]
+
+FMiltankLineMoves=[]
 
 FTyranitarLineMoves=[:BARRAGE,:TAILSLAP]
 
+FRaikouLineMoves=[]
+
 FEnteiLineMoves=[:BOOMBURST,:HYPERVOICE] # Lore states it's roar can erupt volcanos, and it's the worse Legendary Beasts out of the three
+
+FSuicuneLineMoves=[]
+
+FLugiaLineMoves=[] # Lugia's always been a Silver Dragon to me
 
 FHoohLineMoves=[:REVIVALBLESSING] # What do you mean the Golden Lifebringer doesn't learn Revival Blessing!?
 
+FCelebiLineMoves=[]
+
+# Gen 3 Pokemon
+
+FSceptileLineMoves=[]
+
+FBlazikenLineMoves=[]
+
+FSwampertLineMoves=[]
+
 FMightyenaLineMoves=[:HYPERFANG] # Poochyena is Normal/Dark to expand it's Normal Type Movepool, Mightyena is Ghost/Dark, to give it an alternative Biting move that isn't Crunch
+
+FObstagoonLineMoves=[]
+
+FWurmpleLineMoves=[]
+
+FLudicoloLineMoves=[]
+
+FShiftryLineMoves=[]
+
+FSwellowLineMoves=[:HYPERVOICE] # Added so Swellow can work in Double/Triple Battles
+
+FPelipperLineMoves=[]
+
+FRaltsLineMoves=[]
 
 FMasquerainLineMoves=[:BOUNCYBUBBLE,:TWINBEAM]
 
-FShedinjaLineMoves=[:SPECTRALTHIEF] 
+FBreloomLineMoves=[]
 
-FSwellowLineMoves=[:HYPERVOICE] # Added so Swellow can work in Double/Triple Battles
+FSlakingLineMoves=[]
+
+FShedinjaLineMoves=[:SPECTRALTHIEF]
+
+FExploudLineMoves=[]
+
+FMakuhitaLineMoves=[]
+
+FProbopassLineMoves=[]
+
+FDelcattyLineMoves=[]
+
+FSableyeLineMoves=[]
+
+FMawileLineMoves=[]
+
+FAggronLineMoves=[]
+
+FMedichamLineMoves=[]
+
+FManectricLineMoves=[]
+
+FPlusleLineMoves=[]
+
+FMinunLineMoves=[]
+
+FVolbeatLineMoves=[]
+
+FIllumiseLineMoves=[]
+
+FRoseradeLineMoves=[] 
 
 FSwalotLineMoves=[:RECYCLE] 
 
 FSharpedoLineMoves=[:FISHIOUSREND,:HYPERFANG] # All 900+ Moves have been tweaked or overhauled. Sharpedo is one of many Pokemon who benefit from Aqua Fang, a nerfed Fishious Rend.
+
+FWailordLineMoves=[]
+
+FCameruptLineMoves=[]
+
+FTorkoalLineMoves=[]
+
+FGrumpigLineMoves=[]
+
+FSpindaLineMoves=[]
 
 FFlygonLineMoves=[:AEROBLAST,:CLANGINGSCALES,:HYPERVOICE] # Vibrava is Ground/Dragon, Flygon is Bug/Dragon. Flygon can gain Ground STAB via Sand Force. Hyper Voice is so Vibrava gets a Ground Type Sound move. Clanging Scales is so Vibrava and Flygon are not left wanting more with Amplifier (Renamed Punk Rock)
 
@@ -362,17 +482,53 @@ FCacturneLineMoves=[:ROCKTHROW] # Rock Throw is Rock type Iron Head now. Cacturn
 
 FAltariaLineMoves=[:TORCHSONG,:TIDYUP] # Roost + Torch Song + Draco Meteor + Heal Bell/Aeroblast is insane on Mega Altaria.
 
+FZangooseLineMoves=[]
+
+FSeviperLineMoves=[]
+
 FLunatoneLineMoves=[:GEOMANCY,:MYSTICALPOWER,:SPACIALREND] # Spacial Rend is now a Water Type move, due to better Dragon type move options for Palkia.
 
 FSolRockLineMoves=[:ARMORCANNON,:GEOMANCY,:MYSTICALPOWER] # I hate the very idea of signature moves. All it does is bloat the movepool and cut off options a specfic line really needs
+
+FWhiscashLineMoves=[]
+
+FCrawdauntLineMoves=[]
+
+FClaydolLineMoves=[]
+
+FCradilyLineMoves=[]
+
+FArmaldoLineMoves=[]
 
 FMiloticLineMoves=[:DRAININGKISS,:MUDDYWATER]
 
 FCastformLineMoves=[:AEROBLAST,:BLEAKWINDSTORM,:GLACIATE,:LEAFSTORM,:MAGMASTORM,:SANDSEARSTORM,:SPRINGTIDESTORM,:WILDBOLTSTORM]
 
+FKecleonLineMoves=[]
+
+FBanetteLineMoves=[]
+
+FDusknoirLineMoves=[]
+
+FTropiusLineMoves=[]
+
+FChimechoLineMoves=[]
+
 FAbsolLineMoves=[:SACREDSWORD] # Mega Absol is Fairy/Dark. Base is Mono Dark. This move is for the benefit of it's Sharpness ability
 
-FClamperlLineMoves=[:FISHIOUSREND,:JAWLOCK,:PSYCHICFANGS] #Huntail is Dark/Water with the Strong Jaw Ability, Gorebyss is Psychic/Water with Multiscale. 
+FSnoruntLineMoves=[]
+
+FWalreinLineMoves=[]
+
+FClamperlLineMoves=[:FISHIOUSREND,:JAWLOCK,:PSYCHICFANGS] #Huntail is Dark/Water with the Strong Jaw Ability, Gorebyss is Psychic/Water with Multiscale.
+
+FRelicanthLineMoves=[]
+
+FLuvdiscLineMoves=[]
+
+FBagonLineMoves=[]
+
+FMetagrossLineMoves=[] 
 
 FRegirockLineMoves=[:SALTCURE] 
 
@@ -380,17 +536,77 @@ FRegiceLineMoves=[:VOLTSWITCH]
 
 FRegisteelLineMoves=[:TRICKROOM]
 
+FRegielekiLineMoves=[]
+
+FRegidragoLineMoves=[]
+
+FRegigigasLineMoves=[]
+
+FLatiasLineMoves=[]
+
+FLatiosLineMoves=[]
+
+FKyogreLineMoves=[]
+
+FGroudonLineMoves=[]
+
+FRayquazaLineMoves=[]
+
+FJirachiLineMoves=[]
+
+FDeoxysLineMoves=[]
+
+# Gen 4 Pokemon
+
+FTorterraLineMoves=[]
+
 FInfernapeLineMoves=[:PSYCHOBOOST,:COMETPUNCH] # Monferno is Psychic/Fire, Infernape is Fighting/Fire. Comet Punch is Fire type, because if it were Fighting Type, it would overlay with Arm Thrust. Pound is a 2-5 multi hit move called Pummel now, because I never liked Tackle overlapping with Pound and Scratch. Because a Tackle is a universal concept that any Pokemon can do. Psycho Boost and Monferno inheriting universal Psychic type moves, is to allow Infernape to stand out from Blaziken and Emboar
+
+FEmpoleonLineMoves=[]
+
+FStaraptorLineMoves=[]
+
+FBibarelLineMoves=[]
+
+FKricketuneLineMoves=[]
 
 FLuxrayLineMoves=[:HYPERFANG,:JAWLOCK,:THUNDEROUSKICK,:TAILSLAP,:BEATUP] # I hate every fan game that makes Luxray Dark/Electric. And it's not much of a benefit for it to be half Dark anyway
 
 FRampardosLineMoves=[:FLAREBLITZ,:SUBMISSION,:WAVECRASH,:WOODHAMMER] # Rampardos and Bastiodon are one of many Pokemon transformed by the 600 BST standard. Rampardos is great to use now. The recoil moves are becasue Rampardos is a Dragon/Rock type now, and Dragon types usually have lots of type coverage
 
+FBastiodonLineMoves=[]
+
+FBurmyLineMoves=[]
+
+FVespiquenLineMoves=[]
+
+FPachirisuLineMoves=[]
+
 FFloatzelLineMoves=[:SURGINGSTRIKES] # Poliwrath cannot have Surging Strikes because it learns Belly Drum
 
 FCherrimLineMoves=[:DRAININGKISS,:FIERYDANCE]
 
-FHonchkrowLineMoves=[:OBLIVIONWING] 
+FGastrodonLineMoves=[]
+
+FDrifblimLineMoves=[]
+
+FLopunnyLineMoves=[]
+
+FRotomLineMoves=[]
+
+FPuruglyLineMoves=[]
+
+FSkuntankLineMoves=[]
+
+FBronzongLineMoves=[]
+
+FChatotLineMoves=[]
+
+FSpiritombLineMoves=[]
+
+FDrapionLineMoves=[]
+
+FToxicroakLineMoves=[]
 
 FGarchompLineMoves=[:DRILLRUN] 
 

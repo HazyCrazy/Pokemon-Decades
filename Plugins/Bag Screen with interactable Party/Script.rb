@@ -29,6 +29,24 @@ class SpriteWindow_Selectable < SpriteWindow_Base
             update_cursor_rect
           end
         end
+      elsif Input.repeat?(Input::JUMPUP)
+        if @index > 0
+          oldindex = @index
+          @index = [self.index - self.page_item_max, 0].max
+          if @index != oldindex
+            self.top_row -= self.page_row_max
+            update_cursor_rect
+          end
+        end
+      elsif Input.repeat?(Input::JUMPDOWN)
+        if @index < @item_max - 1
+          oldindex = @index
+          @index = [self.index + self.page_item_max, @item_max - 1].min
+          if @index != oldindex
+            self.top_row += self.page_row_max
+            update_cursor_rect
+          end
+        end
       end
     elsif  self.active && @item_max > 0 && @index >= 0 && !@ignore_input
       if Input.repeat?(Input::UP)
@@ -602,18 +620,32 @@ class PokemonBag_Scene
     @sprites["panorama"] = IconSprite.new(0, 0, @viewport)
     @sprites["panorama"].setBitmap("Graphics/UI/Bag Screen with Party/panorama")
     
-    if BagScreenWiInParty::BGSTYLE == 1 # BW Style
-      if $player.female?
-        @sprites["background"].color = Color.new(231, 101, 137)
-        @sprites["gradient"].color = Color.new(243, 133, 169)
-        @sprites["panorama"].color = Color.new(232, 62, 113)
-      else
-        @sprites["background"].color = Color.new(101, 230, 255)
-        @sprites["gradient"].color = Color.new(37, 129, 255)
-        @sprites["panorama"].color = Color.new(37, 136, 255)
+    if @choosing && BagScreenWiInParty::ALTCHOOSINGSTYLE
+      @sprites["gradient"].color = Color.new(-255, -255, -255)
+      @sprites["panorama"].setBitmap("Graphics/UI/Bag Screen with Party/panoramaDark")
+      if BagScreenWiInParty::BGSTYLE == 1 # BW Style, but choosing
+        if $player.female?
+          @sprites["background"].color = Color.new(231, 101, 137)
+        else
+          @sprites["background"].color = Color.new(101, 230, 255)
+        end
+      elsif BagScreenWiInParty::BGSTYLE == 2 # HGSS Style, but choosing
+        pbPocketColor
       end
-    elsif BagScreenWiInParty::BGSTYLE == 2 # HGSS Style
-      pbPocketColor
+    else
+      if BagScreenWiInParty::BGSTYLE == 1 # BW Style
+        if $player.female?
+          @sprites["background"].color = Color.new(231, 101, 137)
+          @sprites["gradient"].color = Color.new(243, 133, 169)
+          @sprites["panorama"].color = Color.new(232, 62, 113)
+        else
+          @sprites["background"].color = Color.new(101, 230, 255)
+          @sprites["gradient"].color = Color.new(37, 129, 255)
+          @sprites["panorama"].color = Color.new(37, 136, 255)
+        end
+      elsif BagScreenWiInParty::BGSTYLE == 2 # HGSS Style
+        pbPocketColor
+      end
     end
     @sprites["ui1"] = IconSprite.new(0, 0, @viewport)
     @sprites["ui1"].setBitmap("Graphics/UI/Bag Screen with Party/ui1")
@@ -673,39 +705,60 @@ class PokemonBag_Scene
   end
 
   def pbPocketColor
-    case @bag.last_viewed_pocket
-    when 1
-      @sprites["background"].color = Color.new(233, 152, 189)
-      @sprites["gradient"].color = Color.new(255, 37, 187)
-      @sprites["panorama"].color = Color.new(213, 89, 141)
-    when 2
-      @sprites["background"].color = Color.new(233, 161, 152)
-      @sprites["gradient"].color = Color.new(255, 134, 37)
-      @sprites["panorama"].color = Color.new(224, 112, 56)
-    when 3
-      @sprites["background"].color = Color.new(233, 197, 152)
-      @sprites["gradient"].color = Color.new(255, 177, 37)
-      @sprites["panorama"].color = Color.new(200, 136, 32)
-    when 4
-      @sprites["background"].color = Color.new(216, 233, 152)
-      @sprites["gradient"].color = Color.new(194, 255, 37)
-      @sprites["panorama"].color = Color.new(128, 168, 32)
-    when 5
-      @sprites["background"].color = Color.new(175, 233, 152)
-      @sprites["gradient"].color = Color.new(78, 255, 37)
-      @sprites["panorama"].color = Color.new(32, 160, 72)
-    when 6
-      @sprites["background"].color = Color.new(152, 220, 233)
-      @sprites["gradient"].color = Color.new(37, 212, 255)
-      @sprites["panorama"].color = Color.new(24, 144, 176)
-    when 7
-      @sprites["background"].color = Color.new(152, 187, 233)
-      @sprites["gradient"].color = Color.new(37, 125, 255)
-      @sprites["panorama"].color = Color.new(48, 112, 224)
-    when 8
-      @sprites["background"].color = Color.new(178, 152, 233)
-      @sprites["gradient"].color = Color.new(145, 37, 255)
-      @sprites["panorama"].color = Color.new(144, 72, 216)
+    if @choosing && BagScreenWiInParty::ALTCHOOSINGSTYLE
+      case @bag.last_viewed_pocket
+      when 1
+        @sprites["background"].color = Color.new(233, 152, 189)
+      when 2
+        @sprites["background"].color = Color.new(233, 161, 152)
+      when 3
+        @sprites["background"].color = Color.new(233, 197, 152)
+      when 4
+        @sprites["background"].color = Color.new(216, 233, 152)
+      when 5
+        @sprites["background"].color = Color.new(175, 233, 152)
+      when 6
+        @sprites["background"].color = Color.new(152, 220, 233)
+      when 7
+        @sprites["background"].color = Color.new(152, 187, 233)
+      when 8
+        @sprites["background"].color = Color.new(178, 152, 233)
+      end
+    else
+      case @bag.last_viewed_pocket
+      when 1
+        @sprites["background"].color = Color.new(233, 152, 189)
+        @sprites["gradient"].color = Color.new(255, 37, 187)
+        @sprites["panorama"].color = Color.new(213, 89, 141)
+      when 2
+        @sprites["background"].color = Color.new(233, 161, 152)
+        @sprites["gradient"].color = Color.new(255, 134, 37)
+        @sprites["panorama"].color = Color.new(224, 112, 56)
+      when 3
+        @sprites["background"].color = Color.new(233, 197, 152)
+        @sprites["gradient"].color = Color.new(255, 177, 37)
+        @sprites["panorama"].color = Color.new(200, 136, 32)
+      when 4
+        @sprites["background"].color = Color.new(216, 233, 152)
+        @sprites["gradient"].color = Color.new(194, 255, 37)
+        @sprites["panorama"].color = Color.new(128, 168, 32)
+      when 5
+        @sprites["background"].color = Color.new(175, 233, 152)
+        @sprites["gradient"].color = Color.new(78, 255, 37)
+        @sprites["panorama"].color = Color.new(32, 160, 72)
+      when 6
+        @sprites["background"].color = Color.new(152, 220, 233)
+        @sprites["gradient"].color = Color.new(37, 212, 255)
+        @sprites["panorama"].color = Color.new(24, 144, 176)
+      when 7
+        @sprites["background"].color = Color.new(152, 187, 233)
+        @sprites["gradient"].color = Color.new(37, 125, 255)
+        @sprites["panorama"].color = Color.new(48, 112, 224)
+      when 8
+        @sprites["background"].color = Color.new(178, 152, 233)
+        @sprites["gradient"].color = Color.new(145, 37, 255)
+        @sprites["panorama"].color = Color.new(144, 72, 216)
+      end
     end
   end
   
@@ -923,8 +976,7 @@ class PokemonBag_Scene
       if itm.is_evolution_stone?
         for i in $player.party
           elig = i.check_evolution_on_use_item(itm)
-          #annotations.push((elig) ? _INTL("ABLE") : _INTL("UNABLE"))
-		  annotations.push((elig) ? _INTL("") : _INTL(""))
+          annotations.push((elig) ? _INTL("ABLE") : _INTL("UNABLE"))
         end
       else
         for i in 0...Settings::MAX_PARTY_SIZE
@@ -966,8 +1018,7 @@ class PokemonBag_Scene
         end
       else
         for i in @party
-          #annotations.push((elig) ? _INTL("ABLE") : _INTL("UNABLE"))
-		  annotations.push((elig) ? _INTL("") : _INTL(""))
+          annotations.push((elig) ? _INTL("ABLE") : _INTL("UNABLE"))
         end
       end
       for i in 0...Settings::MAX_PARTY_SIZE
@@ -1021,7 +1072,9 @@ class PokemonBag_Scene
         else
           # Plays SE when scrolling the item list
           if Input.repeat?(Input::UP) && thispocket.length   > 0 || 
-             Input.repeat?(Input::DOWN) && thispocket.length > 0
+             Input.repeat?(Input::DOWN) && thispocket.length > 0 || 
+             Input.repeat?(Input::JUMPUP) && thispocket.length > 0 || 
+             Input.repeat?(Input::JUMPDOWN) && thispocket.length > 0
             pbSEPlay("GUI bag cursor") if itemwindow.index != oldindex
           end
           # Change pockets
@@ -1067,7 +1120,8 @@ class PokemonBag_Scene
               pbWait(0.1) {pbUpdate}
               @sprites["currentpocket"].x -= 2
             end
-          elsif Input.trigger?(Input::SPECIAL)   # Checking party
+          elsif Input.trigger?(Input::SPECIAL)  # Checking party
+            if !@choosing || @choosing && BagScreenWiInParty::ACCESSWHILECHOOSING 
             if $player.pokemon_count == 0
               pbMessage(_INTL("There is no Pokémon."))
             else
@@ -1076,6 +1130,7 @@ class PokemonBag_Scene
               pbRefresh
               pbDeactivateWindows(@sprites){pbChoosePoke(3, false)}
               pbRefresh
+            end
             end
           elsif Input.trigger?(Input::ACTION)   # Start switching the selected item
             if !@choosing && thispocket.length > 1 && itemwindow.index < thispocket.length &&
@@ -1178,7 +1233,8 @@ class PokemonBag_Scene
       @sprites["pokemon#{i}"].selected = (i == @activecmd)
     end
     itemwindow = @sprites["itemlist"]
-    item = itemwindow.item
+    item       = itemwindow.item
+    itm        = GameData::Item.get(item) if item
     if option == 3 || option == 4
       pbChangeCursor(3)
     else
@@ -1218,7 +1274,10 @@ class PokemonBag_Scene
         elsif option == 2 # Use
           ret = pbBagUseItem(@bag, item, PokemonBagScreen, self, @activecmd)
           pbRefresh; pbUpdateAnnotation
-          if !$bag.has?(item)
+          if BagScreenWiInParty::LEAVEPARTYEVO && itm.is_evolution_stone? ||
+             BagScreenWiInParty::LEAVEPARTYMACH && itm.is_machine? ||
+             BagScreenWiInParty::LEAVEPARTYKEY && itm.is_key_item? ||
+             !$bag.has?(item)
             @sprites["pokemon#{@activecmd}"].selected = false
             pbChangeCursor(2)
             break
@@ -1232,8 +1291,8 @@ class PokemonBag_Scene
             commands = []
             # Generate command list
             commands[cmdSummary = commands.length]       = _INTL("Summary")
-            commands[cmdTake = commands.length]          = _INTL("Take Item") if pkmn.hasItem?
-            commands[cmdMove = commands.length]          = _INTL("Move Item") if pkmn.hasItem? && !GameData::Item.get(pkmn.item).is_mail?
+            commands[cmdTake = commands.length]          = _INTL("Take Item") if pkmn.hasItem? && !@choosing
+            commands[cmdMove = commands.length]          = _INTL("Move Item") if pkmn.hasItem? && !GameData::Item.get(pkmn.item).is_mail? && !@choosing
             commands[commands.length]                    = _INTL("Cancel")
             # Show commands generated above
             if pkmn.hasItem?
@@ -1366,13 +1425,13 @@ class PokemonBag_Scene
     end
   end
   
-  def pbSummary(pkmnid, inbattle=false)
+  def pbSummary(pkmnid, inbattle = @choosing)
     oldsprites = pbFadeOutAndHide(@sprites)
     scene = PokemonSummary_Scene.new
-    screen = PokemonSummaryScreen.new(scene,inbattle)
-    screen.pbStartScreen(@party,pkmnid)
+    screen = PokemonSummaryScreen.new(scene, inbattle)
+    screen.pbStartScreen(@party, pkmnid)
     yield if block_given?
-    pbFadeInAndShow(@sprites,oldsprites)
+    pbFadeInAndShow(@sprites, oldsprites)
   end
 
   def pbSelect(item)
@@ -1404,7 +1463,7 @@ class PokemonBag_Scene
         movenames.push(_INTL("{1} (PP: {2}/{3})", i.name, i.pp, i.total_pp))
       end
     end
-    return pbShowCommands(helptext,movenames,index)
+    return pbShowCommands(helptext, movenames,index)
   end
 end
 
@@ -1715,14 +1774,21 @@ def pbBagUseItem(bag, item, scene, screen, chosen, bagscene=nil)
     end
     qty = 1
     ret = false
+    max_at_once = ItemHandlers.triggerUseOnPokemonMaximum(item, pkmn)
+    max_at_once = [max_at_once, $bag.quantity(item)].min
+      if max_at_once > 1
+        qty = pbChooseNumber(
+          _INTL("How many {1} do you want to use?", GameData::Item.get(item).portion_name_plural), max_at_once
+        ) { screen.pbRefresh }
+      end
     screen.pbRefresh
-    if pbCheckUseOnPokemon(item, pkmn, screen)
-      ret = ItemHandlers.triggerUseOnPokemon(item, qty, pkmn, screen)
+    if pbCheckUseOnPokemon(item, pkmn, screen) && qty > 0
+      ret = ItemHandlers.triggerUseOnPokemon(item, qty, pkmn, screen) { screen.pbRefresh }
       if ret && useType == 1 # Usable on Pokémon, consumed
         $bag.remove(item, qty)  if itm.consumed_after_use? { screen.pbRefresh }
       end
       if !$bag.has?(item)
-        screen.pbDisplay(_INTL("You used your last {1}.", itm.portion_name)) { screen.pbUpdate }
+        screen.pbDisplay(_INTL("You used your last {1}.", itm.portion_name)) if !itm.is_key_item? { screen.pbUpdate }
         screen.pbChangeCursor(2)
       end
       screen.pbRefresh
@@ -1768,12 +1834,13 @@ ItemHandlers::UseInField.add(:SACREDASH, proc { |item|
 })
 
 #=============================================================================
-# Battle scene for openning the Bag screen and choosing an item to use
+# Battle scene for opening the Bag screen and choosing an item to use
 #=============================================================================
 class Battle::Scene
   def pbItemMenu(idxBattler, _firstAction)
     # Fade out and hide all sprites
     visibleSprites = pbFadeOutAndHide(@sprites)
+    # Variable for checking battle
     # Set Bag starting positions
     oldLastPocket = $bag.last_viewed_pocket
     oldChoices    = $bag.last_pocket_selections.clone
